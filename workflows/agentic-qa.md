@@ -15,29 +15,14 @@ tools:
   github:
     allowed:
       [
-        list_files,
         create_or_update_file,
-        get_file_contents,
         create_branch,
         delete_file,
-        get_commit,
-        list_branches,
-        list_commits,
         push_files,
-        search_code,
-        list_issues,
-        get_issue,
-        get_issue_comments,
-        search_issues,
         create_issue,
         update_issue,
         add_issue_comment,
         create_pull_request,
-        list_pull_requests,
-        get_pull_request,
-        get_pull_request_files,
-        get_pull_request_diff,
-        get_pull_request_status,
       ]
   Bash:
     allowed: [":*"] # Allow all bash commands

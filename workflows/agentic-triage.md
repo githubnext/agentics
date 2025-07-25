@@ -15,9 +15,9 @@ permissions:
 tools:
   github:
     allowed:
-      [get_issue, get_issue_comments, update_issue, search_issues, list_issues]
+      [update_issue]
   Bash:
-    allowed: [gh label list:*]
+    allowed: [:*]
   Task:
   Glob:
   Grep:

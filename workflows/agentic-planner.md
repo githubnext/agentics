@@ -12,19 +12,10 @@ tools:
   github:
     allowed:
       [
-        list_files,
-        get_file_contents,
-        search_code,
-        list_issues,
-        get_issue,
-        get_issue_comments,
-        search_issues,
         create_issue,
         create_pull_request,
         update_issue,
         create_issue_comment,
-        list_pull_requests,
-        get_pull_request,
         create_or_update_file,
       ]
   Bash:

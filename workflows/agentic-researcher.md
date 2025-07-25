@@ -21,28 +21,10 @@ tools:
   github:
     allowed:
       [
-        list_files,
-        get_file_contents,
-        search_code,
-        list_issues,
-        get_issue,
-        get_issue_comments,
-        search_issues,
         create_issue,
       ]
   Bash:
-    allowed:
-      [
-        "gh label list:*",
-        "cat:*",
-        "echo:*",
-        "grep:*",
-        "head:*",
-        "tail:*",
-        "wc:*",
-        "sort:*",
-        "uniq:*",
-      ]
+    allowed: [":*"]
   Task:
   Glob:
   Grep:
