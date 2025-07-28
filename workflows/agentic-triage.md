@@ -14,10 +14,7 @@ permissions:
 
 tools:
   github:
-    allowed:
-      [update_issue]
-  Bash:
-    allowed: [":*"]
+    allowed: [update_issue]
   Task:
   Glob:
   Grep:
@@ -35,12 +32,6 @@ timeout_minutes: 10
 ---
 
 # Agentic Triage
-
-## Components
-
-@include outputs/issue-comment.md
-
-## Job Description
 
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
 

@@ -19,12 +19,7 @@ permissions:
 # Note: we're still working out how explicit we need to be about the tools to be used.
 tools:
   github:
-    allowed:
-      [
-        create_issue,
-      ]
-  Bash:
-    allowed: [":*"]
+    allowed: [create_issue]
   Task:
   Glob:
   Grep:
@@ -36,12 +31,6 @@ tools:
 ---
 
 # Agentic Researcher
-
-## Components
-
-<!-- Includes https://github.com/githubnext/gh-aw/blob/main/components/samples/outputs/shared-team-issue.md -->
-
-@include outputs/shared-team-issue.md
 
 ## Job Description
 
