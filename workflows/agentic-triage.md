@@ -17,7 +17,7 @@ tools:
     allowed:
       [update_issue]
   Bash:
-    allowed: [:*]
+    allowed: [":*"]
   Task:
   Glob:
   Grep:

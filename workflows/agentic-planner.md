@@ -19,7 +19,7 @@ tools:
         create_or_update_file,
       ]
   Bash:
-    allowed: [gh:*, git:*]
+    allowed: ["gh:*", "git:*"]
   Task:
   Glob:
   Grep:
