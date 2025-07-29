@@ -49,29 +49,24 @@ tools:
         get_pull_request_reviews,
         search_pull_requests,
       ]
-  Bash:
-    allowed: [":*"] # Allow all bash commands for building docs
-  Task:
-  Glob:
-  Grep:
-  LS:
-  Read:
-  Edit:
-  MultiEdit:
-  Write:
-  NotebookRead:
-  NotebookEdit:
-  WebFetch:
-  WebSearch:
+  claude:
+    Bash:
+      allowed: [":*"] # Allow all bash commands for building docs
+    Edit:
+    MultiEdit:
+    Write:
+    NotebookEdit:
+    WebFetch:
+    WebSearch:
 ---
 
 # Starlight Scribe
 
 ## Components
 
-<!-- Includes https://github.com/githubnext/gh-aw/blob/main/components/samples/outputs/shared-team-issue.md -->
+<!-- Includes https://github.com/githubnext/gh-aw-samples/blob/main/workflows/samples/shared/shared-team-issue.md -->
 
-@include outputs/shared-team-issue.md
+@include shared/shared-team-issue.md
 
 ## Job Description
 
@@ -174,12 +169,8 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 
 > NOTE: Never make direct pushes to the main branch. Always create a pull request for documentation changes.
 
-> NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to, and file an issue to request access.
-
-> NOTE: Include a link like this at the end of each new issue, issue comment or pull request you create:
-
-```markdown
-> AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
-```
-
 > NOTE: Treat documentation gaps like failing tests: a "red build" until fixed. Offer friendly PR reviews with inline suggestions before merging.
+
+@include shared/bash-refused.md
+
+@include shared/include-link.md

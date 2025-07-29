@@ -20,14 +20,9 @@ permissions:
 tools:
   github:
     allowed: [create_issue]
-  Task:
-  Glob:
-  Grep:
-  LS:
-  Read:
-  NotebookRead:
-  WebFetch:
-  WebSearch:
+  claude:
+    WebFetch:
+    WebSearch:
 ---
 
 # Agentic Researcher

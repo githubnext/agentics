@@ -24,29 +24,24 @@ tools:
         add_issue_comment,
         create_pull_request,
       ]
-  Bash:
-    allowed: [":*"] # Allow all bash commands
-  Task:
-  Glob:
-  Grep:
-  LS:
-  Read:
-  Edit:
-  MultiEdit:
-  Write:
-  NotebookRead:
-  NotebookEdit:
-  WebFetch:
-  WebSearch:
+  claude:
+    Bash:
+      allowed: [":*"] # Allow all bash commands
+    Edit:
+    MultiEdit:
+    Write:
+    NotebookEdit:
+    WebFetch:
+    WebSearch:
 ---
 
 # Agentic QA Engineer
 
 ## Components
 
-<!-- Includes https://github.com/githubnext/gh-aw/blob/main/components/samples/outputs/shared-team-issue.md -->
+<!-- Includes https://github.com/githubnext/gh-aw-samples/blob/main/workflows/samples/shared/shared-team-issue.md -->
 
-@include outputs/shared-team-issue.md
+@include shared/shared-team-issue.md
 
 ## Job Description
 
@@ -73,24 +68,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
    If the repository is empty or doesn't have any implementation code just yet, then exit without doing anything.
 
-2. You have access to the following tools:
-
-   - **GitHub**: To interact with the GitHub API, e.g. to list issues, create issues, add comments, etc.
-   - **Bash**: To run shell commands, e.g. to run tests, build the code, etc.
-   - **Task**: To create and manage tasks.
-   - **Glob**: To match files using glob patterns.
-   - **Grep**: To search for text in files.
-   - **LS**: To list files in a directory.
-   - **Read**: To read files.
-   - **Edit**: To edit files.
-   - **MultiEdit**: To edit multiple files at once.
-   - **Write**: To write files.
-   - **NotebookRead**: To read Jupyter notebooks.
-   - **NotebookEdit**: To edit Jupyter notebooks.
-   - **WebFetch**: To fetch web pages.
-   - **WebSearch**: To search the web.
-
-   You can use these tools to perform your tasks. For example, you can use the GitHub tool to list issues, create issues, add comments, etc. You can use the Bash tool to run shell commands, e.g. to run tests, build the code, etc.
+2. You have access to various tools. You can use these tools to perform your tasks. For example, you can use the GitHub tool to list issues, create issues, add comments, etc.
 
 3. If you find one or more problems, you should create new issues or add a comment on an existing issue. For each distinct problem:
 
@@ -100,10 +78,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
    - If you think the fix to a problem is simple, also create a pull request to fix it.
 
-> NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to, and file an issue to request access.
+@include shared/bash-refused.md
 
-> NOTE: Include a link like this at the end of each new issue, issue comment or pull request you create:
-
-```
-> AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
-```
+@include shared/include-link.md

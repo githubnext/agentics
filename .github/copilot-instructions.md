@@ -5,7 +5,7 @@ This repository defines autonomous GitHub agents using the [gh-aw](https://githu
 ## Repository Structure
 
 - `workflows/` - Agent definitions in markdown format
-- `workflows/outputs/` - Reusable components for agent outputs and reporting
+- `workflows/shared/` - Reusable components for agent outputs and reporting
 
 ## Agent Definition Format
 
@@ -26,7 +26,7 @@ Agents are defined as markdown files with YAML frontmatter specifying:
 ### Components System
 Use `@include` directives to incorporate reusable components:
 ```markdown
-@include outputs/shared-team-issue.md
+@include shared/shared-team-issue.md
 ```
 
 ## Agent Patterns
@@ -72,7 +72,7 @@ Agents coordinate through a daily "Team Status DD/MM/YYYY" issue for progress re
 1. **Create agent file** - Add a new `.md` file in `workflows/` directory
 2. **Define YAML frontmatter** - Configure timeout, permissions, and tools
 3. **Write job description** - Numbered steps with clear exit conditions
-4. **Include components** - Use `@include outputs/shared-team-issue.md` for coordination
+4. **Include components** - Use `@include shared/shared-team-issue.md` for coordination
 5. **Test and compile** - Run `gh aw compile` to validate syntax
 
 ### Agent Development Process
