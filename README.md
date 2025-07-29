@@ -23,6 +23,13 @@ gh aw add agentic-dependency-updater
 git commit -a -m "Add agentic-dependency-updater workflow"
 ```
 
+## Supply Chain Security Specialist
+
+```bash
+gh aw add supply-chain-security-specialist
+git commit -a -m "Add supply-chain-security-specialist workflow"
+```
+
 ## QA Engineer
 
 ```bash
