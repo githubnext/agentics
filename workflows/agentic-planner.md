@@ -18,29 +18,24 @@ tools:
         create_issue_comment,
         create_or_update_file,
       ]
-  Bash:
-    allowed: ["gh:*", "git:*"]
-  Task:
-  Glob:
-  Grep:
-  LS:
-  Read:
-  Edit:
-  MultiEdit:
-  Write:
-  NotebookRead:
-  NotebookEdit:
-  WebFetch:
-  WebSearch:
+  claude:
+    Bash:
+      allowed: ["gh:*", "git:*"]
+    Edit:
+    MultiEdit:
+    Write:
+    NotebookEdit:
+    WebFetch:
+    WebSearch:
 ---
 
 # Agentic Planner
 
 ## Components
 
-<!-- Includes https://github.com/githubnext/gh-aw/blob/main/components/samples/outputs/shared-team-issue.md -->
+<!-- Includes https://github.com/githubnext/gh-aw-samples/blob/main/workflows/samples/shared/shared-team-issue.md -->
 
-@include outputs/shared-team-issue.md
+@include shared/shared-team-issue.md
 
 ## Job Description
 
@@ -79,10 +74,7 @@ Your job is to act as an agentic planner for the GitHub repository ${{ env.GITHU
 
    Sometimes agentic coders leave labels on issues or pull requests they've "claimed". These labels will usually start with "Agentic Coder". Look around the repo to see if there are any stale labels. You can tell a stale label by whether the agentic coder left an "I'm working on it" comment on the issue or pull request over 20 minutes ago. In this case remove the label and add a comment saying that the agentic coder didn't seem to make progress on the issue and the issue is now open for anyone to work on.
 
-> NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to.
+@include shared/bash-refused.md
 
-> NOTE: Include a link like this at the end of each new issue, issue comment or pull request created:
+@include shared/include-link.md
 
-```
-> AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
-```

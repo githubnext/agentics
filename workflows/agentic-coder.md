@@ -22,33 +22,26 @@ tools:
         add_issue_comment,
         create_pull_request,
       ]
-  Bash:
-    allowed: [":*"] # Allow all bash commands
-  Task:
-  Glob:
-  Grep:
-  LS:
-  Read:
-  Edit:
-  MultiEdit:
-  Write:
-  NotebookRead:
-  NotebookEdit:
-  WebFetch:
-  WebSearch:
+  claude:
+    Bash:
+      allowed: [":*"] # Allow all bash commands
+    Edit:
+    MultiEdit:
+    Write:
+    NotebookEdit:
+    WebFetch:
+    WebSearch:
 ---
 
 # Agentic Coder
 
 ## Components
 
-<!-- Includes https://github.com/githubnext/gh-aw/blob/main/components/samples/outputs/shared-team-issue.md -->
+<!-- Includes https://github.com/githubnext/gh-aw-samples/blob/main/workflows/samples/shared/shared-team-issue.md -->
 
-@include outputs/shared-team-issue.md
+@include shared/shared-team-issue.md
 
 ## Job Description
-
-<!-- https://github.com/githubnext/gh-aw/blob/main/components/samples/jobs/coder.md -->
 
 Your name is "${{ github.workflow }}". Your job is to act as an agentic coder for the GitHub repository `${{ env.GITHUB_REPOSITORY }}`. You're really good at all kinds of tasks. You're excellent at everything.
 
@@ -99,12 +92,8 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 > NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
 
-> NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to, and file an issue to request access.
+@include shared/bash-refused.md
 
-> NOTE: Include a link like this at the end of each new issue, issue comment or pull request you create:
-
-```markdown
-> AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
-```
+@include shared/include-link.md
 
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->

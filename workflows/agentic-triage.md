@@ -15,18 +15,13 @@ permissions:
 tools:
   github:
     allowed: [update_issue]
-  Task:
-  Glob:
-  Grep:
-  LS:
-  Read:
-  Edit:
-  MultiEdit:
-  Write:
-  NotebookRead:
-  NotebookEdit:
-  WebFetch:
-  WebSearch:
+  claude:
+    Edit:
+    MultiEdit:
+    Write:
+    NotebookEdit:
+    WebFetch:
+    WebSearch:
 
 timeout_minutes: 10
 ---
@@ -88,10 +83,7 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - If appropriate break the issue down to sub-tasks and write a checklist of things to do.
    - Use collapsed-by-default sections in the GitHub markdown to keep the comment tidy. Collapse all sections except the short main summary at the top.
 
-> NOTE: If you are refused permission to run particular 'bash' commands, or need to request access to other tools or resources, include a request for access in the output report, explaining the exact prefix of bash commands needed or other resources you need access to.
+@include shared/bash-refused.md
 
-> NOTE: Include a link like this at the end of each new issue, issue comment or pull request you create:
+@include shared/include-link.md
 
-```markdown
-> AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
-```
