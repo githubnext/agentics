@@ -60,5 +60,76 @@ gh aw add agentic-coder
 git commit -a -m "Add agentic-coder workflow"
 ```
 
+## Product Management & Design Team
+
+### Product Manager
+
+```bash
+gh aw add product-manager
+git commit -a -m "Add product-manager workflow"
+```
+
+### Business Analyst
+
+```bash
+gh aw add business-analyst
+git commit -a -m "Add business-analyst workflow"
+```
+
+### UX Designer
+
+```bash
+gh aw add ux-designer
+git commit -a -m "Add ux-designer workflow"
+```
+
+### UI Prototyper
+
+```bash
+gh aw add ui-prototyper
+git commit -a -m "Add ui-prototyper workflow"
+```
+
+### Domain Expert
+
+```bash
+gh aw add domain-expert
+git commit -a -m "Add domain-expert workflow"
+```
+
+### System Architect
+
+```bash
+gh aw add system-architect
+git commit -a -m "Add system-architect workflow"
+```
+
+### Data Architect
+
+```bash
+gh aw add data-architect
+git commit -a -m "Add data-architect workflow"
+```
+
+### Requirements Analyst
+
+```bash
+gh aw add requirements-analyst
+git commit -a -m "Add requirements-analyst workflow"
+```
+
+### Competitive Analyst
+
+```bash
+gh aw add competitive-analyst
+git commit -a -m "Add competitive-analyst workflow"
+```
+
+### User Advocate
+
+```bash
+gh aw add user-advocate
+git commit -a -m "Add user-advocate workflow"
+```
 
 
