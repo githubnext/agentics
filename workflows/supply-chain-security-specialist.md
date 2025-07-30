@@ -1,8 +1,9 @@
 ---
 on:
-    workflow_dispatch:
-    schedule:
-        - cron: "0 9 * * 1" # Run weekly on Mondays at 9 AM UTC
+  schedule:
+    # Every week, 9AM UTC, Monday  
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
 
 timeout_minutes: 20
 permissions:
