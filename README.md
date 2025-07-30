@@ -60,5 +60,79 @@ gh aw add agentic-coder
 git commit -a -m "Add agentic-coder workflow"
 ```
 
+## Observability & Monitoring Team
+
+The following agents form a comprehensive observability and monitoring team for production systems:
+
+### Monitoring Agent
+
+```bash
+gh aw add monitoring-agent
+git commit -a -m "Add monitoring-agent workflow"
+```
+
+### Alert Manager Agent
+
+```bash
+gh aw add alert-manager-agent
+git commit -a -m "Add alert-manager-agent workflow"
+```
+
+### Incident Responder Agent
+
+```bash
+gh aw add incident-responder-agent
+git commit -a -m "Add incident-responder-agent workflow"
+```
+
+### Logging Analyst Agent
+
+```bash
+gh aw add logging-analyst-agent
+git commit -a -m "Add logging-analyst-agent workflow"
+```
+
+### Analytics Agent
+
+```bash
+gh aw add analytics-agent
+git commit -a -m "Add analytics-agent workflow"
+```
+
+### Feedback Analyst Agent
+
+```bash
+gh aw add feedback-analyst-agent
+git commit -a -m "Add feedback-analyst-agent workflow"
+```
+
+### SLA/SLO Manager Agent
+
+```bash
+gh aw add sla-slo-manager-agent
+git commit -a -m "Add sla-slo-manager-agent workflow"
+```
+
+### Configuration Monitor Agent
+
+```bash
+gh aw add configuration-monitor-agent
+git commit -a -m "Add configuration-monitor-agent workflow"
+```
+
+### Post-Mortem Analyst Agent
+
+```bash
+gh aw add post-mortem-analyst-agent
+git commit -a -m "Add post-mortem-analyst-agent workflow"
+```
+
+### User Experience Monitor Agent
+
+```bash
+gh aw add user-experience-monitor-agent
+git commit -a -m "Add user-experience-monitor-agent workflow"
+```
+
 
 
