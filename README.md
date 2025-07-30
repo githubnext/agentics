@@ -60,5 +60,77 @@ gh aw add agentic-coder
 git commit -a -m "Add agentic-coder workflow"
 ```
 
+## Data Curation & Knowledge Management Team
+
+### Knowledge Base Curator
+
+```bash
+gh aw add knowledge-base-curator
+git commit -a -m "Add knowledge-base-curator workflow"
+```
+
+### Context Provider
+
+```bash
+gh aw add context-provider
+git commit -a -m "Add context-provider workflow"
+```
+
+### Data Engineer
+
+```bash
+gh aw add data-engineer
+git commit -a -m "Add data-engineer workflow"
+```
+
+### Prompt Optimizer
+
+```bash
+gh aw add prompt-optimizer
+git commit -a -m "Add prompt-optimizer workflow"
+```
+
+### Vector Database Manager
+
+```bash
+gh aw add vector-database-manager
+git commit -a -m "Add vector-database-manager workflow"
+```
+
+### Model Update Agent
+
+```bash
+gh aw add model-update-agent
+git commit -a -m "Add model-update-agent workflow"
+```
+
+### Data Privacy Agent
+
+```bash
+gh aw add data-privacy-agent
+git commit -a -m "Add data-privacy-agent workflow"
+```
+
+### Sample Generator
+
+```bash
+gh aw add sample-generator
+git commit -a -m "Add sample-generator workflow"
+```
+
+### Library Knowledge Agent
+
+```bash
+gh aw add library-knowledge-agent
+git commit -a -m "Add library-knowledge-agent workflow"
+```
+
+### Experimentation Analyst
+
+```bash
+gh aw add experimentation-analyst
+git commit -a -m "Add experimentation-analyst workflow"
+```
+
 
 
