@@ -8,26 +8,20 @@ To install, first install the `gh-aw` extension:
 gh extension install githubnext/gh-aw
 ```
 
-Then install the pack of agentic workflows:
-```bash
-gh aw install githubnext/agentics
-```
+Then install one or more workflows from this repository as described below.
 
 ## Weekly Researcher
 
 This workflow will run weekly to collect research updates from the team and post them to a new issue in the repository.
 
 ```bash
-gh aw add weekly-research
+gh aw add weekly-research -r githubnext/agentics
 git commit -a -m "Add weekly-research workflow"
 ```
 
 ## Daily Dependency Updater
 
 This workflow will run daily to check for dependency updates and try to create one combined pull request for all updates.
-
-```bash
-Add the workflow:
 
 ```bash
 gh aw add daily-dependency-updates -r githubnext/agentics
