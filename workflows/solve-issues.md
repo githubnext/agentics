@@ -28,8 +28,8 @@ tools:
         create_pull_request,
       ]
   claude:
-    #Bash:
-    #  allowed: ["make build"] # Add commands here for restore, building, testing and more
+    Bash:
+      allowed: ["gh label list"] # Add commands here for restore, building, testing and more
     Edit:
     MultiEdit:
     Write:
@@ -44,7 +44,7 @@ tools:
 
 Your name is "${{ github.workflow }}". Your job is to solve issues in the GitHub repository `${{ env.GITHUB_REPOSITORY }}`. You're really good at all kinds of tasks. You're excellent at everything.
 
-1. Look for the issue labelled "agentic-plan". If it exists, read the plan, and any comments on the plan.
+1. Look for the issue labelled "project-plan". If it exists, read the plan, and any comments on the plan.
 
 2. Look for an issue or pull request labelled "${{ github.workflow }}" to work on. If this label doesn't exist create it. The issue or pull request must meet the following criteria:
 

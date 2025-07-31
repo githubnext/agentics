@@ -22,7 +22,7 @@ gh aw add weekly-research-report
 git commit -a -m "Add weekly-research-report workflow"
 ```
 
-## Dependency Updater
+## Daily Dependency Updater
 
 This workflow will run daily to check for dependency updates and try to create one combined pull request for all updates.
 
@@ -51,6 +51,8 @@ Now commit the changes:
 git commit -a -m "Add dependency-updater workflow"
 ```
 
+> NOTE: When run, this workflow will edit files in the checked-out repository (e.g. in a GitHub Actions workflow run), and create a pull request with the changes. It may also search the web for information.
+
 ## Daily QA 
 
 This workflow will run daily to perform adhoc QA tasks, e.g. check that the code builds and runs, and that the tests pass.
@@ -60,6 +62,8 @@ gh aw add daily-qa -r githubnext/agentics
 ```
 
 Now follow the same steps as for the dependency updater to edit the workflow to add the Bash commands needed to build and test the project.
+
+> NOTE: When run, this workflow will edit files in the checked-out repository (e.g. in a GitHub Actions workflow run), and create a pull request with the changes. It may also search the web for information.
 
 ## Issue Triage
 
@@ -71,14 +75,18 @@ gh aw add issue-triage -r githubnext/agentics
 
 Now follow the same steps as for the dependency updater to edit the workflow to add the Bash commands needed to build and test the project.
 
+> NOTE: When run, this workflow will edit files in the checked-out repository (e.g. in a GitHub Actions workflow run), and create a pull request with the changes. It may also search the web for information.
+
 ## Daily Plan
 
 This workflow will run daily to update a planning issue for the team.
 
 ```bash
-gh aw add daily-plan -r githubnext/agentics
-git commit -a -m "Add daily-plan workflow"
+gh aw add project-plan -r githubnext/agentics
+git commit -a -m "Add project-plan workflow"
 ```
+
+> NOTE: When run, this workflow will create issues and add comments to existing issues. It may also search the web for information.
 
 ## Daily Team Status
 
@@ -89,18 +97,36 @@ gh aw add daily-team-status -r githubnext/agentics
 git commit -a -m "Add daily-team-status workflow"
 ```
 
-## Issue Solver
+> NOTE: When run, this workflow will create an issue with the status report.
+
+## Solve Issues
 
 This workflow will run every 3 hours to solve issues in the repository.
 
 ```bash
-gh aw add regular-solve-issue -r githubnext/agentics
-git commit -a -m "Add issue-solver workflow"
+gh aw add solve-issues -r githubnext/agentics
 ```
 
-## Security Alerts
+Now edit the workflow to add the typical Bash commands needed to build and test the project.
 
-This workflow will run daily to check for security alerts and try to create pull request for them.
+```bash
+code .github/workflows/solve-issues.md
+```
+
+Now update:
+
+```bash
+gh aw compile
+```
+Now commit the changes:
+
+```bash
+git commit -a -m "Add solve-issues workflow"
+```
+
+## Solving Security Alerts
+
+This workflow will run daily to check for security alerts and try to create pull requests for them.
 
 ```bash
 Add the workflow:
@@ -127,3 +153,11 @@ Now commit the changes:
 git commit -a -m "Add security-issues workflow"
 ```
 
+## Documentation Update
+
+This workflow will run on each push to main to try to update documentation in the repository.
+
+```bash
+gh aw add update-docs -r githubnext/agentics
+git commit -a -m "Add update-docs workflow"
+```
