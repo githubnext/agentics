@@ -24,7 +24,7 @@ git push
 
 ## Daily Team Status
 
-The [daily team status workflow](workflows/daily-team-status.md?plain=1) will run daily to collect status updates from the team and post them to a designated channel.
+The [daily team status workflow](workflows/daily-team-status.md?plain=1) will run daily to assess activity in the repository and create a status report issue.
 
 ```bash
 gh aw add daily-team-status -r githubnext/agentics
@@ -36,7 +36,7 @@ git push
 
 ## Daily Plan
 
-The [daily plan workflow](workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team.
+The [daily plan workflow](workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team. This planning issue can be used by other workflows as a reference for what the team is working on and what the current priorities are.
 
 ```bash
 gh aw add project-plan -r githubnext/agentics
