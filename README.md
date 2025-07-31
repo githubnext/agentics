@@ -16,8 +16,21 @@ This workflow will run weekly to collect research updates from the team and post
 
 ```bash
 gh aw add weekly-research -r githubnext/agentics
-git commit -a -m "Add weekly-research workflow"
+git commit -m "Add weekly-research workflow"
+git push
 ```
+
+## Daily Team Status
+
+This workflow will run daily to collect team status updates and post them to a designated channel.
+
+```bash
+gh aw add daily-team-status -r githubnext/agentics
+git commit -m "Add daily-team-status workflow"
+git push
+```
+
+> NOTE: When run, this workflow will create an issue with the status report.
 
 ## Daily Dependency Updater
 
@@ -42,7 +55,8 @@ gh aw compile
 Now commit the changes:
 
 ```bash
-git commit -a -m "Add dependency-updater workflow"
+git commit -m "Add dependency-updater workflow"
+git push
 ```
 
 > NOTE: When run, this workflow will edit files in the checked-out repository (e.g. in a GitHub Actions workflow run), and create a pull request with the changes. It may also search the web for information.
@@ -77,21 +91,11 @@ This workflow will run daily to update a planning issue for the team.
 
 ```bash
 gh aw add project-plan -r githubnext/agentics
-git commit -a -m "Add project-plan workflow"
+git commit -m "Add project-plan workflow"
+git push
 ```
 
 > NOTE: When run, this workflow will create issues and add comments to existing issues. It may also search the web for information.
-
-## Daily Team Status
-
-This workflow will run daily to collect team status updates and post them to a designated channel.
-
-```bash
-gh aw add daily-team-status -r githubnext/agentics
-git commit -a -m "Add daily-team-status workflow"
-```
-
-> NOTE: When run, this workflow will create an issue with the status report.
 
 ## Solve Issues
 
@@ -115,7 +119,7 @@ gh aw compile
 Now commit the changes:
 
 ```bash
-git commit -a -m "Add solve-issues workflow"
+git commit -m "Add solve-issues workflow"
 ```
 
 ## Solving Security Alerts
@@ -144,7 +148,7 @@ gh aw compile
 Now commit the changes:
 
 ```bash
-git commit -a -m "Add security-issues workflow"
+git commit -m "Add security-issues workflow"
 ```
 
 ## Documentation Update
@@ -153,5 +157,5 @@ This workflow will run on each push to main to try to update documentation in th
 
 ```bash
 gh aw add update-docs -r githubnext/agentics
-git commit -a -m "Add update-docs workflow"
+git commit -m "Add update-docs workflow"
 ```
