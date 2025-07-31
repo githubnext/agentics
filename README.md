@@ -74,7 +74,7 @@ git commit -m "Add dependency-updater workflow"
 git push # or create a pull request
 ```
 
-See notes above on coding tasks.  **You will need to configure additional Bash commands to build and test your project.** 
+See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
 
 ### Daily QA 
 
@@ -86,7 +86,7 @@ git commit -m "Add daily-qa workflow"
 git push # or create a pull request
 ```
 
-See notes above on coding tasks.  **You will need to configure additional Bash commands to build and test your project.** 
+See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
 
 ### Solve Issues
 
@@ -98,7 +98,7 @@ git commit -m "Add solve-issues workflow"
 git push # or create a pull request
 ```
 
-See notes above on coding tasks.  **You will need to configure additional Bash commands to build and test your project.** 
+See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
 
 ### Solving Security Alerts
 
@@ -111,7 +111,7 @@ git commit -m "Add security-issues workflow"
 git push # or create a pull request
 ```
 
-See notes above on coding tasks.  **You will need to configure additional Bash commands to build and test your project.** 
+See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
 
 ## Documentation Update
 
@@ -122,4 +122,4 @@ gh aw add update-docs -r githubnext/agentics
 git commit -m "Add update-docs workflow"
 ```
 
-See notes above on coding tasks.  **You will need to configure additional Bash commands to build and test your project.** 
+See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
