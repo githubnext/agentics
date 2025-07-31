@@ -26,37 +26,37 @@ tools:
 
 # Daily Team Status
 
-write an upbeat, friendly, motiviating, emjoi-filled summary of recent activity in the repo.
+Write an upbeat, friendly, motiviating, emjoi-filled summary of recent activity in the repo.
 
-Include some or all of the following:
-* Recent issues activity
-* Recent pull requests
-* Recent discussions
-* Recent releases
-* Recent comments
-* Recent code reviews
-* Recent code changes
-* Recent failed CI runs
+- Include some or all of the following:
+  * Recent issues activity
+  * Recent pull requests
+  * Recent discussions
+  * Recent releases
+  * Recent comments
+  * Recent code reviews
+  * Recent code changes
+  * Recent failed CI runs
 
-If little has happened, don't write too much.
+- If little has happened, don't write too much.
 
-Give some depth thought into ways the team can improve their productivity, and suggest some ways to do that.
+- Give some depth thought into ways the team can improve their productivity, and suggest some ways to do that.
 
-Write a summary of current team structure as inferred from recent activity. Include a description of open source community engagement, if any.
+- Include a description of open source community engagement, if any.
 
-Highlight suggestions for possible investment, ideas for features and project plan, ways to improve community engagement, and so on.
+- Highlight suggestions for possible investment, ideas for features and project plan, ways to improve community engagement, and so on.
 
-Be helpful, thoughtful, respectful, positive, kind, and encouraging.
+- Be helpful, thoughtful, respectful, positive, kind, and encouraging.
+
+- Include a short haiku at the end of the report to help orient the team to the season of their work.
+
+- In a note at the end of the report, include a log of
+  * all search queries (web, issues, pulls, content) you used to generate the data for the report
+  * all commands you used to generate the data for the report
+  * all files you read to generate the data for the report
+  * places you didn't have time to read or search, but would have liked to
 
 Create a new GitHub issue containing a markdown report with your findings. Use links where appropriate.
-
-Include a short haiku at the end of the report to help orient the team to the season of their work.
-
-In a note at the end of the report, include a log of
-* all search queries (web, issues, pulls, content) you used to generate the data for the report
-* all commands you used to generate the data for the report
-* all files you read to generate the data for the report
-* places you didn't have time to read or search, but would have liked to
 
 Only a new issue should be created, no existing issues should be adjusted.
 
