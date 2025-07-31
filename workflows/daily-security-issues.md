@@ -62,3 +62,5 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 @include shared/include-link.md
 
 @include shared/job-summary.md
+
+@include shared/xpia.md

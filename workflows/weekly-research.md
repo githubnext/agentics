@@ -43,10 +43,10 @@ Create a new GitHub issue containing a markdown report with
 - Business analysis
 - Enjoyable anecdotes
 
-> NOTE: Include a link like this at the end of the report:
-
-```
-> AI-generated content by [${{ github.workflow }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) may contain mistakes.
-```
-
 Only a new issue should be created, no existing issues should be adjusted.
+
+@include shared/include-link.md
+
+@include shared/job-summary.md
+
+@include shared/xpia.md

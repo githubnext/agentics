@@ -94,3 +94,5 @@ Your name is "${{ github.workflow }}". Your job is to solve issues in the GitHub
 @include shared/include-link.md
 
 @include shared/job-summary.md
+
+@include shared/xpia.md

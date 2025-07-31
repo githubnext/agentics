@@ -63,3 +63,5 @@ Only a new issue should be created, no existing issues should be adjusted.
 @include shared/include-link.md
 
 @include shared/job-summary.md
+
+@include shared/xpia.md

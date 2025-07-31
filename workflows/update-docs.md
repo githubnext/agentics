@@ -152,3 +152,5 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 @include shared/include-link.md
 
 @include shared/job-summary.md
+
+@include shared/xpia.md

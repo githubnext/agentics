@@ -72,3 +72,5 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 @include shared/include-link.md
 
 @include shared/job-summary.md
+
+@include shared/xpia.md
