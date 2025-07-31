@@ -12,7 +12,7 @@ Then install one or more workflows from this repository as described below.
 
 ## Weekly Researcher
 
-The [weekly researcher workflow](workflows/weekly-research.md) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
+The [weekly researcher workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
 
 ```bash
 gh aw add weekly-research -r githubnext/agentics
@@ -24,7 +24,7 @@ git push
 
 ## Daily Team Status
 
-The [daily team status workflow](workflows/daily-team-status.md) will run daily to collect status updates from the team and post them to a designated channel.
+The [daily team status workflow](workflows/daily-team-status.md?plain=1) will run daily to collect status updates from the team and post them to a designated channel.
 
 ```bash
 gh aw add daily-team-status -r githubnext/agentics
@@ -36,7 +36,7 @@ git push
 
 ## Daily Plan
 
-The [daily plan workflow](workflows/daily-plan.md) will run daily to update a planning issue for the team.
+The [daily plan workflow](workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team.
 
 ```bash
 gh aw add project-plan -r githubnext/agentics
@@ -48,7 +48,7 @@ git push # or create a pull request
 
 ## Issue Triage
 
-The [issue triage workflow](workflows/issue-triage.md) will run daily to triage issues and pull requests in the repository.
+The [issue triage workflow](workflows/issue-triage.md?plain=1) will run daily to triage issues and pull requests in the repository.
 
 ```bash
 gh aw add issue-triage -r githubnext/agentics
@@ -66,7 +66,7 @@ The samples in this repo include workflows that can help with coding tasks, such
 
 ### Daily Dependency Updater
 
-The [daily dependency updater workflow](workflows/daily-dependency-updates.md) will run daily to check for Dependabot alerts in the repository and update dependencies to the latest versions, creating pull requests as necessary.
+The [daily dependency updater workflow](workflows/daily-dependency-updates.md?plain=1) will run daily to check for Dependabot alerts in the repository and update dependencies to the latest versions, creating pull requests as necessary.
 
 ```bash
 gh aw add daily-dependency-updates -r githubnext/agentics
@@ -78,7 +78,7 @@ git push # or create a pull request
 
 ### Daily QA 
 
-The [daily QA workflow](workflows/daily-qa.md) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md to check that the code builds and runs, and that the tests pass.
+The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md to check that the code builds and runs, and that the tests pass.
 
 ```bash
 gh aw add daily-qa -r githubnext/agentics
@@ -90,7 +90,7 @@ git push # or create a pull request
 
 ### Solve Issues
 
-The [solve issues workflow](workflows/solve-issues.md) will run every 3 hours to solve issues in the repository. It will look for issues labelled with the workflow name and attempt to solve them by creating pull requests with the changes.
+The [solve issues workflow](workflows/solve-issues.md?plain=1) will run every 3 hours to solve issues in the repository. It will look for issues labelled with the workflow name and attempt to solve them by creating pull requests with the changes.
 
 ```bash
 gh aw add solve-issues -r githubnext/agentics
@@ -102,7 +102,7 @@ git push # or create a pull request
 
 ### Solving Security Alerts
 
-The [daily security issues workflow](workflows/daily-security-issues.md) will run daily to check for existing security alerts from code scanning in the repository and attempt to create pull requests for them.
+The [daily security issues workflow](workflows/daily-security-issues.md?plain=1) will run daily to check for existing security alerts from code scanning in the repository and attempt to create pull requests for them.
 
 ```bash
 Add the workflow:
@@ -115,7 +115,7 @@ git push # or create a pull request
 
 ## Documentation Update
 
-The [update documentation workflow](workflows/update-docs.md) will run on each push to main to try to update documentation in the repository.
+The [update documentation workflow](workflows/update-docs.md?plain=1) will run on each push to main to try to update documentation in the repository.
 
 ```bash
 gh aw add update-docs -r githubnext/agentics
