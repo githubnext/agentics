@@ -1,4 +1,9 @@
 ---
+# Run once a day at midnight UTC
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -28,12 +33,6 @@ tools:
 ---
 
 # Agentic Planner
-
-## Components
-
-<!-- Includes https://github.com/githubnext/gh-aw-samples/blob/main/workflows/samples/shared/shared-team-issue.md -->
-
-@include shared/shared-team-issue.md
 
 ## Job Description
 
@@ -71,4 +70,6 @@ Your job is to act as an agentic planner for the GitHub repository ${{ env.GITHU
 @include shared/bash-refused.md
 
 @include shared/include-link.md
+
+@include shared/job-summary.md
 

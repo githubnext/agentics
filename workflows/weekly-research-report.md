@@ -16,7 +16,6 @@ permissions:
   checks: read
   statuses: read
 
-# Note: we're still working out how explicit we need to be about the tools to be used.
 tools:
   github:
     allowed: [create_issue]

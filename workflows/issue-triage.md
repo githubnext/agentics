@@ -87,3 +87,4 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
 
 @include shared/include-link.md
 
+@include shared/job-summary.md

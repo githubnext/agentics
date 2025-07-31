@@ -32,8 +32,8 @@ tools:
         create_pull_request,
       ]
   claude:
-    Bash:
-      allowed: [":*"] # Allow all bash commands for building docs
+    #Bash:
+    #  allowed: ["make docs"] # Add commands here for building docs
     Edit:
     MultiEdit:
     Write:
@@ -43,12 +43,6 @@ tools:
 ---
 
 # Starlight Scribe
-
-## Components
-
-<!-- Includes https://github.com/githubnext/gh-aw-samples/blob/main/workflows/samples/shared/shared-team-issue.md -->
-
-@include shared/shared-team-issue.md
 
 ## Job Description
 
@@ -156,3 +150,5 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 @include shared/bash-refused.md
 
 @include shared/include-link.md
+
+@include shared/job-summary.md

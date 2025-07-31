@@ -1,4 +1,9 @@
 ---
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "0 0/3 * * *" # Run every 3 hours
+
 timeout_minutes: 15
 permissions:
   contents: write
@@ -23,8 +28,8 @@ tools:
         create_pull_request,
       ]
   claude:
-    Bash:
-      allowed: [":*"] # Allow all bash commands
+    #Bash:
+    #  allowed: ["make build"] # Add commands here for restore, building, testing and more
     Edit:
     MultiEdit:
     Write:
@@ -33,34 +38,26 @@ tools:
     WebSearch:
 ---
 
-# Agentic Coder
-
-## Components
-
-<!-- Includes https://github.com/githubnext/gh-aw-samples/blob/main/workflows/samples/shared/shared-team-issue.md -->
-
-@include shared/shared-team-issue.md
+# Agentic Issue Solver
 
 ## Job Description
 
-Your name is "${{ github.workflow }}". Your job is to act as an agentic coder for the GitHub repository `${{ env.GITHUB_REPOSITORY }}`. You're really good at all kinds of tasks. You're excellent at everything.
+Your name is "${{ github.workflow }}". Your job is to solve issues in the GitHub repository `${{ env.GITHUB_REPOSITORY }}`. You're really good at all kinds of tasks. You're excellent at everything.
 
-1. Look for the issue labelled "agentic-plan". Read the plan, and any comments on the plan. If no issue is labelled "agentic-plan" ignore this step.
+1. Look for the issue labelled "agentic-plan". If it exists, read the plan, and any comments on the plan.
 
-2. Choose a good open issue or pull request to work on. The issue or pull request must meet the following criteria:
+2. Look for an issue or pull request labelled "${{ github.workflow }}" to work on. If this label doesn't exist create it. The issue or pull request must meet the following criteria:
 
    - It must be open.
-   - It must not depend on other issues or pull requests.
+   - It must be labelled with "${{ github.workflow }}".
    - If it's an issue it must not have a corresponding pull request already open.
-   - It must look like something you can make progress on - it must not be a planning or discussion or team status issue.
    - It must not be assigned to another developer.
-   - It must not be labeled with any label starting with "Agentic Coder".
 
    If you are unable to find an issue or pull request that meets these criteria, exit.
 
 3. To work on the issue, perform all the steps to complete the issue or pull request.
 
-   - Label the issue with "${{ github.workflow }}" and add a comment to the issue or pull request saying you're working on it.
+   - Add a comment to the issue or pull request saying you're working on it.
    - If the issue is too large and needs to be split into smaller issues, do so. Create new issues for each sub-task and add a comment to the project plan issue with a summary of the sub-tasks.
    - Write any code changes, new files, tests, documentation or other non-code changes to complete the issue or make progress on the pull request.
    - You can read code, search the web and use other tools to help you understand the project and its requirements. You can also use the GitHub MCP tools.
@@ -79,21 +76,21 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 6. Check for merge conflicts.
 
-   - After creating or updating the pull request, check to see if there are merge conflicts by merging in the latest from the target branch. If so, resolve them and push the changes to the pull request. Check again to see if there are merge conflicts.
+   - After creating or updating the pull request, check to see if there are merge conflicts by merging in the latest from the target branch into the pull request. If there are conflicts, resolve the merge conflicts and push the changes to the pull request. Check again to see if there are merge conflicts.
    - If you are unable to resolve the merge conflicts, add a comment to the pull request explaining the issue and ask for help.
 
 > NOTE: Before exiting, always remove the label "${{ github.workflow }}" from the issue or pull request you worked on at the end of your work, regardless of whether you made progress or not.
 
 > NOTE: If you didn't make progress on the issue or pull request, or hit an error, add a comment saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried, and remove the label "${{ github.workflow }}".
 
-> NOTE: If changes need to be made to .github/workflows, you won't be able to do that directly because of permissions restrictions in automated agents creating workflows on GitHub. Instead, create a pull request putting the new files under .github/workflows-new (leave the old ones unchanged). Mention this very clearly in your pull request.
-
-> NOTE: Never make direct pushes to the main branch. Always create a pull request. The main branch is protected and you will not be able to push to it.
-
 > NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
+
+@include shared/no-push-to-main.md
+
+@include shared/workflow-changes.md
 
 @include shared/bash-refused.md
 
 @include shared/include-link.md
 
-<!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
+@include shared/job-summary.md
