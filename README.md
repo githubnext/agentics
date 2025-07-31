@@ -62,7 +62,7 @@ git push # or create a pull request
 
 The samples in this repo include workflows that can help with coding tasks, such as solving issues, updating documentation, and performing QA tasks.
 
-⚠️⚠️ Coding tasks should be installed with caution. While the tasks are executed within GitHub Actions, and are relatively sandboxed, they still operate in an environment where outward network requests are allowed. Also, you will require you to configure additional `Bash` commands to build and test your project. You will need to edit the workflow file to add those commands and then run `gh aw compile` to update the workflow. The worfklows below will attempt to "self-report" the commands they need to run, so you can look at the initial reports to see what commands are needed.
+⚠️⚠️ Coding tasks should be installed with caution. While the tasks are executed within GitHub Actions, and are relatively sandboxed, operating over their own copy of the repository, they still operate in an environment where outward network requests are allowed. Also, you will require you to configure additional `Bash` commands to build and test your project by editing the markdown workflow file to add those commands and then running `gh aw compile` to update the workflow. The worfklows below will attempt to "self-report" the commands they need to run, so you can look at the initial reports to see what commands are needed.
 
 ### Daily Dependency Updater
 
