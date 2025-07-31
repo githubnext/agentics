@@ -1,12 +1,6 @@
 ---
 tools:
-  github:
-    allowed: [
-      "create_or_update_file"
-    ]
   claude:
-    Bash:
-      allowed: [":*"] # Allow all bash commands
     Write:
 ---
 

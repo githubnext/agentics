@@ -30,8 +30,8 @@ tools:
         update_pull_request,
       ]
   claude:
-    Bash:
-        allowed: [":*"] # Allow all bash commands for now, will be reviewed later
+    #Bash:
+    #  allowed: ["make build"] # Add commands here for restore, building, testing and more
     Edit:
     MultiEdit:
     Write:
@@ -50,21 +50,17 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
    - Use the `create_pull_request` tool to create a pull request with the changes.
    - Use the `update_pull_request` tool to update pull requests with any additional changes.
 
-2. Deal with any security alerts in the repository. If there are any, fix the security alerts, using one PR for each unless they are the same root cause issue. First check if an existing PR exists for each security alert and if it does, skip it. In each case test the changes to ensure they work correctly.
-
-    - Use the `list_code_scanning_alerts` tool to retrieve the list of code scanning alerts.
-    - Use the `get_code_scanning_alert` tool to retrieve details of each alert.
-    - Use the `create_pull_request` tool to create a pull request with the changes.
-
-> NOTE: If you didn't make progress on a particular dependency update or security issue, add a comment saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
-
-> NOTE: If changes need to be made to .github/workflows, you won't be able to do that directly because of permissions restrictions in automated agents creating workflows on GitHub. Instead, create a pull request putting the new files under .github/workflows-new (leave the old ones unchanged). Mention this very clearly in your pull request.
-
-> NOTE: Never make direct pushes to the main branch. Always create a pull request. The main branch is protected and you will not be able to push to it.
+> NOTE: If you didn't make progress on a particular dependency update, add a comment saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
 
 > NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
+
+@include shared/no-push-to-main.md
+
+@include shared/workflow-changes.md
 
 @include shared/bash-refused.md
 
 @include shared/include-link.md
+
+@include shared/job-summary.md
 
