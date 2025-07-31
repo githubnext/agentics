@@ -1,4 +1,4 @@
-# GitHub Agentic Workflows (Samples)
+# GitHub Next Agentic Workflows (Samples)
 
 More information about the format at https://github.com/githubnext/gh-aw
 
@@ -120,6 +120,7 @@ The [update documentation workflow](workflows/update-docs.md?plain=1) will run o
 ```bash
 gh aw add update-docs -r githubnext/agentics
 git commit -m "Add update-docs workflow"
+git push # or create a pull request
 ```
 
 See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
