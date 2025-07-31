@@ -24,7 +24,7 @@ tools:
     WebSearch:
 ---
 
-# Agentic Researcher
+# Weekly Research
 
 ## Job Description
 

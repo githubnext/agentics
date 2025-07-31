@@ -20,6 +20,12 @@ git commit -m "Add weekly-research workflow"
 git push
 ```
 
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run weekly-research
+```
+
 > NOTE: When run, this workflow will create an issue with the research report.
 
 ## Daily Team Status
@@ -30,6 +36,12 @@ The [daily team status workflow](workflows/daily-team-status.md?plain=1) will ru
 gh aw add daily-team-status -r githubnext/agentics
 git commit -m "Add daily-team-status workflow"
 git push
+```
+
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-team-status
 ```
 
 > NOTE: When run, this workflow will create an issue with the status report.
@@ -44,6 +56,12 @@ git commit -m "Add project-plan workflow"
 git push # or create a pull request
 ```
 
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run project-plan
+```
+
 > NOTE: When run, this workflow will create an issue with the project plan. It will also search the web for information to help with the planning.
 
 ## Issue Triage
@@ -55,6 +73,8 @@ gh aw add issue-triage -r githubnext/agentics
 git commit -m "Add issue-triage workflow"
 git push # or create a pull request
 ```
+
+You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
 > NOTE: When run, this workflow will add an issue comment to your issue. It may also search the web for information.
 
@@ -74,6 +94,12 @@ git commit -m "Add dependency-updater workflow"
 git push # or create a pull request
 ```
 
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-dependency-updates
+```
+
 See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
 
 ### Daily QA 
@@ -86,6 +112,12 @@ git commit -m "Add daily-qa workflow"
 git push # or create a pull request
 ```
 
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-qa
+```
+
 See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
 
 ### Solve Issues
@@ -96,6 +128,12 @@ The [solve issues workflow](workflows/solve-issues.md?plain=1) will run every 3 
 gh aw add solve-issues -r githubnext/agentics
 git commit -m "Add solve-issues workflow"
 git push # or create a pull request
+```
+
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run solve-issues
 ```
 
 See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
@@ -111,6 +149,12 @@ git commit -m "Add security-issues workflow"
 git push # or create a pull request
 ```
 
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-security-issues
+```
+
 See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
 
 ## Documentation Update
@@ -121,6 +165,12 @@ The [update documentation workflow](workflows/update-docs.md?plain=1) will run o
 gh aw add update-docs -r githubnext/agentics
 git commit -m "Add update-docs workflow"
 git push # or create a pull request
+```
+
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run update-docs
 ```
 
 See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
