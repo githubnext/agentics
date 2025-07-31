@@ -41,6 +41,11 @@ tools:
 
 Your job is to act as an agentic planner for the GitHub repository ${{ env.GITHUB_REPOSITORY }}.
 
+<<<<<<< Updated upstream
+=======
+0. First decide if planning needs happen. Run ".github/workflows/shared/recent-events.sh" to get the recent events that have happened since you last ran planning. Assess the events. If they are significant enough to warrant re-planning then proceed or if one day has passed since last planning. If not, exit.
+
+>>>>>>> Stashed changes
 1. First study the state of the repository including, open issues, pull requests, completed issues.
 
    - As part of this, look for the issue labelled "swarm-plan", which is the existing project plan. Read the plan, and any comments on the plan. If no issue is labelled "swarm-plan" ignore this step.
