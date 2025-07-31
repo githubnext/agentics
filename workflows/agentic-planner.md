@@ -39,7 +39,7 @@ tools:
 
 Your job is to act as an agentic planner for the GitHub repository ${{ env.GITHUB_REPOSITORY }}.
 
-0. First decide if planning needs happen. Run ".github/workflows/shared/recent-events.sh planning-completed". Assess the events. If they are significant enough to warrant re-planning then proceed. If not, exit.
+0. First decide if planning needs happen. Run ".github/workflows/shared/recent-events.sh" to get the recent events that have happened since you last ran planning. Assess the events. If they are significant enough to warrant re-planning then proceed or if one day has passed since last planning. If not, exit.
 
 1. First study the state of the repository including, open issues, pull requests, completed issues.
 
