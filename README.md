@@ -18,8 +18,8 @@ gh aw install githubnext/agentics
 This workflow will run weekly to collect research updates from the team and post them to a new issue in the repository.
 
 ```bash
-gh aw add weekly-research-report
-git commit -a -m "Add weekly-research-report workflow"
+gh aw add weekly-research
+git commit -a -m "Add weekly-research workflow"
 ```
 
 ## Daily Dependency Updater
