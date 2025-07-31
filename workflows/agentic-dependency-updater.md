@@ -28,10 +28,6 @@ tools:
         add_issue_comment,
         create_pull_request,
         update_pull_request,
-        get_code_scanning_alert,
-        list_code_scanning_alerts,
-        get_dependabot_alert,
-        list_dependabot_alerts,
       ]
   claude:
     Bash:

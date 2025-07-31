@@ -39,7 +39,7 @@ Use `@include` directives to incorporate reusable components:
 
 ### 2. Agentic Planner (`agentic-planner.md`)
 - **Purpose**: Creates and maintains project plans
-- **Workflow**: Analyze repo state → create dependency graph → update "swarm-plan" issue
+- **Workflow**: Analyze repo state → create dependency graph → update "agentic-plan" issue
 - **Output**: JSON plan graph with issue dependencies in collapsed section
 - **Tools**: Limited to planning-focused GitHub operations
 
