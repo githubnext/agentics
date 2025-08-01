@@ -22,7 +22,7 @@ tools:
       ]
   claude:
     Bash:
-      allowed: ["gh label list"] # Add commands here for restore, building, testing and more
+      allowed: ["gh label list"]
     WebFetch:
     WebSearch:
 ---
@@ -51,7 +51,7 @@ Your job is to act as a planner for the GitHub repository ${{ env.GITHUB_REPOSIT
 
    - Do not create any other issues, just the project plan issue. Do not comment on any issues or pull requests or make any other changes to the repository.
 
-@include shared/bash-refused.md
+@include shared/tool-refused.md
 
 @include shared/include-link.md
 

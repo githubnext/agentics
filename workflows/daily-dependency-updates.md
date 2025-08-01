@@ -15,6 +15,8 @@ permissions:
   checks: read
   statuses: read
   security-events: read
+  # give access to dependabot alerts
+  dependabot-alerts: read
 tools:
   github:
     allowed:
@@ -30,8 +32,6 @@ tools:
         update_pull_request,
       ]
   claude:
-    #Bash:
-    #  allowed: ["make build"] # Add commands here for restore, building, testing and more
     Edit:
     MultiEdit:
     Write:
@@ -58,10 +58,16 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 @include shared/workflow-changes.md
 
-@include shared/bash-refused.md
+@include shared/tool-refused.md
 
 @include shared/include-link.md
 
 @include shared/job-summary.md
 
 @include shared/xpia.md
+
+@include shared/gh-read-tools.md
+
+<!-- You can whitelist tools in the shared/build-tools.md file, and include it here. -->
+<!-- This should be done with care, as tools may  -->
+<!-- include shared/build-tools.md -->

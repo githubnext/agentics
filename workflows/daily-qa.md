@@ -6,6 +6,8 @@ on:
 
 timeout_minutes: 15
 
+max-runs: 1
+
 permissions:
   contents: write
   models: read
@@ -25,8 +27,6 @@ tools:
         add_issue_comment,
       ]
   claude:
-    #Bash:
-    #  allowed: ["make build"] # Add commands here for restore, building, testing and more
     Edit:
     MultiEdit:
     Write:
@@ -35,7 +35,7 @@ tools:
     WebSearch:
 ---
 
-# Agentic QA Engineer
+# Daily QA
 
 ## Job Description
 
@@ -67,10 +67,16 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 4. At the end of your work, create an issue summarizing the problems you found and the actions you took. Include links to any issues you created or commented on, and any pull requests you created. Highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bashcommands but were refused permission, then include a list of those at the end of the issue.
 
-@include shared/bash-refused.md
+@include shared/tool-refused.md
 
 @include shared/include-link.md
 
 @include shared/job-summary.md
 
 @include shared/xpia.md
+
+@include shared/gh-read-tools.md
+
+<!-- You can whitelist tools in the shared/build-tools.md file, and include it here. -->
+<!-- This should be done with care, as tools may  -->
+<!-- include shared/build-tools.md -->

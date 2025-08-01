@@ -15,15 +15,19 @@ Then install one or more workflows from this repository as described below.
 The [weekly researcher workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
 
 ```bash
-gh aw add weekly-research -r githubnext/agentics
-git commit -m "Add weekly-research workflow"
-git push
+gh aw add weekly-research -r githubnext/agentics --pr
 ```
 
 You can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run weekly-research
+```
+
+You can run this workflow locally by running:
+
+```bash
+gh aw run-local weekly-research
 ```
 
 > NOTE: When run, this workflow will create an issue with the research report.
@@ -33,15 +37,19 @@ gh aw run weekly-research
 The [daily team status workflow](workflows/daily-team-status.md?plain=1) will run daily to assess activity in the repository and create a status report issue.
 
 ```bash
-gh aw add daily-team-status -r githubnext/agentics
-git commit -m "Add daily-team-status workflow"
-git push
+gh aw add daily-team-status -r githubnext/agentics --pr
 ```
 
 You can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-team-status
+```
+
+You can run this workflow locally by running:
+
+```bash
+gh aw run-local daily-team-status
 ```
 
 > NOTE: When run, this workflow will create an issue with the status report.
@@ -51,15 +59,19 @@ gh aw run daily-team-status
 The [daily plan workflow](workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team. This planning issue can be used by other workflows as a reference for what the team is working on and what the current priorities are.
 
 ```bash
-gh aw add project-plan -r githubnext/agentics
-git commit -m "Add project-plan workflow"
-git push # or create a pull request
+gh aw add project-plan -r githubnext/agentics --pr
 ```
 
 You can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run project-plan
+```
+
+You can run this workflow locally by running:
+
+```bash
+gh aw run-local project-plan
 ```
 
 > NOTE: When run, this workflow will create an issue with the project plan. It will also search the web for information to help with the planning.
@@ -69,9 +81,7 @@ gh aw run project-plan
 The [issue triage workflow](workflows/issue-triage.md?plain=1) will run daily to triage issues and pull requests in the repository.
 
 ```bash
-gh aw add issue-triage -r githubnext/agentics
-git commit -m "Add issue-triage workflow"
-git push # or create a pull request
+gh aw add issue-triage -r githubnext/agentics --pr
 ```
 
 You can't start a run of this workflow directly as it is triggered in the context of an issue.
@@ -82,16 +92,14 @@ You can't start a run of this workflow directly as it is triggered in the contex
 
 The samples in this repo include workflows that can help with coding tasks, such as solving issues, updating documentation, and performing QA tasks.
 
-⚠️⚠️ Coding tasks should be installed with caution. While the tasks are executed within GitHub Actions, and are relatively sandboxed, operating over their own copy of the repository, they still operate in an environment where outward network requests are allowed. Also, you will require you to configure additional `Bash` commands to build and test your project by editing the markdown workflow file to add those commands and then running `gh aw compile` to update the workflow. The worfklows below will attempt to "self-report" the commands they need to run, so you can look at the initial reports to see what commands are needed.
+⚠️⚠️ Coding tasks should be installed with caution and used only experimentally, and then disabled. While the tasks are executed within GitHub Actions, and are relatively sandboxed, operating over their own copy of the repository, they still operate in an environment where outward network requests are allowed. Also, you will require you to configure additional `Bash` commands to build and test your project by editing the markdown workflow file to add those commands and then running `gh aw compile` to update the workflow. The worfklows below will attempt to "self-report" the commands they need to run, so you can look at the initial reports to see what commands are needed.
 
 ### Daily Dependency Updater
 
 The [daily dependency updater workflow](workflows/daily-dependency-updates.md?plain=1) will run daily to check for Dependabot alerts in the repository and update dependencies to the latest versions, creating pull requests as necessary.
 
 ```bash
-gh aw add daily-dependency-updates -r githubnext/agentics
-git commit -m "Add dependency-updater workflow"
-git push # or create a pull request
+gh aw add daily-dependency-updates -r githubnext/agentics --pr
 ```
 
 You can start a run of this workflow immediately by running:
@@ -100,73 +108,20 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-dependency-updates
 ```
 
-See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
-
-### Daily QA 
-
-The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md to check that the code builds and runs, and that the tests pass.
+You can run this workflow locally by running:
 
 ```bash
-gh aw add daily-qa -r githubnext/agentics
-git commit -m "Add daily-qa workflow"
-git push # or create a pull request
+gh aw run-local daily-dependency-updates
 ```
 
-You can start a run of this workflow immediately by running:
+See notes above on coding tasks. This workflow generally doesn't require permissions to build/test code, as you can use existing GitHub CI Workflows to test your code.
+
+## Regular Documentation Update
+
+The [update documentation workflow](workflows/update-docs.md?plain=1) will run on each push to main to try to update documentation in the repository. It defaults to using [Astro Starlight] (https://starlight.astro.build) for documentation generation, but you can edit it to use other frameworks if necessary.
 
 ```bash
-gh aw run daily-qa
-```
-
-See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
-
-### Solve Issues
-
-The [solve issues workflow](workflows/solve-issues.md?plain=1) will run every 3 hours to solve issues in the repository. It will look for issues labelled with the workflow name and attempt to solve them by creating pull requests with the changes.
-
-```bash
-gh aw add solve-issues -r githubnext/agentics
-git commit -m "Add solve-issues workflow"
-git push # or create a pull request
-```
-
-You can start a run of this workflow immediately by running:
-
-```bash
-gh aw run solve-issues
-```
-
-See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
-
-### Daily Security Issue Solver
-
-The [daily security issues workflow](workflows/daily-security-issues.md?plain=1) will run daily to check for existing security alerts from code scanning in the repository and attempt to create pull requests to address them.
-
-⚠️⚠️ Any pull requests generated by this sample should be very carefully checked. This sample is for demonstration purposes only and may not produce correct or safe code changes.
-
-```bash
-Add the workflow:
-gh aw add daily-security-issues -r githubnext/agentics
-git commit -m "Add security-issues workflow"
-git push # or create a pull request
-```
-
-You can start a run of this workflow immediately by running:
-
-```bash
-gh aw run daily-security-issues
-```
-
-See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
-
-## Documentation Update
-
-The [update documentation workflow](workflows/update-docs.md?plain=1) will run on each push to main to try to update documentation in the repository.
-
-```bash
-gh aw add update-docs -r githubnext/agentics
-git commit -m "Add update-docs workflow"
-git push # or create a pull request
+gh aw add update-docs -r githubnext/agentics --pr
 ```
 
 You can start a run of this workflow immediately by running:
@@ -175,4 +130,33 @@ You can start a run of this workflow immediately by running:
 gh aw run update-docs
 ```
 
-See notes above on coding tasks. You will need to configure additional Bash commands to build and test your project. 
+You can run this workflow locally by running:
+
+```bash
+gh aw run-local update-docs
+```
+
+> NOTE: When run, this workflow will create a pull request with the documentation updates and other information. It may also search the web for information to help with the documentation.
+
+### Daily QA (NOTE: use with caution, and only for experimental purposes)
+
+The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md to check that the code builds and runs, and that the tests pass.
+
+```bash
+gh aw add daily-qa -r githubnext/agentics --pr
+```
+
+This creates a pull request to add the workflow to your repository. You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-qa
+```
+
+⚠️⚠️ This workflow is configured with "max-runs: 1" so it will only run once, as a sample. If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
+
+If you would like to run this workflow locally, with ability to execute all commands, you can add `Bash(":*")` to the tools and run:
+
+```bash
+gh aw run-local daily-qa
+```
+
