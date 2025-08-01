@@ -4,7 +4,7 @@ tools:
     Write:
     Bash:
       allowed:
-      - "echo $GITHUB_STEP_SUMMARY"
+      - "echo:*"
 ---
 
 ### Output Report implemented via GitHub Action Job Summary
