@@ -51,3 +51,6 @@ Only a new issue should be created, no existing issues should be adjusted.
 
 @include shared/xpia.md
 
+@include shared/tool-refused.md
+
+@include shared/gh-read-tools.md
