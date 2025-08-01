@@ -45,6 +45,11 @@ Create a new GitHub issue containing a markdown report with
 
 Only a new issue should be created, no existing issues should be adjusted.
 
+At the end of the report list write a collapsed section with the following:
+- All search queries (web, issues, pulls, content) you used
+- All bash commands you executed
+- All MCP tools you used
+
 @include shared/include-link.md
 
 @include shared/job-summary.md
