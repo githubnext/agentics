@@ -21,10 +21,10 @@ tools:
         update_issue,
       ]
   claude:
-    Bash:
-      allowed: ["gh label list"]
-    WebFetch:
-    WebSearch:
+    allowed:
+      Bash: ["gh label list"]
+      WebFetch:
+      WebSearch:
 ---
 
 # Agentic Planner

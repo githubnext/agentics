@@ -1,8 +1,8 @@
 ---
 tools:
   claude:
-    Bash: 
-      allowed:
+    allowed:
+      Bash: 
       - "gh label list:*"
       - "gh label view:*"
       - "gh issue list:*"

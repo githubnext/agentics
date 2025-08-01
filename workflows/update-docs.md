@@ -26,12 +26,13 @@ tools:
         create_pull_request,
       ]
   claude:
-    Edit:
-    MultiEdit:
-    Write:
-    NotebookEdit:
-    WebFetch:
-    WebSearch:
+    allowed:
+      Edit:
+      MultiEdit:
+      Write:
+      NotebookEdit:
+      WebFetch:
+      WebSearch:
 ---
 
 # Starlight Scribe

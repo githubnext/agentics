@@ -16,12 +16,13 @@ tools:
   github:
     allowed: [update_issue]
   claude:
-    Edit:
-    MultiEdit:
-    Write:
-    NotebookEdit:
-    WebFetch:
-    WebSearch:
+    allowed:
+      Edit:
+      MultiEdit:
+      Write:
+      NotebookEdit:
+      WebFetch:
+      WebSearch:
 
 timeout_minutes: 10
 ---
@@ -41,7 +42,6 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - Fetch any comments on the issue using the `get_issue_comments` tool
    - Find similar issues if needed using the `search_issues` tool
    - List the issues to see other open issues in the repository using the `list_issues` tool
-   - Before each tool use, update the output report
 
 4. Analyze the issue content, considering:
 
@@ -66,12 +66,11 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
 
 7. Apply the selected labels:
 
-   - Before each tool use, update the output report
    - Use the `update_issue` tool to apply the labels to the issue
    - DO NOT communicate directly with users
    - If no labels are clearly applicable, do not apply any labels
 
-8. Finalize the output report with your analysis:
+8. Add an issue comment to the issue with your analysis:
    - Start with "🎯 Agentic Issue Triage"
    - Provide a brief summary of the issue
    - Mention any relevant details that might help the team understand the issue better

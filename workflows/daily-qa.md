@@ -27,12 +27,13 @@ tools:
         add_issue_comment,
       ]
   claude:
-    Edit:
-    MultiEdit:
-    Write:
-    NotebookEdit:
-    WebFetch:
-    WebSearch:
+    allowed:
+      Edit:
+      MultiEdit:
+      Write:
+      NotebookEdit:
+      WebFetch:
+      WebSearch:
 ---
 
 # Daily QA

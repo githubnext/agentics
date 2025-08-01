@@ -20,8 +20,9 @@ tools:
   github:
     allowed: [create_issue]
   claude:
-    WebFetch:
-    WebSearch:
+    allowed:
+      WebFetch:
+      WebSearch:
 ---
 
 # Daily Team Status

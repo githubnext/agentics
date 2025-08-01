@@ -17,11 +17,12 @@ permissions:
   statuses: read
 
 tools:
-  # github:
-  #   allowed: [create_issue]
+  github:
+    allowed: [create_issue]
   claude:
-    WebFetch:
-    WebSearch:
+    allowed:
+      WebFetch:
+      WebSearch:
 ---
 
 # Weekly Research

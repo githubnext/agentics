@@ -32,11 +32,12 @@ tools:
         update_pull_request,
       ]
   claude:
-    Edit:
-    MultiEdit:
-    Write:
-    WebFetch:
-    WebSearch:
+    allowed:
+      Edit:
+      MultiEdit:
+      Write:
+      WebFetch:
+      WebSearch:
 ---
 
 # Agentic Dependency Updater
