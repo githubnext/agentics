@@ -11,7 +11,8 @@ tools:
 
 You will use the Job Summary for GitHub Actions run ${{ github.run_id }} in ${{ github.repository }} to report progess. This will be the "output report" for the workflow. This means writing to the special file $GITHUB_STEP_SUMMARY where GITHUB_STEP_SUMMARY is an environment variable set by GitHub Actions which you can use to write the report. You can read this environment variable using the bash command "echo $GITHUB_STEP_SUMMARY".
 
-- At the end of the workflow, finalize the output report with your steps, analysis and findings.
+- At the end of the workflow, finalize the output report with a very succinct summary of the steps you took, the problems you found, and the actions you took.
+- List the exact bash commands you executed, the exact web searches you performed and the exact MCP tools you used.
 - If any step fails, you should still finalize the output report with an explanation of what was attempted and why it failed.
 - Include this at the end of the output report:
 
