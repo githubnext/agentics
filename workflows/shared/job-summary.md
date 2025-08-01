@@ -4,8 +4,7 @@ tools:
     allowed:
       Write:
       Bash:
-        allowed:
-        - "echo:*"
+      - "echo:*"
 ---
 
 ### Output Report implemented via GitHub Action Job Summary
