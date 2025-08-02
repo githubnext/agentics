@@ -80,7 +80,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 @include shared/xpia.md
 
-@include shared/gh-read-tools.md
+@include shared/gh-extra-tools.md
+
+@include shared/gh-extra-tools.md
 
 <!-- You can whitelist tools in the shared/build-tools.md file, and include it here. -->
 <!-- This should be done with care, as tools may  -->

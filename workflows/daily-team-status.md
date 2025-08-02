@@ -70,3 +70,6 @@ tools:
 @include shared/job-summary.md
 
 @include shared/xpia.md
+
+@include shared/gh-extra-tools.md
+

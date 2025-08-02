@@ -57,6 +57,6 @@ At the end of the report list write a collapsed section with the following:
 
 @include shared/xpia.md
 
-@include shared/tool-refused.md
+@include shared/gh-extra-tools.md
 
-<!-- include shared/gh-read-tools.md -->
+@include shared/tool-refused.md

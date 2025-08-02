@@ -138,3 +138,6 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 @include shared/job-summary.md
 
 @include shared/xpia.md
+
+@include shared/gh-extra-tools.md
+

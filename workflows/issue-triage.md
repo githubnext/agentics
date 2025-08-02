@@ -89,3 +89,6 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
 @include shared/job-summary.md
 
 @include shared/xpia.md
+
+@include shared/gh-extra-tools.md
+
