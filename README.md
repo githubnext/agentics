@@ -2,7 +2,7 @@
 
 Samples of [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
 
-##⚡ Quick Start (30 seconds)
+## ⚡ Quick Start (30 seconds)
 
 To install, first install the `gh-aw` extension:
 
