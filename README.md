@@ -12,9 +12,9 @@ gh extension install githubnext/gh-aw
 
 Then install one or more workflows from this repository as described below.
 
-## Weekly Researcher
+## Weekly Research
 
-The [weekly researcher workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
+The [weekly research workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
 
 ```bash
 gh aw add weekly-research -r githubnext/agentics --pr
