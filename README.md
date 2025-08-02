@@ -10,6 +10,13 @@ To install, first install the `gh-aw` extension:
 gh extension install githubnext/gh-aw
 ```
 
+Your repository will also need a ANTHROPIC_API_KEY or OPENAI_API_KEY Actions secret set up to run workflows that use AI models. You can add this using one of the following commands:
+
+```bash
+gh secret set ANTHROPIC_API_KEY -a actions --body <your-anthropic-api-key>
+#gh secret set OPENAI_API_KEY -a actions --body <your-openai-api-key>
+```
+
 Then install one or more workflows from this repository as described below.
 
 ## Weekly Research
