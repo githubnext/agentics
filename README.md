@@ -18,16 +18,10 @@ The [weekly researcher workflow](workflows/weekly-research.md?plain=1) will run 
 gh aw add weekly-research -r githubnext/agentics --pr
 ```
 
-You can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run weekly-research
-```
-
-You can run this workflow locally by running:
-
-```bash
-gh aw run-local weekly-research
 ```
 
 > NOTE: When run, this workflow will create an issue with the research report.
@@ -40,16 +34,10 @@ The [daily team status workflow](workflows/daily-team-status.md?plain=1) will ru
 gh aw add daily-team-status -r githubnext/agentics --pr
 ```
 
-You can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-team-status
-```
-
-You can run this workflow locally by running:
-
-```bash
-gh aw run-local daily-team-status
 ```
 
 > NOTE: When run, this workflow will create an issue with the status report.
@@ -59,19 +47,13 @@ gh aw run-local daily-team-status
 The [daily plan workflow](workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team. This planning issue can be used by other workflows as a reference for what the team is working on and what the current priorities are.
 
 ```bash
-gh aw add project-plan -r githubnext/agentics --pr
+gh aw add daily-plan -r githubnext/agentics --pr
 ```
 
-You can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
-gh aw run project-plan
-```
-
-You can run this workflow locally by running:
-
-```bash
-gh aw run-local project-plan
+gh aw run daily-plan
 ```
 
 > NOTE: When run, this workflow will create an issue with the project plan. It will also search the web for information to help with the planning.
@@ -84,7 +66,7 @@ The [issue triage workflow](workflows/issue-triage.md?plain=1) will run daily to
 gh aw add issue-triage -r githubnext/agentics --pr
 ```
 
-You can't start a run of this workflow directly as it is triggered in the context of an issue.
+This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
 > NOTE: When run, this workflow will add an issue comment to your issue. It may also search the web for information.
 
@@ -102,16 +84,10 @@ The [daily dependency updater workflow](workflows/daily-dependency-updates.md?pl
 gh aw add daily-dependency-updates -r githubnext/agentics --pr
 ```
 
-You can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-dependency-updates
-```
-
-You can run this workflow locally by running:
-
-```bash
-gh aw run-local daily-dependency-updates
 ```
 
 See notes above on coding tasks. This workflow generally doesn't require permissions to build/test code, as you can use existing GitHub CI Workflows to test your code.
@@ -124,16 +100,10 @@ The [update documentation workflow](workflows/update-docs.md?plain=1) will run o
 gh aw add update-docs -r githubnext/agentics --pr
 ```
 
-You can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run update-docs
-```
-
-You can run this workflow locally by running:
-
-```bash
-gh aw run-local update-docs
 ```
 
 > NOTE: When run, this workflow will create a pull request with the documentation updates and other information. It may also search the web for information to help with the documentation.
@@ -146,17 +116,11 @@ The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform
 gh aw add daily-qa -r githubnext/agentics --pr
 ```
 
-This creates a pull request to add the workflow to your repository. You can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-qa
 ```
 
 ⚠️⚠️ This workflow is configured with "max-runs: 1" so it will only run once, as a sample. If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
-
-If you would like to run this workflow locally, with ability to execute all commands, you can add `Bash(":*")` to the tools and run:
-
-```bash
-gh aw run-local daily-qa
-```
 

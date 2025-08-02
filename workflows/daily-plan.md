@@ -47,7 +47,7 @@ Your job is to act as a planner for the GitHub repository ${{ env.GITHUB_REPOSIT
 
    - The project plan should be written into the issue body itself, not as a comment. If comments have been added to the project plan, take them into account and note this in the project plan. Never add comments to the project plan issue.
 
-   - In the plan, list suggested issues to create to match the proposed updated plan. Don't create any issues, just list the suggestions. Show `gh` commands to create the issues with labels and complete bodies, but don't actually create them.
+   - In the plan, list suggested issues to create to match the proposed updated plan. Don't create any issues, just list the suggestions. Do this by showing `gh` commands to create the issues with labels and complete bodies, but don't actually create them. Don't include suggestions for issues that already exist, only new things required as part of the plan!
 
    - Do not create any other issues, just the project plan issue. Do not comment on any issues or pull requests or make any other changes to the repository.
 

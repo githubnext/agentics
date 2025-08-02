@@ -68,6 +68,8 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 4. At the end of your work, create an issue summarizing the problems you found and the actions you took. Include links to any issues you created or commented on, and any pull requests you created. Highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bashcommands but were refused permission, then include a list of those at the end of the issue.
 
+5. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
+
 @include shared/tool-refused.md
 
 @include shared/include-link.md
