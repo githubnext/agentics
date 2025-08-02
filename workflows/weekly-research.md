@@ -18,7 +18,7 @@ permissions:
 
 tools:
   github:
-    allowed: [create_issue]
+    allowed: [create_issue, update_issue]
   claude:
     allowed:
       WebFetch:
@@ -29,12 +29,14 @@ tools:
 
 ## Job Description
 
+First search for any previous "Weekly Research Report" open issues in the repository. Close them.
+
 Do a deep research investigation in ${{ env.GITHUB_REPOSITORY }} repository, and the related industry in general.
 
 - Read selections of the latest code, issues and PRs for this repo.
 - Read latest trends and news from the software industry news source on the Web.
 
-Create a new GitHub issue containing a markdown report with
+Create a new GitHub issue with title starting with "Weekly Research Report" containing a markdown report with
 
 - Interesting news about the area related to this software project.
 - Related products and competitive analysis
