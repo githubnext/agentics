@@ -18,7 +18,7 @@ permissions:
 
 tools:
   github:
-    allowed: [create_issue, update_issue]
+    allowed: [create_issue]
   claude:
     allowed:
       WebFetch:
@@ -28,8 +28,6 @@ tools:
 # Weekly Research
 
 ## Job Description
-
-First search for any previous "Weekly Research Report" open issues in the repository. Close them.
 
 Do a deep research investigation in ${{ env.GITHUB_REPOSITORY }} repository, and the related industry in general.
 
