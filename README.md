@@ -1,6 +1,6 @@
-# GitHub Agentic Workflows (Samples)
+# The Agentics
 
-More information at [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
+Samples of [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
 
 To install, first install the `gh-aw` extension:
 
