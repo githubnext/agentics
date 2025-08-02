@@ -99,7 +99,7 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-dependency-updates
 ```
 
-See notes above on coding tasks. This workflow generally doesn't require permissions to build/test code, as you can use existing GitHub CI Workflows to test your code.
+⚠️ See notes above on coding tasks. This workflow generally doesn't require permissions to build/test code, as you can use existing GitHub CI Workflows to test your code.
 
 ## Regular Documentation Update
 
@@ -115,7 +115,7 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run update-docs
 ```
 
-> NOTE: When run, this workflow will create a pull request with the documentation updates and other information. It may also search the web for information to help with the documentation.
+⚠️ See notes above on coding tasks. When run, this workflow will create a pull request with the documentation updates and other information. It may also search the web for information to help with the documentation.
 
 ### Daily QA (NOTE: use with caution, and only for experimental purposes)
 
@@ -131,5 +131,5 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-qa
 ```
 
-⚠️⚠️ This workflow is configured with "max-runs: 1" so it will only run once, as a sample. If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
+⚠️ See notes above on coding tasks. This workflow is configured with "max-runs: 1" so it will only run once, as a sample. If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
 
