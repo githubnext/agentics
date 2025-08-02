@@ -14,7 +14,7 @@ permissions:
 
 tools:
   github:
-    allowed: [update_issue]
+    allowed: [add_issue_comment]
   claude:
     allowed:
       Edit:
