@@ -117,7 +117,7 @@ gh aw run update-docs
 
 ⚠️ See notes above on coding tasks. When run, this workflow will create a pull request with the documentation updates and other information. It may also search the web for information to help with the documentation.
 
-### Daily QA (NOTE: use with caution, and only for experimental purposes)
+### Daily QA
 
 The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md to check that the code builds and runs, and that the tests pass.
 
@@ -131,5 +131,5 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-qa
 ```
 
-⚠️ See notes above on coding tasks. This workflow is configured with "max-runs: 1" so it will only run once, as a sample. If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
+⚠️ See notes above on coding tasks. **This workflow is configured with "max-runs: 1" so it will only run once, as a sample.** If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
 
