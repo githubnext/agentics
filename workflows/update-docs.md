@@ -7,10 +7,10 @@ on:
 timeout_minutes: 15
 
 permissions:
-  contents: write
+  contents: write # needed to push changes to a new branch in the repository in preparation for the pull request
+  pull-requests: write # needed to create pull requests for the changes
   models: read
   issues: read
-  pull-requests: write
   actions: read
   checks: read
   statuses: read

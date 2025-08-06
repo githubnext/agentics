@@ -9,11 +9,11 @@ timeout_minutes: 15
 max-runs: 1
 
 permissions:
-  contents: write
+  issues: write  # needed to create issues for problems found
+  contents: read
   models: read
-  issues: write
-  pull-requests: write
-  discussions: write
+  pull-requests: read
+  discussions: read
   actions: read
   checks: read
   statuses: read

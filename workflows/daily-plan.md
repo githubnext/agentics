@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  issues: write  # needed to write the output plan to an issue
+  contents: read
   models: read
-  issues: write
-  pull-requests: write
+  pull-requests: read
 
 timeout_minutes: 15
 

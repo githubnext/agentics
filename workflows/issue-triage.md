@@ -6,7 +6,7 @@ on:
 permissions:
   contents: read
   models: read
-  issues: write
+  issues: write  # needed to write comments to the issue
   actions: read
   checks: read
   statuses: read
