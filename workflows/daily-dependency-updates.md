@@ -57,20 +57,20 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 > NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
 
-@include shared/no-push-to-main.md
+@include agentics/shared/no-push-to-main.md
 
-@include shared/workflow-changes.md
+@include agentics/shared/workflow-changes.md
 
-@include shared/tool-refused.md
+@include agentics/shared/tool-refused.md
 
-@include shared/include-link.md
+@include agentics/shared/include-link.md
 
-@include shared/job-summary.md
+@include agentics/shared/job-summary.md
 
-@include shared/xpia.md
+@include agentics/shared/xpia.md
 
-@include shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-tools.md
 
-<!-- You can whitelist tools in the shared/build-tools.md file, and include it here. -->
+<!-- You can whitelist tools in the agentics/shared/build-tools.md file, and include it here. -->
 <!-- This should be done with care, as tools may  -->
-<!-- include shared/build-tools.md -->
+<!-- include agentics/shared/build-tools.md -->

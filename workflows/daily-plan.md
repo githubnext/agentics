@@ -51,13 +51,13 @@ Your job is to act as a planner for the GitHub repository ${{ env.GITHUB_REPOSIT
 
    - Do not create any other issues, just the project plan issue. Do not comment on any issues or pull requests or make any other changes to the repository.
 
-@include shared/tool-refused.md
+@include agentics/shared/tool-refused.md
 
-@include shared/include-link.md
+@include agentics/shared/include-link.md
 
-@include shared/job-summary.md
+@include agentics/shared/job-summary.md
 
-@include shared/xpia.md
+@include agentics/shared/xpia.md
 
-@include shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-tools.md
 

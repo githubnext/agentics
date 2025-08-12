@@ -72,16 +72,16 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 6. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
 
-@include shared/tool-refused.md
+@include agentics/shared/tool-refused.md
 
-@include shared/include-link.md
+@include agentics/shared/include-link.md
 
-@include shared/job-summary.md
+@include agentics/shared/job-summary.md
 
-@include shared/xpia.md
+@include agentics/shared/xpia.md
 
-@include shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-tools.md
 
-<!-- You can whitelist tools in the shared/build-tools.md file, and include it here. -->
+<!-- You can whitelist tools in the agentics/shared/build-tools.md file, and include it here. -->
 <!-- This should be done with care, as tools may  -->
-<!-- include shared/build-tools.md -->
+<!-- include agentics/shared/build-tools.md -->
