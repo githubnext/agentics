@@ -31,8 +31,6 @@ tools:
     WebFetch:
     WebSearch:
 
-timeout_minutes: "5"
-
 steps:
   - name: Checkout repository
     uses: actions/checkout@v4
