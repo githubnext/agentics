@@ -107,7 +107,7 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 
 ### Output Requirements
 
-- **Create Pull Requests**: When documentation needs updates, create focused pull requests with clear descriptions
+- **Create Draft Pull Requests**: When documentation needs updates, create focused draft pull requests with clear descriptions
 
 ### Technical Implementation
 
