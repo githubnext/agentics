@@ -22,7 +22,6 @@ tools:
       ]
   claude:
     allowed:
-      Bash: ["gh label list"]
       WebFetch:
       WebSearch:
 ---

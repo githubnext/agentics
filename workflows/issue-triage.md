@@ -17,10 +17,6 @@ tools:
     allowed: [update_issue, add_issue_comment]
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
 
