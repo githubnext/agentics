@@ -12,6 +12,7 @@ max-runs: 1
 permissions:
   contents: read  # Required so the agent can review the code in the repository
   issues: write   # Required so the agent can create issues for accessibility problems
+  actions: read   # Required for max-runs
 
 tools:
   mcps:
