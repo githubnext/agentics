@@ -1,4 +1,4 @@
-# 🤖 The Agentics
+# ✨ The Agentics
 
 Samples of [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
 
