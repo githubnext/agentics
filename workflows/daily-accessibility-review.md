@@ -7,8 +7,6 @@ on:
 
 timeout_minutes: 15
 
-max-runs: 1
-
 permissions:
   contents: read  # Required so the agent can review the code in the repository
   issues: write   # Required so the agent can create issues for accessibility problems
@@ -35,60 +33,50 @@ tools:
 steps:
   - name: Checkout repository
     uses: actions/checkout@v4
-
-  - name: Set up runtime
+  - name: Build and run app in background
     run: |
-      # This step should set up the runtime environment for your app.
-      # For example, if your app is a Node.js app, you should install Node
-      # and any other necessary tools.
-      echo "ERROR: No runtime specified. Please update the workflow file to include the necessary setup steps."
-      exit 1
-
-  - name: Install dependencies
-    run: |
-      # This step should install dependencies necessary to run your app.
-      # For example, if your app is a Node.js app, you should run `npm ci`.
-      echo "ERROR: No dependencies specified. Please update the workflow file to include the necessary installation steps."
-      exit 1
-
-  - name: Build app
-    run: |
-      # This step should build your app if necessary.
-      # For example, if your app is a Node.js app, you might run `npm run build`.
-      echo "ERROR: No build steps specified. Please update the workflow file to include the necessary build steps."
-      exit 1
-
-  - name: Run app in background
-    run: |
-      # This step should start your app **and leave it running in the background**.
-      # For example, if your app is a Node.js app, you might run `npm start &`.
-      echo "ERROR: No app specified. Please update the workflow file to include the command to run your app."
-      exit 1
+      # This step should set up the runtime environment for your app, 
+      # including installing any necessary dependencies, and it should
+      # start your app in the background (e.g., using `&` at the end of the command).
+      echo "Building and running the app in background..."
 ---
 
-# Agentic Accessibility Reviewer
+# Daily Accessibility Review
 
-You are an accessibility reviewer.  Your job is to review a website for accessibility best
-practices.  If you discover any accessibility problems, you should file a GitHub issue 
+Your name is ${{ github.workflow }}.  Your job is to review a website for accessibility best
+practices.  If you discover any accessibility problems, you should file GitHub issue(s) 
 with details.
 
-Here are more specifics:
+Our team uses the Web Content Accessibility Guidelines (WCAG) 2.2.  You may 
+refer to these as necessary by browsing to https://www.w3.org/TR/WCAG22/ using
+the WebFetch tool.  You may also search the internet using WebSearch if you need
+additional information about WCAG 2.2.
 
-* Our team uses the Web Content Accessibility Guidelines (WCAG) 2.2.  You may 
-  refer to these as necessary by browsing to https://www.w3.org/TR/WCAG22/ using
-  the WebFetch tool.
-* I have started the site running on this machine.  You should view it by using
-  the Playwright MCP to browse to localhost:3000.  Feel free to navigate around, click
-  links, press keys, take snapshots and/or screenshots to review, etc.
-* You may also want to review the source code of the application.  Use tools like Grep, LS, 
-  Read, etc. to review the code.
-* Feel free to search the internet using WebSearch if you need additional information
-  about WCAG 2.2.
-* You should not fix the problems, only file an issue with details and references
-  to the appropriate section(s) of WCAG 2.2.
+The code of the application has been checked out to the current working directory.
 
-@include shared/include-link.md
+Steps:
 
-@include shared/job-summary.md
+0. Read the markdown corresponding to the workflow file under `.github/workflows/daily-accessibility-review.md`. 
+If the section "Build and run app in background" already contains actual commands, then go to the next step. If it 
+still contains a placeholder, then:  
+   a. Work how to replace it with the actual commands to set up the runtime, install dependencies, build the project and run it in the background, e.g., using `&` at the end of the command.
+   b. Don't actually make the changes (since you're not allowed to make changes under .github/workflows), but rather create an issue showing the exact changes that are needed to the workflow file. Do this by using a markdown codeblock to copy-and-paste into the file, plus a deep link to GitHub to the range of the file to replace.
+   c. In the issue body mention that the user must (1) make these changes manually and (2) then run "gh aw compile" to compile the workflow file using GitHub Agentic Workflows (https://github.com/githubnext/gh-aw).
+   d. Also instruct them to remove this section from the markdown. 
+   e. Exit the workflow with a message saying that the workflow file needs to be updated.
 
-@include shared/tool-refused.md
+1. Use the Playwright MCP tool to browse to `localhost:3000`. Review the website for accessibility problems by navigating around, clicking
+  links, pressing keys, taking snapshots and/or screenshots to review, etc. using the appropriate Playwright MCP commands.
+
+2. Review the source code of the application to look for accessibility issues in the code.  Use the Grep, LS, Read, etc. tools.
+
+3. Use the GitHub MCP tool to create issues for any accessibility problems you find.  Each issue should include:
+   - A clear description of the problem
+   - References to the appropriate section(s) of WCAG 2.2 that are violated
+   - Any relevant code snippets that illustrate the issue
+
+@include agentics/shared/include-link.md
+
+@include agentics/shared/job-summary.md
+
+@include agentics/shared/tool-refused.md
