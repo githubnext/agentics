@@ -29,7 +29,7 @@ tools:
 
 ## Job Description
 
-Do a deep research investigation in ${{ env.GITHUB_REPOSITORY }} repository, and the related industry in general.
+Do a deep research investigation in ${{ github.repository }} repository, and the related industry in general.
 
 - Read selections of the latest code, issues and PRs for this repo.
 - Read latest trends and news from the software industry news source on the Web.
@@ -51,12 +51,12 @@ At the end of the report list write a collapsed section with the following:
 - All bash commands you executed
 - All MCP tools you used
 
-@include shared/include-link.md
+@include agentics/shared/include-link.md
 
-@include shared/job-summary.md
+@include agentics/shared/job-summary.md
 
-@include shared/xpia.md
+@include agentics/shared/xpia.md
 
-@include shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-tools.md
 
-@include shared/tool-refused.md
+@include agentics/shared/tool-refused.md

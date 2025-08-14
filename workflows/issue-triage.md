@@ -3,6 +3,8 @@ on:
   issues:
     types: [opened, reopened]
 
+ai-reaction: eyes
+
 permissions:
   contents: read
   models: read
@@ -17,12 +19,16 @@ tools:
     allowed: [update_issue, add_issue_comment]
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
+
+# By default agentic workflows use a concurrency setting that
+# allows one run at a time, regardless of branch or issue. This is
+# not appropriate for triage workflows, so here we allow one run
+# per issue at a time.
+concurrency:
+   group: "triage-${{ github.event.issue.number }}"
+   cancel-in-progress: true
 
 timeout_minutes: 10
 ---
@@ -82,13 +88,13 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - If appropriate break the issue down to sub-tasks and write a checklist of things to do.
    - Use collapsed-by-default sections in the GitHub markdown to keep the comment tidy. Collapse all sections except the short main summary at the top.
 
-@include shared/tool-refused.md
+@include agentics/shared/tool-refused.md
 
-@include shared/include-link.md
+@include agentics/shared/include-link.md
 
-@include shared/job-summary.md
+@include agentics/shared/job-summary.md
 
-@include shared/xpia.md
+@include agentics/shared/xpia.md
 
-@include shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-tools.md
 

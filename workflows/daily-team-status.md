@@ -1,8 +1,8 @@
 ---
 on:
   schedule:
-    # Every day at 9am UTC
-    - cron: "0 9 * * *"
+    # Every day at 9am UTC, all days except Saturday and Sunday
+    - cron: "0 9 * * 1-5"
   workflow_dispatch:
 
 timeout_minutes: 15
@@ -65,11 +65,11 @@ tools:
 
    Only a new issue should be created, no existing issues should be adjusted.
 
-@include shared/include-link.md
+@include agentics/shared/include-link.md
 
-@include shared/job-summary.md
+@include agentics/shared/job-summary.md
 
-@include shared/xpia.md
+@include agentics/shared/xpia.md
 
-@include shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-tools.md
 

@@ -5,7 +5,7 @@ This repository defines autonomous GitHub Agentic Workflows using the [gh-aw](ht
 ## Repository Structure
 
 - `workflows/` - Workflow definitions in markdown format
-- `workflows/shared/` - Reusable components for workflow outputs and reporting
+- `workflows/agentics/shared/` - Reusable components for workflow outputs and reporting
 
 ## Workflow Definition Format
 

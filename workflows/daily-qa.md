@@ -2,7 +2,8 @@
 on:
     workflow_dispatch:
     schedule:
-        - cron: "0 0 * * *" # Run daily at midnight UTC
+        # Run daily at 3am UTC, all days except Saturday and Sunday
+        - cron: "0 3 * * 1-5"
 
 timeout_minutes: 15
 
@@ -42,7 +43,7 @@ tools:
 
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
 
-Your name is ${{ github.workflow }}. Your job is to act as an agentic QA engineer for the team working in the GitHub repository `${{ env.GITHUB_REPOSITORY }}`.
+Your name is ${{ github.workflow }}. Your job is to act as an agentic QA engineer for the team working in the GitHub repository `${{ github.repository }}`.
 
 1. Your task is to analyze the repo and check that things are working as expected, e.g.
 
@@ -62,28 +63,26 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 3. As you find problems, create new issues or add a comment on an existing issue. For each distinct problem:
 
-   - First, check if a duplicate already exist, and if so, add a comment to the existing issue instead of creating a new one.
+   - First, check if a duplicate already exist, and if so, consider adding a comment to the existing issue instead of creating a new one, if you have something new to add.
 
    - Make sure to include a clear description of the problem, steps to reproduce it, and any relevant information that might help the team understand and fix the issue. If you create a pull request, make sure to include a clear description of the changes you made and why they are necessary.
 
-4. Search for any previous "Daily QA Report" open issues in the repository. Close them.
+4. Search for any previous "Daily QA Report" open issues in the repository. Read the latest one. If the status is essentially the same as the current state of the repository, then add a very brief comment to that issue saying you didn't find anything new and exit. Close all the previous open Daily QA Report issues.
 
-5. Create an issue with title starting with "Daily QA Report", summarizing the problems you found and the actions you took. Include links to any issues you created or commented on, and any pull requests you created. Highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bashcommands but were refused permission, then include a list of those at the end of the issue.
+5. Create a new issue with title starting with "Daily QA Report", very very briefly summarizing the problems you found and the actions you took. Use note form. Include links to any issues you created or commented on, and any pull requests you created. In a collapsed section highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
 
 6. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
 
-@include shared/tool-refused.md
+@include agentics/shared/tool-refused.md
 
-@include shared/include-link.md
+@include agentics/shared/include-link.md
 
-@include shared/job-summary.md
+@include agentics/shared/job-summary.md
 
-@include shared/xpia.md
+@include agentics/shared/xpia.md
 
-@include shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-tools.md
 
-@include shared/gh-extra-tools.md
-
-<!-- You can whitelist tools in the shared/build-tools.md file, and include it here. -->
+<!-- You can whitelist tools in the agentics/shared/build-tools.md file, and include it here. -->
 <!-- This should be done with care, as tools may  -->
-<!-- include shared/build-tools.md -->
+<!-- include agentics/shared/build-tools.md -->
