@@ -2,7 +2,8 @@
 # Run once a day at midnight UTC
 on:
   schedule:
-    - cron: "0 0 * * *"
+        # Run daily at 2am UTC, all days except Saturday and Sunday
+        - cron: "0 2 * * 1-5"
   workflow_dispatch:
 
 permissions:

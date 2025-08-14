@@ -2,7 +2,8 @@
 on:
     workflow_dispatch:
     schedule:
-        - cron: "0 0 * * *" # Run daily at midnight UTC
+        # Run daily at 3am UTC, all days except Saturday and Sunday
+        - cron: "0 3 * * 1-5"
 
 timeout_minutes: 15
 

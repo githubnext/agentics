@@ -3,6 +3,8 @@ on:
   issues:
     types: [opened, reopened]
 
+ai-reaction: eyes
+
 permissions:
   contents: read
   models: read

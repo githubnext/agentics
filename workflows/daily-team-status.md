@@ -1,8 +1,8 @@
 ---
 on:
   schedule:
-    # Every day at 9am UTC
-    - cron: "0 9 * * *"
+    # Every day at 9am UTC, all days except Saturday and Sunday
+    - cron: "0 9 * * 1-5"
   workflow_dispatch:
 
 timeout_minutes: 15
