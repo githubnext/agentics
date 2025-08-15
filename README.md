@@ -190,7 +190,7 @@ gh aw run daily-dependency-updates
 - Makes file changes to update dependency versions
 - Requires `contents: write` and `pull-requests: write` permissions
 
-⚠️ See notes above on coding tasks. This workflow generally doesn't require permissions to build/test code, as you can use existing GitHub CI Workflows to test your code.
+⚠️ See notes above on coding tasks.
 
 ## 📖 Regular Documentation Update
 
@@ -224,7 +224,7 @@ gh aw run update-docs
 - Searches for information to help improve documentation
 - May look up best practices, examples, or technical references
 
-⚠️ See notes above on coding tasks. When run, this workflow will create a pull request with the documentation updates and other information. It may also search the web for information to help with the documentation.
+⚠️ See notes above on coding tasks.
 
 ### 🔍 Daily QA
 
@@ -255,7 +255,7 @@ gh aw run daily-qa
 - Adds comments to issues with QA results
 - Requires `issues: write` permission
 
-⚠️ See notes above on coding tasks.
+⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and test your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
 
 ### 🔍 Daily Accessibility Review
 
@@ -265,7 +265,7 @@ The [daily accessibility review workflow](workflows/daily-accessibility-review.m
 gh aw add daily-accessibility-review -r githubnext/agentics --pr
 ```
 
-This creates a pull request to add the workflow to your repository. You will need to edit the workflow file to add the commands to install dependencies and run your application, as described in the comments in the workflow file. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-accessibility-review
@@ -284,4 +284,4 @@ gh aw run daily-accessibility-review
 - Searches for WCAG 2.2 guidelines and accessibility information
 - May look up accessibility best practices and compliance requirements
 
-⚠️ See notes above on coding tasks.
+⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and test your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
