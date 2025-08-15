@@ -285,3 +285,8 @@ gh aw run daily-accessibility-review
 - May look up accessibility best practices and compliance requirements
 
 ⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and test your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
+
+## 💬 Share Feedback
+
+Is your favorite agent not here? Tell us about it! You can file bugs and feature requests as issues in this repository
+and share your thoughts in the `#continuous-ai` channel in the [GitHub Next Discord](https://gh.io/next-discord).
