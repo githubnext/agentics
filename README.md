@@ -136,3 +136,18 @@ gh aw run daily-qa
 
 ⚠️ See notes above on coding tasks. **This workflow is configured with "stop-time: +48h" so it will only run once or twice, as a sample.** If you want to run it again, you will need to remove or edit the workflow file to change this line, and then run `gh aw compile` to update the workflow.
 
+### 🔍 Daily Accessibility Review
+
+The [daily accessibility review workflow](workflows/daily-accessibility-review.md?plain=1) will run daily to perform accessibility reviews of the application.
+
+```bash
+gh aw add daily-accessibility-review -r githubnext/agentics --pr
+```
+
+This creates a pull request to add the workflow to your repository. You will need to edit the workflow file to add the commands to install dependencies and run your application, as described in the comments in the workflow file. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-accessibility-review
+```
+
+⚠️ See notes above on coding tasks. When run, this workflow will create new issue(s) with the accessibility review results. It may also search the web for information to help with the review.  **This workflow is configured with "max-runs: 1" so it will only run once, as a sample.** If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
