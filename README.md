@@ -22,7 +22,21 @@ gh secret set ANTHROPIC_API_KEY -a actions --body <your-anthropic-api-key>
 
 Then install one or more workflows from this repository as described below.
 
-## 📚 Weekly Research
+## 📂 Available Workflows
+
+### Research & Planning Workflows
+- [📚 Weekly Research](#-weekly-research) - Collect research updates and industry trends
+- [👥 Daily Team Status](#-daily-team-status) - Assess repository activity and create status reports
+- [📋 Daily Plan](#-daily-plan) - Update planning issues for team coordination
+- [🏷️ Issue Triage](#️-issue-triage) - Triage issues and pull requests
+
+### Coding & Development Workflows
+- [📦 Daily Dependency Updater](#-daily-dependency-updater) - Update dependencies and create pull requests
+- [📖 Regular Documentation Update](#-regular-documentation-update) - Update documentation automatically
+- [🔍 Daily QA](#-daily-qa) - Perform quality assurance tasks
+- [🔍 Daily Accessibility Review](#-daily-accessibility-review) - Review application accessibility
+
+## �📚 Weekly Research
 
 The [weekly research workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
 
