@@ -131,5 +131,5 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-qa
 ```
 
-⚠️ See notes above on coding tasks. **This workflow is configured with "max-runs: 1" so it will only run once, as a sample.** If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
+⚠️ See notes above on coding tasks. **This workflow is configured with "stop-time: +48h" so it will only run once or twice, as a sample.** If you want to run it again, you will need to remove or edit the workflow file to change this line, and then run `gh aw compile` to update the workflow.
 

@@ -7,7 +7,7 @@ on:
 
 timeout_minutes: 15
 
-max-runs: 1
+stop-time: +25h # workflow will no longer trigger after 25 hours
 
 permissions:
   issues: write  # needed to create issues for problems found
