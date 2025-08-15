@@ -22,14 +22,15 @@ tools:
   github: 
     allowed: ["create_issue"]
   claude:
-    Task:
-    TodoWrite:
-    Glob:
-    Grep:
-    LS:
-    Read:
-    WebFetch:
-    WebSearch:
+    allowed:
+      Task:
+      TodoWrite:
+      Glob:
+      Grep:
+      LS:
+      Read:
+      WebFetch:
+      WebSearch:
 
 steps:
   - name: Checkout repository
