@@ -1,6 +1,9 @@
-# 🤖 The Agentics
+# ✨ The Agentics
 
 Samples of [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
+
+> [!CAUTION]
+> GitHub Agentic Workflows are a research demonstrator, and these workflows are samples only. They should not be used in production, are early development and may change significantly. Using agentic workflows in your repository requires careful supervision, and even then things can still go wrong. Use it with caution, and at your own risk.
 
 ## ⚡ Quick Start (30 seconds)
 
