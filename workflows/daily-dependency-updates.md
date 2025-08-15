@@ -5,6 +5,8 @@ on:
         # Run daily at 2am UTC, all days except Saturday and Sunday
         - cron: "0 2 * * 1-5"
 
+stop-time: +48h # workflow will no longer trigger after 48 hours. Remove this and recompile to run indefinitely
+
 timeout_minutes: 15
 permissions:
   contents: write # needed to push changes to a new branch in the repository in preparation for the pull request

@@ -5,6 +5,8 @@ on:
 
 ai-reaction: eyes
 
+stop-time: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
+
 permissions:
   contents: read
   models: read

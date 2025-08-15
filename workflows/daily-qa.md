@@ -1,13 +1,13 @@
 ---
 on:
-    workflow_dispatch:
     schedule:
-        # Run daily at 3am UTC, all days except Saturday and Sunday
-        - cron: "0 3 * * 1-5"
+      # Run daily at 3am UTC, all days except Saturday and Sunday
+      - cron: "0 3 * * 1-5"
+    workflow_dispatch:
 
 timeout_minutes: 15
 
-stop-time: +25h # workflow will no longer trigger after 25 hours
+stop-time: +48h # workflow will no longer trigger after 48 hours
 
 permissions:
   issues: write  # needed to create issues for problems found

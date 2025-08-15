@@ -36,7 +36,24 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run weekly-research
 ```
 
-> 📝 NOTE: When run, this workflow will create an issue with the research report.
+**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+
+**What it reads from GitHub:**
+- Repository contents and file structure
+- Pull requests and their metadata
+- Discussions and community content
+- Actions workflow runs and results
+- Checks and status information
+
+**What it creates:**
+- Creates new issues containing research reports
+- Requires `issues: write` permission
+
+**What web searches it performs:**
+- Searches for latest trends and news from software industry sources
+- Looks up information about related products and competitive analysis
+- Searches for relevant research papers and academic content
+- May search for market opportunities and business insights
 
 ## 👥 Daily Team Status
 
@@ -52,7 +69,19 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-team-status
 ```
 
-> 📝 NOTE: When run, this workflow will create an issue with the status report.
+**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+
+**What it reads from GitHub:**
+- Repository contents and file structure
+- Pull requests and their metadata
+- Discussions and community content
+- Actions workflow runs and results
+- Checks and status information
+
+**What it creates:**
+- Creates new status report issues
+- Updates existing status issues with new information
+- Requires `issues: write` permission
 
 ## 📋 Daily Plan
 
@@ -68,7 +97,20 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-plan
 ```
 
-> 📝 NOTE: When run, this workflow will create an issue with the project plan. It will also search the web for information to help with the planning.
+**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+
+**What it reads from GitHub:**
+- Repository contents and file structure
+- Pull requests and their metadata
+
+**What it creates:**
+- Creates new planning issues for the team
+- Updates existing planning issues with current information
+- Requires `issues: write` permission
+
+**What web searches it performs:**
+- Searches for additional planning information and best practices
+- May look up industry trends or project management insights
 
 ## 🏷️ Issue Triage
 
@@ -80,7 +122,23 @@ gh aw add issue-triage -r githubnext/agentics --pr
 
 This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
-> 📝 NOTE: When run, this workflow will add an issue comment to your issue. It may also search the web for information.
+**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+
+**What it reads from GitHub:**
+- The specific issue being triaged and its details
+- Repository contents and file structure
+- Pull requests and their metadata
+- Actions workflow runs and results
+- Checks and status information
+
+**What it creates:**
+- Adds comments to issues with triage information
+- Updates issue labels, assignees, or other metadata
+- Requires `issues: write` permission
+
+**What web searches it performs:**
+- Searches for relevant information to assist with issue triage
+- May look up documentation, error messages, or similar issues
 
 ## 💻 Coding Tasks
 
@@ -102,6 +160,22 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-dependency-updates
 ```
 
+**Activity Duration:** By default this workflow will stay active for 48 hours before automatically stopping.
+
+**What it reads from GitHub:**
+- Repository contents and dependency files
+- Issues and their metadata
+- Discussions and community content
+- Actions workflow runs and results
+- Checks and status information
+- Security events and Dependabot alerts
+
+**What it creates:**
+- Creates pull requests with dependency updates
+- Creates new branches for the dependency changes
+- Makes file changes to update dependency versions
+- Requires `contents: write` and `pull-requests: write` permissions
+
 ⚠️ See notes above on coding tasks. This workflow generally doesn't require permissions to build/test code, as you can use existing GitHub CI Workflows to test your code.
 
 ## 📖 Regular Documentation Update
@@ -117,6 +191,24 @@ This creates a pull request to add the workflow to your repository. After mergin
 ```bash
 gh aw run update-docs
 ```
+
+**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+
+**What it reads from GitHub:**
+- Repository contents and source code
+- Issues and their metadata
+- Actions workflow runs and results
+- Checks and status information
+
+**What it creates:**
+- Creates pull requests with documentation updates
+- Creates new branches for the documentation changes
+- Makes file changes to update or add documentation
+- Requires `contents: write` and `pull-requests: write` permissions
+
+**What web searches it performs:**
+- Searches for information to help improve documentation
+- May look up best practices, examples, or technical references
 
 ⚠️ See notes above on coding tasks. When run, this workflow will create a pull request with the documentation updates and other information. It may also search the web for information to help with the documentation.
 
@@ -134,7 +226,22 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-qa
 ```
 
-⚠️ See notes above on coding tasks. **This workflow is configured with "stop-time: +48h" so it will only run once or twice, as a sample.** If you want to run it again, you will need to remove or edit the workflow file to change this line, and then run `gh aw compile` to update the workflow.
+**Activity Duration:** By default this workflow will stay active for 48 hours before automatically stopping.
+
+**What it reads from GitHub:**
+- Repository contents and source code
+- Pull requests and their metadata
+- Discussions and community content
+- Actions workflow runs and results
+- Checks and status information
+
+**What it creates:**
+- Creates new issues for problems found during QA
+- Updates existing issues with QA findings
+- Adds comments to issues with QA results
+- Requires `issues: write` permission
+
+⚠️ See notes above on coding tasks.
 
 ### 🔍 Daily Accessibility Review
 
@@ -150,4 +257,17 @@ This creates a pull request to add the workflow to your repository. You will nee
 gh aw run daily-accessibility-review
 ```
 
-⚠️ See notes above on coding tasks. When run, this workflow will create new issue(s) with the accessibility review results. It may also search the web for information to help with the review.  **This workflow is configured with "max-runs: 1" so it will only run once, as a sample.** If you want to run it again, you will need to edit the workflow file to change to "max-runs: 2" line, and then run `gh aw compile` to update the workflow.
+**Activity Duration:** By default this workflow will stay active for 48 hours before automatically stopping.
+
+**What it reads from GitHub:**
+- Repository contents and source code for accessibility analysis
+
+**What it creates:**
+- Creates new issues documenting accessibility problems found
+- Requires `issues: write` permission
+
+**What web searches it performs:**
+- Searches for WCAG 2.2 guidelines and accessibility information
+- May look up accessibility best practices and compliance requirements
+
+⚠️ See notes above on coding tasks.

@@ -1,16 +1,17 @@
 ---
 on: 
   schedule:
-    # Every day at 9am UTC
-    - cron: "0 9 * * *"
+    # Run daily at 3am UTC, all days except Saturday and Sunday
+    - cron: "0 3 * * 1-5"
   workflow_dispatch:
 
 timeout_minutes: 15
 
+stop-time: +48h # workflow will no longer trigger after 48 hours
+
 permissions:
   contents: read  # Required so the agent can review the code in the repository
   issues: write   # Required so the agent can create issues for accessibility problems
-  actions: read   # Required for max-runs
 
 tools:
   playwright:
@@ -23,12 +24,7 @@ tools:
     allowed: ["create_issue"]
   claude:
     allowed:
-      Task:
       TodoWrite:
-      Glob:
-      Grep:
-      LS:
-      Read:
       WebFetch:
       WebSearch:
 
