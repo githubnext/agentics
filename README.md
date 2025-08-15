@@ -36,7 +36,7 @@ Then install one or more workflows from this repository as described below.
 - [🔍 Daily QA](#-daily-qa) - Perform quality assurance tasks
 - [🔍 Daily Accessibility Review](#-daily-accessibility-review) - Review application accessibility
 
-## �📚 Weekly Research
+## 📚 Weekly Research
 
 The [weekly research workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
 
