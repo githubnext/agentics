@@ -16,7 +16,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.com/github
 ### Coding & Development Workflows
 - [📦 Daily Dependency Updater](#-daily-dependency-updater) - Update dependencies and create pull requests
 - [📖 Regular Documentation Update](#-regular-documentation-update) - Update documentation automatically
-- [🔍 Daily QA](#-daily-qa) - Perform quality assurance tasks
+- [🔍 Daily QA](#-daily-qa) - Perform "soft", explorative quality assurance tasks
 - [🔍 Daily Accessibility Review](#-daily-accessibility-review) - Review application accessibility
 
 ## 📚 Weekly Research
