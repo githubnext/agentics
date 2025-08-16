@@ -271,5 +271,5 @@ gh aw run daily-accessibility-review
 
 ## 💬 Share Feedback
 
-Is your favorite agent not here? Tell us about it! You can file bugs and feature requests as issues in this repository
+Is your favorite agentic workflow not here? Do you have an idea for a new one? Clone this repo and explore, create! Tell us about it! You can file bugs and feature requests as issues in this repository
 and share your thoughts in the `#continuous-ai` channel in the [GitHub Next Discord](https://gh.io/next-discord).
