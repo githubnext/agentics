@@ -3,24 +3,7 @@
 Samples of [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
 
 > [!CAUTION]
-> GitHub Agentic Workflows are a research demonstrator, and these workflows are samples only. They should not be used in production, are early development and may change significantly. Using agentic workflows in your repository requires careful supervision, and even then things can still go wrong. Use it with caution, and at your own risk.
-
-## ⚡ Quick Start (30 seconds)
-
-To install, first install the `gh-aw` extension:
-
-```bash 
-gh extension install githubnext/gh-aw
-```
-
-Your repository will also need a ANTHROPIC_API_KEY or OPENAI_API_KEY Actions secret set up to run workflows that use AI models. You can add this using one of the following commands:
-
-```bash
-gh secret set ANTHROPIC_API_KEY -a actions --body <your-anthropic-api-key>
-#gh secret set OPENAI_API_KEY -a actions --body <your-openai-api-key>
-```
-
-Then install one or more workflows from this repository as described below.
+> GitHub Agentic Workflows are a research demonstrator, and these workflows are samples only.
 
 ## 📂 Available Workflows
 
@@ -38,7 +21,7 @@ Then install one or more workflows from this repository as described below.
 
 ## 📚 Weekly Research
 
-The [weekly research workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository.
+The [weekly research workflow](workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository. You can edit the workflow to adjust the topics, length and texture of the report. 
 
 ```bash
 gh aw add weekly-research -r githubnext/agentics --pr
@@ -71,7 +54,7 @@ gh aw run weekly-research
 
 ## 👥 Daily Team Status
 
-The [daily team status workflow](workflows/daily-team-status.md?plain=1) will run daily to assess activity in the repository and create a status report issue.
+The [daily team status workflow](workflows/daily-team-status.md?plain=1) will run daily to assess activity in the repository and create a status report issue. You can edit the workflow to adjust the topics and texture of the report. 
 
 ```bash
 gh aw add daily-team-status -r githubnext/agentics --pr
@@ -99,7 +82,7 @@ gh aw run daily-team-status
 
 ## 📋 Daily Plan
 
-The [daily plan workflow](workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team. This planning issue can be used by other workflows as a reference for what the team is working on and what the current priorities are.
+The [daily plan workflow](workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team. This planning issue can be used by other workflows as a reference for what the team is working on and what the current priorities are. You can edit the workflow to adjust the planning and report. 
 
 ```bash
 gh aw add daily-plan -r githubnext/agentics --pr
@@ -228,7 +211,7 @@ gh aw run update-docs
 
 ### 🔍 Daily QA
 
-The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md to check that the code builds and runs, and that the tests pass.
+The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md, tutorials and walkthroughs to check that the code builds and runs, and that the getting started process is simple and works well. You can edit and configure the workflow to describe more tasks. 
 
 ```bash
 gh aw add daily-qa -r githubnext/agentics --pr
