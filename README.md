@@ -1,8 +1,8 @@
 # ✨ The Agentics
 
-Samples of [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
+A sample family of reusable [GitHub Agentic Workflows](https://github.com/githubnext/gh-aw?tab=readme-ov-file).
 
-> [!CAUTION]
+> [!WARNING]
 > GitHub Agentic Workflows are a research demonstrator, and these workflows are samples only.
 
 ## 📂 Available Workflows
