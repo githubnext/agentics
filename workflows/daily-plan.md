@@ -53,6 +53,10 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 
    - Do not create any other issues, just the project plan issue. Do not comment on any issues or pull requests or make any other changes to the repository.
 
+## Human in the loop
+
+Review the project plan issue labeled "project-plan" to ensure the proposed plan aligns with project goals and priorities. Check that suggested new issues are appropriate and actionable before creating them manually.
+
 @include agentics/shared/tool-refused.md
 
 @include agentics/shared/include-link.md

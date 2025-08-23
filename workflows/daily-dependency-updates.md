@@ -60,6 +60,10 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 > NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
 
+## Human in the loop
+
+Review dependency update pull requests to verify changes are appropriate and test results are satisfactory. Check for breaking changes and ensure compatibility before merging updates.
+
 @include agentics/shared/no-push-to-main.md
 
 @include agentics/shared/workflow-changes.md

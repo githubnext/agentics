@@ -53,6 +53,10 @@ At the end of the report list write a collapsed section with the following:
 - All bash commands you executed
 - All MCP tools you used
 
+## Human in the loop
+
+Review the "Weekly Research Report" issue to gain insights into industry trends, competitive landscape, and new opportunities relevant to the project. Consider implementing suggested ideas and exploring mentioned technologies.
+
 @include agentics/shared/include-link.md
 
 @include agentics/shared/job-summary.md

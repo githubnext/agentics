@@ -133,6 +133,10 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 
 > NOTE: Treat documentation gaps like failing tests.
 
+## Human in the loop
+
+Review draft pull requests for documentation changes to ensure accuracy, clarity, and completeness. Verify that code examples work correctly and that the documentation structure follows project standards before merging.
+
 @include agentics/shared/tool-refused.md
 
 @include agentics/shared/include-link.md

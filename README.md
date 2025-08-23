@@ -18,6 +18,8 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.com/github
 - [📖 Regular Documentation Update](#-regular-documentation-update) - Update documentation automatically
 - [🔍 Daily QA](#-daily-qa) - Perform "soft", explorative quality assurance tasks
 - [🔍 Daily Accessibility Review](#-daily-accessibility-review) - Review application accessibility by automatically running and using the application
+- [⚡ Daily Performance Improver](#-daily-performance-improver) - Analyze and improve code performance through benchmarking and optimization
+- [🧪 Daily Test Coverage Improver](#-daily-test-coverage-improver) - Improve test coverage by adding meaningful tests to under-tested areas
 
 ## 📚 Weekly Research
 
@@ -33,7 +35,10 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run weekly-research
 ```
 
-**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+**Configuration:**
+- No build steps required - works out of the box
+- Edit the workflow file to customize output format, research topics, report length, focus areas or to adjust frequency or timing
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - Repository contents and file structure
@@ -52,9 +57,20 @@ gh aw run weekly-research
 - Searches for relevant research papers and academic content
 - May search for market opportunities and business insights
 
+**Human in the loop:**
+- Review the research report issue created by the workflow
+- Validate research findings and sources for accuracy
+- Add additional context or follow-up questions as comments
+- Close or update the issue once insights have been reviewed and acted upon
+- Disable or uninstall the workflow if research reports are not useful or relevant
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 30 days, after which it will stop triggering.
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
 ## 👥 Daily Team Status
 
-The [daily team status workflow](workflows/daily-team-status.md?plain=1) will run daily to assess activity in the repository and create a status report issue. You can edit the workflow to adjust the topics and texture of the report. 
+The [daily team status workflow](workflows/daily-team-status.md?plain=1) will assess activity in the repository and create a status report issue. You can edit the workflow to adjust the topics and texture of the report. 
 
 ```bash
 gh aw add daily-team-status -r githubnext/agentics --pr
@@ -66,7 +82,10 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-team-status
 ```
 
-**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+**Configuration:**
+- No build steps required - works out of the box
+- Edit the workflow file to customize status report format, metrics, modify report frequency or add specific team focuses
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - Repository contents and file structure
@@ -79,6 +98,17 @@ gh aw run daily-team-status
 - Creates new status report issues
 - Updates existing status issues with new information
 - Requires `issues: write` permission
+
+**Human in the loop:**
+- Review daily status report issues for accuracy and completeness
+- Validate team activity assessments and metrics
+- Comment on issues to provide additional context or corrections
+- Use status reports to inform team meetings and planning decisions
+- Disable or uninstall the workflow if status reports don't provide valuable insights
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 30 days, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
 ## 📋 Daily Plan
 
@@ -94,7 +124,11 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-plan
 ```
 
-**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+**Configuration:**
+- No build steps required - works out of the box
+- Edit the workflow file to customize planning format, priorities, planning categories, timeframes, or team coordination style
+- Add MCPs to integrate with other planning tools
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - Repository contents and file structure
@@ -109,9 +143,20 @@ gh aw run daily-plan
 - Searches for additional planning information and best practices
 - May look up industry trends or project management insights
 
+**Human in the loop:**
+- Review and validate planning issues created or updated by the workflow
+- Adjust priorities and tasks based on team feedback
+- Add missing context or clarifications to planning issues
+- Use planning issues as input for team coordination and sprint planning
+- Disable or uninstall the workflow if planning automation is not helpful
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 30 days, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
 ## 🏷️ Issue Triage
 
-The [issue triage workflow](workflows/issue-triage.md?plain=1) will run daily to triage issues and pull requests in the repository.
+The [issue triage workflow](workflows/issue-triage.md?plain=1) will when issues are created or reopened to triage issues in the repository.
 
 ```bash
 gh aw add issue-triage -r githubnext/agentics --pr
@@ -119,7 +164,11 @@ gh aw add issue-triage -r githubnext/agentics --pr
 
 This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
-**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+**Configuration:**
+- No build steps required - works out of the box
+- Edit the workflow file to customize triage criteria, labeling logic, customize issue categorization, modify automated responses
+- Add MCPs to integrate with project management tools
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - The specific issue being triaged and its details
@@ -137,15 +186,26 @@ This creates a pull request to add the workflow to your repository. You can't st
 - Searches for relevant information to assist with issue triage
 - May look up documentation, error messages, or similar issues
 
+**Human in the loop:**
+- Review triage comments added to issues for accuracy
+- Validate label assignments and priority assessments
+- Override or adjust triage decisions when needed
+- Monitor triaged issues to ensure proper follow-up and resolution
+- Disable or uninstall the workflow if triage automation is not accurate or helpful
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 30 days, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
 ## 💻 Coding Tasks
 
 The samples in this repo include workflows that can help with coding tasks, such as solving issues, updating documentation, and performing QA tasks.
 
-⚠️⚠️ Coding tasks should be installed with caution and used only experimentally, and then disabled. While the tasks are executed within GitHub Actions, and are relatively sandboxed, operating over their own copy of the repository, they still operate in an environment where outward network requests are allowed. Also, you will require you to configure additional `Bash` commands to build and test your project by editing the markdown workflow file to add those commands and then running `gh aw compile` to update the workflow. The worfklows below will attempt to "self-report" the commands they need to run, so you can look at the initial reports to see what commands are needed.
+⚠️⚠️ Coding tasks should be installed with caution and used only experimentally, and then disabled. While the tasks are executed within GitHub Actions, and are relatively sandboxed, operating over their own copy of the repository, they still operate in an environment where outward network requests are allowed and egress is possible. Also, you will require you to configure additional `Bash` commands to build and test your project by editing the markdown workflow file to add those commands and then running `gh aw compile` to update the workflow. The worfklows below will attempt to "self-report" the commands they need to run, so you can look at the initial reports to see what commands are needed.
 
 ### 📦 Daily Dependency Updater
 
-The [daily dependency updater workflow](workflows/daily-dependency-updates.md?plain=1) will run daily to check for Dependabot alerts in the repository and update dependencies to the latest versions, creating pull requests as necessary.
+The [daily dependency updater workflow](workflows/daily-dependency-updates.md?plain=1) will check for Dependabot alerts in the repository and update dependencies to the latest versions, creating pull requests as necessary.
 
 ```bash
 gh aw add daily-dependency-updates -r githubnext/agentics --pr
@@ -157,7 +217,10 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-dependency-updates
 ```
 
-**Activity Duration:** By default this workflow will stay active for 48 hours before automatically stopping.
+**Configuration:**
+- Edit the workflow to specify dependency management tools (npm, pip, maven, etc.), customize dependency update strategies and version constraints
+- Configure which dependencies to include/exclude from automated updates
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - Repository contents and dependency files
@@ -172,6 +235,17 @@ gh aw run daily-dependency-updates
 - Creates new branches for the dependency changes
 - Makes file changes to update dependency versions
 - Requires `contents: write` and `pull-requests: write` permissions
+
+**Human in the loop:**
+- Review dependency update pull requests for breaking changes
+- Test updated dependencies to ensure compatibility
+- Merge approved pull requests after validation
+- Monitor for any issues after dependency updates are deployed
+- Disable or uninstall the workflow if dependency updates cause more problems than benefits
+
+**Activity duration:**
+- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
 ⚠️ See notes above on coding tasks.
 
@@ -189,7 +263,13 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run update-docs
 ```
 
-**Activity Duration:** By default this workflow will stay active for 30 days before automatically stopping.
+**Configuration:**
+- Benefits from configuring build steps for documentation generation
+- Edit the workflow to specify your documentation framework (Astro Starlight, MkDocs, etc.)
+- Customize documentation structure, themes, and generation commands
+- Add project-specific documentation validation and deployment steps
+- Configure which files and directories to include in documentation updates
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - Repository contents and source code
@@ -207,11 +287,22 @@ gh aw run update-docs
 - Searches for information to help improve documentation
 - May look up best practices, examples, or technical references
 
+**Human in the loop:**
+- Review documentation update pull requests for accuracy and clarity
+- Validate that documentation changes reflect actual code behavior
+- Edit and improve AI-generated documentation before merging
+- Test documentation examples and instructions for correctness
+- Disable or uninstall the workflow if documentation updates are not improving quality
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 30 days, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
 ⚠️ See notes above on coding tasks.
 
 ### 🔍 Daily QA
 
-The [daily QA workflow](workflows/daily-qa.md?plain=1) will run daily to perform quality assurance tasks in the repository, such as following the instructions in the README.md, tutorials and walkthroughs to check that the code builds and runs, and that the getting started process is simple and works well. You can edit and configure the workflow to describe more tasks. 
+The [daily QA workflow](workflows/daily-qa.md?plain=1) will perform quality assurance tasks in the repository, such as following the instructions in the README.md, tutorials and walkthroughs to check that the code builds and runs, and that the getting started process is simple and works well. You can edit and configure the workflow to describe more tasks. 
 
 ```bash
 gh aw add daily-qa -r githubnext/agentics --pr
@@ -223,7 +314,12 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-qa
 ```
 
-**Activity Duration:** By default this workflow will stay active for 48 hours before automatically stopping.
+**Configuration:**
+- Requires configuring build steps to run your application - initial runs may open issues suggesting new inferred commands that need approval
+- Edit the workflow to specify build tools, test frameworks, and QA scenarios
+- Customize quality checks, performance benchmarks, and validation steps
+- Add project-specific getting-started instructions and tutorial validation
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - Repository contents and source code
@@ -238,11 +334,22 @@ gh aw run daily-qa
 - Adds comments to issues with QA results
 - Requires `issues: write` permission
 
-⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and test your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
+**Human in the loop:**
+- Review QA issues to validate reported problems
+- Reproduce and confirm issues identified by the workflow
+- Prioritize QA findings and assign them for resolution
+- Close issues once problems have been addressed
+- Disable or uninstall the workflow if QA findings are not actionable or valuable
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
+⚠️ See notes above on coding tasks.
 
 ### 🔍 Daily Accessibility Review
 
-The [daily accessibility review workflow](workflows/daily-accessibility-review.md?plain=1) will run daily to perform accessibility reviews of the application.
+The [daily accessibility review workflow](workflows/daily-accessibility-review.md?plain=1) will perform accessibility reviews of the application.
 
 ```bash
 gh aw add daily-accessibility-review -r githubnext/agentics --pr
@@ -254,7 +361,13 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-accessibility-review
 ```
 
-**Activity Duration:** By default this workflow will stay active for 48 hours before automatically stopping.
+**Configuration:**
+- First run produces a pull request with inferred action pre-steps that need approval
+- Requires configuring build steps to run your application - initial runs may open issues suggesting new inferred commands that need approval
+- Edit the workflow to specify application startup commands and URLs to test
+- Customize accessibility testing tools and WCAG compliance levels
+- Add project-specific accessibility scenarios and user journey testing
+- After editing run `gh aw compile` to update the workflow.
 
 **What it reads from GitHub:**
 - Repository contents and source code for accessibility analysis
@@ -267,7 +380,117 @@ gh aw run daily-accessibility-review
 - Searches for WCAG 2.2 guidelines and accessibility information
 - May look up accessibility best practices and compliance requirements
 
+**Human in the loop:**
+- Review accessibility issues created by the workflow for accuracy
+- Validate accessibility problems with screen readers or accessibility tools
+- Prioritize accessibility fixes based on severity and impact
+- Test accessibility improvements before closing issues
+- Disable or uninstall the workflow if accessibility reports are not accurate or useful
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
 ⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and test your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
+
+## 🧪 Daily Test Coverage Improver
+
+The [daily test coverage improver workflow](workflows/daily-test-improver.md?plain=1) will analyze test coverage and add tests to improve coverage in under-tested areas of the codebase.
+
+```bash
+gh aw add daily-test-improver -r githubnext/agentics --pr
+```
+
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-test-improver
+```
+
+**Configuration:**
+- First run produces a pull request with inferred action pre-steps that need approval
+- Requires configuring build steps to run your application - initial runs may open issues suggesting new inferred commands that need approval
+- Edit the workflow to customize test generation strategies, high-priority areas and coverage targets
+- Add project-specific test patterns and edge case identification
+- After editing run `gh aw compile` to update the workflow.
+
+**What it reads from GitHub:**
+- Repository contents and source code for coverage analysis
+- Existing test files and test coverage reports
+- Build scripts and testing configuration files
+- Previous issues and pull requests related to testing
+
+**What it creates:**
+- Creates new branches with additional test cases
+- Creates draft pull requests with improved test coverage
+- Creates issues documenting coverage analysis and improvements
+- Makes file changes to add meaningful tests for edge cases and uncovered code
+- Requires `contents: write`, `issues: write`, and `pull-requests: write` permissions
+
+**Human in the loop:**
+- Review test coverage improvement pull requests for test quality
+- Validate that new tests properly cover edge cases and uncovered code
+- Ensure tests are meaningful and not just coverage-padding
+- Merge approved test improvements after verification
+- Disable or uninstall the workflow if test additions are not improving code quality
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
+⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and run tests with coverage reporting, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
+
+## ⚡ Daily Performance Improver
+
+The [daily performance improver workflow](workflows/daily-perf-improver.md?plain=1) will analyze code performance, identify bottlenecks, and implement optimizations through benchmarking and code improvements.
+
+```bash
+gh aw add daily-perf-improver -r githubnext/agentics --pr
+```
+
+This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+
+```bash
+gh aw run daily-perf-improver
+```
+
+**Configuration:**
+- First run produces a pull request with inferred action pre-steps that need approval
+- Requires configuring build steps to run your application - initial runs may open issues suggesting new inferred commands that need approval
+- Edit the workflow to specify performance testing tools and benchmarking frameworks
+- Customize optimization targets, performance metrics, and profiling strategies
+- Add project-specific bottleneck identification and performance validation steps
+
+**Activity duration:** 
+- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
+**What it reads from GitHub:**
+- Repository contents and source code for performance analysis
+- Existing issues and pull requests related to performance
+- Build scripts and project configuration files
+- CI/CD configurations and workflow results
+
+**What it creates:**
+- Creates new branches with performance improvements
+- Creates draft pull requests with optimized code and benchmark results
+- Creates issues documenting performance analysis and improvements
+- Makes file changes to optimize algorithms and data structures
+- Requires `contents: write`, `issues: write`, and `pull-requests: write` permissions
+
+**What web searches it performs:**
+- Searches for performance optimization techniques and best practices
+- Looks up benchmarking tools and methodologies
+- May search for algorithm optimizations and data structure improvements
+
+**Human in the loop:**
+- Review performance improvement pull requests and benchmark results
+- Validate performance gains through independent testing
+- Assess code quality and maintainability of optimizations
+- Merge approved performance improvements after thorough testing
+- Disable or uninstall the workflow if performance optimizations are not effective or introduce bugs
+
+⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and profile your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
 
 ## 💬 Share Feedback
 
