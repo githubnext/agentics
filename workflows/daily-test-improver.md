@@ -71,31 +71,37 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    
    e. Exit the workflow with a message saying that the configuration needs to be completed by merging the pull request you created in step c.
 
-1. Analyze the state of test coverage:
+1. Analyze the state of test coverage. You can assume that the repository is in a state where the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` have been run and a test coverage report has been generated, perhaps with other detailed coverage information.
    
-   a. The repository should be in a state where the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` have been run and a test coverage report has been generated, perhaps with other detailed coverage information. Look at the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` to work out where the coverage report should be, and read it. If you can't find the coverage report, work out why the build or coverage generation failed, then create an issue describing the problem and exit. If you know how to fix the problem, then do so in a pull request first, and then exit the workflow so that the workflow can be re-run once the PR is merged.
+   a. Look at the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` to work out where the coverage report should be, and find it. If you can't find the coverage report, work out why the build or coverage generation failed, then create an issue describing the problem and exit.
 
-   b. Check the most recent issue with title starting with "${{ github.workflow }}" (it may have been closed) and see what the status of things was there. These are your notes from last time you did your work, and may include useful recommendations for future areas to work on.
-
-   c. Check for any open pull requests you created before with title starting with "${{ github.workflow }}. Don't work on adding any tests that overlap with what was done there.
-
-2. Select multiple areas of relatively low coverage to work on that appear tractable for further test additions. Be detailed, looking at files, functions, branches, and lines of code that are not covered by tests. Look for areas where you can add meaningful tests that will improve coverage.
-
-3. For each area identified
-
-   a. Create a new branch and add tests to improve coverage. Ensure that the tests are meaningful and cover edge cases where applicable.
-
-   b. Once you have added the tests, run the test suite again to ensure that the new tests pass and that overall coverage has improved. Do not add tests that do not improve coverage.
-
-   c. Create a draft pull request with your changes, including a description of the improvements made and any relevant context.
+   b. Read the coverge report. Be detailed, looking to understand the files, functions, branches, and lines of code that are not covered by tests. Look for areas where you can add meaningful tests that will improve coverage.
    
-   d. Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
+   c. Check the most recent issue with title starting with "${{ github.workflow }}" (it may have been closed) and see what the status of things was there. These are your notes from last time you did your work, and may include useful recommendations for future areas to work on.
 
-   e. Create an issue with title starting with "${{ github.workflow }}", summarizing
+   d. Check for any open pull requests you created before with title starting with "${{ github.workflow }}. Don't work on adding any tests that overlap with what was done there.
+
+   e. Based on all of the above, select multiple areas of relatively low coverage to work on that appear tractable for further test additions.
+
+3. For each area identified, do the following:
+
+   a. Create a new branch
+   
+   b. Write new tests to improve coverage. Ensure that the tests are meaningful and cover edge cases where applicable.
+
+   c. Build the tests if necessary and remove any build errors.
+   
+   d. Run the new tests to ensure they pass.
+
+   e. Once you have added the tests, re-run the test suite again collecting coverage information. Check that overall coverage has improved. If coverage has not improved then exit.
+
+   f. Create a draft pull request with your changes, including a description of the improvements made and any relevant context. Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
+
+   g. Create an issue with title starting with "${{ github.workflow }}", summarizing
    
    - the problems you found
    - the actions you took
-   - the changes in test coverage achieved
+   - the changes in test coverage achieved - give numbers from the coverage reports
    - possible other areas for future improvement
    - include links to any issues you created or commented on, and any pull requests you created.
    - list any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.

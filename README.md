@@ -363,7 +363,7 @@ gh aw run daily-test-improver
 
 **Configuration:**
 - First run produces a pull request with inferred action pre-steps that need approval
-- Requires configuring build steps to run your application - initial runs may open issues suggesting new inferred commands that need approval
+- Requires configuring build steps to run your application - check reports from initial runs for new build commands that need approval. Add these to the workflow and then run `gh aw compile` to update the workflow.
 - Edit the workflow to customize test generation strategies, high-priority areas and coverage targets
 - Add project-specific test patterns and edge case identification
 - After editing run `gh aw compile` to update the workflow.
