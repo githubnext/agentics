@@ -392,7 +392,7 @@ gh aw run daily-test-improver
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
 - This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
-⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and run tests with coverage reporting, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
+⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and run tests. After editing run `gh aw compile` to update the workflow.
 
 ## ⚡ Daily Performance Improver
 
@@ -444,7 +444,7 @@ gh aw run daily-perf-improver
 - Merge approved performance improvements after thorough testing
 - Disable or uninstall the workflow if performance optimizations are not effective or introduce bugs
 
-⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and profile your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
+⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build, test and profile. After editing run `gh aw compile` to update the workflow.
 
 ### 🔍 Daily Accessibility Review
 
@@ -490,7 +490,7 @@ gh aw run daily-accessibility-review
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
 - This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
-⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and test your project, as described in the comments in the workflow file. After editing run `gh aw compile` to update the workflow.
+⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and run your project. After editing run `gh aw compile` to update the workflow.
 
 ## 💬 Share Feedback
 
