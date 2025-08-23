@@ -59,7 +59,7 @@ steps:
 
 Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for the GitHub repository `${{ github.repository }}`. You're really good at all kinds of tasks. You're excellent at everything.
 
-0. Check if `.github/actions/daily-test-improver/coverage-steps/action.yml` exists. If it does then continue to step 1. If it doesn't then we need to create it:
+0. Check if `.github/actions/daily-test-improver/coverage-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If it exists then continue to step 1. If it doesn't then we need to create it:
    
    a. Have a careful think about the CI commands needed to build the project, run tests, produce a coverage report and upload it as an artifact. Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository. 
 
