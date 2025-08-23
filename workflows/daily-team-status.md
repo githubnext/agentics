@@ -67,10 +67,6 @@ tools:
 
    Only a new issue should be created, no existing issues should be adjusted.
 
-## Human in the loop
-
-Review the "Daily Team Status" issue for motivation and team insights. Consider the productivity suggestions and community engagement ideas to improve team effectiveness and project visibility.
-
 @include agentics/shared/include-link.md
 
 @include agentics/shared/job-summary.md

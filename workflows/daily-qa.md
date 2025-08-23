@@ -72,10 +72,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 6. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
 
-## Human in the loop
-
-Review the "Daily QA Report" issue to understand problems found and actions taken. Address any issues created by the workflow and consider implementing suggested improvements to code quality and documentation.
-
 @include agentics/shared/tool-refused.md
 
 @include agentics/shared/include-link.md

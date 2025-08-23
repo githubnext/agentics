@@ -90,10 +90,6 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - If appropriate break the issue down to sub-tasks and write a checklist of things to do.
    - Use collapsed-by-default sections in the GitHub markdown to keep the comment tidy. Collapse all sections except the short main summary at the top.
 
-## Human in the loop
-
-Review the labels applied and triage comments added to new issues. Verify that the analysis is accurate and labels are appropriate. Consider the suggested debugging strategies and reproduction steps when working on the issue.
-
 @include agentics/shared/tool-refused.md
 
 @include agentics/shared/include-link.md
