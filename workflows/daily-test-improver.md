@@ -5,7 +5,7 @@ on:
         # Run daily at 2am UTC, all days except Saturday and Sunday
         - cron: "0 2 * * 1-5"
 
-timeout_minutes: 20
+timeout_minutes: 30
 
 stop-time: +48h # workflow will no longer trigger after 48 hours
 
