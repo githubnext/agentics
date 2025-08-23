@@ -59,9 +59,9 @@ steps:
 
 Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for the GitHub repository `${{ github.repository }}`. You're really good at all kinds of tasks. You're excellent at everything.
 
-1. Self-configuration. Check if `./.github/daily-perf-improver.notes.md` and `./.github/actions/daily-perf-improver/build-steps/action.yml` both exist. If they do, then continue to step 2. If either file is missing then follow these steps:
+1. Self-configuration. Check if `.github/daily-perf-improver.notes.md` and `.github/actions/daily-perf-improver/build-steps/action.yml` both exist in this repo. If they do, then continue to step 2. If either file is missing then follow these steps:
 
-   1a. If `./.github/daily-perf-improver.notes.md` doesn't exist, then
+   1a. If `.github/daily-perf-improver.notes.md` doesn't exist in this repo, then
       - Do some deep research into performance matters in this repo.
         - How is performance testing is done in the repo?
         - How to do micro benchmarks in the repo?
@@ -75,13 +75,13 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
         - What existing documentation is there about performance in this repo?
         - What exact steps need to be followed to benchmark and profile a typical part of the code in this repo?
 
-      - Use this research to write a file `./.github/daily-perf-improver.notes.md` containing "Perf Improvement Developer Guide", a collection of succint notes answering these questions.
+      - Use this research to write a file `.github/daily-perf-improver.notes.md` containing "Perf Improvement Developer Guide", a collection of succint notes answering these questions.
 
       - Create a pull request for the addition of this file, with title "Add perf improvement developer guide for ${{ github.workflow }}". Explain that adding this file to the repo will make this workflow more reliable and effective. Encourage the maintainer to review the file carefully to ensure it is appropriate for the project.
 
       - Continue to step 1b.
    
-   1b. If `./.github/actions/daily-perf-improver/build-steps/action.yml` doesn't exist
+   1b. If `.github/actions/daily-perf-improver/build-steps/action.yml` doesn't exist in this repo, then
    
       - Have a careful think about the CI commands needed to
         - install necessary tools, for build, test, profiling and micro-benchmarking tools
@@ -89,7 +89,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
       
       - Carefully read any existing documentation and CI files in the repository that do similar things. Look at build scripts, project files, dev guides etc. in the repository.
 
-      - Create the file `./.github/actions/daily-perf-improver/build-steps/action.yml` containing these steps, ensuring that the action.yml file is valid.
+      - Create the file `.github/actions/daily-perf-improver/build-steps/action.yml` containing these steps, ensuring that the action.yml file is valid.
 
       - Make a pull request for the addition of this file, with title "Updates to complete configuration of ${{ github.workflow }}". Explain that adding these files to the repo will make this workflow more reliable and effective. Encourage the maintainer to review the files carefully to ensure they are appropriate for the project.
    
@@ -97,9 +97,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 2. Goal selection. Assuming you've found those two files, now build an understanding of what to work on and select a performance improvement goal to pursue.
 
-   2a. You can now assume the repository is in a state where the steps in `./.github/actions/daily-perf-improver/build-steps/action.yml` have been run and is ready for performance testing, running micro-benchmarks etc. Read this file to understand what has been done.
+   2a. You can now assume the repository is in a state where the steps in `.github/actions/daily-perf-improver/build-steps/action.yml` have been run and is ready for performance testing, running micro-benchmarks etc. Read this file to understand what has been done.
 
-   2b. Read the notes you created in `./.github/daily-perf-improver.notes.md` to understand performance engineering in this repo.
+   2b. Read the notes you created in `.github/daily-perf-improver.notes.md` to understand performance engineering in this repo.
 
    2c. Check the most recent issue with title starting with "${{ github.workflow }}" (it may have been closed) and see what the status of things was there, including any recommendations.
 
