@@ -12,7 +12,6 @@ stop-time: +48h # workflow will no longer trigger after 48 hours
 permissions:
   issues: write  # needed to create issues for problems found
   contents: read
-  models: read
   pull-requests: read
   discussions: read
   actions: read
