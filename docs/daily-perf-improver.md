@@ -60,6 +60,6 @@ gh aw run daily-perf-improver
 
 ## YOLO
 
-- If you're sufficiently isolated (e.g. operating in a fresh fork of a project), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
+- If you're sufficiently isolated (e.g. operating in a fresh fork of an open source project, with Actions and Issues enabled ), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
 
 ⚠️ See notes on coding tasks in the [main README](../README.md). You will need to edit the workflow file to add the commands to build, test and profile. After editing run `gh aw compile` to update the workflow.

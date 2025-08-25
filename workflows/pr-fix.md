@@ -4,7 +4,7 @@ on:
     name: pr-fix
 
 permissions:
-  contents: read # needed to read repository content and workflow files
+  contents: write # needed to push changes
   actions: read # needed to access workflow runs and job logs
   checks: read # needed to read check runs and status
   statuses: read # needed to read commit statuses
