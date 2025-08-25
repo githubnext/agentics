@@ -76,9 +76,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    1c. Create the file `.github/actions/daily-test-improver/coverage-steps/action.yml` containing these steps, ensuring that the action.yml file is valid.
 
-   1d. Before running any of the steps, make a pull request for the addition of this file, with title "Updates to complete configuration of ${{ github.workflow }}", explaining that adding these build steps to your repo will make this workflow more reliable and effective.
+   1d. Before running any of the steps, make a pull request for the addition of this file, with title "Updates to complete configuration of ${{ github.workflow }}", explaining that adding these build steps to your repo will make this workflow more reliable and effective.  Use `push_files` to push the changes, then use `create_pull_request` to create the pull request.
    
-   1e. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the pull request you created in step 1d. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
+   1e. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the pull request you created in step 1d, using `update_pull_request` to make the update. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
    
    1f. Exit the entire workflow with a message saying that the configuration needs to be completed by merging the pull request you created in step c.
 
@@ -106,21 +106,21 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3e. Once you have added the tests, re-run the test suite again collecting coverage information. Check that overall coverage has improved. If coverage has not improved then exit.
 
-   3f. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context.
-   - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
-   - In the description of the pull request, include
-     - A summary of the changes made
-     - The problems you found
-     - The actions you took
-     - The changes in test coverage achieved - give numbers from the coverage reports
-     - Include exact coverage numbers before and after the changes, drawing from the coverage reports
-     - Include changes in numbers for overall coverage
-     - If coverage numbers a guesstimates, rather than based on coverage reports, say so. Don't blag, be honest. Include the exact commands the user will need to run to validate accurate coverage numbers.
-     - List possible other areas for future improvement
-     - In a collapsed section list
-       - all bash commands you ran
-       - all web searches you performed
-       - all web pages you fetched 
+   3f. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context. Use `push_files` to push the changes, then use `create_pull_request` to create the pull request.
+    - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
+    - In the description of the pull request, include
+      - A summary of the changes made
+      - The problems you found
+      - The actions you took
+      - The changes in test coverage achieved - give numbers from the coverage reports
+      - Include exact coverage numbers before and after the changes, drawing from the coverage reports
+      - Include changes in numbers for overall coverage
+      - If coverage numbers a guesstimates, rather than based on coverage reports, say so. Don't blag, be honest. Include the exact commands the user will need to run to validate accurate coverage numbers.
+      - List possible other areas for future improvement
+      - In a collapsed section list
+        - all bash commands you ran
+        - all web searches you performed
+        - all web pages you fetched 
 
    If you were unable to improve coverage in a particular area, create an issue explaining why and what you tried. If you have any relevant links or resources, include those as well.
 
