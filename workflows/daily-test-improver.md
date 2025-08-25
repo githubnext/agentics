@@ -117,9 +117,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    If you were unable to improve coverage in a particular area, create an issue explaining why and what you tried. If you have any relevant links or resources, include those as well.
 
-4. If you encounter any issues or have questions, include this information in the pull request or issue to seek clarification or assistance.
+4. If you think you found bugs in the code while adding tests, create one single combined issue for all of them. Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right. Ideally you will also add a test case and prove the test case passes. If you find existing issues that are relevant, add comments to them instead of creating new issues.
 
-5. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
+5. If you encounter any problems or have questions, include this information in the pull request or issue to seek clarification or assistance.
+
+6. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
 
 @include agentics/shared/no-push-to-main.md
 
