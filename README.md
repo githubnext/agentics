@@ -345,6 +345,9 @@ gh aw run daily-qa
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
 - This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
+**YOLO:**
+- If you're sufficiently isolated (e.g. operating in a fresh fork of a project), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
+
 ⚠️ See notes above on coding tasks.
 
 ## 🧪 Daily Test Coverage Improver
@@ -392,6 +395,9 @@ gh aw run daily-test-improver
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
 - This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
+**YOLO:**
+- If you're sufficiently isolated (e.g. operating in a fresh fork of a project), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
+
 ⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and run tests. After editing run `gh aw compile` to update the workflow.
 
 ## ⚡ Daily Performance Improver
@@ -414,6 +420,9 @@ gh aw run daily-perf-improver
 - Edit the workflow to specify performance testing tools and benchmarking frameworks
 - Customize optimization targets, performance metrics, and profiling strategies
 - Add project-specific bottleneck identification and performance validation steps
+
+**YOLO:**
+* If you're sufficiently isolated (e.g. operating in a fresh fork of a project), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
 
 **Activity duration:** 
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
@@ -443,6 +452,9 @@ gh aw run daily-perf-improver
 - Assess code quality and maintainability of optimizations
 - Merge approved performance improvements after thorough testing
 - Disable or uninstall the workflow if performance optimizations are not effective or introduce bugs
+
+**YOLO:**
+- If you're sufficiently isolated (e.g. operating in a fresh fork of a project), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
 
 ⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build, test and profile. After editing run `gh aw compile` to update the workflow.
 
@@ -489,6 +501,9 @@ gh aw run daily-accessibility-review
 **Activity duration:** 
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
 - This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
+
+**YOLO:**
+- If you're sufficiently isolated (e.g. operating in a fresh fork of a project), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
 
 ⚠️ See notes above on coding tasks. You will need to edit the workflow file to add the commands to build and run your project. After editing run `gh aw compile` to update the workflow.
 
