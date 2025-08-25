@@ -45,6 +45,7 @@ tools:
 steps:
   - name: Checkout repository
     uses: actions/checkout@v3
+
   - name: Check if action.yml exists
     id: check_build_steps_file
     run: |
@@ -52,6 +53,7 @@ steps:
         echo "exists=true" >> $GITHUB_OUTPUT
       else
         echo "exists=false" >> $GITHUB_OUTPUT
+      fi
     shell: bash
   - name: Build the project ready for performance testing
     if: steps.check_build_steps_file.outputs.exists == 'true'
