@@ -1,7 +1,7 @@
 ---
 on:
   workflow_run:
-    workflows: ["Daily Perf Improver", "Daily Test Improver"]  # Monitor the CI workflow specifically
+    workflows: ["Daily Perf Improver", "Daily Test Coverage Improver"]  # Monitor the CI workflow specifically
     types:
       - completed
     # This will trigger only when the CI workflow completes with failure
