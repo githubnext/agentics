@@ -153,11 +153,15 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
      - Benchmarking should be done in a way that is reliable and reproducible, though beware that because you're running in a virtualised environment wall-clock-time measurements may not be 100% accurate.
      - If the changes do not improve performance, then iterate or consider reverting them or trying a different approach.
 
+   4e. Apply any automatic code formatting used in the repo
+   
+   4f. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
+
 5. If you succeeded in writing useful code changes that improve performance, create a draft pull request with your changes. 
 
    - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
 
-   - Use Bash `gh pr create --repo ${{ github.repository }}` to create a pull request with the changes.
+   - Use Bash `gh pr create --repo ${{ github.repository }} ...` to create a pull request with the changes.
 
    5a. Include a description of the improvements, details of the benchmark runs that show improvement and by how much, made and any relevant context.
    
@@ -178,7 +182,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    - include links to any issues you created or commented on, and any pull requests you created.
    - list any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
 
-   5d. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on the particular performance goal and linking to the pull request you created.
+   5d. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
+
+   5e. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on the particular performance goal and linking to the pull request you created.
 
 6. If you didn't succeed in improving performance, create an issue with title starting with "${{ github.workflow }}", summarizing similar information to above.
 

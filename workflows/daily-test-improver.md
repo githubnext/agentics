@@ -28,7 +28,6 @@ tools:
         create_branch,
         delete_file,
         push_files,
-        create_pull_request,
         update_pull_request,
       ]
   claude:
@@ -77,7 +76,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    1c. Create the file `.github/actions/daily-test-improver/coverage-steps/action.yml` containing these steps, ensuring that the action.yml file is valid.
 
-   1d. Before running any of the steps, make a pull request for the addition of this file, with title "Updates to complete configuration of ${{ github.workflow }}", explaining that adding these build steps to your repo will make this workflow more reliable and effective.  Use `push_files` to push the changes, then use `create_pull_request` to create the pull request.
+   1d. Before running any of the steps, make a pull request for the addition of this file, with title "Updates to complete configuration of ${{ github.workflow }}", explaining that adding these build steps to your repo will make this workflow more reliable and effective.
+
+    - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
+
+    - Use Bash `gh pr create --repo ${{ github.repository }} ...` to create a pull request with the changes.
    
    1e. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the pull request you created in step 1d, using `update_pull_request` to make the update. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
    
@@ -91,7 +94,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    
    2c. Check the most recent pull request with title starting with "${{ github.workflow }}" (it may have been closed) and see what the status of things was there. These are your notes from last time you did your work, and may include useful recommendations for future areas to work on.
 
-   2d. Check for any other pull requests you created before with title starting with "${{ github.workflow }}. Don't work on adding any tests that overlap with what was done there.
+   2d. Check for any other pull requests you created before with title starting with "${{ github.workflow }}". Don't work on adding any tests that overlap with what was done there.
 
    2e. Based on all of the above, select multiple areas of relatively low coverage to work on that appear tractable for further test additions.
 
@@ -107,11 +110,15 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3e. Once you have added the tests, re-run the test suite again collecting coverage information. Check that overall coverage has improved. If coverage has not improved then exit.
 
-   3f. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context. Use `push_files` to push the changes, then use `create_pull_request` to create the pull request.
+   3f. Apply any automatic code formatting used in the repo
+   
+   3g. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
+
+   3h. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context.
 
     - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
 
-    - Use Bash `gh pr create --repo ${{ github.repository }}` to create a pull request with the changes.
+    - Use Bash `gh pr create --repo ${{ github.repository }} ...` to create a pull request with the changes.
 
     - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
 
@@ -129,9 +136,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
         - all web searches you performed
         - all web pages you fetched 
 
-   If you were unable to improve coverage in a particular area, create an issue explaining why and what you tried. If you have any relevant links or resources, include those as well.
+    - After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-4. If you think you found bugs in the code while adding tests, create one single combined issue for all of them. Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right. Ideally you will also add a test case and prove the test case passes. If you find existing issues that are relevant, add comments to them instead of creating new issues.
+4. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 
 5. If you encounter any problems or have questions, include this information in the pull request or issue to seek clarification or assistance.
 
