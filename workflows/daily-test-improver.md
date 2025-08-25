@@ -106,14 +106,21 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3e. Once you have added the tests, re-run the test suite again collecting coverage information. Check that overall coverage has improved. If coverage has not improved then exit.
 
-   3f. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context. Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here. In the description of the pull request, include a summary of the changes made and the impact on coverage.
-   
-   - the problems you found
-   - the actions you took
-   - the changes in test coverage achieved - give numbers from the coverage reports
-   - possible other areas for future improvement
-   - include links to any issues you created or commented on, and any pull requests you created.
-   - list any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
+   3f. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context.
+   - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
+   - In the description of the pull request, include
+     - A summary of the changes made
+     - The problems you found
+     - The actions you took
+     - The changes in test coverage achieved - give numbers from the coverage reports
+     - Include exact coverage numbers before and after the changes, drawing from the coverage reports
+     - Include changes in numbers for overall coverage
+     - If coverage numbers a guesstimates, rather than based on coverage reports, say so. Don't blag, be honest. Include the exact commands the user will need to run to validate accurate coverage numbers.
+     - List possible other areas for future improvement
+     - In a collapsed section list
+       - all bash commands you ran
+       - all web searches you performed
+       - all web pages you fetched 
 
    If you were unable to improve coverage in a particular area, create an issue explaining why and what you tried. If you have any relevant links or resources, include those as well.
 

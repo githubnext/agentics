@@ -73,17 +73,30 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    1a. Check if an open issue with title "${{ github.workflow }}: Research and Plan" exists. If it does, read the issue and its comments, paying particular attention to comment from repository maintainers, then continue to step 2. If not, follow the steps below to create it:
 
    1b. Do some deep research into performance matters in this repo.
-        - How is performance testing is done in the repo?
-        - How to do micro benchmarks in the repo?
-        - What are typical workloads for the software in this repo?
-        - Where are performance bottlenecks?
-        - Is perf I/O, CPU or Storage bound?
-        - What do the repo maintainers care about most w.r.t. perf.?
-        - What are realistic goals for Round 1, 2, 3 of perf improvement?
-        - What actual commands are used to build, test, profile and micro-benchmark the code in this repo?
-        - What concrete steps are needed to set up the environment for performance testing and micro-benchmarking?
-        - What existing documentation is there about performance in this repo?
-        - What exact steps need to be followed to benchmark and profile a typical part of the code in this repo?
+     - How is performance testing is done in the repo?
+     - How to do micro benchmarks in the repo?
+     - What are typical workloads for the software in this repo?
+     - Where are performance bottlenecks?
+     - Is perf I/O, CPU or Storage bound?
+     - What do the repo maintainers care about most w.r.t. perf.?
+     - What are realistic goals for Round 1, 2, 3 of perf improvement?
+     - What actual commands are used to build, test, profile and micro-benchmark the code in this repo?
+     - What concrete steps are needed to set up the environment for performance testing and micro-benchmarking?
+     - What existing documentation is there about performance in this repo?
+     - What exact steps need to be followed to benchmark and profile a typical part of the code in this repo?
+
+     Research:
+     - Functions or methods that are slow
+     - Algorithms that can be optimized
+     - Data structures that can be made more efficient
+     - Code that can be refactored for better performance
+     - Important routines that dominate performance
+     - Code that can be vectorized or other standard techniques to improve performance
+     - Any other areas that you identify as potential performance bottlenecks
+     - CPU, memory, I/O or other bottlenecks
+
+     Consider perf engineering fundamentals:
+     - You want to get to a zone where the engineers can run commands to get numbers towards some performance goal - with commands running reliably within 1min or so - and it can "see" the code paths associated with that. If you can achieve that, your engineers will be very good at finding low-hanging fruit to work towards the performance goals.
 
      1b. Use this research to write an issue with title "${{ github.workflow }}: Research and Plan", then exit this entire workflow.
 
@@ -99,45 +112,43 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    2e. Make a pull request for the addition of this file, with title "${{ github.workflow }}: Updates to complete configuration". Explain that adding these files to the repo will make this workflow more reliable and effective. Encourage the maintainer to review the files carefully to ensure they are appropriate for the project. Exit the entire workflow.
 
-3. Performance goal selection: build an understanding of what to work on and select a performance improvement goal to pursue.
+3. Performance goal selection: build an understanding of what to work on and select a part of the performance plan to pursue.
 
    3a. You can now assume the repository is in a state where the steps in `.github/actions/daily-perf-improver/build-steps/action.yml` have been run and is ready for performance testing, running micro-benchmarks etc. Read this file to understand what has been done.
 
-   3b. Read the notes you created in `.github/daily-perf-improver.notes.md` to understand performance engineering in this repo.
+   3b. Read the plan in the issue mentioned earlier, along with comments.
 
    3c. Check any existing open pull requests that are related to performance improvements especially any opened by you starting with title "${{ github.workflow }}".
    
-   3d. Select a performance improvement goal to pursue. 
-   - Functions or methods that are slow
-   - Algorithms that can be optimized
-   - Data structures that can be made more efficient
-   - Code that can be refactored for better performance
-   - Important routines that dominate performance
-   - Code that can be vectorized or other standard techniques to improve performance
-   - Any other areas that you identify as potential performance bottlenecks
-   - CPU, memory, I/O or other bottlenecks
+   3d. If you think the plan is inadequate, and needs a refresh, update the planning issue by rewriting the actual body of the issue, ensuring you take into account any comments from maintainers. Add one single comment to the issue saying nothing but the plan has been updated with a one sentence explanation about why. Do not add comments to the issue, just update the body. Then continue to step 3e.
+  
+   3e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
 
-   Ensure that you have a good understanding of the code and the performance issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
-
-4. Write code to improve performance and measure impact. For the performance improvement goal you selected, do the following:
+4. Work towards your selected goal.. For the performance improvement goal you selected, do the following:
 
    4a. Create a new branch.
    
-   4b. Develop a plan about how to measure and improve performance for this performance goal. This could include
-      - writing and running micro-benchmarks before and after changes
-      - optimizing algorithms
-      - implementing more efficient data structures
-      - refactoring code for better performance 
-      Ensure that the changes are likely to be useful, don't waste time on changes that are unlikely to help.
+   4b. Make the changes to work towards the performance improvement goal you selected. This may involve:
+     - Refactoring code
+     - Optimizing algorithms
+     - Changing data structures
+     - Adding caching
+     - Parallelizing code
+     - Improving memory access patterns
+     - Using more efficient libraries or frameworks
+     - Reducing I/O operations
+     - Reducing network calls
+     - Improving concurrency
+     - Using profiling tools to identify bottlenecks
+     - Improving engineering practices
+     - Other techniques to improve performance 
 
-   4c. Make the changes to improve performance.
-   
-   4d. Ensure the code still works as expected and that any existing relevant tests pass. 
+   4c. Ensure the code still works as expected and that any existing relevant tests pass. 
 
-   4e. After making the changes, measure their impact on performance.
+   4d. After making the changes, if appropriate measure their impact on performance.
    
      - Get actual performance numbers
-     - If you can't measure the performance impact, then continue but make a note of what you tried.
+     - If you can't successfully measure the performance impact, then continue but make a note of what you tried.
      - Run individual benchmarks and comparing results.
      - Benchmarking should be done in a way that is reliable and reproducible, though beware that because you're running in a virtualised environment wall-clock-time measurements may not be 100% accurate.
      - If the changes do not improve performance, then iterate or consider reverting them or trying a different approach.
