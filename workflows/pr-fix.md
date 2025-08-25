@@ -1,6 +1,7 @@
 ---
 on:
-  alias: pr-fix
+  alias:
+    name: pr-fix
 
 permissions:
   contents: read # needed to read repository content and workflow files
