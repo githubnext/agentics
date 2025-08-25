@@ -36,6 +36,7 @@ tools:
       WebSearch:
       # Configure bash build commands here, or enabled the agentics/shared/build-tools.md file at the end of this file and edit there
       #Bash: [":*"]
+      Bash: ["gh pr create:*", "git commit:*", "git push:*", "git checkout:*", "git branch:*", "git add:*", "gh auth status", "gh repo view", "gh pr view:*", "gh pr list:*", "gh issue list:*", "gh issue view:*", "gh issue comment:*", "gh api *"]
 
 timeout_minutes: 20
 
