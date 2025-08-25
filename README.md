@@ -14,6 +14,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.com/github
 - [🏷️ Issue Triage](#️-issue-triage) - Triage issues and pull requests
 
 ### Coding & Development Workflows
+- [🏥 CI Doctor](#-ci-doctor) - Monitor CI workflows and investigate failures automatically
 - [📦 Daily Dependency Updater](#-daily-dependency-updater) - Update dependencies and create pull requests
 - [📖 Regular Documentation Update](#-regular-documentation-update) - Update documentation automatically
 - [🔍 Daily Adhoc QA](#-daily-qa) - Perform "soft", explorative quality assurance tasks
@@ -202,6 +203,55 @@ This creates a pull request to add the workflow to your repository. You can't st
 The samples in this repo include workflows that can help with coding tasks, such as solving issues, updating documentation, and performing QA tasks.
 
 ⚠️⚠️ Coding tasks should be installed with caution and used only experimentally, and then disabled. While the tasks are executed within GitHub Actions, and are relatively sandboxed, operating over their own copy of the repository, they still operate in an environment where outward network requests are allowed and egress is possible. Also, you will require you to configure additional `Bash` commands to build and test your project by editing the markdown workflow file to add those commands and then running `gh aw compile` to update the workflow. The worfklows below will attempt to "self-report" the commands they need to run, so you can look at the initial reports to see what commands are needed.
+
+## 🏥 CI Doctor
+
+The [CI Doctor workflow](workflows/ci-doctor.md?plain=1) monitors your GitHub Actions workflows and automatically investigates CI failures. When a monitored workflow fails, the CI Doctor conducts a deep analysis to identify root causes, patterns, and provides actionable recommendations for fixing the issues.
+
+```bash
+gh aw add ci-doctor -r githubnext/agentics --pr
+```
+
+This creates a pull request to add the workflow to your repository. After merging the PR, the workflow will automatically trigger when monitored CI workflows fail. You cannot start this workflow manually as it responds to workflow failure events.
+
+**Configuration:**
+- No build steps required - works out of the box for failure investigation
+- Edit the workflow file to specify which workflows to monitor (currently monitors "Daily Perf Improver" and "Daily Test Improver")
+- Customize investigation depth, failure categorization, and reporting format
+- After editing run `gh aw compile` to update the workflow.
+
+**What it reads from GitHub:**
+- Failed workflow runs and job details
+- Workflow and job logs from failed executions
+- Repository contents and configuration files
+- Commit details that triggered the failure
+- Pull request information (if failure is PR-related)
+- Historical issues for pattern matching
+- Actions workflow runs and status information
+
+**What it creates:**
+- Creates detailed investigation issues with root cause analysis
+- Adds comments to related pull requests with failure analysis
+- Updates existing issues if similar failures have occurred
+- Stores investigation data in cache for pattern recognition
+- Requires `issues: write`, `actions: read`, and `pull-requests: write` permissions
+
+**What web searches it performs:**
+- Searches for error message explanations and solutions
+- Looks up documentation for failing dependencies or tools
+- May search for known issues and workarounds for identified problems
+
+**Human in the loop:**
+- Review CI failure investigation reports for accuracy and completeness
+- Validate root cause analysis and recommended fixes
+- Implement suggested solutions and test fixes
+- Close investigation issues once problems are resolved
+- Monitor for recurring failure patterns and adjust workflows accordingly
+- Disable or uninstall the workflow if failure investigations are not providing value
+
+**Activity duration:**
+- By default this workflow will trigger for at most 30 days, after which it will stop triggering.
+- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
 ### 📦 Daily Dependency Updater
 
