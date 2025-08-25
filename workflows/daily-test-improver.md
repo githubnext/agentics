@@ -46,10 +46,19 @@ steps:
   - name: Checkout repository
     uses: actions/checkout@v3
 
-  - name: Build and run test to produce coverage report
+  - name: Check if action.yml exists
+    id: check_build_steps_file
+    run: |
+      if [ -f ".github/actions/daily-test-improver/coverage-steps/action.yml" ]; then
+        echo "exists=true" >> $GITHUB_OUTPUT
+      else
+        echo "exists=false" >> $GITHUB_OUTPUT
+      fi
+    shell: bash
+  - name: Build the project and produce coverage report
+    if: steps.check_build_steps_file.outputs.exists == 'true'
     uses: ./.github/actions/daily-test-improver/coverage-steps
-    id: coverage-steps
-    continue-on-error: true
+    id: build-steps
 
 ---
 
