@@ -41,6 +41,7 @@ tools:
       WebSearch:
       # Configure bash build commands here, or enabled the agentics/shared/build-tools.md file at the end of this file and edit there
       #Bash: [":*"]
+      Bash: ["gh pr create:*", "git commit:*", "git push:*", "git checkout:*", "git branch:*", "git add:*", "gh auth status", "gh repo view", "gh pr view:*", "gh pr list:*", "gh issue list:*", "gh issue view:*", "gh issue comment:*", "gh api *"]
 
 steps:
   - name: Checkout repository
@@ -107,7 +108,13 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    3e. Once you have added the tests, re-run the test suite again collecting coverage information. Check that overall coverage has improved. If coverage has not improved then exit.
 
    3f. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context. Use `push_files` to push the changes, then use `create_pull_request` to create the pull request.
+
+    - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
+
+    - Use Bash `gh pr create --repo ${{ github.repository }}` to create a pull request with the changes.
+
     - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
+
     - In the description of the pull request, include
       - A summary of the changes made
       - The problems you found

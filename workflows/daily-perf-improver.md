@@ -28,7 +28,6 @@ tools:
         create_branch,
         delete_file,
         push_files,
-        create_pull_request,
         update_pull_request,
       ]
   claude:
@@ -41,6 +40,7 @@ tools:
       WebSearch:
       # Configure bash build commands here, or enabled the agentics/shared/build-tools.md file at the end of this file and edit there
       #Bash: [":*"]
+      Bash: ["gh pr create:*", "git commit:*", "git push:*", "git checkout:*", "git branch:*", "git add:*", "gh auth status", "gh repo view", "gh pr view:*", "gh pr list:*", "gh issue list:*", "gh issue view:*", "gh issue comment:*", "gh api *"]
 
 steps:
   - name: Checkout repository
@@ -153,7 +153,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
      - Benchmarking should be done in a way that is reliable and reproducible, though beware that because you're running in a virtualised environment wall-clock-time measurements may not be 100% accurate.
      - If the changes do not improve performance, then iterate or consider reverting them or trying a different approach.
 
-5. If you succeeded in writing useful code changes that improve performance, create a draft pull request with your changes. Use `push_files` to push the changes, then use `create_pull_request` to create the pull request.
+5. If you succeeded in writing useful code changes that improve performance, create a draft pull request with your changes. 
+
+   - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
+
+   - Use Bash `gh pr create --repo ${{ github.repository }}` to create a pull request with the changes.
 
    5a. Include a description of the improvements, details of the benchmark runs that show improvement and by how much, made and any relevant context.
    

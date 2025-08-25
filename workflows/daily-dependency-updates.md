@@ -26,11 +26,9 @@ tools:
         create_or_update_file,
         create_branch,
         delete_file,
-        push_files,
         create_issue,
         update_issue,
         add_issue_comment,
-        create_pull_request,
         update_pull_request,
       ]
   claude:
@@ -40,6 +38,7 @@ tools:
       Write:
       WebFetch:
       WebSearch:
+      Bash: ["gh pr create:*", "git commit:*", "git push:*", "git checkout:*", "git branch:*", "git add:*", "gh auth status", "gh repo view", "gh pr view:*", "gh pr list:*", "gh issue list:*", "gh issue view:*", "gh issue comment:*", "gh api *"]
 ---
 
 # Agentic Dependency Updater
@@ -53,7 +52,7 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 2. Check for an existing PR starting with title "Daily Dependency Updates". Add your additional updates to that PR if it exists, otherwise create a new PR.  Try to bundle as many dependency updates as possible into one PR. Test the changes to ensure they work correctly, if the tests don't pass then divide and conquer and create separate PRs for each dependency update. 
 
-   - Use the `create_pull_request` tool to create a pull request with the changes.
+   - Use Bash `gh pr create --repo ${{ github.repository }}` to create a pull request with the changes.
    - Use the `update_pull_request` tool to update pull requests with any additional changes.
 
 > NOTE: If you didn't make progress on a particular dependency update, add a comment saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
