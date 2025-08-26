@@ -3,10 +3,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
 timeout_minutes: 15
-
-stop-time: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
 permissions:
   contents: write # needed to push changes to a new branch in the repository in preparation for the pull request

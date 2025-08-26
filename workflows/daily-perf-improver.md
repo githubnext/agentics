@@ -4,10 +4,9 @@ on:
     schedule:
         # Run daily at 2am UTC, all days except Saturday and Sunday
         - cron: "0 2 * * 1-5"
+    stop-after: +48h # workflow will no longer trigger after 48 hours
 
 timeout_minutes: 30
-
-stop-time: +48h # workflow will no longer trigger after 48 hours
 
 permissions:
   contents: write # needed to create branches, files, and pull requests in this repo without a fork

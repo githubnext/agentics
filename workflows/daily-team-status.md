@@ -5,7 +5,7 @@ on:
     - cron: "0 9 * * 1-5"
   workflow_dispatch:
 
-stop-time: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
+  stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
 timeout_minutes: 15
 permissions:
