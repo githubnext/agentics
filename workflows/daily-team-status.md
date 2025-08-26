@@ -75,3 +75,5 @@ tools:
 
 @include agentics/shared/gh-extra-tools.md
 
+<!-- You can customize prompting and tools in .github/workflows/agentics/daily-team-status.config -->
+@include? agentics/daily-team-status.config

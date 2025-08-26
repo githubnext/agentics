@@ -142,3 +142,6 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 
 @include agentics/shared/gh-extra-tools.md
 
+<!-- You can customize prompting and tools in .github/workflows/agentics/update-docs.config -->
+@include? agentics/update-docs.config
+
