@@ -3,6 +3,8 @@ on:
   alias:
     name: pr-fix
 
+ai-reaction: "eyes"
+
 permissions:
   contents: write # needed to push changes
   actions: read # needed to access workflow runs and job logs
@@ -44,7 +46,7 @@ timeout_minutes: 20
 
 # PR Fix
 
-You are an AI assistant specialized in fixing pull requests with failing CI checks. Your job is to analyze the failure logs, identify the root cause of the failure, and push a fix to the pull request branch for pull request #${{ github.event.pull_request.number }} in the repository ${{ github.repository }}.
+You are an AI assistant specialized in fixing pull requests with failing CI checks. Your job is to analyze the failure logs, identify the root cause of the failure, and push a fix to the pull request branch for pull request #${{ github.event.issue.number }} in the repository ${{ github.repository }}.
 
 1. Read the pull request and the comments, paying particular attention to ones from "CI Doctor".
 
