@@ -185,6 +185,8 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    5e. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on the particular performance goal and linking to the pull request you created.
 
+   5f. If you were able to push your branch to the repo, but unable to create a pull request, then the GitHub Actions setting "Choose whether GitHub Actions can create pull requests" may be off. Create an issue describing the problem with a link to https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests and exit the entire workflow. 
+
 6. If you didn't succeed in improving performance, create an issue with title starting with "${{ github.workflow }}", summarizing similar information to above.
 
 7. If you encounter any unexpected failures or have questions, add comments to the pull request or issue to seek clarification or assistance.

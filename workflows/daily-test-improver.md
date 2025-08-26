@@ -158,6 +158,8 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    4i. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on this area and created a pull request, with a link to the pull request.
 
+   4j. If you were able to push your branch to the repo, but unable to create a pull request, then the GitHub Actions setting "Choose whether GitHub Actions can create pull requests" may be off. Create an issue describing the problem with a link to https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests and exit the entire workflow. 
+
 5. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 
 6. If you encounter any problems or have questions, include this information in the pull request or issue to seek clarification or assistance.
