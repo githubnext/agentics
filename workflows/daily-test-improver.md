@@ -156,6 +156,8 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
     - After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
+   4i. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on this area and created a pull request, with a link to the pull request.
+
 5. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 
 6. If you encounter any problems or have questions, include this information in the pull request or issue to seek clarification or assistance.
