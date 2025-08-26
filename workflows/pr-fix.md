@@ -2,8 +2,7 @@
 on:
   alias:
     name: pr-fix
-
-ai-reaction: "eyes"
+  reaction: "eyes"
 
 permissions:
   contents: write # needed to push changes
