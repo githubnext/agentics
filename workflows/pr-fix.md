@@ -3,7 +3,7 @@ on:
   alias:
     name: pr-fix
   reaction: "eyes"
-  stop-time: +48h
+  stop-sfter: +48h
 
 permissions:
   contents: write # needed to push changes
