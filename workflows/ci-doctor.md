@@ -22,18 +22,9 @@ permissions:
 tools:
   github:
     allowed: [
-      get_workflow_run,
-      list_workflow_jobs,
-      get_job_logs,
-      get_workflow_run_logs,
-      get_commit,
-      get_pull_request,
-      get_pull_request_files,
       create_issue,
       add_issue_comment,
-      update_issue,
-      search_issues,
-      list_issues
+      update_issue
     ]
   
   # Simple file-based storage for investigation results (no external dependencies)
@@ -42,8 +33,6 @@ tools:
 
   claude:
     allowed:
-      Write:
-      Edit:
       WebFetch:
       WebSearch:
 
