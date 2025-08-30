@@ -16,13 +16,31 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-test-improver
 ```
 
+**Checklist**
+
+* [ ] See notes on coding tasks in the [main README](../README.md). 
+
+* [ ] Enable "Allow GitHub Actions to create and approve pull requests" in the repository settings under "Actions > General"
+
+* [ ] Recommend enabling  "Always suggest updating pull request branches" in the repository settings
+
+* [ ] If in a fork, enable "GitHub Actions" and "GitHub Issues" in the fork project settings
+
+* [ ] When a pull request is created, you must review the changes carefully. 
+
+* [ ] Understand that your GitHub Actions runs will **not** trigger on pull requests created by this workflow, or indeed any Actions-created PRs. You must open/close the PR or push a new commit to trigger CI checks. This is not indicated in the GitHub UI. It's just something you need to be aware of.
+
 ## Configuration
 
-- First run produces a pull request with inferred action pre-steps that need approval
-- Requires configuring build steps to run your application - check reports from initial runs for new build commands that need approval. Add these to the workflow and then run `gh aw compile` to update the workflow.
-- Edit the workflow to customize test generation strategies, high-priority areas and coverage targets
-- Add project-specific test patterns and edge case identification
-- After editing run `gh aw compile` to update the workflow.
+1. The first run of the workflow will produce a pull request with inferred action pre-steps that need approval.
+
+2. The first run of the workflow will also create an issue in the repository with a plan for improving test coverage. You can comment on this issue to provide feedback or adjustments to the plan. Comments will not be picked up until the next run.
+
+3. Use local configuation or comment on the plan to specify test generation strategies, high-priority areas and coverage targets. Local configuration can be done in `.github/workflows/agentics/daily-test-improver.config.md`.
+
+4. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`.
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 
@@ -56,4 +74,3 @@ gh aw run daily-test-improver
 
 - If you're sufficiently isolated (e.g. operating in a fresh fork of an open source project, with Actions and Issues enabled ), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
 
-⚠️ See notes on coding tasks in the [main README](../README.md). You will need to edit the workflow file to add the commands to build and run tests. After editing run `gh aw compile` to update the workflow.

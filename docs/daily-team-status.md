@@ -16,11 +16,15 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-team-status
 ```
 
+**Checklist**
+
+* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
+
 ## Configuration
 
 - No build steps required - works out of the box
 - Edit the workflow file to customize status report format, metrics, modify report frequency or add specific team focuses
-- After editing run `gh aw compile` to update the workflow.
+- After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 

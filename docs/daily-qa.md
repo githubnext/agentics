@@ -16,13 +16,17 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-qa
 ```
 
+**Checklist**
+
+* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
+
 ## Configuration
 
-- Requires configuring build steps to run your application - initial runs may open issues suggesting new inferred commands that need approval
-- Edit the workflow to specify build tools, test frameworks, and QA scenarios
-- Customize quality checks, performance benchmarks, and validation steps
-- Add project-specific getting-started instructions and tutorial validation
-- After editing run `gh aw compile` to update the workflow.
+3. Use local configuation to specify QA tasks, testing scenarios, reporting format, and frequency. Local configuration can be done in `.github/workflows/agentics/daily-qa.config.md`.
+
+4. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`.
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 
@@ -56,4 +60,3 @@ gh aw run daily-qa
 
 - If you're sufficiently isolated (e.g. operating in a fresh fork of an open source project, with Actions and Issues enabled ), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
 
-⚠️ See notes on coding tasks in the [main README](../README.md).

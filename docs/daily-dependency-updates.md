@@ -16,11 +16,27 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-dependency-updates
 ```
 
+**Checklist**
+
+* [ ] See notes on coding tasks in the [main README](../README.md). 
+
+* [ ] Enable "Allow GitHub Actions to create and approve pull requests" in the repository settings under "Actions > General"
+
+* [ ] Recommend enabling  "Always suggest updating pull request branches" in the repository settings
+
+* [ ] If in a fork, enable "GitHub Actions" and "GitHub Issues" in the fork project settings
+
+* [ ] When a pull request is created, you must review the changes carefully. 
+
+* [ ] Understand that your GitHub Actions runs will **not** trigger on pull requests created by this workflow, or indeed any Actions-created PRs. You must open/close the PR or push a new commit to trigger CI checks. This is not indicated in the GitHub UI. It's just something you need to be aware of.
+
 ## Configuration
 
-- Edit the workflow to specify dependency management tools (npm, pip, maven, etc.), customize dependency update strategies and version constraints
-- Configure which dependencies to include/exclude from automated updates
-- After editing run `gh aw compile` to update the workflow.
+1. Use local configuation to specify dependency management tools (npm, pip, maven, etc.), customize dependency update strategies and version constraints, onfigure which dependencies to include/exclude from automated updates. Local configuration can be done in `.github/workflows/agentics/daily-dependency-updates.config.md`.
+
+2. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`.
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 
@@ -51,4 +67,3 @@ gh aw run daily-dependency-updates
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
 - This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
 
-⚠️ See notes on coding tasks in the [main README](../README.md).

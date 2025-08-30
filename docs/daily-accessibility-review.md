@@ -10,20 +10,23 @@ The [daily accessibility review workflow](../workflows/daily-accessibility-revie
 gh aw add daily-accessibility-review -r githubnext/agentics --pr
 ```
 
-This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+This creates an issue in your repository recording accessibility problems found.
 
 ```bash
 gh aw run daily-accessibility-review
 ```
 
+**Checklist**
+
+* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
+
 ## Configuration
 
-- First run produces a pull request with inferred action pre-steps that need approval
-- Requires configuring build steps to run your application - initial runs may open issues suggesting new inferred commands that need approval
-- Edit the workflow to specify application startup commands and URLs to test
-- Customize accessibility testing tools and WCAG compliance levels
-- Add project-specific accessibility scenarios and user journey testing
-- After editing run `gh aw compile` to update the workflow.
+1. Use local configuation to specify which accessibility standards to check (e.g., WCAG 2.1, WCAG 2.2), types of accessibility issues to prioritize, and reporting format. Local configuration can be done in `.github/workflows/agentics/daily-accessibility-review.config.md`.
+
+2. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`. 
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 
@@ -56,4 +59,3 @@ gh aw run daily-accessibility-review
 
 - If you're sufficiently isolated (e.g. operating in a fresh fork of an open source project, with Actions and Issues enabled ), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
 
-⚠️ See notes on coding tasks in the [main README](../README.md). You will need to edit the workflow file to add the commands to build and run your project. After editing run `gh aw compile` to update the workflow.

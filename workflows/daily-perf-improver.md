@@ -127,7 +127,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    4a. Create a new branch.
    
-   4b. Make the changes to work towards the performance improvement goal you selected. This may involve:
+   4b. Work towards the performance improvement goal you selected. This may involve:
      - Refactoring code
      - Optimizing algorithms
      - Changing data structures
@@ -141,6 +141,8 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
      - Using profiling tools to identify bottlenecks
      - Improving engineering practices
      - Other techniques to improve performance 
+
+     If you do benchmarking then make sure you actually take before/after benchmarking performance figures. Provide benchmarking, profiling or other evidence that the thing you're optimizing is important to a significant realistic workload.
 
    4c. Ensure the code still works as expected and that any existing relevant tests pass. 
 

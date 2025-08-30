@@ -12,12 +12,17 @@ gh aw add ci-doctor -r githubnext/agentics --pr
 
 This creates a pull request to add the workflow to your repository. After merging the PR, the workflow will automatically trigger when monitored CI workflows fail. You cannot start this workflow manually as it responds to workflow failure events.
 
+**Checklist**
+
+* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
+
 ## Configuration
 
-- No build steps required - works out of the box for failure investigation
-- Edit the workflow file to specify which workflows to monitor (currently monitors "Daily Perf Improver" and "Daily Test Improver")
-- Customize investigation depth, failure categorization, and reporting format
-- After editing run `gh aw compile` to update the workflow.
+1. Use local configuation to specify which workflows to monitor (currently monitors "Daily Perf Improver" and "Daily Test Improver"), investigation depth, failure categorization, and reporting format. Local configuration can be done in `.github/workflows/agentics/ci-doctor.config.md`.
+
+2. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`. 
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 
