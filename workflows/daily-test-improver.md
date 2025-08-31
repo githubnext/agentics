@@ -132,11 +132,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    
    4g. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
 
-   4h. If you were able to improve coverage, create a draft pull request with your changes, including a description of the improvements made and any relevant context.
+   4h. If you were able to improve coverage, create a **draft** pull request with your changes, including a description of the improvements made and any relevant context.
 
     - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
 
-    - Use Bash `gh pr create --repo ${{ github.repository }} ...` to create a pull request with the changes.
+    - Use Bash `gh pr create --repo ${{ github.repository }} --draft ...` to create a pull request with the changes.
 
     - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
 

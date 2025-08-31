@@ -139,20 +139,13 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
      - Reducing network calls
      - Improving concurrency
      - Using profiling tools to identify bottlenecks
-     - Improving engineering practices
-     - Other techniques to improve performance 
+     - Other techniques to improve performance or performance engineering practices
 
-     If you do benchmarking then make sure you actually take before/after benchmarking performance figures. Provide benchmarking, profiling or other evidence that the thing you're optimizing is important to a significant realistic workload.
+     If you do benchmarking then make sure you plan ahead about how to take before/after benchmarking performance figures. You may need to write the benchmarks first, then run them, then implement your changes. Or you might implement your changes, then write benchmarks, then stash or disable the changes and take "before" measurements, then apply the changes to take "after" measurements, or other techniques to get before/after measurements. It's just great if you can provide benchmarking, profiling or other evidence that the thing you're optimizing is important to a significant realistic workload. Run individual benchmarks and comparing results. Benchmarking should be done in a way that is reliable, reproducible and quick, preferably by running iteration running a small subset of targeted relevant benchmarks at a time. Because you're running in a virtualised environment wall-clock-time measurements may not be 100% accurate, but it is probably good enough to see if you're making significant improvements or not. Even better if you can use cycle-accurate timers or similar.
 
-   4c. Ensure the code still works as expected and that any existing relevant tests pass. 
+   4c. Ensure the code still works as expected and that any existing relevant tests pass. Add new tests if appropriate and make sure they pass too.
 
-   4d. After making the changes, if appropriate measure their impact on performance.
-   
-     - Get actual performance numbers
-     - If you can't successfully measure the performance impact, then continue but make a note of what you tried.
-     - Run individual benchmarks and comparing results.
-     - Benchmarking should be done in a way that is reliable and reproducible, though beware that because you're running in a virtualised environment wall-clock-time measurements may not be 100% accurate.
-     - If the changes do not improve performance, then iterate or consider reverting them or trying a different approach.
+   4d. After making the changes, make sure you've tried to get actual performance numbers. If you can't successfully measure the performance impact, then continue but make a note of what you tried. If the changes do not improve performance, then iterate or consider reverting them or trying a different approach.
 
    4e. Apply any automatic code formatting used in the repo
    
