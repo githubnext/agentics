@@ -17,4 +17,4 @@ You can use the GitHub MCP tools to perform various tasks in the repository. In 
 
 ## Git Configuration
 
-When using `git commit`, ensure you set the author name and email appropriately. Do this by using a `--author` flag with `git commit`, for example `git commit --author "${{ github.workflow }} <github-actions@users.noreply.github.com>" ...`.
+When using `git commit`, ensure you set the author name and email appropriately. Do this by using a `--author` flag with `git commit`, for example `git commit --author "${{ github.workflow }} <github-actions[bot]@users.noreply.github.com>" ...`.
