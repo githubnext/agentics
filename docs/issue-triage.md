@@ -18,10 +18,13 @@ This creates a pull request to add the workflow to your repository. You can't st
 
 ## Configuration
 
-- No build steps required - works out of the box
-- Edit the workflow file to customize triage criteria, labeling logic, customize issue categorization, modify automated responses
-- Add MCPs to integrate with project management tools
-- After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
+This workflow requires no configuration and works out of the box. However, you can customize it as follows:
+
+1. Use local configuation to customize triage criteria, labeling logic, customize issue categorization, modify automated responses. Local configuration can be done in `.github/workflows/agentics/issue-triage.config.md`.
+
+2. Add MCPs to integrate with project management tools
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 

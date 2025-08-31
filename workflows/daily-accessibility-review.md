@@ -8,8 +8,10 @@ on:
 
 timeout_minutes: 15
 
-safe-output:
-  create-issue:
+
+permissions:
+  contents: read  # Required so the agent can review the code in the repository
+  issues: write   # Required so the agent can create issues for accessibility problems
 
 tools:
   playwright:
@@ -18,8 +20,11 @@ tools:
       command: npx
       args: ["@playwright/mcp@0.0.33", "--headless"]
     allowed: ["browser_click", "browser_evaluate", "browser_handle_dialog", "browser_hover", "browser_navigate", "browser_navigate_back", "browser_navigate_forward", "browser_press_key", "browser_resize", "browser_select_option", "browser_snapshot", "browser_take_screenshot", "browser_type", "browser_wait_for"]
+  github: 
+    allowed: ["create_issue"]
   claude:
     allowed:
+      TodoWrite:
       WebFetch:
       WebSearch:
 

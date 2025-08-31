@@ -22,6 +22,8 @@ gh aw run weekly-research
 
 ## Configuration
 
+This workflow requires no configuration and works out of the box. However, you can customize it as follows:
+
 1. Use local configuation to customize output format, research topics, report length, focus areas or to adjust frequency or timing. Local configuration can be done in `.github/workflows/agentics/daily-plan.config.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.

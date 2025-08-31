@@ -22,6 +22,8 @@ gh aw run daily-plan
 
 ## Configuration
 
+This workflow requires no configuration and works out of the box. However, you can customize it as follows:
+
 1. Use local configuation to specify planning focus areas, reporting format, and frequency. Local configuration can be done in `.github/workflows/agentics/daily-plan.config.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.

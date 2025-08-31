@@ -33,12 +33,13 @@ gh aw run update-docs
 
 ## Configuration
 
-- Benefits from configuring build steps for documentation generation
-- Edit the workflow to specify your documentation framework (Astro Starlight, MkDocs, etc.)
-- Customize documentation structure, themes, and generation commands
-- Add project-specific documentation validation and deployment steps
-- Configure which files and directories to include in documentation updates
-- After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
+This workflow requires no configuration and works out of the box. However, you can customize it as follows:
+
+1. Use local configuation to configure documentation frameworks, documentation structure, themes, files, directories. Local configuration can be done in `.github/workflows/agentics/update-docs.config.md`.
+
+2. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`.
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 
