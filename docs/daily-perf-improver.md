@@ -92,7 +92,7 @@ If you're sufficiently isolated (e.g. operating in a fresh fork of an open sourc
 ---
 tools:
 claude:
-    allowed:
+  allowed:
     Bash: ["*"] # YOLO mode - all bash commands allowed or list specific tools
 ---
 ```

@@ -52,6 +52,8 @@ tools:
       - "gh issue comment:*"
       - "gh issue list:*"
       - "gh pr list:*"
+      KillBash:
+      BashOutput:
 
 steps:
   - name: Checkout repository
@@ -79,7 +81,7 @@ steps:
 
 Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for the GitHub repository `${{ github.repository }}`. You're really good at all kinds of tasks. You're excellent at everything.
 
-1. Testing research (if not done before).
+1. Testing research (if not done before)
 
    1a. Check if an open issue with title "${{ github.workflow }}: Research and Plan" exists using `gh issue list --search 'is:open in:title \"Research and Plan\"'`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
 
@@ -97,7 +99,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
     1e. Continue to step 2. 
 
-2. Build steps configuration.
+2. Build steps inference and configuration (if not done before)
 
    2a. Check if `.github/actions/daily-test-improver/coverage-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If it exists then continue to step 3. If it doesn't then we need to create it:
    
@@ -115,7 +117,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    
    2f. Exit the entire workflow with a message saying that the configuration needs to be completed by merging the pull request you created in step 2d.
 
-3. Decide what to work on.
+3. Decide what to work on
 
    3a. You can assume that the repository is in a state where the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` have been run and a test coverage report has been generated, perhaps with other detailed coverage information. Look at the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` to work out where the coverage report should be, and find it. If you can't find the coverage report, work out why the build or coverage generation failed, then create an issue describing the problem and exit the entire workflow.
 
@@ -167,7 +169,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
     - After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-   4i. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on this area and created a pull request, with a link to the pull request.
+   4i. Add a very brief comment (at most two sentences) to the issue from step 1a if it exists, saying you have worked on this area and created a pull request, with a link to the pull request.
 
    4j. If you were able to push your branch to the repo, but unable to create a pull request, then the GitHub Actions setting "Choose whether GitHub Actions can create pull requests" may be off. Create an issue describing the problem with a link to https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests and exit the entire workflow. 
 

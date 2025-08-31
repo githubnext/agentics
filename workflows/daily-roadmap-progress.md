@@ -57,6 +57,8 @@ tools:
       - "gh issue comment:*"
       - "gh issue list:*"
       - "gh pr list:*"
+      KillBash:
+      BashOutput:
 
 steps:
   - name: Checkout repository
