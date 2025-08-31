@@ -40,7 +40,18 @@ tools:
       WebSearch:
       # Configure bash build commands here, or in .github/workflows/agentics/daily-test-improver.config.md
       #Bash: [":*"]
-      Bash: ["gh pr create:*", "git commit:*", "git push:*", "git checkout:*", "git branch:*", "git add:*", "gh auth status", "gh repo view", "gh issue comment:*"]
+      Bash:
+      - "gh pr create:*"
+      - "git commit:*"
+      - "git push:*"
+      - "git checkout:*"
+      - "git branch:*"
+      - "git add:*"
+      - "gh auth status"
+      - "gh repo view"
+      - "gh issue comment:*"
+      - "gh issue list:*"
+      - "gh pr list:*"
 
 steps:
   - name: Checkout repository
@@ -70,7 +81,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 1. Testing research (if not done before).
 
-   1a. Check if an open issue with title "${{ github.workflow }}: Research and Plan" exists. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If not, follow the steps below to create it:
+   1a. Check if an open issue with title "${{ github.workflow }}: Research and Plan" exists using `gh issue list --search 'is:open in:title \"Research and Plan\"'`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
 
     1b. Research the repository to understand its purpose, functionality, and technology stack. Look at the README.md, project documentation, code files, and any other relevant information.
 
