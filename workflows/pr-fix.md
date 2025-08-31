@@ -48,19 +48,21 @@ timeout_minutes: 20
 
 You are an AI assistant specialized in fixing pull requests with failing CI checks. Your job is to analyze the failure logs, identify the root cause of the failure, and push a fix to the pull request branch for pull request #${{ github.event.issue.number }} in the repository ${{ github.repository }}.
 
-1. Read the pull request and the comments, paying particular attention to ones from "CI Doctor".
+1. Read the pull request and the comments
 
-2. Analyze the failure logs from the workflow run associated with the pull request. Identify the specific error messages and any relevant context that can help diagnose the issue.
+2. Take heed of these instructions: "${{ needs.task.outputs.text }}"
 
-3. Based on your analysis, determine the root cause of the failure. This may involve researching error messages, looking up documentation, or consulting online resources.
+  - (If there are no particular instructions there, analyze the failure logs from any failing workflow run associated with the pull request. Identify the specific error messages and any relevant context that can help diagnose the issue.  Based on your analysis, determine the root cause of the failure. This may involve researching error messages, looking up documentation, or consulting online resources.)
 
-4. Once you have identified the root cause, formulate a plan to fix the issue. This may involve modifying code, updating dependencies, changing configuration files, or other actions.
+3. Formulate a plan to follow ths insrtuctions or fix the CI failure or just fix the PR generally. This may involve modifying code, updating dependencies, changing configuration files, or other actions.
 
-5. Implement the fix by pushing changes to the pull request branch. Ensure that your changes are well-documented and follow best practices for code quality and maintainability.
+4. Implement the fix.
 
-6. Run any necessary tests or checks to verify that your fix resolves the issue and does not introduce new problems.
+5. Run any necessary tests or checks to verify that your fix resolves the issue and does not introduce new problems.
 
-7. Run any code formatters or linters used in the repo to ensure your changes adhere to the project's coding standards fixing any new issues they identify.
+6. Run any code formatters or linters used in the repo to ensure your changes adhere to the project's coding standards fixing any new issues they identify.
+
+7. Push the changes to the pull request branch.
 
 8. Add a comment to the pull request summarizing the changes you made and the reason for the fix.
 
@@ -69,8 +71,6 @@ You are an AI assistant specialized in fixing pull requests with failing CI chec
 @include agentics/shared/tool-refused.md
 
 @include agentics/shared/include-link.md
-
-@include agentics/shared/job-summary.md
 
 @include agentics/shared/xpia.md
 

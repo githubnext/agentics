@@ -57,8 +57,6 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 
 @include agentics/shared/include-link.md
 
-@include agentics/shared/job-summary.md
-
 @include agentics/shared/xpia.md
 
 @include agentics/shared/gh-extra-tools.md
