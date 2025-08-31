@@ -33,6 +33,8 @@ jobs:
     - name: Install gh aw extension
       run: |
         gh extension install githubnext/gh-aw || gh extension upgrade githubnext/gh-aw
+      env:
+        GH_TOKEN: ${{ github.token }}
         
     - name: Clean up existing lock files
       run: |
@@ -87,6 +89,8 @@ jobs:
         else
           echo "All workflows compiled successfully! 🎉"
         fi
+      env:
+        GH_TOKEN: ${{ github.token }}
         
     - name: Check for generated YAML files
       run: |
