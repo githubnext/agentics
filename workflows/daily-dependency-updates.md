@@ -7,11 +7,11 @@ on:
     stop-after: +48h # workflow will no longer trigger after 48 hours. Remove this and recompile to run indefinitely
 
 timeout_minutes: 15
+
 permissions:
   contents: write # needed to push changes to a new branch in the repository in preparation for the pull request
   pull-requests: write # needed to create pull requests for the changes
   issues: read
-  models: read
   discussions: read
   actions: read
   checks: read

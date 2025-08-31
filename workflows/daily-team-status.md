@@ -10,7 +10,6 @@ on:
 timeout_minutes: 15
 permissions:
   contents: read
-  models: read
   issues: write  # needed to write the output status report to an issue
   pull-requests: read
   discussions: read

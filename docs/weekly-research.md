@@ -22,9 +22,9 @@ gh aw run weekly-research
 
 ## Configuration
 
-- No build steps required - works out of the box
-- Edit the workflow file to customize output format, research topics, report length, focus areas or to adjust frequency or timing
-- After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
+1. Use local configuation to customize output format, research topics, report length, focus areas or to adjust frequency or timing. Local configuration can be done in `.github/workflows/agentics/daily-plan.config.md`.
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 
@@ -36,8 +36,7 @@ gh aw run weekly-research
 
 ## What it creates
 
-- Creates new issues containing research reports
-- Requires `issues: write` permission
+- Creates a new issue containing a research report
 
 ## What web searches it performs
 
@@ -53,6 +52,13 @@ gh aw run weekly-research
 - Add additional context or follow-up questions as comments
 - Close or update the issue once insights have been reviewed and acted upon
 - Disable or uninstall the workflow if research reports are not useful or relevant
+
+## Security
+
+- This workflow uses "safe outputs" to create a new issue containing a research report. The overall workflow has `issues: write` permission, but the agentic step doing the research only has `issues: read` permission and runs with no GitHub write permissions
+- This workflow has no access to secrets
+- This workflow does not modify existing issues or other repository content
+- This workflow does web searches and fetches content from the web
 
 ## Activity duration
 

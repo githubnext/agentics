@@ -12,7 +12,6 @@ permissions:
   statuses: read # needed to read commit statuses
   issues: read # needed to create investigation issues
   pull-requests: write # needed to comment on PRs if failure is related
-  models: read # typically needed for AI workflows
 
 tools:
   github:

@@ -8,19 +8,11 @@ on:
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
 timeout_minutes: 15
-permissions:
-  issues: write # needed to write the output report to an issue
-  contents: read
-  models: read
-  pull-requests: read
-  discussions: read
-  actions: read
-  checks: read
-  statuses: read
+
+safe-outputs:
+  create-issue:
 
 tools:
-  github:
-    allowed: [create_issue]
   claude:
     allowed:
       WebFetch:
