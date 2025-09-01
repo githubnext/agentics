@@ -7,19 +7,14 @@ on:
 
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
+safe-outpus:
+  create-issue:
+
 timeout_minutes: 15
-permissions:
-  contents: read
-  issues: write  # needed to write the output status report to an issue
-  pull-requests: read
-  discussions: read
-  actions: read
-  checks: read
-  statuses: read
+
+permissions: read-all
 
 tools:
-  github:
-    allowed: [create_issue, update_issue]
   claude:
     allowed:
       WebFetch:
@@ -28,7 +23,7 @@ tools:
 
 # Daily Team Status
 
-1. Search for any previous "Daily Team Status" open issues in the repository. Close them.
+1. Search for recent "Daily Team Status" open issues in the repository. Read them to understand the context of the team and recent activity, and to avoid duplication.
 
 2. Write an upbeat, friendly, motiviating summary of recent activity in the repo.
 
@@ -70,7 +65,7 @@ tools:
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-read-tools.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-team-status.config -->
 @include? agentics/daily-team-status.config

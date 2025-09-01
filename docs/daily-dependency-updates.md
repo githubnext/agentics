@@ -16,19 +16,25 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-dependency-updates
 ```
 
+❗IMPORTANT: GitHub Actions runs will **not** trigger on commits pushed by this workflow and will **not** tell you that CI has not been run unless you have enabled a specific custom check for this condition. **You must open/close the PR or hit "Update branch" if offered to trigger CI.Yes it's painful and yes it's just something you need to be aware of.
+
 **Checklist**
 
-* [ ] See notes on coding tasks in the [main README](../README.md). 
+* [ ] I have read the notes on coding tasks in the [main README](../README.md) and understand the implications.
 
-* [ ] Enable "Allow GitHub Actions to create and approve pull requests" in the repository settings under "Actions > General"
+* [ ] I am a repository admin or have sufficient permissions, and am happy for this workflow to push new branches to the repository.
 
-* [ ] Recommend enabling  "Always suggest updating pull request branches" in the repository settings
+* [ ] I have enabled "Allow GitHub Actions to create and approve pull requests" in the repository settings under "Actions > General"
 
-* [ ] If in a fork, enable "GitHub Actions" and "GitHub Issues" in the fork project settings
+* [ ] I have considered enabling "Always suggest updating pull request branches" in the repository settings
 
-* [ ] When a pull request is created, you must review the changes carefully. 
+* [ ] If in a fork, I have enabled "GitHub Actions" and "GitHub Issues" in the fork repository settings
 
-* [ ] Understand that your GitHub Actions runs will **not** trigger on pull requests created by this workflow, or indeed any Actions-created PRs. You must open/close the PR or push a new commit to trigger CI checks. This is not indicated in the GitHub UI. It's just something you need to be aware of.
+* [ ] I will review all pull requests very carefully, and carefully monitor the repository. 
+
+* [ ] I will operate this demonstrator for a time-limited period only (the default is 48h). 
+
+* [ ] I understand that GitHub Actions runs will **not** trigger on pull requests created by this workflow, see above.
 
 ## Configuration
 

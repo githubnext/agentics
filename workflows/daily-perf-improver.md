@@ -37,22 +37,18 @@ tools:
       NotebookEdit:
       WebFetch:
       WebSearch:
-      # Configure bash build commands here, or in .github/workflows/agentics/daily-perf-improver.config.md
-      #Bash: [":*"]
-      Bash:
-      - "gh pr create:*"
-      - "git commit:*"
-      - "git push:*"
-      - "git checkout:*"
-      - "git branch:*"
-      - "git add:*"
-      - "gh auth status"
-      - "gh repo view"
-      - "gh issue comment:*"
-      - "gh issue list:*"
-      - "gh pr list:*"
       KillBash:
       BashOutput:
+      # Configure bash build commands in any of these places
+      # - this file
+      # - .github/workflows/agentics/daily-perf-improver.config.md 
+      # - .github/workflows/agentics/build-tools.md (shared).
+      #
+      # Run `gh aw compile` after editing to recompile the workflow.
+      #
+      # For YOLO mode, uncomment the following line
+      # Bash:
+      # - ":*
 
 steps:
   - name: Checkout repository
@@ -166,10 +162,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 5. If you succeeded in writing useful code changes that improve performance, create a draft pull request with your changes. 
 
-   - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
-
-   - Use Bash `gh pr create --repo ${{ github.repository }} ...` to create a pull request with the changes.
-
    5a. Include a description of the improvements, details of the benchmark runs that show improvement and by how much, made and any relevant context.
    
    5b. Do NOT include performance reports or any tool-generated files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large files that you shouldn't, so be careful here.
@@ -213,7 +205,8 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-read-tools.md
+@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md

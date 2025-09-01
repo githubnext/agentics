@@ -95,7 +95,7 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-read-tools.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/issue-triage.config -->
 @include? agentics/issue-triage.config

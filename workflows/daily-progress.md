@@ -43,22 +43,18 @@ tools:
       NotebookEdit:
       WebFetch:
       WebSearch:
-      # Configure bash build commands here, or in .github/workflows/agentics/daily-roadmap-progress.config.md
-      #Bash: [":*"]
-      Bash:
-      - "gh pr create:*"
-      - "git commit:*"
-      - "git push:*"
-      - "git checkout:*"
-      - "git branch:*"
-      - "git add:*"
-      - "gh auth status"
-      - "gh repo view"
-      - "gh issue comment:*"
-      - "gh issue list:*"
-      - "gh pr list:*"
       KillBash:
       BashOutput:
+      # Configure bash build commands in any of these places
+      # - this file
+      # - .github/workflows/agentics/daily-progress.config.md 
+      # - .github/workflows/agentics/build-tools.md (shared).
+      #
+      # Run `gh aw compile` after editing to recompile the workflow.
+      #
+      # For YOLO mode, uncomment the following line
+      # Bash:
+      # - ":*
 
 steps:
   - name: Checkout repository
@@ -67,7 +63,7 @@ steps:
   - name: Check if action.yml exists
     id: check_build_steps_file
     run: |
-      if [ -f ".github/actions/daily-roadmap-progress/build-steps/action.yml" ]; then
+      if [ -f ".github/actions/daily-progress/build-steps/action.yml" ]; then
         echo "exists=true" >> $GITHUB_OUTPUT
       else
         echo "exists=false" >> $GITHUB_OUTPUT
@@ -75,7 +71,7 @@ steps:
     shell: bash
   - name: Build the project ready for feature work
     if: steps.check_build_steps_file.outputs.exists == 'true'
-    uses: ./.github/actions/daily-roadmap-progress/build-steps
+    uses: ./.github/actions/daily-progress/build-steps
     id: build-steps
 
 ---
@@ -107,19 +103,19 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 2. Generate build steps configuration (if not done before) to help set up the environment for individual development work. 
 
-   2a. Check if `.github/actions/daily-roadmap-progress/build-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If this file exists, it will have been run already as part of the GitHub Action you are executing in, so read the file to understand what has already been run and continue to step 3. Otherwise continue to step 2b.
+   2a. Check if `.github/actions/daily-progress/build-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If this file exists, it will have been run already as part of the GitHub Action you are executing in, so read the file to understand what has already been run and continue to step 3. Otherwise continue to step 2b.
 
    2b. Check if an open pull request with title "${{ github.workflow }}: Updates to complete configuration" exists in this repo. If it does, add a comment to the pull request saying configuration needs to be completed, then exit the workflow. Otherwise continue to step 2c.
 
    2c. Research the typical steps needed to build and run the project for feature work.
 
-   2d. Create the file `.github/actions/daily-roadmap-progress/build-steps/action.yml` as a GitHub Action containing these steps, ensuring that the action.yml file is valid and carefully cross-checking with other CI files and devcontainer configurations in the repo to ensure accuracy and correctness.
+   2d. Create the file `.github/actions/daily-progress/build-steps/action.yml` as a GitHub Action containing these steps, ensuring that the action.yml file is valid and carefully cross-checking with other CI files and devcontainer configurations in the repo to ensure accuracy and correctness.
 
    2e. Make a pull request for the addition of this file, with title "${{ github.workflow }}: Updates to complete configuration". Explain that adding these files to the repo will make this workflow more reliable and effective. Encourage the maintainer to review the files carefully to ensure they are appropriate for the project. Exit the entire workflow.
 
 3. Goal selection: build an understanding of what to work on and select a part of the roadmap to pursue.
 
-   3a. You can now assume the repository is in a state where the steps in `.github/actions/daily-roadmap-progress/build-steps/action.yml` have been run and is ready for you to work on features.
+   3a. You can now assume the repository is in a state where the steps in `.github/actions/daily-progress/build-steps/action.yml` have been run and is ready for you to work on features.
 
    3b. Read the plan in the issue mentioned earlier, along with comments.
 
@@ -142,10 +138,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    4e. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
 
 5. If you succeeded in writing useful code changes that work on the feature roadmap, create a draft pull request with your changes. 
-
-   - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
-
-   - Use Bash `gh pr create --repo ${{ github.repository }} ...` to create a pull request with the changes.
 
    5b. Do NOT include any tool-generated files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large files that you shouldn't, so be careful here.
 
@@ -171,10 +163,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-read-tools.md
+@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/daily-roadmap-progress.config -->
-@include? agentics/daily-roadmap-progress.config.md
+<!-- You can customize prompting and tools in .github/workflows/agentics/daily-progress.config -->
+@include? agentics/daily-progress.config.md

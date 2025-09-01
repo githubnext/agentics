@@ -34,11 +34,18 @@ tools:
       NotebookEdit:
       WebFetch:
       WebSearch:
-      # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md
-      #Bash: [":*"]
-      Bash: ["gh pr create:*", "git commit:*", "git push:*", "git checkout:*", "git branch:*", "git add:*", "gh auth status", "gh repo view", "gh issue comment:*"]
       KillBash:
       BashOutput:
+      # Configure bash build commands in any of these places
+      # - this file
+      # - .github/workflows/agentics/daily-qa.config.md 
+      # - .github/workflows/agentics/build-tools.md (shared).
+      #
+      # Run `gh aw compile` after editing to recompile the workflow.
+      #
+      # For YOLO mode, uncomment the following line
+      # Bash:
+      # - ":*
 
 ---
 
@@ -84,7 +91,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-read-tools.md
+
+@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md
