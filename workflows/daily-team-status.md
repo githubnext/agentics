@@ -7,7 +7,7 @@ on:
 
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
-safe-outpus:
+safe-outputs:
   create-issue:
 
 timeout_minutes: 15
