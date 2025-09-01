@@ -38,22 +38,18 @@ tools:
       NotebookEdit:
       WebFetch:
       WebSearch:
-      # Configure bash build commands here, or in .github/workflows/agentics/daily-test-improver.config.md
-      #Bash: [":*"]
-      Bash:
-      - "gh pr create:*"
-      - "git commit:*"
-      - "git push:*"
-      - "git checkout:*"
-      - "git branch:*"
-      - "git add:*"
-      - "gh auth status"
-      - "gh repo view"
-      - "gh issue comment:*"
-      - "gh issue list:*"
-      - "gh pr list:*"
       KillBash:
       BashOutput:
+      # Configure bash build commands in any of these places
+      # - this file
+      # - .github/workflows/agentics/daily-test-improver.config.md 
+      # - .github/workflows/agentics/build-tools.md (shared).
+      #
+      # Run `gh aw compile` after editing to recompile the workflow.
+      #
+      # For YOLO mode, uncomment the following line
+      # Bash:
+      # - ":*
 
 steps:
   - name: Checkout repository
@@ -103,16 +99,12 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    2a. Check if `.github/actions/daily-test-improver/coverage-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If it exists then continue to step 3. If it doesn't then we need to create it:
    
-   2b. Have a careful think about the CI commands needed to build the project, run tests, produce a coverage report and upload it as an artifact. Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository. 
+   2b. Have a careful think about the CI commands needed to build the repository, run tests, produce a combined coverage report and upload it as an artifact. Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository. If multiple projects are present, perform build and coverage testing on as many as possible, and where possible merge the coverage reports into one combined report. Work out the steps you worked out, in order, as a series of YAML steps suitable for inclusion in a GitHub Action.
 
-   2c. Create the file `.github/actions/daily-test-improver/coverage-steps/action.yml` containing these steps, ensuring that the action.yml file is valid.
+   2c. Create the file `.github/actions/daily-test-improver/coverage-steps/action.yml` containing these steps, ensuring that the action.yml file is valid. Leave comments in the file to explain what the steps are doing, where the coverage report will be generated, and any other relevant information. Ensure that the steps include uploading the coverage report(s) as an artifact called "coverage".
 
-   2d. Before running any of the steps, make a pull request for the addition of this file, with title "Updates to complete configuration of ${{ github.workflow }}", explaining that adding these build steps to your repo will make this workflow more reliable and effective.
+   2d. Before running any of the steps, make a pull request for the addition of the `action.yml` file, with title "Updates to complete configuration of ${{ github.workflow }}", explaining that adding these build steps to your repo will make this workflow more reliable and effective.
 
-    - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
-
-    - Use Bash `gh pr create --repo ${{ github.repository }} ...` to create a pull request with the changes.
-   
    2e. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the pull request you created in step 2d, using `update_pull_request` to make the update. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
    
    2f. Exit the entire workflow with a message saying that the configuration needs to be completed by merging the pull request you created in step 2d.
@@ -146,10 +138,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    4g. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
 
    4h. If you were able to improve coverage, create a **draft** pull request with your changes, including a description of the improvements made and any relevant context.
-
-    - Use Bash `git add ...`, `git commit ...`, `git push ...` etc. to push the changes to your branch.
-
-    - Use Bash `gh pr create --repo ${{ github.repository }} --draft ...` to create a pull request with the changes.
 
     - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
 
@@ -187,7 +175,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-tools.md
+@include agentics/shared/gh-extra-read-tools.md
+
+@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md
