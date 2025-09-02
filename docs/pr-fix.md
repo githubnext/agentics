@@ -4,16 +4,16 @@
 
 The ["@pr-fix" workflow](../workflows/pr-fix.md?plain=1) is an alias workflow "@pr-fix" that will help you fix and complete pull requests. By default it will analyze failing CI checks in pull requests, identify root causes, and implement fixes to resolve issues and get PRs back to a passing state. 
 
-You can trigger the workflow in default mode by adding a comment to a pull request with the alias:
+You can trigger the workflow in default mode by adding a comment to a pull request with the command:
 
 ```
-@pr-fix
+/pr-fix
 ```
 
 or by writing a comment:
 
 ```
-@pr-fix Please add more tests.
+/pr-fix Please add more tests.
 ```
 
 ## Installation
@@ -24,10 +24,10 @@ gh aw add pr-fix -r githubnext/agentics --pr
 
 This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of a pull request with failing checks.
 
-To trigger the workflow on a specific pull request, add a comment with the alias:
+To trigger the workflow on a specific pull request, add a comment with the command:
 
 ```
-@pr-fix
+/pr-fix
 ```
 
 IMPORTANT: GitHub Actions runs will **not** trigger on commits pushed by this workflow and will **not** tell you that CI has not been run unless you have enabled a specific custom check for this condition. **You must open/close the PR or hit "Update branch" if offered to trigger CI.Yes it's painful and yes it's just something you need to be aware of.

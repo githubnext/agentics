@@ -9,23 +9,12 @@ on:
 
 timeout_minutes: 15
 
-permissions:
-  issues: write  # needed to create issues for problems found
-  contents: read
-  pull-requests: read
-  discussions: read
-  actions: read
-  checks: read
-  statuses: read
+safe-outputs:
+  create-issue:
+  add-issue-comment:
+    max: 5
 
 tools:
-  github:
-    allowed:
-      [
-        create_issue,
-        update_issue,
-        add_issue_comment,
-      ]
   claude:
     allowed:
       Edit:

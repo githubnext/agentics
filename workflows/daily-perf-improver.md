@@ -8,13 +8,12 @@ on:
 
 timeout_minutes: 30
 
-permissions:
-  contents: write # needed to create branches, files, and pull requests in this repo without a fork
-  issues: write # needed to create report issue
-  pull-requests: write # needed to create results pull request
-  actions: read
-  checks: read
-  statuses: read
+safe-outputs:
+  create-issue:
+    max: 5
+  add-issue-comment:
+    max: 5
+  create-pull-request:
 
 tools:
   github:

@@ -1,6 +1,6 @@
 ---
 on:
-  alias:
+  command:
     name: pr-fix
   reaction: "eyes"
   stop-after: +48h

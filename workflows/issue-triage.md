@@ -5,29 +5,19 @@ on:
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
   reaction: eyes
 
-permissions:
-  contents: read
-  issues: write  # needed to write comments to the issue
-  actions: read
-  checks: read
-  statuses: read
-  pull-requests: read
+safe-outputs:
+  add-issue-label:
+    max: 3
+  add-issue-comment:
+    max: 1
+
+permissions: read-all
 
 tools:
-  github:
-    allowed: [update_issue, add_issue_comment]
   claude:
     allowed:
       WebFetch:
       WebSearch:
-
-# By default agentic workflows use a concurrency setting that
-# allows one run at a time, regardless of branch or issue. This is
-# not appropriate for triage workflows, so here we allow one run
-# per issue at a time.
-concurrency:
-   group: "triage-${{ github.event.issue.number }}"
-   cancel-in-progress: true
 
 timeout_minutes: 10
 ---

@@ -8,28 +8,16 @@ on:
     # The condition is handled in the workflow body
   stop-after: +48h
 
+# Only trigger for failures - check in the workflow body
 if: ${{ github.event.workflow_run.conclusion == 'failure' }}
 
-permissions:
-  contents: read # needed to read repository content and workflow files
-  actions: read # needed to access workflow runs and job logs
-  checks: read # needed to read check runs and status
-  statuses: read # needed to read commit statuses
-  issues: write # needed to create investigation issues
-  pull-requests: write # needed to comment on PRs if failure is related
+permissions: read-all
+
+safe-outputs:
+  create-issue:
+  add-issue-comment:
 
 tools:
-  github:
-    allowed: [
-      create_issue,
-      add_issue_comment,
-      update_issue
-    ]
-  
-  # Simple file-based storage for investigation results (no external dependencies)
-  # Using Claude's built-in file operations and a structured approach to storing patterns
-  # The cache system will handle persistence between runs
-
   claude:
     allowed:
       WebFetch:
@@ -47,7 +35,6 @@ cache:
 
 timeout_minutes: 10
 
-# Only trigger for failures - check in the workflow body
 ---
 
 # CI Failure Doctor
@@ -150,6 +137,7 @@ You are the CI Failure Doctor, an expert investigative agent that analyzes faile
 ## Output Requirements
 
 ### Investigation Issue Template
+
 When creating an investigation issue, use this structure:
 
 ```markdown
