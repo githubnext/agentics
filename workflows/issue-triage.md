@@ -5,13 +5,13 @@ on:
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
   reaction: eyes
 
+permissions: read-all
+
 safe-outputs:
   add-issue-label:
     max: 3
   add-issue-comment:
     max: 1
-
-permissions: read-all
 
 tools:
   claude:

@@ -8,12 +8,16 @@ on:
 
 timeout_minutes: 30
 
+permissions: read-all
+
 safe-outputs:
   create-issue:
+    title-prefix: "${{ github.workflow }}"
     max: 5
   add-issue-comment:
     max: 5
   create-pull-request:
+    draft: true
 
 tools:
   github:
@@ -185,8 +189,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    5d. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
    5e. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on the particular performance goal and linking to the pull request you created.
-
-   5f. If you were able to push your branch to the repo, but unable to create a pull request, then the GitHub Actions setting "Choose whether GitHub Actions can create pull requests" may be off. Create an issue describing the problem with a link to https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests and exit the entire workflow. 
 
 6. If you didn't succeed in improving performance, create an issue with title starting with "${{ github.workflow }}", summarizing similar information to above.
 

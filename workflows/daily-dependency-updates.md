@@ -8,15 +8,11 @@ on:
 
 timeout_minutes: 15
 
-permissions:
-  contents: write # needed to push changes to a new branch in the repository in preparation for the pull request
-  pull-requests: write # needed to create pull requests for the changes
-  issues: read
-  discussions: read
-  actions: read
-  checks: read
-  statuses: read
-  security-events: read
+permissions: read-all
+
+safe-outputs:
+  create-pull-request:
+    draft: true
 
 tools:
   github:

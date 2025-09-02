@@ -7,6 +7,8 @@ on:
 
 timeout_minutes: 15
 
+permissions: read-all
+
 safe-outputs:
   create-pull-request:
     draft: true

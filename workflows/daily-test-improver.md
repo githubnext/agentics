@@ -9,27 +9,18 @@ on:
 
 timeout_minutes: 30
 
-permissions:
-  contents: write # needed to create branches, files, and pull requests in this repo without a fork
-  issues: write # needed to create report issue
-  pull-requests: write # needed to create results pull request
-  actions: read
-  checks: read
-  statuses: read
+permissions: read-all
+
+safe-outputs:
+  create-issue: # needed to create report issue
+    title-prefix: "${{ github.workflow }}"
+  update-issue: # needed to update the report issue if it already exists
+    target: "*" # can update any one single issue
+    body: # can update the issue body only
+  create-pull-request: # needed to create results pull request
+    draft: true
 
 tools:
-  github:
-    allowed:
-      [
-        create_issue,
-        update_issue,
-        add_issue_comment,
-        create_or_update_file,
-        create_branch,
-        delete_file,
-        push_files,
-        update_pull_request,
-      ]
   claude:
     allowed:
       Edit:
@@ -119,9 +110,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3d. Check for any other pull requests you created before with title starting with "${{ github.workflow }}". Don't work on adding any tests that overlap with what was done there.
 
-   3e. Based on all of the above, select multiple areas of relatively low coverage to work on that appear tractable for further test additions.
+   3e. Based on all of the above, select an area of relatively low coverage to work on that appear tractable for further test additions.
 
-4. For each area identified, do the following:
+4. Do the following:
 
    4a. Create a new branch
    
@@ -158,8 +149,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
     - After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
    4i. Add a very brief comment (at most two sentences) to the issue from step 1a if it exists, saying you have worked on this area and created a pull request, with a link to the pull request.
-
-   4j. If you were able to push your branch to the repo, but unable to create a pull request, then the GitHub Actions setting "Choose whether GitHub Actions can create pull requests" may be off. Create an issue describing the problem with a link to https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests and exit the entire workflow. 
 
 5. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 

@@ -12,6 +12,7 @@ permissions: read-all
 
 safe-outputs:
   create-issue:
+    title-prefix: "${{ github.workflow }}"
     max: 5
   add-issue-comment:
     max: 5

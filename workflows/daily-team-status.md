@@ -7,12 +7,15 @@ on:
 
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
+permissions: read-all
+
 safe-outputs:
   create-issue:
+    title-prefix: "${{ github.workflow }}"
+  update-issue:
+    target: "*" # can update one single issue
 
 timeout_minutes: 15
-
-permissions: read-all
 
 tools:
   claude:
@@ -57,7 +60,7 @@ tools:
      * all files you read to generate the data for the report
      * places you didn't have time to read or search, but would have liked to
 
-   Create a new GitHub issue with title starting with "Daily Team Status" containing a markdown report with your findings. Use links where appropriate.
+   Create a new GitHub issue with title starting with "${{ github.workflow }}" containing a markdown report with your findings. Use links where appropriate.
 
    Only a new issue should be created, no existing issues should be adjusted.
 

@@ -15,6 +15,7 @@ permissions: read-all
 
 safe-outputs:
   create-issue:
+    title-prefix: "${{ github.workflow }}"
   add-issue-comment:
 
 tools:
