@@ -8,33 +8,16 @@ on:
 
 timeout_minutes: 30
 
-permissions:
-  contents: write # needed to create branches, files, and pull requests in this repo without a fork
-  issues: write # needed to create report issue
-  pull-requests: write # needed to create results pull request
-  actions: read
-  checks: read
-  statuses: read
+safe-outputs:
+  create-issue:
+    title-prefix: "${{ github.workflow }}"
+    max: 3
+  add-issue-comment:
+    max: 3
+  create-pull-request:
+    draft: true
 
 tools:
-  github:
-    allowed:
-      [
-        create_issue,
-        update_issue,
-        search_issues,
-        list_issues,
-        get_pull_request,
-        get_pull_request_files,
-        list_pull_requests,
-        search_pull_requests,
-        add_issue_comment,
-        create_or_update_file,
-        create_branch,
-        delete_file,
-        push_files,
-        update_pull_request,
-      ]
   claude:
     allowed:
       Edit:

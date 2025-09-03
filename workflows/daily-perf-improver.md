@@ -20,18 +20,6 @@ safe-outputs:
     draft: true
 
 tools:
-  github:
-    allowed:
-      [
-        create_issue,
-        update_issue,
-        add_issue_comment,
-        create_or_update_file,
-        create_branch,
-        delete_file,
-        push_files,
-        update_pull_request,
-      ]
   claude:
     allowed:
       Edit:
