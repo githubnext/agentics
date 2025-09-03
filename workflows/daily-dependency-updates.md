@@ -13,19 +13,10 @@ permissions: read-all
 safe-outputs:
   create-pull-request:
     draft: true
+  create-issue:
+    title-prefix: "${{ github.workflow }}"
 
 tools:
-  github:
-    allowed:
-      [
-        create_or_update_file,
-        create_branch,
-        delete_file,
-        create_issue,
-        update_issue,
-        add_issue_comment,
-        update_pull_request,
-      ]
   claude:
     allowed:
       Edit:
@@ -34,8 +25,8 @@ tools:
       WebFetch:
       WebSearch:
       # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
-      Bash:
       # For YOLO mode, uncomment the following line
+      #Bash:
       #- ":*
 ---
 
@@ -48,11 +39,9 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
    - Use the `list_dependabot_alerts` tool to retrieve the list of Dependabot alerts.
    - Use the `get_dependabot_alert` tool to retrieve details of each alert.
 
-2. Check for an existing PR starting with title "Daily Dependency Updates". Add your additional updates to that PR if it exists, otherwise create a new PR.  Try to bundle as many dependency updates as possible into one PR. Test the changes to ensure they work correctly, if the tests don't pass then divide and conquer and create separate PRs for each dependency update. 
+2. Create a new PR with title "${{ github.workflow }}". Try to bundle as many dependency updates as possible into one PR. Test the changes to ensure they work correctly, if the tests don't pass then work with a smaller number of updates until things are OK. 
 
-> NOTE: If you didn't make progress on a particular dependency update, add a comment saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
-
-> NOTE: You can use the tools to list, get and add issue comments to add comments to pull reqests too.
+> NOTE: If you didn't make progress on particular dependency updates, create one overall issue saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
 
 @include agentics/shared/no-push-to-main.md
 

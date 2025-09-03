@@ -137,7 +137,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 4. Work towards your selected goal.. For the performance improvement goal you selected, do the following:
 
-   4a. Create a new branch.
+   4a. Create a new branch starting with "perf/".
    
    4b. Work towards the performance improvement goal you selected. This may involve:
      - Refactoring code

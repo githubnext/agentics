@@ -5,30 +5,15 @@ on:
   reaction: "eyes"
   stop-after: +48h
 
-permissions:
-  contents: write # needed to push changes
-  actions: read # needed to access workflow runs and job logs
-  checks: read # needed to read check runs and status
-  statuses: read # needed to read commit statuses
-  issues: read # needed to create investigation issues
-  pull-requests: write # needed to comment on PRs if failure is related
+permissions: read-all
+
+safe-outputs:
+  push-to-branch:
+  create-issue:
+    title-prefix: "${{ github.workflow }}"
+  add-issue-comment:
 
 tools:
-  github:
-    allowed: [
-      get_workflow_run,
-      list_workflow_jobs,
-      get_job_logs,
-      get_workflow_run_logs,
-      get_commit,
-      get_pull_request,
-      get_pull_request_files,
-      create_issue,
-      add_issue_comment,
-      search_issues,
-      list_issues
-    ]
-  
   claude:
     allowed:
       Edit:

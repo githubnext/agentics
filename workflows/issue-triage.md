@@ -9,9 +9,8 @@ permissions: read-all
 
 safe-outputs:
   add-issue-label:
-    max: 3
+    max: 5
   add-issue-comment:
-    max: 1
 
 tools:
   claude:
