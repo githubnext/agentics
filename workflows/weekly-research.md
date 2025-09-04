@@ -7,9 +7,9 @@ on:
 
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
-timeout_minutes: 15
-
 permissions: read-all
+
+network: defaults
 
 safe-outputs:
   create-issue:
@@ -20,6 +20,9 @@ tools:
     allowed:
       WebFetch:
       WebSearch:
+
+timeout_minutes: 15
+
 ---
 
 # Weekly Research

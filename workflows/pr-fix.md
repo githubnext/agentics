@@ -7,6 +7,8 @@ on:
 
 permissions: read-all
 
+network: defaults
+
 safe-outputs:
   push-to-branch:
   create-issue:
@@ -16,14 +18,8 @@ safe-outputs:
 tools:
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
-      KillBash:
-      BashOutput:
       # Configure bash build commands in any of these places
       # - this file
       # - .github/workflows/agentics/pr-fix.config.md 
@@ -32,6 +28,8 @@ tools:
       # Run `gh aw compile` after editing to recompile the workflow.
       #
       # For YOLO mode, uncomment the following line
+      # KillBash:
+      # BashOutput:
       # Bash:
       # - ":*
 

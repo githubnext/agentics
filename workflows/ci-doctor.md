@@ -13,6 +13,8 @@ if: ${{ github.event.workflow_run.conclusion == 'failure' }}
 
 permissions: read-all
 
+network: defaults
+
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"

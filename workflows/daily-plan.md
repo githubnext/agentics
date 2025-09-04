@@ -10,6 +10,8 @@ on:
 
 permissions: read-all
 
+network: defaults
+
 safe-outputs:
   create-issue: # needed to create the project plan issue
     title-prefix: "${{ github.workflow }}"
@@ -17,13 +19,13 @@ safe-outputs:
     target: "*" # can update one single issue
     body: # can update the issue body only
 
-timeout_minutes: 15
-
 tools:
   claude:
     allowed:
       WebFetch:
       WebSearch:
+
+timeout_minutes: 15
 ---
 
 # Agentic Planner

@@ -10,6 +10,8 @@ timeout_minutes: 30
 
 permissions: read-all
 
+network: defaults
+
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
@@ -22,24 +24,11 @@ safe-outputs:
 tools:
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
-      KillBash:
-      BashOutput:
-      # Configure bash build commands in any of these places
-      # - this file
-      # - .github/workflows/agentics/daily-perf-improver.config.md 
-      # - .github/workflows/agentics/build-tools.md (shared).
-      #
-      # Run `gh aw compile` after editing to recompile the workflow.
-      #
-      # For YOLO mode, uncomment the following line
-      # Bash:
-      # - ":*
+      # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
+      # For YOLO mode, uncomment 
+      # Bash: [ ":*" ]
 
 steps:
   - name: Checkout repository
@@ -195,6 +184,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 @include agentics/shared/xpia.md
 
 @include agentics/shared/gh-extra-read-tools.md
+
 @include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->

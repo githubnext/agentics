@@ -9,6 +9,8 @@ on:
 
 permissions: read-all
 
+network: defaults
+
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
@@ -26,7 +28,7 @@ tools:
 
 # Daily Team Status
 
-1. Search for recent "Daily Team Status" open issues in the repository. Read them to understand the context of the team and recent activity, and to avoid duplication.
+1. Search for recent open issues with title "${{ github.workflow }}" in the repository. Read them to understand the context of the team and recent activity, and to avoid duplication. 
 
 2. Write an upbeat, friendly, motiviating summary of recent activity in the repo.
 

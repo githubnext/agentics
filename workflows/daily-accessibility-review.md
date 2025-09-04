@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
   stop-after: +48h # workflow will no longer trigger after 48 hours
 
-timeout_minutes: 15
-
 permissions: read-all
+
+network: defaults
 
 safe-outputs:
   create-issue:
@@ -28,6 +28,8 @@ tools:
     allowed:
       WebFetch:
       WebSearch:
+
+timeout_minutes: 15
 
 steps:
   - name: Checkout repository

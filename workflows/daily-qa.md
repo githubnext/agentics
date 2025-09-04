@@ -11,31 +11,31 @@ timeout_minutes: 15
 
 permissions: read-all
 
+network: defaults
+
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
   add-issue-comment:
     max: 5
+  create-pull-request:
+    draft: true
 
 tools:
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
-      KillBash:
-      BashOutput:
       # Configure bash build commands in any of these places
       # - this file
-      # - .github/workflows/agentics/daily-qa.config.md 
+      # - .github/workflows/agentics/daily-qa-improver.config.md 
       # - .github/workflows/agentics/build-tools.md (shared).
       #
       # Run `gh aw compile` after editing to recompile the workflow.
       #
       # For YOLO mode, uncomment the following line
+      # KillBash:
+      # BashOutput:
       # Bash:
       # - ":*
 
@@ -71,11 +71,13 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
    - Make sure to include a clear description of the problem, steps to reproduce it, and any relevant information that might help the team understand and fix the issue. If you create a pull request, make sure to include a clear description of the changes you made and why they are necessary.
 
-4. Search for any previous "Daily QA Report" open issues in the repository. Read the latest one. If the status is essentially the same as the current state of the repository, then add a very brief comment to that issue saying you didn't find anything new and exit. Close all the previous open Daily QA Report issues.
+4. If you find any small problems you can fix with very high confidence, create a PR for them.
 
-5. Create a new issue with title starting with "${{ github.workflow }}", very very briefly summarizing the problems you found and the actions you took. Use note form. Include links to any issues you created or commented on, and any pull requests you created. In a collapsed section highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
+5. Search for any previous "${{ github.workflow }}" open issues in the repository. Read the latest one. If the status is essentially the same as the current state of the repository, then add a very brief comment to that issue saying you didn't find anything new and exit. Close all the previous open Daily QA Report issues.
 
-6. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
+6. Create a new issue with title starting with "${{ github.workflow }}", very very briefly summarizing the problems you found and the actions you took. Use note form. Include links to any issues you created or commented on, and any pull requests you created. In a collapsed section highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
+
+7. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
 
 @include agentics/shared/tool-refused.md
 

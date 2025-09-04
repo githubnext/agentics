@@ -8,6 +8,8 @@ on:
 
 timeout_minutes: 30
 
+network: defaults
+
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
@@ -20,14 +22,8 @@ safe-outputs:
 tools:
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
-      KillBash:
-      BashOutput:
       # Configure bash build commands in any of these places
       # - this file
       # - .github/workflows/agentics/daily-progress.config.md 
@@ -36,6 +32,8 @@ tools:
       # Run `gh aw compile` after editing to recompile the workflow.
       #
       # For YOLO mode, uncomment the following line
+      # KillBash:
+      # BashOutput:
       # Bash:
       # - ":*
 

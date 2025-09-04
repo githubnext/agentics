@@ -5,9 +5,9 @@ on:
   workflow_dispatch:
   stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
 
-timeout_minutes: 15
-
 permissions: read-all
+
+network: defaults
 
 safe-outputs:
   create-pull-request:
@@ -16,12 +16,22 @@ safe-outputs:
 tools:
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
+      # Configure bash build commands in any of these places
+      # - this file
+      # - .github/workflows/agentics/update-docs.config.md 
+      # - .github/workflows/agentics/build-tools.md (shared).
+      #
+      # Run `gh aw compile` after editing to recompile the workflow.
+      #
+      # For YOLO mode, uncomment the following line
+      # KillBash:
+      # BashOutput:
+      # Bash:
+      # - ":*
+
+timeout_minutes: 15
 ---
 
 # Update Docs

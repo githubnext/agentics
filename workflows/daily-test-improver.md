@@ -6,10 +6,11 @@ on:
         - cron: "0 2 * * 1-5"
     stop-after: +48h # workflow will no longer trigger after 48 hours
 
-
 timeout_minutes: 30
 
 permissions: read-all
+
+network: defaults
 
 safe-outputs:
   create-issue: # needed to create report issue
@@ -23,14 +24,8 @@ safe-outputs:
 tools:
   claude:
     allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      NotebookEdit:
       WebFetch:
       WebSearch:
-      KillBash:
-      BashOutput:
       # Configure bash build commands in any of these places
       # - this file
       # - .github/workflows/agentics/daily-test-improver.config.md 
@@ -39,6 +34,8 @@ tools:
       # Run `gh aw compile` after editing to recompile the workflow.
       #
       # For YOLO mode, uncomment the following line
+      # KillBash:
+      # BashOutput:
       # Bash:
       # - ":*
 

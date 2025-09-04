@@ -7,6 +7,8 @@ on:
 
 permissions: read-all
 
+network: defaults
+
 safe-outputs:
   add-issue-label:
     max: 5

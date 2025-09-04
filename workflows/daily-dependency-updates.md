@@ -6,9 +6,9 @@ on:
         - cron: "0 2 * * 1-5"
     stop-after: +48h # workflow will no longer trigger after 48 hours. Remove this and recompile to run indefinitely
 
-timeout_minutes: 15
-
 permissions: read-all
+
+network: defaults
 
 safe-outputs:
   create-pull-request:
@@ -16,18 +16,15 @@ safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
 
-tools:
-  claude:
-    allowed:
-      Edit:
-      MultiEdit:
-      Write:
-      WebFetch:
-      WebSearch:
-      # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
-      # For YOLO mode, uncomment the following line
-      #Bash:
-      #- ":*
+# Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
+# For YOLO mode, uncomment 
+# tools:
+#  claude:
+#    allowed:
+#      Bash: [ ":*" ]
+
+timeout_minutes: 15
+
 ---
 
 # Agentic Dependency Updater
