@@ -1,12 +1,4 @@
 ---
-tools:
-  claude:
-    allowed:
-      Bash: 
-      - "git checkout:*"
-      - "git branch:*"
-      - "git add:*"
-      - "git commit:*"
 ---
 
 ## Creating and Updating Pull Requests
