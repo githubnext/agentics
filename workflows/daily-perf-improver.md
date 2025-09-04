@@ -183,8 +183,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-read-tools.md
-
 @include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->

@@ -67,8 +67,6 @@ You are an AI assistant specialized in fixing pull requests with failing CI chec
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-read-tools.md
-
 @include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->

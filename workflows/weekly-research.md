@@ -55,8 +55,6 @@ At the end of the report list write a collapsed section with the following:
 
 @include agentics/shared/xpia.md
 
-@include agentics/shared/gh-extra-read-tools.md
-
 @include agentics/shared/tool-refused.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/weekly-research.config -->
