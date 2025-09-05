@@ -21,10 +21,8 @@ safe-outputs:
   add-issue-comment:
 
 tools:
-  claude:
-    allowed:
-      WebFetch:
-      WebSearch:
+  web-fetch:
+  web-search:
 
 # Cache configuration for persistent storage between runs
 cache:

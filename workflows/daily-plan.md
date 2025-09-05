@@ -20,10 +20,8 @@ safe-outputs:
     body: # can update the issue body only
 
 tools:
-  claude:
-    allowed:
-      WebFetch:
-      WebSearch:
+  web-fetch:
+  web-search:
 
 timeout_minutes: 15
 ---

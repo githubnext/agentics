@@ -20,10 +20,8 @@ safe-outputs:
 timeout_minutes: 15
 
 tools:
-  claude:
-    allowed:
-      WebFetch:
-      WebSearch:
+  web-fetch:
+  web-search:
 ---
 
 # Daily Team Status

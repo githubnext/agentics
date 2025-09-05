@@ -16,10 +16,8 @@ safe-outputs:
     title-prefix: "${{ github.workflow }}"
 
 tools:
-  claude:
-    allowed:
-      WebFetch:
-      WebSearch:
+  web-fetch:
+  web-search:
 
 timeout_minutes: 15
 

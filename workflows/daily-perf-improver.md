@@ -22,10 +22,8 @@ safe-outputs:
     draft: true
 
 tools:
-  claude:
-    allowed:
-      WebFetch:
-      WebSearch:
+  web-fetch:
+  web-search:
       # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
       # For YOLO mode, uncomment 
       # Bash: [ ":*" ]

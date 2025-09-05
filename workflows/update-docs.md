@@ -14,22 +14,17 @@ safe-outputs:
     draft: true
 
 tools:
-  claude:
-    allowed:
-      WebFetch:
-      WebSearch:
-      # Configure bash build commands in any of these places
-      # - this file
-      # - .github/workflows/agentics/update-docs.config.md 
-      # - .github/workflows/agentics/build-tools.md (shared).
-      #
-      # Run `gh aw compile` after editing to recompile the workflow.
-      #
-      # For YOLO mode, uncomment the following line
-      # KillBash:
-      # BashOutput:
-      # Bash:
-      # - ":*
+  web-fetch:
+  web-search:
+  # Configure bash build commands in any of these places
+  # - this file
+  # - .github/workflows/agentics/update-docs.config.md 
+  # - .github/workflows/agentics/build-tools.md (shared).
+  #
+  # Run `gh aw compile` after editing to recompile the workflow.
+  #
+  # For YOLO mode, uncomment the following line
+  # bash: [ ":* ]
 
 timeout_minutes: 15
 ---

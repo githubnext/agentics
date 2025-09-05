@@ -15,10 +15,8 @@ safe-outputs:
   add-issue-comment:
 
 tools:
-  claude:
-    allowed:
-      WebFetch:
-      WebSearch:
+  web-fetch:
+  web-search:
 
 timeout_minutes: 10
 ---

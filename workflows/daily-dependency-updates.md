@@ -19,9 +19,7 @@ safe-outputs:
 # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
 # For YOLO mode, uncomment 
 # tools:
-#  claude:
-#    allowed:
-#      Bash: [ ":*" ]
+#    bash: [ ":*" ]
 
 timeout_minutes: 15
 
