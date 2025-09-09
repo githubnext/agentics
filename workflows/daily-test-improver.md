@@ -13,14 +13,15 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  create-issue: # needed to create report issue
+  create-issue: # needed to create planning issue
     title-prefix: "${{ github.workflow }}"
-  update-issue: # needed to update the report issue if it already exists
-    target: "*" # can update any one single issue
-    body: # can update the issue body only
+  update-issue: # can update the planning issue if it already exists
+    target: "*" # one single issue
+    body: # can update the issue title/body only
+    title: # can update the issue title/body only
   add-issue-comment:
     target: "*" # can add a comment to any one single issue or pull request
-  create-pull-request: # needed to create results pull request
+  create-pull-request: # can create a pull request
     draft: true
 
 tools:
@@ -41,7 +42,7 @@ steps:
     uses: actions/checkout@v3
 
   - name: Check if action.yml exists
-    id: check_build_steps_file
+    id: check_coverage_steps_file
     run: |
       if [ -f ".github/actions/daily-test-improver/coverage-steps/action.yml" ]; then
         echo "exists=true" >> $GITHUB_OUTPUT
@@ -52,7 +53,7 @@ steps:
   - name: Build the project and produce coverage report
     if: steps.check_build_steps_file.outputs.exists == 'true'
     uses: ./.github/actions/daily-test-improver/coverage-steps
-    id: build-steps
+    id: coverage-steps
 
 ---
 
@@ -80,31 +81,35 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
     1e. Continue to step 2. 
 
-2. Build steps inference and configuration (if not done before)
+2. Coverage steps inference and configuration (if not done before)
 
-   2a. Check if `.github/actions/daily-test-improver/coverage-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If it exists then continue to step 3. If it doesn't then we need to create it:
+   2a. Check if `.github/actions/daily-test-improver/coverage-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If it exists then continue to step 3. Otherwise continue to step 2b.
    
-   2b. Have a careful think about the CI commands needed to build the repository, run tests, produce a combined coverage report and upload it as an artifact. Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository. If multiple projects are present, perform build and coverage testing on as many as possible, and where possible merge the coverage reports into one combined report. Work out the steps you worked out, in order, as a series of YAML steps suitable for inclusion in a GitHub Action.
+   2b. Check if an open pull request with title "${{ github.workflow }}: Updates to complete configuration" exists in this repo. If it does, add a comment to the pull request saying configuration needs to be completed, then exit the workflow. Otherwise continue to step 2c.
 
-   2c. Create the file `.github/actions/daily-test-improver/coverage-steps/action.yml` containing these steps, ensuring that the action.yml file is valid. Leave comments in the file to explain what the steps are doing, where the coverage report will be generated, and any other relevant information. Ensure that the steps include uploading the coverage report(s) as an artifact called "coverage".
+   2c. Have a careful think about the CI commands needed to build the repository, run tests, produce a combined coverage report and upload it as an artifact. Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository. If multiple projects are present, perform build and coverage testing on as many as possible, and where possible merge the coverage reports into one combined report. Work out the steps you worked out, in order, as a series of YAML steps suitable for inclusion in a GitHub Action.
 
-   2d. Before running any of the steps, make a pull request for the addition of the `action.yml` file, with title "Updates to complete configuration of ${{ github.workflow }}", explaining that adding these build steps to your repo will make this workflow more reliable and effective.
+   2d. Create the file `.github/actions/daily-test-improver/coverage-steps/action.yml` containing these steps, ensuring that the action.yml file is valid. Leave comments in the file to explain what the steps are doing, where the coverage report will be generated, and any other relevant information. Ensure that the steps include uploading the coverage report(s) as an artifact called "coverage".  Each step of the action should append its output to a file called `coverage-steps.log` in the root of the repository. Ensure that the action.yml file is valid and correctly formatted.
 
-   2e. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the pull request you created in step 2d, using `update_pull_request` to make the update. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
+   2e. Before running any of the steps, make a pull request for the addition of the `action.yml` file, with title "${{ github.workflow }}: Updates to complete configuration". Encourage the maintainer to review the files carefully to ensure they are appropriate for the project.
+
+   2f. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 2e. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
    
-   2f. Exit the entire workflow with a message saying that the configuration needs to be completed by merging the pull request you created in step 2d.
+   2g. Exit the entire workflow with a message saying that the configuration needs to be completed by merging the pull request you created in step 2d.
 
 3. Decide what to work on
 
-   3a. You can assume that the repository is in a state where the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` have been run and a test coverage report has been generated, perhaps with other detailed coverage information. Look at the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` to work out where the coverage report should be, and find it. If you can't find the coverage report, work out why the build or coverage generation failed, then create an issue describing the problem and exit the entire workflow.
+   3a. You can assume that the repository is in a state where the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` have been run and a test coverage report has been generated, perhaps with other detailed coverage information. Look at the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` to work out what has been run and where the coverage report should be, and find it. Also read any output files such as `coverage-steps.log` to understand what has been done. If the coverage steps failed, work out what needs to be fixed in `.github/actions/daily-test-improver/coverage-steps/action.yml` and make a pull request for those fixes and exit the entire workflow. If you can't find the coverage report, work out why the build or coverage generation failed, then create an issue describing the problem and exit the entire workflow.
 
    3b. Read the coverge report. Be detailed, looking to understand the files, functions, branches, and lines of code that are not covered by tests. Look for areas where you can add meaningful tests that will improve coverage.
    
    3c. Check the most recent pull request with title starting with "${{ github.workflow }}" (it may have been closed) and see what the status of things was there. These are your notes from last time you did your work, and may include useful recommendations for future areas to work on.
 
-   3d. Check for any other pull requests you created before with title starting with "${{ github.workflow }}". Don't work on adding any tests that overlap with what was done there.
-
-   3e. Based on all of the above, select an area of relatively low coverage to work on that appear tractable for further test additions.
+   3d. Check for existing open pull opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
+   
+   3e. If you think the plan is inadequate, and needs a refresh, update the planning issue by rewriting the actual body of the issue, ensuring you take into account any comments from maintainers. Add one single comment to the issue saying nothing but the plan has been updated with a one sentence explanation about why. Do not add comments to the issue, just update the body. Then continue to step 3f.
+  
+   3f. Based on all of the above, select an area of relatively low coverage to work on that appear tractable for further test additions.
 
 4. Do the following:
 

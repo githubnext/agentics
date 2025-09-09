@@ -88,22 +88,24 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
      1b. Use this research to write an issue with title "${{ github.workflow }}: Research and Plan", then exit this entire workflow.
 
-2. Generate build steps configuration (if not done before). 
+2. Build steps inference and configuration (if not done before)
 
-   2a. Check if `.github/actions/daily-perf-improver/build-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If this file exists, it will have been run already as part of the GitHub Action you are executing in, so read the file to understand what has already been run and continue to step 3. Otherwise continue to step 2b.
+   2a. Check if `.github/actions/daily-perf-improver/build-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If this file exists then continue to step 3. Otherwise continue to step 2b.
 
    2b. Check if an open pull request with title "${{ github.workflow }}: Updates to complete configuration" exists in this repo. If it does, add a comment to the pull request saying configuration needs to be completed, then exit the workflow. Otherwise continue to step 2c.
 
    2c. Have a careful think about the CI commands needed to build the project and set up the environment for individual performance development work, assuming one set of build assumptions and one architecture (the one running). Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository.
 
-   2d. Create the file `.github/actions/daily-perf-improver/build-steps/action.yml` as a GitHub Action containing these steps, ensuring that the action.yml file is valid and carefully cross-checking with other CI files and devcontainer configurations in the repo to ensure accuracy and correctness.
+   2d. Create the file `.github/actions/daily-perf-improver/build-steps/action.yml` as a GitHub Action containing these steps, ensuring that the action.yml file is valid and carefully cross-checking with other CI files and devcontainer configurations in the repo to ensure accuracy and correctness. Each step should append its output to a file called `build-steps.log` in the root of the repository. Ensure that the action.yml file is valid and correctly formatted.
 
-   2e. Make a pull request for the addition of this file, with title "${{ github.workflow }}: Updates to complete configuration". Explain that adding these files to the repo will make this workflow more reliable and effective. Encourage the maintainer to review the files carefully to ensure they are appropriate for the project. Exit the entire workflow.
+   2e. Make a pull request for the addition of this file, with title "${{ github.workflow }}: Updates to complete configuration". Encourage the maintainer to review the files carefully to ensure they are appropriate for the project. Exit the entire workflow.
+
+   2f. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 2e. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
 
 3. Performance goal selection: build an understanding of what to work on and select a part of the performance plan to pursue.
 
-   3a. You can now assume the repository is in a state where the steps in `.github/actions/daily-perf-improver/build-steps/action.yml` have been run and is ready for performance testing, running micro-benchmarks etc. Read this file to understand what has been done.
-
+   3a. You can now assume the repository is in a state where the steps in `.github/actions/daily-perf-improver/build-steps/action.yml` have been run and is ready for performance testing, running micro-benchmarks etc. Read this file to understand what has been done. Read any output files such as `build-steps.log` to understand what has been done. If the build steps failed, work out what needs to be fixed in `.github/actions/daily-perf-improver/build-steps/action.yml` and make a pull request for those fixes and exit the entire workflow.
+   
    3b. Read the plan in the issue mentioned earlier, along with comments.
 
    3c. Check for existing open pull requests that are related to performance improvements especially any opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
