@@ -12,7 +12,7 @@ gh aw add issue-triage -r githubnext/agentics --pr
 
 This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
-**Checklist**
+**Mandatory Checklist**
 
 * [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
 

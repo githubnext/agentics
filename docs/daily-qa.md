@@ -16,7 +16,9 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-qa
 ```
 
-**Checklist**
+**Mandatory Checklist**
+
+* [ ] I understand that, by default, the agentic portion of this workflow will generate and run bash commands in the confine of the GitHub Actions VM, with network access.
 
 * [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
 
@@ -57,8 +59,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 
 - By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
 - This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
-
-## YOLO
-
-- If you're sufficiently isolated (e.g. operating in a fresh fork of an open source project, with Actions and Issues enabled ), you can enable all Bash commands by using `Bash: [":*"]` in the workflow file and then running `gh aw compile` to update the workflow. This may be useful for time-limited experiments.
-

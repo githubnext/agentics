@@ -16,7 +16,7 @@ This creates a pull request to add the workflow to your repository. After mergin
 gh aw run daily-team-status
 ```
 
-**Checklist**
+**Mandatory Checklist**
 
 * [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
 

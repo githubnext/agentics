@@ -12,7 +12,7 @@ gh aw add ci-doctor -r githubnext/agentics --pr
 
 This creates a pull request to add the workflow to your repository. After merging the PR, the workflow will automatically trigger when monitored CI workflows fail. You cannot start this workflow manually as it responds to workflow failure events.
 
-**Checklist**
+**Mandatory Checklist**
 
 * [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
 

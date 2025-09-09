@@ -18,11 +18,11 @@ gh aw run update-docs
 
 ❗IMPORTANT: GitHub Actions runs will **not** trigger on commits pushed by this workflow and will **not** tell you that CI has not been run unless you have enabled a specific custom check for this condition. **You must open/close the PR or hit "Update branch" if offered to trigger CI.Yes it's painful and yes it's just something you need to be aware of.
 
-**Checklist**
+**Mandatory Checklist**
 
 * [ ] I have read the notes on coding tasks in the [main README](../README.md) and understand the implications.
 
-* [ ] I am a repository admin or have sufficient permissions, and am happy for this workflow to push new branches to the repository.
+* [ ] I am a repository admin or have sufficient permissions, and am happy for the safe-outputs portion of this workflow to push new branches to the repository.
 
 * [ ] I have enabled "Allow GitHub Actions to create and approve pull requests" in the repository settings under "Actions > General"
 
