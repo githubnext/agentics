@@ -167,7 +167,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    5d. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-   5e. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on the particular performance goal and linking to the pull request you created.
+   5e. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on the particular performance goal and linking to the pull request you created. Assess the work that you've done and write notes about what you would have needed to do to make things go more smoothly, and include these notes in the comment. Leave notes about the fastest ways to run builds, tests, benchmarks and so on, including the ways to avoid any problems you encountered.
 
 6. If you didn't succeed in improving performance, create an issue with title starting with "${{ github.workflow }}", summarizing similar information to above.
 
