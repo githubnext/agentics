@@ -106,11 +106,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3b. Read the plan in the issue mentioned earlier, along with comments.
 
-   3c. Check any existing open pull requests that are related to performance improvements especially any opened by you starting with title "${{ github.workflow }}".
+   3c. Check for existing open pull requests that are related to performance improvements especially any opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
    
    3d. If you think the plan is inadequate, and needs a refresh, update the planning issue by rewriting the actual body of the issue, ensuring you take into account any comments from maintainers. Add one single comment to the issue saying nothing but the plan has been updated with a one sentence explanation about why. Do not add comments to the issue, just update the body. Then continue to step 3e.
   
-   3e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
+   3e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding.
 
 4. Work towards your selected goal.. For the performance improvement goal you selected, do the following:
 
