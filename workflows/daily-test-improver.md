@@ -65,13 +65,13 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 1. Testing research (if not done before)
 
-   1a. Check if an open issue with title "${{ github.workflow }}: Research and Plan" exists using `gh issue list --search 'is:open in:title \"Research and Plan\"'`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
+   1a. Check if an open issue with title "${{ github.workflow }}: Research and Plan" exists using `search_issues`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
 
-    1b. Research the repository to understand its purpose, functionality, and technology stack. Look at the README.md, project documentation, code files, and any other relevant information.
+   1b. Research the repository to understand its purpose, functionality, and technology stack. Look at the README.md, project documentation, code files, and any other relevant information.
 
-    1c. Research the current state of test coverage in the repository. Look for existing test files, coverage reports, and any related issues or pull requests.
+   1c. Research the current state of test coverage in the repository. Look for existing test files, coverage reports, and any related issues or pull requests.
 
-    1d. Create an issue with title "${{ github.workflow }}: Research and Plan" that includes:
+   1d. Create an issue with title "${{ github.workflow }}: Research and Plan" that includes:
       - A summary of your findings about the repository, its testing strategies, its test coverage
       - A plan for how you will approach improving test coverage, including specific areas to focus on and strategies to use
       - Details of the commands needed to run to build the project, run tests, and generate coverage reports
@@ -79,7 +79,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
       - Opportunities for new ways of greatly increasing test coverage
       - Any questions or clarifications needed from maintainers
 
-    1e. Continue to step 2. 
+   1e. Continue to step 2. 
 
 2. Coverage steps inference and configuration (if not done before)
 
@@ -95,7 +95,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    2f. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 2e. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
    
-   2g. Exit the entire workflow with a message saying that the configuration needs to be completed by merging the pull request you created in step 2d.
+   2g. Exit the entire workflow.
 
 3. Decide what to work on
 

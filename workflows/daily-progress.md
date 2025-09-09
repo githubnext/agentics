@@ -61,7 +61,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 1. Roadmap research (if not done before).
 
-   1a. Check carefully if an open issue with title "${{ github.workflow }}: Research, Roadmap and Plan" exists using `gh issue list --search 'is:open in:title \"Research, Roadmap and Plan\"'`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
+   1a. Check carefully if an open issue with title "${{ github.workflow }}: Research, Roadmap and Plan" exists using `search_issues`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
 
    1b. Do some deep research into the feature reoadmap in this repo.
     - Read any existing documentation, issues, pull requests, project files, dev guides and so on in the repository that do similar things.
