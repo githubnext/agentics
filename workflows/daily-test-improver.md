@@ -51,7 +51,7 @@ steps:
       fi
     shell: bash
   - name: Build the project and produce coverage report
-    if: steps.check_build_steps_file.outputs.exists == 'true'
+    if: steps.check_coverage_steps_file.outputs.exists == 'true'
     uses: ./.github/actions/daily-test-improver/coverage-steps
     id: coverage-steps
 
