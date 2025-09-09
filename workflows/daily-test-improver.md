@@ -153,8 +153,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 6. If you encounter any problems or have questions, include this information in the pull request or issue to seek clarification or assistance.
 
-7. Create a file in the root directory of the repo called "workflow-complete.txt" with the text "Workflow completed successfully".
-
 @include agentics/shared/no-push-to-main.md
 
 @include agentics/shared/tool-refused.md
