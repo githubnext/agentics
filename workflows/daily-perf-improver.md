@@ -17,16 +17,18 @@ safe-outputs:
     title-prefix: "${{ github.workflow }}"
     max: 5
   add-issue-comment:
-    max: 5
+    target: "*" # can add a comment to any one single issue or pull request
   create-pull-request:
     draft: true
 
 tools:
   web-fetch:
   web-search:
-      # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
-      # For YOLO mode, uncomment 
-      # Bash: [ ":*" ]
+  
+  # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
+  #
+  # By default this workflow allows all bash commands within the confine of Github Actions VM 
+  bash: [ ":*" ]
 
 steps:
   - name: Checkout repository

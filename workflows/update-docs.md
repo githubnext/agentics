@@ -23,8 +23,8 @@ tools:
   #
   # Run `gh aw compile` after editing to recompile the workflow.
   #
-  # For YOLO mode, uncomment the following line
-  # bash: [ ":* ]
+  # By default this workflow allows all bash commands within the confine of Github Actions VM 
+  bash: [ ":*" ]
 
 timeout_minutes: 15
 ---

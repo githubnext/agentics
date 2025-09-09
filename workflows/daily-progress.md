@@ -15,6 +15,7 @@ safe-outputs:
     title-prefix: "${{ github.workflow }}"
     max: 3
   add-issue-comment:
+    target: "*" # all issues and PRs
     max: 3
   create-pull-request:
     draft: true
@@ -29,8 +30,8 @@ tools:
   #
   # Run `gh aw compile` after editing to recompile the workflow.
   #
-  # For YOLO mode, uncomment the following line
-  # bash: [":*]
+  # By default this workflow allows all bash commands within the confine of Github Actions VM 
+  bash: [ ":*" ]
 
 steps:
   - name: Checkout repository

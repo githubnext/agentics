@@ -18,6 +18,8 @@ safe-outputs:
   update-issue: # needed to update the report issue if it already exists
     target: "*" # can update any one single issue
     body: # can update the issue body only
+  add-issue-comment:
+    target: "*" # can add a comment to any one single issue or pull request
   create-pull-request: # needed to create results pull request
     draft: true
 
@@ -31,8 +33,8 @@ tools:
   #
   # Run `gh aw compile` after editing to recompile the workflow.
   #
-  # For YOLO mode, uncomment the following line
-  # bash: [ ":* ]
+  # By default this workflow allows all bash commands within the confine of Github Actions VM 
+  bash: [ ":*" ]
 
 steps:
   - name: Checkout repository

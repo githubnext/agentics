@@ -17,9 +17,9 @@ safe-outputs:
     title-prefix: "${{ github.workflow }}"
 
 # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
-# For YOLO mode, uncomment 
-# tools:
-#    bash: [ ":*" ]
+# By default this workflow allows all bash commands within the confine of Github Actions VM 
+tools:
+  bash: [ ":*" ]
 
 timeout_minutes: 15
 
