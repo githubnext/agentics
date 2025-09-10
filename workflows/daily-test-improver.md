@@ -50,10 +50,11 @@ steps:
         echo "exists=false" >> $GITHUB_OUTPUT
       fi
     shell: bash
-  - name: Build the project and produce coverage report
+  - name: Build the project and produce coverage report, logging to coverage-steps.log
     if: steps.check_coverage_steps_file.outputs.exists == 'true'
     uses: ./.github/actions/daily-test-improver/coverage-steps
     id: coverage-steps
+    continue-on-error: true # the model may not have got it right, so continue anyway, the model will check the results and try to fix the steps
 
 ---
 

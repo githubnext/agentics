@@ -43,10 +43,11 @@ steps:
         echo "exists=false" >> $GITHUB_OUTPUT
       fi
     shell: bash
-  - name: Build the project ready for performance testing
+  - name: Build the project ready for performance testing, logging to build-steps.log
     if: steps.check_build_steps_file.outputs.exists == 'true'
     uses: ./.github/actions/daily-perf-improver/build-steps
     id: build-steps
+    continue-on-error: true # the model may not have got it right, so continue anyway, the model will check the results and try to fix the steps
 
 ---
 
