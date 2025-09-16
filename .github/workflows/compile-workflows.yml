@@ -43,52 +43,7 @@ jobs:
         echo "Cleanup complete"
         
     - name: Compile workflows
-      run: |
-        set -e
-        echo "Compiling workflows..."
-        
-        # Find all workflow markdown files, excluding shared components
-        workflow_files=$(find workflows -name "*.md" -type f | grep -v "workflows/agentics/shared/")
-        
-        if [ -z "$workflow_files" ]; then
-          echo "No workflow files found"
-          exit 1
-        fi
-        
-        echo "Found workflow files:"
-        echo "$workflow_files"
-        echo ""
-        
-        failed_compilations=()
-        compiled_count=0
-        
-        # Compile each workflow
-        for workflow_file in $workflow_files; do
-          echo "Compiling $workflow_file..."
-          
-          if gh aw compile --validate "$workflow_file"; then
-            echo "✅ Successfully compiled $workflow_file"
-            compiled_count=$((compiled_count + 1))
-          else
-            echo "❌ Failed to compile $workflow_file"
-            failed_compilations+=("$workflow_file")
-          fi
-          echo ""
-        done
-        
-        echo "Compilation Summary:"
-        echo "Successfully compiled: $compiled_count workflows"
-        
-        if [ ${#failed_compilations[@]} -gt 0 ]; then
-          echo "Failed compilations: ${#failed_compilations[@]}"
-          echo "Failed workflows:"
-          for failed_workflow in "${failed_compilations[@]}"; do
-            echo "  - $failed_workflow"
-          done
-          exit 1
-        else
-          echo "All workflows compiled successfully! 🎉"
-        fi
+      run: gh aw compile --validate --instructions --workflows-dir workflows
       env:
         GH_TOKEN: ${{ github.token }}
         
