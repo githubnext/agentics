@@ -1,10 +1,10 @@
 ---
 on:
   command:
-    name: ask
+    name: repo-ask
   reaction: "eyes"
   stop-after: +48h
-  roles: [admin, maintainer, write]
+roles: [admin, maintainer, write]
 
 permissions: read-all
 
