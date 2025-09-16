@@ -4,6 +4,7 @@ on:
     name: pr-fix
   reaction: "eyes"
   stop-after: +48h
+  roles: [admin, maintainer, write]
 
 permissions: read-all
 
