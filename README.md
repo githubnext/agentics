@@ -27,7 +27,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 
 ## 💻 Coding Tasks Warning
 
-[!WARNING] The workflows that help with coding tasks should be installed with caution and used only experimentally, then disabled. While the tasks are executed within GitHub Actions and have no access to secrets, they still operate in an environment where outward network requests are allowed. This means untrusted inputs such as issue descriptions, comments, and code could potentially be exploited to direct the models to access external content that in turn could be malicious. Pull requests and other outputs must be reviewed very carefully before merging.
+> [!WARNING] The workflows that help with coding tasks should be installed with caution and used only experimentally, then disabled. While the tasks are executed within GitHub Actions and have no access to secrets, they still operate in an environment where outward network requests are allowed. This means untrusted inputs such as issue descriptions, comments, and code could potentially be exploited to direct the models to access external content that in turn could be malicious. Pull requests and other outputs must be reviewed very carefully before merging.
 
 ## 💬 Share Feedback
 
