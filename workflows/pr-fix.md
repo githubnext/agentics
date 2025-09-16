@@ -10,7 +10,7 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  push-to-branch:
+  push-to-pr-branch:
   create-issue:
     title-prefix: "${{ github.workflow }}"
   add-issue-comment:
