@@ -14,11 +14,13 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 
 ### Depth Triage & Analysis Workflows
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
+- [🔍 Repo Ask](docs/repo-ask.md) - Intelligent research assistant for repository questions and analysis
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🔍 Daily Accessibility Review](docs/daily-accessibility-review.md) - Review application accessibility by automatically running and using the application
 
 ### Coding & Development Workflows
-- [📦 Daily Dependency Updater](docs/daily-dependency-updates.md) - Update dependencies and create pull requests
+- [� Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap
+- [�📦 Daily Dependency Updater](docs/daily-dependency-updates.md) - Update dependencies and create pull requests
 - [📖 Regular Documentation Update](docs/update-docs.md) - Update documentation automatically
 - [🏥 PR Fix](docs/pr-fix.md) - Analyze failing CI checks and implement fixes for pull requests
 - [🔎 Daily Adhoc QA](docs/daily-qa.md) - Perform adhoc explorative quality assurance tasks
