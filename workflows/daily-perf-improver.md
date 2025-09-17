@@ -170,13 +170,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    5d. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-   5e. Add a very brief comment to the issue from step 1a if it exists, saying you have worked on the particular performance goal and linking to the pull request you created. Assess the work that you've done and write notes about what you would have needed to do to make things go more smoothly, and include these notes in the comment. Leave notes about the fastest ways to run builds, tests, benchmarks and so on, including the ways to avoid any problems you encountered.
-
-6. If you didn't succeed in improving performance, create an issue with title starting with "${{ github.workflow }}", summarizing similar information to above.
-
-7. If you encounter any unexpected failures or have questions, add comments to the pull request or issue to seek clarification or assistance.
-
-8. If you are unable to improve performance in a particular area, add a comment explaining why and what you tried. If you have any relevant links or resources, include those as well.
+6. At the end of your work, add a very, very brief comment (at most two-sentences) to the issue from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
 
 @include agentics/shared/no-push-to-main.md
 
