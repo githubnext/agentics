@@ -10,9 +10,9 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  add-issue-label:
+  add-labels:
     max: 5
-  add-issue-comment:
+  add-comment:
 
 tools:
   web-fetch:

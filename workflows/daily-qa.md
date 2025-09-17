@@ -16,7 +16,7 @@ network: defaults
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
-  add-issue-comment:
+  add-comment:
     target: "*" # all issues and PRs
     max: 5
   create-pull-request:
