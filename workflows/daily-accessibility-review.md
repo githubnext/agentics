@@ -71,6 +71,4 @@ still contains a placeholder, then:
 
 @include agentics/shared/include-link.md
 
-@include agentics/shared/tool-refused.md
-
 @include agentics/shared/xpia.md

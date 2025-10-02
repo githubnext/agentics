@@ -95,15 +95,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 6. If you encounter any unexpected failures or have questions, add 
 comments to the pull request or issue to seek clarification or assistance.
 
-@include agentics/shared/no-push-to-main.md
-
-@include agentics/shared/tool-refused.md
-
 @include agentics/shared/include-link.md
 
 @include agentics/shared/xpia.md
-
-@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md

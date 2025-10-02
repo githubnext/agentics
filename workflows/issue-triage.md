@@ -78,8 +78,6 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - If appropriate break the issue down to sub-tasks and write a checklist of things to do.
    - Use collapsed-by-default sections in the GitHub markdown to keep the comment tidy. Collapse all sections except the short main summary at the top.
 
-@include agentics/shared/tool-refused.md
-
 @include agentics/shared/include-link.md
 
 @include agentics/shared/xpia.md

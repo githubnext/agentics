@@ -40,15 +40,9 @@ Take heed of these instructions: "${{ needs.task.outputs.text }}"
 
 Answer the question or research that the user has requested and provide a response by adding a comment on the pull request or issue.
 
-@include agentics/shared/no-push-to-main.md
-
-@include agentics/shared/tool-refused.md
-
 @include agentics/shared/include-link.md
 
 @include agentics/shared/xpia.md
-
-@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md

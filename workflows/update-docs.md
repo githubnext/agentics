@@ -121,13 +121,9 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 
 > NOTE: Treat documentation gaps like failing tests.
 
-@include agentics/shared/tool-refused.md
-
 @include agentics/shared/include-link.md
 
 @include agentics/shared/xpia.md
-
-@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/update-docs.config -->
 @include? agentics/update-docs.config

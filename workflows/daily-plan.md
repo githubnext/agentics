@@ -50,8 +50,6 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 
    3a. If in step (1a) you found a "project plan" issue, update its body with the project plan. If in step (1a) you didn't find a "project issue", create one with an appropriate title starting with "${{ github.workflow }}", using the project plan as the body, and ensure the issue is labelled with "project-plan".
 
-@include agentics/shared/tool-refused.md
-
 @include agentics/shared/include-link.md
 
 @include agentics/shared/xpia.md
