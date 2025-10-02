@@ -40,8 +40,6 @@ This workflow requires no configuration and works out of the box. However, you c
 
 2. **Build steps**: The workflow will automatically create a build configuration file at `.github/actions/daily-progress/build-steps/action.yml` to set up the development environment for feature work.
 
-3. **Build tools configuration**: Specify additional bash commands and tools in `.github/workflows/agentics/build-tools.md` (shared).
-
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## How it Works

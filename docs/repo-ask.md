@@ -42,11 +42,7 @@ To trigger the workflow on a specific issue or pull request, add a comment with 
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. However, you can customize it as follows:
-
-1. **Local configuration**: Customize research behavior, response format, and allowed tools. Local configuration can be done in `.github/workflows/agentics/repo-ask.config.md`.
-
-2. **Build tools configuration**: Specify additional bash commands and tools in `.github/workflows/agentics/build-tools.md` (shared).
+This workflow requires no configuration and works out of the box. You can customize research behavior, response format, and allowed tools. Local configuration can be done in `.github/workflows/agentics/repo-ask.config.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

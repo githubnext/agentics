@@ -27,13 +27,6 @@ safe-outputs:
 tools:
   web-fetch:
   web-search:
-  # Configure bash build commands in any of these places
-  # - this file
-  # - .github/workflows/agentics/daily-test-improver.config.md 
-  # - .github/workflows/agentics/build-tools.md (shared).
-  #
-  # Run `gh aw compile` after editing to recompile the workflow.
-  #
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
 

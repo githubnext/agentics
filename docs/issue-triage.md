@@ -18,9 +18,7 @@ This creates a pull request to add the workflow to your repository. You can't st
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. However, you can customize it as follows:
-
-1. Use local configuation to customize triage criteria, labeling logic, customize issue categorization, modify automated responses. Local configuration can be done in `.github/workflows/agentics/issue-triage.config.md`.
+This workflow requires no configuration and works out of the box. You can use local configuation to customize triage criteria, labeling logic, customize issue categorization, modify automated responses. Local configuration can be done in `.github/workflows/agentics/issue-triage.config.md`.
 
 2. Add MCPs to integrate with project management tools
 
