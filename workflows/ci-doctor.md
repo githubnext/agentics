@@ -21,18 +21,9 @@ safe-outputs:
   add-comment:
 
 tools:
+  cache-memory: true
   web-fetch:
   web-search:
-
-# Cache configuration for persistent storage between runs
-cache:
-  key: investigation-memory-${{ github.repository }}
-  path: 
-    - /tmp/memory
-    - /tmp/investigation
-  restore-keys:
-    - investigation-memory-${{ github.repository }}
-    - investigation-memory-
 
 timeout_minutes: 10
 
