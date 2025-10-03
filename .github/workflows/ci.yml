@@ -1,0 +1,21 @@
+name: Install gh-aw
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  install-gh-aw:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install gh-aw
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/githubnext/gh-aw/refs/heads/main/install-gh-aw.sh -o /tmp/install-gh-aw.sh
+          bash /tmp/install-gh-aw.sh
+      - name: Verify gh-aw installation
+        run: ./gh-aw --version
+      - name: Compile workflows
+        run: ./gh-aw compile --workflows-dir workflows --verbose
