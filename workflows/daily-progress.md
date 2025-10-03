@@ -88,8 +88,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 6. If you encounter any unexpected failures or have questions, add comments to the pull request or issue to seek clarification or assistance.
 
-@include agentics/shared/include-link.md
-
 @include agentics/shared/xpia.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
