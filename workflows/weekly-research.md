@@ -49,7 +49,6 @@ At the end of the report list write a collapsed section with the following:
 - All bash commands you executed
 - All MCP tools you used
 
-@include agentics/shared/xpia.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/weekly-research.config -->
 @include? agentics/weekly-research.config

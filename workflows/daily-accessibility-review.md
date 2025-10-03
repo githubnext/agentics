@@ -68,5 +68,3 @@ still contains a placeholder, then:
    - A clear description of the problem
    - References to the appropriate section(s) of WCAG 2.2 that are violated
    - Any relevant code snippets that illustrate the issue
-
-@include agentics/shared/xpia.md
