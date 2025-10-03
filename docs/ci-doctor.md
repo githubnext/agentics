@@ -7,7 +7,7 @@ The [CI Doctor workflow](../workflows/ci-doctor.md?plain=1) monitors your GitHub
 ## Installation
 
 ```bash
-gh aw add ci-doctor -r githubnext/agentics --pr
+gh aw add githubnext/agentics/ci-doctor --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR, the workflow will automatically trigger when monitored CI workflows fail. You cannot start this workflow manually as it responds to workflow failure events.

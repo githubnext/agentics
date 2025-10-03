@@ -19,7 +19,7 @@ or by writing a comment:
 ## Installation
 
 ```bash
-gh aw add pr-fix -r githubnext/agentics --pr
+gh aw add githubnext/agentics/pr-fix --pr
 ```
 
 This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of a pull request with failing checks.

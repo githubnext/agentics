@@ -19,7 +19,7 @@ or by writing a comment with a specific question:
 ## Installation
 
 ```bash
-gh aw add repo-ask -r githubnext/agentics --pr
+gh aw add githubnext/agentics/repo-ask --pr
 ```
 
 This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of an issue or pull request comment.

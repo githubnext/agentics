@@ -7,7 +7,7 @@ The [daily progress workflow](../workflows/daily-progress.md?plain=1) is an auto
 ## Installation
 
 ```bash
-gh aw add daily-progress -r githubnext/agentics --pr
+gh aw add githubnext/agentics/daily-progress --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
