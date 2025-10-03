@@ -1,2 +1,4 @@
 workflows/*.lock.yml
 gh-aw
+.github/instructions/github-agentic-workflows.instructions.md
+.github/prompts/create-agentic-workflow.prompt.md

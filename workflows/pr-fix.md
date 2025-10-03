@@ -4,14 +4,14 @@ on:
     name: pr-fix
   reaction: "eyes"
   stop-after: +48h
-  roles: [admin, maintainer, write]
 
+roles: [admin, maintainer, write]
 permissions: read-all
 
 network: defaults
 
 safe-outputs:
-  push-to-pr-branch:
+  push-to-pull-request-branch:
   create-issue:
     title-prefix: "${{ github.workflow }}"
   add-comment:
