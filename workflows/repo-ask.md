@@ -33,9 +33,6 @@ Take heed of these instructions: "${{ needs.task.outputs.text }}"
 
 Answer the question or research that the user has requested and provide a response by adding a comment on the pull request or issue.
 
-@include agentics/shared/include-link.md
-
-@include agentics/shared/xpia.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md

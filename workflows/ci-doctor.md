@@ -21,18 +21,9 @@ safe-outputs:
   add-comment:
 
 tools:
+  cache-memory: true
   web-fetch:
   web-search:
-
-# Cache configuration for persistent storage between runs
-cache:
-  key: investigation-memory-${{ github.repository }}
-  path: 
-    - /tmp/memory
-    - /tmp/investigation
-  restore-keys:
-    - investigation-memory-${{ github.repository }}
-    - investigation-memory-
 
 timeout_minutes: 10
 
@@ -192,6 +183,3 @@ When creating an investigation issue, use this structure:
 - Build cumulative knowledge about failure patterns and solutions using structured JSON files
 - Use file-based indexing for fast pattern matching and similarity detection
 
-@include agentics/shared/include-link.md
-
-@include agentics/shared/xpia.md

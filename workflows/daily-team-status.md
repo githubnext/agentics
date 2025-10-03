@@ -64,9 +64,6 @@ tools:
 
    Only a new issue should be created, no existing issues should be adjusted.
 
-@include agentics/shared/include-link.md
-
-@include agentics/shared/xpia.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-team-status.config -->
 @include? agentics/daily-team-status.config
