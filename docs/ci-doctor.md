@@ -18,11 +18,7 @@ This creates a pull request to add the workflow to your repository. After mergin
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. However, you can customize it as follows:
-
-1. Use local configuation to specify which workflows to monitor (currently monitors "Daily Perf Improver" and "Daily Test Improver"), investigation depth, failure categorization, and reporting format. Local configuration can be done in `.github/workflows/agentics/ci-doctor.config.md`.
-
-2. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`. 
+You can specify which workflows to monitor (currently monitors "Daily Perf Improver" and "Daily Test Improver") by editing the workflow directly.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

@@ -16,7 +16,7 @@ network: defaults
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
-  add-issue-comment:
+  add-comment:
     target: "*" # all issues and PRs
     max: 5
   create-pull-request:
@@ -25,13 +25,6 @@ safe-outputs:
 tools:
   web-fetch:
   web-search:
-  # Configure bash build commands in any of these places
-  # - this file
-  # - .github/workflows/agentics/daily-qa-improver.config.md 
-  # - .github/workflows/agentics/build-tools.md (shared).
-  #
-  # Run `gh aw compile` after editing to recompile the workflow.
-  #
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
 
@@ -73,13 +66,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 6. Create a new issue with title starting with "${{ github.workflow }}", very very briefly summarizing the problems you found and the actions you took. Use note form. Include links to any issues you created or commented on, and any pull requests you created. In a collapsed section highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
 
-@include agentics/shared/tool-refused.md
-
-@include agentics/shared/include-link.md
-
 @include agentics/shared/xpia.md
-
-@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md

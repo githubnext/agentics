@@ -16,13 +16,6 @@ safe-outputs:
 tools:
   web-fetch:
   web-search:
-  # Configure bash build commands in any of these places
-  # - this file
-  # - .github/workflows/agentics/update-docs.config.md 
-  # - .github/workflows/agentics/build-tools.md (shared).
-  #
-  # Run `gh aw compile` after editing to recompile the workflow.
-  #
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
 
@@ -121,13 +114,7 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 
 > NOTE: Treat documentation gaps like failing tests.
 
-@include agentics/shared/tool-refused.md
-
-@include agentics/shared/include-link.md
-
 @include agentics/shared/xpia.md
-
-@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/update-docs.config -->
 @include? agentics/update-docs.config

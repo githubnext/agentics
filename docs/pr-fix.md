@@ -54,11 +54,9 @@ IMPORTANT: GitHub Actions runs will **not** trigger on commits pushed by this wo
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. However, you can customize it as follows:
+This workflow requires no configuration and works out of the box. You can use local configuration to specify custom build commands, testing procedures, linting rules, and code formatting standards. Local configuration can be done in `.github/workflows/agentics/pr-fix.config.md`.
 
-1. Use local configuration to specify custom build commands, testing procedures, linting rules, and code formatting standards. Local configuration can be done in `.github/workflows/agentics/pr-fix.config.md`.
-
-2. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`. 
+ 
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

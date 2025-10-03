@@ -38,11 +38,9 @@ gh aw run daily-dependency-updates
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. However, you can customize it as follows:
+This workflow requires no configuration and works out of the box. You can use local configuation to specify dependency management tools (npm, pip, maven, etc.), customize dependency update strategies and version constraints, onfigure which dependencies to include/exclude from automated updates. Local configuration can be done in `.github/workflows/agentics/daily-dependency-updates.config.md`.
 
-1. Use local configuation to specify dependency management tools (npm, pip, maven, etc.), customize dependency update strategies and version constraints, onfigure which dependencies to include/exclude from automated updates. Local configuration can be done in `.github/workflows/agentics/daily-dependency-updates.config.md`.
 
-2. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

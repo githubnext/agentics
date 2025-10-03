@@ -18,7 +18,7 @@ network: defaults
 safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
-  add-issue-comment:
+  add-comment:
 
 tools:
   cache-memory:
@@ -181,9 +181,5 @@ When creating an investigation issue, use this structure:
 - Persist findings across workflow runs using GitHub Actions cache
 - Build cumulative knowledge about failure patterns and solutions using structured JSON files
 - Use file-based indexing for fast pattern matching and similarity detection
-
-@include agentics/shared/tool-refused.md
-
-@include agentics/shared/include-link.md
 
 @include agentics/shared/xpia.md

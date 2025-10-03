@@ -52,8 +52,6 @@ gh aw run daily-perf-improver --repeat 180
 
 3. Use local configuation to specify performance testing tools and benchmarking frameworks, optimization targets, performance metrics, and profiling strategies. Local configuration can be done in `.github/workflows/agentics/daily-perf-improver.config.md`.
 
-4. Build tool configuration for build tools shared across all workflows installed from this pack can be done in `.github/workflows/agentics/build-tools.md`. 
-
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub

@@ -19,7 +19,7 @@ safe-outputs:
     target: "*" # one single issue
     body: # can update the issue title/body only
     title: # can update the issue title/body only
-  add-issue-comment:
+  add-comment:
     target: "*" # can add a comment to any one single issue or pull request
   create-pull-request: # can create a pull request
     draft: true
@@ -27,13 +27,6 @@ safe-outputs:
 tools:
   web-fetch:
   web-search:
-  # Configure bash build commands in any of these places
-  # - this file
-  # - .github/workflows/agentics/daily-test-improver.config.md 
-  # - .github/workflows/agentics/build-tools.md (shared).
-  #
-  # Run `gh aw compile` after editing to recompile the workflow.
-  #
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
 
@@ -86,13 +79,13 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    2a. Check if `.github/actions/daily-test-improver/coverage-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If it exists then continue to step 3. Otherwise continue to step 2b.
    
-   2b. Check if an open pull request with title "${{ github.workflow }}: Updates to complete configuration" exists in this repo. If it does, add a comment to the pull request saying configuration needs to be completed, then exit the workflow. Otherwise continue to step 2c.
+   2b. Check if an open pull request with title "${{ github.workflow }} - Updates to complete configuration" exists in this repo. If it does, add a comment to the pull request saying configuration needs to be completed, then exit the workflow. Otherwise continue to step 2c.
 
    2c. Have a careful think about the CI commands needed to build the repository, run tests, produce a combined coverage report and upload it as an artifact. Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository. If multiple projects are present, perform build and coverage testing on as many as possible, and where possible merge the coverage reports into one combined report. Work out the steps you worked out, in order, as a series of YAML steps suitable for inclusion in a GitHub Action.
 
    2d. Create the file `.github/actions/daily-test-improver/coverage-steps/action.yml` containing these steps, ensuring that the action.yml file is valid. Leave comments in the file to explain what the steps are doing, where the coverage report will be generated, and any other relevant information. Ensure that the steps include uploading the coverage report(s) as an artifact called "coverage".  Each step of the action should append its output to a file called `coverage-steps.log` in the root of the repository. Ensure that the action.yml file is valid and correctly formatted.
 
-   2e. Before running any of the steps, make a pull request for the addition of the `action.yml` file, with title "${{ github.workflow }}: Updates to complete configuration". Encourage the maintainer to review the files carefully to ensure they are appropriate for the project.
+   2e. Before running any of the steps, make a pull request for the addition of the `action.yml` file, with title "${{ github.workflow }} - Updates to complete configuration". Encourage the maintainer to review the files carefully to ensure they are appropriate for the project.
 
    2f. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 2e. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
    
@@ -136,10 +129,8 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
       - A summary of the changes made
       - The problems you found
       - The actions you took
-      - The changes in test coverage achieved - give numbers from the coverage reports
-      - Include exact coverage numbers before and after the changes, drawing from the coverage reports
-      - Include changes in numbers for overall coverage
-      - If coverage numbers a guesstimates, rather than based on coverage reports, say so. Don't blag, be honest. Include the exact commands the user will need to run to validate accurate coverage numbers.
+      - Include a section "Test coverage results" giving exact coverage numbers before and after the changes, drawing from the coverage reports, in a table if possible. Include changes in numbers for overall coverage. If coverage numbers a guesstimates, rather than based on coverage reports, say so. Don't blag, be honest. Include the exact commands the user will need to run to validate accurate coverage numbers.
+      - Include a section "Replicating the test coverage measurements" with the exact commands needed to install dependencies, build the code, run tests, generate coverage reports including a summary before/after table, so that someone else can replicate them. If you used any scripts or programs to help with this, include them in the repository if appropriate, or include links to them if they are external.
       - List possible other areas for future improvement
       - In a collapsed section list
         - all bash commands you ran
@@ -148,21 +139,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
     - After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-   4i. Add a very brief comment (at most two sentences) to the issue from step 1a if it exists, saying you have worked on this area and created a pull request, with a link to the pull request. Assess the work that you've done and write notes about what you would have needed to do to make things go more smoothly, and include these notes in the comment. Leave notes about the fastest ways to run tests, how to get coverage reports, and so on.
-
 5. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 
-6. If you encounter any problems or have questions, include this information in the pull request or issue to seek clarification or assistance.
-
-@include agentics/shared/no-push-to-main.md
-
-@include agentics/shared/tool-refused.md
-
-@include agentics/shared/include-link.md
+6. At the end of your work, add a very, very brief comment (at most two-sentences) to the issue from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
 
 @include agentics/shared/xpia.md
-
-@include agentics/shared/gh-extra-pr-tools.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
 @include? agentics/build-tools.md

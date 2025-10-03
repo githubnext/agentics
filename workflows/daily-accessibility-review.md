@@ -14,16 +14,11 @@ safe-outputs:
   create-issue:
     title-prefix: "${{ github.workflow }}"
     max: 5
-  add-issue-comment:
+  add-comment:
     max: 5
 
 tools:
   playwright:
-    mcp:
-      type: stdio
-      command: npx
-      args: ["@playwright/mcp@0.0.33", "--headless"]
-    allowed: ["browser_click", "browser_evaluate", "browser_handle_dialog", "browser_hover", "browser_navigate", "browser_navigate_back", "browser_navigate_forward", "browser_press_key", "browser_resize", "browser_select_option", "browser_snapshot", "browser_take_screenshot", "browser_type", "browser_wait_for"]
   web-fetch:
   web-search:
 
@@ -73,9 +68,5 @@ still contains a placeholder, then:
    - A clear description of the problem
    - References to the appropriate section(s) of WCAG 2.2 that are violated
    - Any relevant code snippets that illustrate the issue
-
-@include agentics/shared/include-link.md
-
-@include agentics/shared/tool-refused.md
 
 @include agentics/shared/xpia.md

@@ -38,14 +38,6 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 > NOTE: If you didn't make progress on particular dependency updates, create one overall issue saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
 
-@include agentics/shared/no-push-to-main.md
-
-@include agentics/shared/workflow-changes.md
-
-@include agentics/shared/tool-refused.md
-
-@include agentics/shared/include-link.md
-
 @include agentics/shared/xpia.md
 
 <!-- You can whitelist tools in .github/workflows/build-tools.md file -->
