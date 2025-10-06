@@ -88,9 +88,5 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 6. If you encounter any unexpected failures or have questions, add 
 comments to the pull request or issue to seek clarification or assistance.
 
-
-<!-- You can whitelist tools in .github/workflows/build-tools.md file -->
-@include? agentics/build-tools.md
-
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-progress.config -->
 @include? agentics/daily-progress.config.md
