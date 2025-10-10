@@ -112,7 +112,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3c. Check for existing open pull requests that are related to performance improvements especially any opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
    
-   3d. If you think the plan is inadequate, and needs a refresh, update the planning discussion by rewriting the actual body of the discussion, ensuring you take into account any comments from maintainers. Add one single comment to the discussion saying the plan has been updated with a one sentence explanation about why. Then continue to step 3e.
+   3d. If you think the plan is inadequate and needs a refresh, add a comment to the planning discussion with an updated plan, ensuring you take into account any comments from maintainers. Explain in the comment why the plan has been updated. Then continue to step 3e.
   
    3e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding.
 
