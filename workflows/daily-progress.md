@@ -11,8 +11,9 @@ timeout_minutes: 30
 network: defaults
 
 safe-outputs:
-  create-issue:
+  create-discussion:
     title-prefix: "${{ github.workflow }}"
+    category: "ideas"
     max: 3
   add-comment:
     target: "*" # all issues and PRs
@@ -36,7 +37,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 1. Roadmap research (if not done before).
 
-   1a. Check carefully if an open issue with with label "daily-progress-plan" using `search_issues`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
+   1a. Check carefully if an open discussion with title starting with "${{ github.workflow }}" exists using `search_discussions`. If it does, read the discussion and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the discussion doesn't exist, follow the steps below to create it:
 
    1b. Do some deep research into the feature roadmap in this repo.
     - Read any existing documentation, issues, pull requests, project files, dev guides and so on in the repository that do similar things.
@@ -50,17 +51,17 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
     - Features can include documentation, code, tests, examples, communication plans and so on.
     - If you find a relevant roadmap document, read it carefully and use it to inform your understanding of the project's feature goals.
     
-     1b. Use this research to write an issue with title "${{ github.workflow }} - Research, Roadmap and Plan" and label "daily-progress-plan", then exit this entire workflow.
+     1b. Use this research to write a discussion with title "${{ github.workflow }} - Research, Roadmap and Plan", then exit this entire workflow.
 
 2. Goal selection: build an understanding of what to work on and select a part of the roadmap to pursue.
 
    2a. You can now assume the repository is in a state where the steps in `.github/actions/daily-progress/build-steps/action.yml` have been run and is ready for you to work on features.
 
-   2b. Read the plan in the issue mentioned earlier, along with comments.
+   2b. Read the plan in the discussion mentioned earlier, along with comments.
 
    2c. Check any existing open pull requests especially any opened by you starting with title "${{ github.workflow }}".
    
-   2d. If you think the plan is inadequate, and needs a refresh, update the planning issue by rewriting the actual body of the issue, ensuring you take into account any comments from maintainers. Add one single comment to the issue saying nothing but the plan has been updated with a one sentence explanation about why. Do not add comments to the issue, just update the body. Then continue to step 3e.
+   2d. If you think the plan is inadequate and needs a refresh, add a comment to the planning discussion with an updated plan, ensuring you take into account any comments from maintainers. Explain in the comment why the plan has been updated. Then continue to step 3e.
   
    2e. Select a goal to pursue from the plan. Ensure that you have a good understanding of the code and the issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
 
@@ -84,9 +85,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    4c. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-5. At the end of your work, add a very, very brief comment (at most two-sentences) to the issue from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
+5. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
 
-6. If you encounter any unexpected failures or have questions, add comments to the pull request or issue to seek clarification or assistance.
+6. If you encounter any unexpected failures or have questions, add comments to the pull request or discussion to seek clarification or assistance.
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-progress.config -->
 {{#import? agentics/daily-progress.config.md}}

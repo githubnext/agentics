@@ -13,12 +13,9 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  create-issue: # needed to create planning issue
+  create-discussion: # needed to create planning discussion
     title-prefix: "${{ github.workflow }}"
-  update-issue: # can update the planning issue if it already exists
-    target: "*" # one single issue
-    body: # can update the issue title/body only
-    title: # can update the issue title/body only
+    category: "ideas"
   add-comment:
     target: "*" # can add a comment to any one single issue or pull request
   create-pull-request: # can create a pull request
@@ -59,13 +56,13 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 1. Testing research (if not done before)
 
-   1a. Check if an open issue with label "daily-test-improver-plan" exists using `search_issues`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
+   1a. Check if an open discussion with title starting with "${{ github.workflow }}" exists using `search_discussions`. If it does, read the discussion and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the discussion doesn't exist, follow the steps below to create it:
 
    1b. Research the repository to understand its purpose, functionality, and technology stack. Look at the README.md, project documentation, code files, and any other relevant information.
 
    1c. Research the current state of test coverage in the repository. Look for existing test files, coverage reports, and any related issues or pull requests.
 
-   1d. Create an issue with title "${{ github.workflow }} - Research and Plan" and label "daily-test-improver-plan" that includes:
+   1d. Create a discussion with title "${{ github.workflow }} - Research and Plan" that includes:
       - A summary of your findings about the repository, its testing strategies, its test coverage
       - A plan for how you will approach improving test coverage, including specific areas to focus on and strategies to use
       - Details of the commands needed to run to build the project, run tests, and generate coverage reports
@@ -101,7 +98,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3d. Check for existing open pull opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
    
-   3e. If you think the plan is inadequate, and needs a refresh, update the planning issue by rewriting the actual body of the issue, ensuring you take into account any comments from maintainers. Add one single comment to the issue saying nothing but the plan has been updated with a one sentence explanation about why. Do not add comments to the issue, just update the body. Then continue to step 3f.
+   3e. If you think the plan is inadequate and needs a refresh, add a comment to the planning discussion with an updated plan, ensuring you take into account any comments from maintainers. Explain in the comment why the plan has been updated. Then continue to step 3f.
   
    3f. Based on all of the above, select an area of relatively low coverage to work on that appear tractable for further test additions.
 
@@ -141,7 +138,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 5. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 
-6. At the end of your work, add a very, very brief comment (at most two-sentences) to the issue from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
+6. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-test-improver.config.md -->
 {{#import? agentics/daily-test-improver.config.md}}

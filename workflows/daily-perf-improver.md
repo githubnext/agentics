@@ -13,8 +13,9 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  create-issue:
+  create-discussion:
     title-prefix: "${{ github.workflow }}"
+    category: "ideas"
     max: 5
   add-comment:
     target: "*" # can add a comment to any one single issue or pull request
@@ -59,7 +60,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
 1. Performance research (if not done before).
 
-   1a. Check if an open issue with label "daily-perf-improver-plan" exists using `search_issues`. If it does, read the issue and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the issue doesn't exist, follow the steps below to create it:
+   1a. Check if an open discussion with title starting with "${{ github.workflow }}" exists using `search_discussions`. If it does, read the discussion and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the discussion doesn't exist, follow the steps below to create it:
 
    1b. Do some deep research into performance matters in this repo.
      - How is performance testing is done in the repo?
@@ -87,7 +88,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
      Consider perf engineering fundamentals:
      - You want to get to a zone where the engineers can run commands to get numbers towards some performance goal - with commands running reliably within 1min or so - and it can "see" the code paths associated with that. If you can achieve that, your engineers will be very good at finding low-hanging fruit to work towards the performance goals.
 
-     1b. Use this research to create an issue with title "${{ github.workflow }} - Research and Plan" and label "daily-perf-improver-plan", then exit this entire workflow.
+     1b. Use this research to create a discussion with title "${{ github.workflow }} - Research and Plan", then exit this entire workflow.
 
 2. Build steps inference and configuration (if not done before)
 
@@ -107,11 +108,11 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3a. You can now assume the repository is in a state where the steps in `.github/actions/daily-perf-improver/build-steps/action.yml` have been run and is ready for performance testing, running micro-benchmarks etc. Read this file to understand what has been done. Read any output files such as `build-steps.log` to understand what has been done. If the build steps failed, work out what needs to be fixed in `.github/actions/daily-perf-improver/build-steps/action.yml` and make a pull request for those fixes and exit the entire workflow.
    
-   3b. Read the plan in the issue mentioned earlier, along with comments.
+   3b. Read the plan in the discussion mentioned earlier, along with comments.
 
    3c. Check for existing open pull requests that are related to performance improvements especially any opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
    
-   3d. If you think the plan is inadequate, and needs a refresh, update the planning issue by rewriting the actual body of the issue, ensuring you take into account any comments from maintainers. Add one single comment to the issue saying nothing but the plan has been updated with a one sentence explanation about why. Do not add comments to the issue, just update the body. Then continue to step 3e.
+   3d. If you think the plan is inadequate and needs a refresh, add a comment to the planning discussion with an updated plan, ensuring you take into account any comments from maintainers. Explain in the comment why the plan has been updated. Then continue to step 3e.
   
    3e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding.
 
@@ -170,7 +171,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    5d. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-6. At the end of your work, add a very, very brief comment (at most two-sentences) to the issue from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
+6. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-perf-improver.config -->
 {{#import? agentics/daily-perf-improver.config.md}}
