@@ -39,7 +39,7 @@ The agentic workflows have been updated to use GitHub Discussions instead of Iss
 4. Click on the "Categories" section in Discussions
 5. Create the following categories with the exact slugs specified above:
    - **Announcements** (slug: `announcements`)
-   - **Ideas** (slug: `ideas`)  
+   - **Ideas** (slug: `ideas`)
    - **Q&A** (slug: `q-a`)
 
 ## Notes
