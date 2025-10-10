@@ -12,10 +12,9 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  create-issue:
+  create-discussion:
     title-prefix: "${{ github.workflow }}"
-  update-issue:
-    target: "*" # can update one single issue
+    category: "announcements"
 
 timeout_minutes: 15
 
@@ -26,7 +25,7 @@ tools:
 
 # Daily Team Status
 
-1. Search for recent open issues with title "${{ github.workflow }}" in the repository. Read them to understand the context of the team and recent activity, and to avoid duplication. 
+1. Search for recent open discussions with title "${{ github.workflow }}" in the repository. Read them to understand the context of the team and recent activity, and to avoid duplication. 
 
 2. Write an upbeat, friendly, motiviating summary of recent activity in the repo.
 
@@ -60,9 +59,9 @@ tools:
      * all files you read to generate the data for the report
      * places you didn't have time to read or search, but would have liked to
 
-   Create a new GitHub issue with title starting with "${{ github.workflow }}" containing a markdown report with your findings. Use links where appropriate.
+   Create a new GitHub discussion with title starting with "${{ github.workflow }}" containing a markdown report with your findings. Use links where appropriate.
 
-   Only a new issue should be created, no existing issues should be adjusted.
+   Only a new discussion should be created, no existing discussions should be adjusted.
 
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-team-status.config -->

@@ -11,8 +11,9 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  create-issue:
+  create-discussion:
     title-prefix: "${{ github.workflow }}"
+    category: "q-a"
     max: 5
   add-comment:
     max: 5
@@ -54,8 +55,8 @@ Steps:
 If the section "Build and run app in background" already contains actual commands, then go to the next step. If it 
 still contains a placeholder, then:  
    a. Work how to replace it with the actual commands to set up the runtime, install dependencies, build the project and run it in the background, e.g., using `&` at the end of the command.
-   b. Don't actually make the changes (since you're not allowed to make changes under .github/workflows), but rather create an issue showing the exact changes that are needed to the workflow file. Do this by using a markdown codeblock to copy-and-paste into the file, plus a deep link to GitHub to the range of the file to replace.
-   c. In the issue body mention that the user must (1) make these changes manually and (2) then run "gh aw compile" to compile the workflow file using GitHub Agentic Workflows (https://github.com/githubnext/gh-aw).
+   b. Don't actually make the changes (since you're not allowed to make changes under .github/workflows), but rather create a discussion showing the exact changes that are needed to the workflow file. Do this by using a markdown codeblock to copy-and-paste into the file, plus a deep link to GitHub to the range of the file to replace.
+   c. In the discussion body mention that the user must (1) make these changes manually and (2) then run "gh aw compile" to compile the workflow file using GitHub Agentic Workflows (https://github.com/githubnext/gh-aw).
    d. Also instruct them to remove this section from the markdown. 
    e. Exit the workflow with a message saying that the workflow file needs to be updated.
 
@@ -64,7 +65,7 @@ still contains a placeholder, then:
 
 2. Review the source code of the application to look for accessibility issues in the code.  Use the Grep, LS, Read, etc. tools.
 
-3. Use the GitHub MCP tool to create issues for any accessibility problems you find.  Each issue should include:
+3. Use the GitHub MCP tool to create discussions for any accessibility problems you find.  Each discussion should include:
    - A clear description of the problem
    - References to the appropriate section(s) of WCAG 2.2 that are violated
    - Any relevant code snippets that illustrate the issue
