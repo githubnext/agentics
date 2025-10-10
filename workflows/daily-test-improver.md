@@ -102,7 +102,7 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 
    3d. Check for existing open pull opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
    
-   3e. If you think the plan is inadequate, and needs a refresh, update the planning discussion by rewriting the actual body of the discussion, ensuring you take into account any comments from maintainers. Add one single comment to the discussion saying nothing but the plan has been updated with a one sentence explanation about why. Do not add multiple comments to the discussion, just update the body. Then continue to step 3f.
+   3e. If you think the plan is inadequate, and needs a refresh, update the planning discussion by rewriting the actual body of the discussion, ensuring you take into account any comments from maintainers. Add one single comment to the discussion saying the plan has been updated with a one sentence explanation about why. Then continue to step 3f.
   
    3f. Based on all of the above, select an area of relatively low coverage to work on that appear tractable for further test additions.
 
