@@ -116,5 +116,5 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/update-docs.config -->
-@include? agentics/update-docs.config
+{{#import? agentics/update-docs.config}}
 

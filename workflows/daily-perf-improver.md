@@ -173,4 +173,4 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 6. At the end of your work, add a very, very brief comment (at most two-sentences) to the issue from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-perf-improver.config -->
-@include? agentics/daily-perf-improver.config.md
+{{#import? agentics/daily-perf-improver.config.md}}

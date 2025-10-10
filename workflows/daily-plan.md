@@ -52,4 +52,4 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-plan.config -->
-@include? agentics/daily-plan.config.md
+{{#import? agentics/daily-plan.config.md}}

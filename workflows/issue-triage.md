@@ -80,4 +80,4 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
 
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/issue-triage.config -->
-@include? agentics/issue-triage.config
+{{#import? agentics/issue-triage.config}}
