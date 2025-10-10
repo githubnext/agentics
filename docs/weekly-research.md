@@ -7,7 +7,7 @@ The [weekly research workflow](../workflows/weekly-research.md?plain=1) will run
 ## Installation
 
 ```bash
-gh aw add weekly-research -r githubnext/agentics --pr
+gh aw add githubnext/agentics/weekly-research --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:

@@ -25,7 +25,7 @@ tools:
   web-fetch:
   web-search:
   
-  # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md or .github/workflows/agentics/build-tools.md
+  # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md
   #
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
@@ -171,11 +171,6 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
    5d. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
 6. At the end of your work, add a very, very brief comment (at most two-sentences) to the issue from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
-
-@include agentics/shared/xpia.md
-
-<!-- You can whitelist tools in .github/workflows/build-tools.md file -->
-@include? agentics/build-tools.md
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-perf-improver.config -->
 @include? agentics/daily-perf-improver.config.md

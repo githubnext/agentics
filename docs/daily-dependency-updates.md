@@ -7,7 +7,7 @@ The [daily dependency updater workflow](../workflows/daily-dependency-updates.md
 ## Installation
 
 ```bash
-gh aw add daily-dependency-updates -r githubnext/agentics --pr
+gh aw add githubnext/agentics/daily-dependency-updates --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:

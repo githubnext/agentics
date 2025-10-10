@@ -7,7 +7,7 @@ The [daily plan workflow](../workflows/daily-plan.md?plain=1) will run daily to 
 ## Installation
 
 ```bash
-gh aw add daily-plan -r githubnext/agentics --pr
+gh aw add githubnext/agentics/daily-plan --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:

@@ -7,7 +7,7 @@ The [daily test coverage improver workflow](../workflows/daily-test-improver.md?
 ## Installation
 
 ```bash
-gh aw add daily-test-improver -r githubnext/agentics --pr
+gh aw add githubnext/agentics/daily-test-improver --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:

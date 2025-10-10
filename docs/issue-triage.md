@@ -7,7 +7,7 @@ The [issue triage workflow](../workflows/issue-triage.md?plain=1) will when issu
 ## Installation
 
 ```bash
-gh aw add issue-triage -r githubnext/agentics --pr
+gh aw add githubnext/agentics/issue-triage --pr
 ```
 
 This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of an issue.

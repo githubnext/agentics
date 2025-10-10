@@ -66,10 +66,5 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 
 6. Create a new issue with title starting with "${{ github.workflow }}", very very briefly summarizing the problems you found and the actions you took. Use note form. Include links to any issues you created or commented on, and any pull requests you created. In a collapsed section highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
 
-@include agentics/shared/xpia.md
-
-<!-- You can whitelist tools in .github/workflows/build-tools.md file -->
-@include? agentics/build-tools.md
-
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-qa.config.md -->
 @include? agentics/daily-qa.config.md

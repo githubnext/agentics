@@ -7,7 +7,7 @@ The [update documentation workflow](../workflows/update-docs.md?plain=1) will ru
 ## Installation
 
 ```bash
-gh aw add update-docs -r githubnext/agentics --pr
+gh aw add githubnext/agentics/update-docs --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:

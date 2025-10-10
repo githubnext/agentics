@@ -7,7 +7,7 @@ The [daily performance improver workflow](../workflows/daily-perf-improver.md?pl
 ## Installation
 
 ```bash
-gh aw add daily-perf-improver -r githubnext/agentics --pr
+gh aw add githubnext/agentics/daily-perf-improver --pr
 ```
 
 This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:

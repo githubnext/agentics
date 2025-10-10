@@ -7,7 +7,7 @@ The [daily accessibility review workflow](../workflows/daily-accessibility-revie
 ## Installation
 
 ```bash
-gh aw add daily-accessibility-review -r githubnext/agentics --pr
+gh aw add githubnext/agentics/daily-accessibility-review --pr
 ```
 
 This creates an issue in your repository recording accessibility problems found.
