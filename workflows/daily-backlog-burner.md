@@ -90,4 +90,4 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for 
 comments to the pull request or discussion to seek clarification or assistance.
 
 <!-- You can customize prompting and tools in .github/workflows/agentics/daily-progress.config -->
-@include? agentics/daily-progress.config.md
+{{#import? agentics/daily-progress.config.md}}
