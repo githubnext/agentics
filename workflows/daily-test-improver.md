@@ -17,6 +17,7 @@ safe-outputs:
     title-prefix: "${{ github.workflow }}"
     category: "ideas"
   add-comment:
+    discussion: true
     target: "*" # can add a comment to any one single issue or pull request
   create-pull-request: # can create a pull request
     draft: true

@@ -7,10 +7,18 @@ The [daily team status workflow](../workflows/daily-team-status.md?plain=1) will
 ## Installation
 
 ```bash
+# Install the 'gh aw' extension
+gh aw extension install githubnext/agentics
+
+# Add the Daily Team Status workflow to your repository
 gh aw add githubnext/agentics/daily-team-status --pr
 ```
 
-This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository.
+
+You must also add [choose a coding agent](https://githubnext.github.io/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+
+After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-team-status

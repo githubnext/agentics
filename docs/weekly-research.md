@@ -7,10 +7,18 @@ The [weekly research workflow](../workflows/weekly-research.md?plain=1) will run
 ## Installation
 
 ```bash
+# Install the 'gh aw' extension
+gh aw extension install githubnext/agentics
+
+# Add the Weekly Research workflow to your repository
 gh aw add githubnext/agentics/weekly-research --pr
 ```
 
-This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository. 
+
+You must also add [choose a coding agent](https://githubnext.github.io/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+
+After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run weekly-research

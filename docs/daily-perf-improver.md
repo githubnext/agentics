@@ -7,10 +7,18 @@ The [daily performance improver workflow](../workflows/daily-perf-improver.md?pl
 ## Installation
 
 ```bash
+# Install the 'gh aw' extension
+gh aw extension install githubnext/agentics
+
+# Add the Daily Performance Improver workflow to your repository
 gh aw add githubnext/agentics/daily-perf-improver --pr
 ```
 
-This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+This creates a pull request to add the workflow to your repository.
+
+You must also add [choose a coding agent](https://githubnext.github.io/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+
+After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-perf-improver

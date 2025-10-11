@@ -19,10 +19,18 @@ or by writing a comment with a specific question:
 ## Installation
 
 ```bash
+# Install the 'gh aw' extension
+gh aw extension install githubnext/agentics
+
+# Add the Repo Ask workflow to your repository
 gh aw add githubnext/agentics/repo-ask --pr
 ```
 
-This creates a pull request to add the workflow to your repository. You can't start a run of this workflow directly as it is triggered in the context of an issue or pull request comment.
+This creates a pull request to add the workflow to your repository.
+
+You must also add [choose a coding agent](https://githubnext.github.io/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+
+You can't start a run of this workflow directly as it is triggered in the context of an issue or pull request comment.
 
 To trigger the workflow on a specific issue or pull request, add a comment with the command:
 
