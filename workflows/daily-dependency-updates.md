@@ -40,6 +40,4 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 > NOTE: If you didn't make progress on particular dependency updates, create one overall discussion saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/daily-dependency-updates.config -->
-{{#import? agentics/daily-dependency-updates.config.md}}
 

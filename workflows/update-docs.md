@@ -115,6 +115,3 @@ Documentation‑as‑Code, transparency, single source of truth, continuous impr
 > NOTE: Treat documentation gaps like failing tests.
 
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/update-docs.config -->
-{{#import? agentics/update-docs.config}}
-

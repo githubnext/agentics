@@ -49,5 +49,3 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
    3a. Create a discussion with an appropriate title starting with "${{ github.workflow }}" and the current date (e.g., "Daily Plan - 2025-10-10"), using the project plan as the body.
 
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/daily-plan.config -->
-{{#import? agentics/daily-plan.config.md}}

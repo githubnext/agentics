@@ -33,6 +33,4 @@ Take heed of these instructions: "${{ needs.task.outputs.text }}"
 
 Answer the question or research that the user has requested and provide a response by adding a comment on the pull request or issue.
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/ask.config.md -->
-{{#import? agentics/ask.config.md}}
 

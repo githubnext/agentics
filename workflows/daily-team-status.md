@@ -64,5 +64,3 @@ tools:
    Only a new discussion should be created, no existing discussions should be adjusted.
 
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/daily-team-status.config -->
-{{#import? agentics/daily-team-status.config}}

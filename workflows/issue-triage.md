@@ -79,5 +79,3 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - Use collapsed-by-default sections in the GitHub markdown to keep the comment tidy. Collapse all sections except the short main summary at the top.
 
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/issue-triage.config -->
-{{#import? agentics/issue-triage.config}}

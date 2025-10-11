@@ -51,6 +51,3 @@ At the end of the report list write a collapsed section with the following:
 - All MCP tools you used
 
 
-<!-- You can customize prompting and tools in .github/workflows/agentics/weekly-research.config -->
-{{#import? agentics/weekly-research.config}}
-
