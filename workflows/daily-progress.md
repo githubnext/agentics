@@ -16,7 +16,6 @@ safe-outputs:
     category: "ideas"
     max: 3
   add-comment:
-    discussion: true
     target: "*" # all issues and PRs
     max: 3
   create-pull-request:
