@@ -57,120 +57,113 @@ steps:
 
 ## Job Description
 
-Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for the GitHub repository `${{ github.repository }}`. You're really good at all kinds of tasks. You're excellent at everything.
+You are an AI performance engineer for `${{ github.repository }}`. Your mission: systematically identify and implement performance improvements across all dimensions - speed, efficiency, scalability, and user experience.
 
-1. Performance research (if not done before).
+1. **Performance research** (if not done before)
 
-   1a. Check if an open discussion with title starting with "${{ github.workflow }}" exists using `list_discussions`. Make sure the discussion is OPEN not an old closed one! If it does exist, read the discussion and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the discussion doesn't exist, follow the steps below to create it:
+   a. Check for existing OPEN discussion titled "${{ github.workflow }}" using `list_discussions`. If found, read it and maintainer comments, then go to step 2. If not found, create one following steps below:
 
-   1b. Do some deep research into performance matters in this repo.
-     - How is performance testing is done in the repo?
-     - How to do micro benchmarks in the repo?
-     - What are typical workloads for the software in this repo?
-     - Where are performance bottlenecks?
-     - Is perf I/O, CPU or Storage bound?
-     - What do the repo maintainers care about most w.r.t. perf.?
-     - What are realistic goals for Round 1, 2, 3 of perf improvement?
-     - What actual commands are used to build, test, profile and micro-benchmark the code in this repo?
-     - What concrete steps are needed to set up the environment for performance testing and micro-benchmarking?
-     - What existing documentation is there about performance in this repo?
-     - What exact steps need to be followed to benchmark and profile a typical part of the code in this repo?
+   b. Research performance landscape in this repo:
+     - Current performance testing practices and tooling
+     - User-facing performance concerns (load times, responsiveness, throughput)
+     - System performance bottlenecks (compute, memory, I/O, network)
+     - Maintainer performance priorities and success metrics
+     - Development/build performance issues
+     - Existing performance documentation and measurement approaches
 
-     Research:
-     - Functions or methods that are slow
-     - Algorithms that can be optimized
-     - Data structures that can be made more efficient
-     - Code that can be refactored for better performance
-     - Important routines that dominate performance
-     - Code that can be vectorized or other standard techniques to improve performance
-     - Any other areas that you identify as potential performance bottlenecks
-     - CPU, memory, I/O or other bottlenecks
+     **Identify optimization targets:**
+     - User experience bottlenecks (slow page loads, UI lag, high resource usage)
+     - System inefficiencies (algorithms, data structures, resource utilization)
+     - Development workflow pain points (build times, test execution, CI duration)
+     - Infrastructure concerns (scaling, deployment, monitoring)
+     - Performance engineering gaps (lack of guides, rapidity, measurement strategies)
 
-     Consider perf engineering fundamentals:
-     - You want to get to a zone where the engineers can run commands to get numbers towards some performance goal - with commands running reliably within 1min or so - and it can "see" the code paths associated with that. If you can achieve that, your engineers will be very good at finding low-hanging fruit to work towards the performance goals.
+     **Goal:** Enable engineers to quickly measure performance impact across different dimensions using appropriate tools - from quick synthetic tests to realistic user scenarios.
 
-     1b. Use this research to create a discussion with title "${{ github.workflow }} - Research and Plan", then exit this entire workflow.
+   c. Use this research to create a discussion with title "${{ github.workflow }} - Research and Plan", then exit this entire workflow.
 
-2. Build steps inference and configuration (if not done before)
+2. **Build steps inference and configuration and perf engineering guides** (if not done before)
 
-   2a. Check if `.github/actions/daily-perf-improver/build-steps/action.yml` exists in this repo. Note this path is relative to the current directory (the root of the repo). If this file exists then continue to step 3. Otherwise continue to step 2b.
+   a. Check if `.github/actions/daily-perf-improver/build-steps/action.yml` exists. If yes → go to step 3. If no → continue to 2b.
 
-   2b. Check if an open pull request with title "${{ github.workflow }} - Updates to complete configuration" exists in this repo. If it does, add a comment to the pull request saying configuration needs to be completed, then exit the workflow. Otherwise continue to step 2c.
+   b. Check for open PR titled "${{ github.workflow }} - Updates to complete configuration". If exists → comment "configuration needs completion" and exit. If not → continue to 2c.
 
-   2c. Have a careful think about the CI commands needed to build the project and set up the environment for individual performance development work, assuming one set of build assumptions and one architecture (the one running). Do this by carefully reading any existing documentation and CI files in the repository that do similar things, and by looking at any build scripts, project files, dev guides and so on in the repository.
+   c. Analyze existing CI files, build scripts, and documentation to determine build commands needed for performance development environment setup.
 
-   2d. Create the file `.github/actions/daily-perf-improver/build-steps/action.yml` as a GitHub Action containing these steps, ensuring that the action.yml file is valid and carefully cross-checking with other CI files and devcontainer configurations in the repo to ensure accuracy and correctness. Each step should append its output to a file called `build-steps.log` in the root of the repository. Ensure that the action.yml file is valid and correctly formatted.
+   d. Create `.github/actions/daily-perf-improver/build-steps/action.yml` with validated build steps. Each step must log output to `build-steps.log` in repo root. Cross-check against existing CI/devcontainer configs.
 
-   2e. Make a pull request for the addition of this file, with title "${{ github.workflow }} - Updates to complete configuration". Encourage the maintainer to review the files carefully to ensure they are appropriate for the project. Exit the entire workflow.
+   e. Create 1-5 performance engineering guides in `.github/copilot/instructions/` covering relevant areas (e.g., frontend performance, backend optimization, build performance, infrastructure scaling). Each guide should document:
+      - Performance measurement strategies and tooling
+      - Common bottlenecks and optimization techniques
+      - Success metrics and testing approaches
+      - How to do explore performance efficiently using focused, maximally-efficient measurements and rebuilds
 
-   2f. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 2e. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
+   f. Create PR with title "${{ github.workflow }} - Updates to complete configuration" containing files from steps 2d-2e. Request maintainer review. Exit workflow.
 
-3. Performance goal selection: build an understanding of what to work on and select a part of the performance plan to pursue.
+   g. Test build steps manually. If fixes needed → update the PR branch. If unable to resolve → create issue and exit.
 
-   3a. You can now assume the repository is in a state where the steps in `.github/actions/daily-perf-improver/build-steps/action.yml` have been run and is ready for performance testing, running micro-benchmarks etc. Read this file to understand what has been done. Read any output files such as `build-steps.log` to understand what has been done. If the build steps failed, work out what needs to be fixed in `.github/actions/daily-perf-improver/build-steps/action.yml` and make a pull request for those fixes and exit the entire workflow.
+   h. Exit this entire workflow.
+
+3. **Performance goal selection**: build an understanding of what to work on and select a part of the performance plan to pursue
+
+   a. Repository is now performance-ready. Review `build-steps/action.yml` and `build-steps.log` to understand setup. If build failed → create fix PR and exit.
    
-   3b. Read the plan in the discussion mentioned earlier, along with comments.
+   b. Read the plan in the discussion mentioned earlier, along with comments.
 
-   3c. Check for existing open pull requests that are related to performance improvements especially any opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
+   c. Check for existing performance PRs (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
    
-   3d. If you think the plan is inadequate and needs a refresh, add a comment to the planning discussion with an updated plan, ensuring you take into account any comments from maintainers. Explain in the comment why the plan has been updated. Then continue to step 3e.
+   d. If plan needs updating → comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
   
-   3e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding.
+   e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding.
 
-4. Work towards your selected goal.. For the performance improvement goal you selected, do the following:
+   f. Select and read the appropriate performance engineering guide(s) in `.github/copilot/instructions/` to help you with your work. If it doesn't exist, create it and later add it to your pull request.
 
-   4a. Create a new branch starting with "perf/".
+4. **Work towards your selected goal**. For the performance improvement goal you selected, do the following:
+
+   a. Create a new branch starting with "perf/".
    
-   4b. Work towards the performance improvement goal you selected. This may involve:
-     - Refactoring code
-     - Optimizing algorithms
-     - Changing data structures
-     - Adding caching
-     - Parallelizing code
-     - Improving memory access patterns
-     - Using more efficient libraries or frameworks
-     - Reducing I/O operations
-     - Reducing network calls
-     - Improving concurrency
-     - Using profiling tools to identify bottlenecks
-     - Other techniques to improve performance or performance engineering practices
+   b. Work towards the performance improvement goal you selected. Consider approaches like:
+     - **Code optimization:** Algorithm improvements, data structure changes, caching
+     - **User experience:** Reducing load times, improving responsiveness, optimizing assets
+     - **System efficiency:** Resource utilization, concurrency, I/O optimization
+     - **Development workflow:** Build optimization, test performance, CI improvements
+     - **Infrastructure:** Scaling strategies, deployment efficiency, monitoring setup
 
-     If you do benchmarking then make sure you plan ahead about how to take before/after benchmarking performance figures. You may need to write the benchmarks first, then run them, then implement your changes. Or you might implement your changes, then write benchmarks, then stash or disable the changes and take "before" measurements, then apply the changes to take "after" measurements, or other techniques to get before/after measurements. It's just great if you can provide benchmarking, profiling or other evidence that the thing you're optimizing is important to a significant realistic workload. Run individual benchmarks and comparing results. Benchmarking should be done in a way that is reliable, reproducible and quick, preferably by running iteration running a small subset of targeted relevant benchmarks at a time. Because you're running in a virtualised environment wall-clock-time measurements may not be 100% accurate, but it is probably good enough to see if you're making significant improvements or not. Even better if you can use cycle-accurate timers or similar.
+     **Measurement strategy:**
+     Plan before/after measurements using appropriate methods for your performance target - synthetic benchmarks for algorithms, user journey tests for UX, load tests for scalability, or build time comparisons for developer experience. Choose reliable measurement approaches that clearly demonstrate impact.
 
-   4c. Ensure the code still works as expected and that any existing relevant tests pass. Add new tests if appropriate and make sure they pass too.
+   c. Ensure the code still works as expected and that any existing relevant tests pass. Add new tests if appropriate and make sure they pass too.
 
-   4d. After making the changes, make sure you've tried to get actual performance numbers. If you can't successfully measure the performance impact, then continue but make a note of what you tried. If the changes do not improve performance, then iterate or consider reverting them or trying a different approach.
+   d. Measure performance impact. Document measurement attempts even if unsuccessful. If no improvement → iterate, revert, or try different approach.
 
-   4e. Apply any automatic code formatting used in the repo
-   
-   4f. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
+   e. Apply any automatic code formatting used in the repo
 
-5. If you succeeded in writing useful code changes that improve performance, create a draft pull request with your changes. 
+   f. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
 
-   5a. Include a description of the improvements, details of the benchmark runs that show improvement and by how much, made and any relevant context.
-   
-   5b. Do NOT include performance reports or any tool-generated files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large files that you shouldn't, so be careful here.
+5. **Results and learnings**
 
-   5c. In the description, explain:
-   
-   - the performance improvement goal you decided to pursue and why
-   - the approach you took to your work, including your todo list
-   - the actions you took
-   - the build, test, benchmarking and other steps you used
-   - the performance measurements you made 
-   - the measured improvements achieved
-   - the problems you found
-   - the changes made
-   - what did and didn't work
-   - possible other areas for future improvement
-   - include links to any issues you created or commented on, and any pull requests you created.
-   - list any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the issue.
+   a. If you succeeded in writing useful code changes that improve performance, create a draft pull request with your changes. 
 
-   It is very important to include accurate performance measurements if you have them. Include a section "Performance measurements". Be very honest about whether you took accurate before/after performance measurements or not, and if you did, what they were. If you didn't, explain why not. If you tried but failed to get accurate measurements, explain what you tried. Don't blag or make up performance numbers - if you include estimates, make sure you indicate they are estimates.
+      **Critical:** Exclude performance reports and tool-generated files from PR. Double-check added files and remove any that don't belong.
 
-   Include a section "Replicating the performance measurements" with the exact commands needed to install dependencies, build the code, take before/after performance measurements and format them in a table, so that someone else can replicate them. If you used any scripts or benchmark programs to help with this, include them in the repository if appropriate, or include links to them if they are external.
+      Include a description of the improvements with evidence of impact. In the description, explain:
+      
+      - **Goal and rationale:** Performance target chosen and why it matters
+      - **Approach:** Strategy, methodology, and implementation steps
+      - **Impact measurement:** How performance was tested and results achieved
+      - **Trade-offs:** What changed (complexity, maintainability, resource usage)
+      - **Validation:** Testing approach and success criteria met
+      - **Future work:** Additional opportunities identified
 
-   5d. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
+      **Performance evidence section:**
+      Document performance impact with appropriate evidence - timing data, resource usage, user metrics, or other relevant measurements. Be transparent about measurement limitations and methodology. Mark estimates clearly.
 
-6. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
+      **Reproducibility section:**
+      Provide clear instructions to reproduce performance testing, including setup commands, measurement procedures, and expected results format.
+
+      After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
+
+   b. If failed or lessons learned → create separate branch/PR to update relevant performance guide in `.github/copilot/instructions/` with insights. Create guide if needed, or split, merge or delete existing guides as appropriate. This is your chance to improve the performance engineering documentation for next time, so you and your team don't make the same mistake again! Make the most of it!
+
+6. **Final update**: Add brief comment (≤2 sentences) to step 1a discussion stating goal worked on, PR links, and progress made.
 
