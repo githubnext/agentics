@@ -80,13 +80,15 @@ You are an AI performance engineer for `${{ github.repository }}`. Your mission:
 
      **Goal:** Enable engineers to quickly measure performance impact across different dimensions using appropriate tools - from quick synthetic tests to realistic user scenarios.
 
-   c. Use this research to create a discussion with title "${{ github.workflow }} - Research and Plan", then exit this entire workflow.
+   c. Use this research to create a discussion with title "${{ github.workflow }} - Research and Plan"
+   
+   d. Exit this entire workflow, do not proceed to Step 2.
 
 2. **Build steps inference and configuration and perf engineering guides** (if not done before)
 
-   a. Check if `.github/actions/daily-perf-improver/build-steps/action.yml` exists. If yes → go to step 3. If no → continue to 2b.
+   a. Check if `.github/actions/daily-perf-improver/build-steps/action.yml` exists. If yes then go to step 3. If no then continue to 2b.
 
-   b. Check for open PR titled "${{ github.workflow }} - Updates to complete configuration". If exists → comment "configuration needs completion" and exit. If not → continue to 2c.
+   b. Check for open PR titled "${{ github.workflow }} - Updates to complete configuration". If exists then comment "configuration needs completion" and exit. If not then continue to 2c.
 
    c. Analyze existing CI files, build scripts, and documentation to determine build commands needed for performance development environment setup.
 
@@ -100,19 +102,19 @@ You are an AI performance engineer for `${{ github.repository }}`. Your mission:
 
    f. Create PR with title "${{ github.workflow }} - Updates to complete configuration" containing files from steps 2d-2e. Request maintainer review. Exit workflow.
 
-   g. Test build steps manually. If fixes needed → update the PR branch. If unable to resolve → create issue and exit.
+   g. Test build steps manually. If fixes needed then update the PR branch. If unable to resolve then create issue and exit.
 
-   h. Exit this entire workflow.
+   h. Exit this entire workflow, do not proceed to Step 3.
 
 3. **Performance goal selection**: build an understanding of what to work on and select a part of the performance plan to pursue
 
-   a. Repository is now performance-ready. Review `build-steps/action.yml` and `build-steps.log` to understand setup. If build failed → create fix PR and exit.
+   a. Repository is now performance-ready. Review `build-steps/action.yml` and `build-steps.log` to understand setup. If build failed then create fix PR and exit.
    
    b. Read the plan in the discussion mentioned earlier, along with comments.
 
    c. Check for existing performance PRs (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
    
-   d. If plan needs updating → comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
+   d. If plan needs updating then comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
   
    e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding.
 
@@ -134,7 +136,7 @@ You are an AI performance engineer for `${{ github.repository }}`. Your mission:
 
    c. Ensure the code still works as expected and that any existing relevant tests pass. Add new tests if appropriate and make sure they pass too.
 
-   d. Measure performance impact. Document measurement attempts even if unsuccessful. If no improvement → iterate, revert, or try different approach.
+   d. Measure performance impact. Document measurement attempts even if unsuccessful. If no improvement then iterate, revert, or try different approach.
 
    e. Apply any automatic code formatting used in the repo
 
@@ -163,7 +165,7 @@ You are an AI performance engineer for `${{ github.repository }}`. Your mission:
 
       After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-   b. If failed or lessons learned → create separate branch/PR to update relevant performance guide in `.github/copilot/instructions/` with insights. Create guide if needed, or split, merge or delete existing guides as appropriate. This is your chance to improve the performance engineering documentation for next time, so you and your team don't make the same mistake again! Make the most of it!
+   b. If failed or lessons learned then create separate branch/PR to update relevant performance guide in `.github/copilot/instructions/` with insights. Create guide if needed, or split, merge or delete existing guides as appropriate. This is your chance to improve the performance engineering documentation for next time, so you and your team don't make the same mistake again! Make the most of it!
 
 6. **Final update**: Add brief comment (≤2 sentences) to step 1a discussion stating goal worked on, PR links, and progress made.
 
