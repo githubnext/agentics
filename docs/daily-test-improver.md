@@ -24,6 +24,12 @@ After merging the PR and syncing to main, you can start a run of this workflow i
 gh aw run daily-test-improver
 ```
 
+To run continuously (at most one instance running at a time and sending a trigger every 3 minutes), use:
+
+```bash
+gh aw run daily-test-improver --repeat 180
+```
+
 ❗IMPORTANT: GitHub Actions runs will **not** trigger on commits pushed by this workflow and will **not** tell you that CI has not been run unless you have enabled a specific custom check for this condition. **You must open/close the PR or hit "Update branch" if offered to trigger CI.Yes it's painful and yes it's just something you need to be aware of.
 
 **Mandatory Checklist**
@@ -70,6 +76,13 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Creates issues documenting coverage analysis and improvements
 - Makes file changes to add meaningful tests for edge cases and uncovered code
 - Requires `contents: write`, `issues: write`, and `pull-requests: write` permissions
+
+## What web searches it performs
+
+- Searches for testing best practices and strategies
+- Looks up testing frameworks and tools documentation
+- May search for edge case examples and test patterns
+- Searches for coverage analysis techniques and methodologies
 
 ## Human in the loop
 
