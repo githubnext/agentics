@@ -78,13 +78,13 @@ To decide which phase to perform:
   - User-facing performance concerns (load times, responsiveness, throughput)
   - System performance bottlenecks (compute, memory, I/O, network)
   - Maintainer performance priorities and success metrics
-  - Development/build performance issues
+  - Development/build performance issues affecting performance engineering
   - Existing performance documentation and measurement approaches
 
   **Identify optimization targets:**
   - User experience bottlenecks (slow page loads, UI lag, high resource usage)
   - System inefficiencies (algorithms, data structures, resource utilization)
-  - Development workflow pain points (build times, test execution, CI duration)
+  - Development workflow pain points affecting performance engineering (build times, test execution, CI duration)
   - Infrastructure concerns (scaling, deployment, monitoring)
   - Performance engineering gaps (lack of guides, rapidity, measurement strategies)
 
@@ -138,7 +138,7 @@ To decide which phase to perform:
      - **Code optimization:** Algorithm improvements, data structure changes, caching
      - **User experience:** Reducing load times, improving responsiveness, optimizing assets
      - **System efficiency:** Resource utilization, concurrency, I/O optimization
-     - **Development workflow:** Build optimization, test performance, CI improvements
+     - **Performance engineering workflow:** Build optimization, test performance, CI improvements for faster performance engineering
      - **Infrastructure:** Scaling strategies, deployment efficiency, monitoring setup
 
      **Measurement strategy:**
@@ -175,7 +175,7 @@ To decide which phase to perform:
 
       After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-   b. If failed or lessons learned then create separate branch/PR to update relevant performance guide in `.github/copilot/instructions/` with insights. Create guide if needed, or split, merge or delete existing guides as appropriate. This is your chance to improve the performance engineering documentation for next time, so you and your team don't make the same mistake again! Make the most of it!
+   b. If failed or lessons learned then add more files to the PR branch to update relevant performance guide in `.github/copilot/instructions/` with insights. Create a new guide if needed, or split, merge or delete existing guides as appropriate. This is your chance to improve the performance engineering documentation for next time, so you and your team don't make the same mistakes again! Make the most of it!
 
 4. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made.
 
