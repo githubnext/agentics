@@ -17,6 +17,8 @@ safe-outputs:
     category: "ideas"
 
 tools:
+  github:
+    toolset: [all]
   web-fetch:
   web-search:
 

@@ -19,6 +19,8 @@ safe-outputs:
 timeout_minutes: 15
 
 tools:
+  github:
+    toolset: [all]
   web-fetch:
   web-search:
 ---

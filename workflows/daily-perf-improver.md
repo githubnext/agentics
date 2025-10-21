@@ -28,7 +28,8 @@ safe-outputs:
 tools:
   web-fetch:
   web-search:
-  
+  github:
+    toolset: [all]  
   # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md
   #
   # By default this workflow allows all bash commands within the confine of Github Actions VM 

@@ -18,6 +18,8 @@ safe-outputs:
     category: "announcements"
 
 tools:
+  github:
+    toolset: [all]
   web-fetch:
   web-search:
 

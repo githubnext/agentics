@@ -25,6 +25,8 @@ safe-outputs:
     draft: true
 
 tools:
+  github:
+    toolset: [all]
   web-fetch:
   web-search:
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
