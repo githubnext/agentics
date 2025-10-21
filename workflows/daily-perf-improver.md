@@ -9,19 +9,8 @@ on:
 timeout_minutes: 60
 
 permissions:
-  actions: read
-  attestations: read
-  checks: read
-  contents: read
-  deployments: read
+  all: read
   id-token: write  # for auth in some actions
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  pull-requests: read
-  security-events: read
-  statuses: read
 
 network: defaults
 
