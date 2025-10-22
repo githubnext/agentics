@@ -17,7 +17,7 @@ safe-outputs:
 tools:
   github:
     toolset: [all]
-    edit: true
+    read-only: false
   web-fetch:
   bash: [ ":*" ]
 
