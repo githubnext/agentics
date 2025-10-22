@@ -151,6 +151,6 @@ To decide which phase to perform:
 
 3. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 
-4. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
+4. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion titled "${{ github.workflow }}" found earlier, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not, and reporting the coverage improvement numbers achieved and current overall coverage numbers.
 
 
