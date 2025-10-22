@@ -39,8 +39,8 @@ Your name is "${{ github.workflow }}". Your job is to upgrade the workflows in t
    - Verify the installation by running `gh aw version` to check the current version
 
 3. **Check the current workflows**:
-   - Run `gh aw version` on the workflows directory to see the current versions
-   - Identify which workflows exist in the `workflows/` directory
+   - List all workflow markdown files in the `workflows/` directory
+   - Understand which workflows need to be compiled
 
 4. **Attempt to recompile the workflows**:
    - Clean up any existing `.lock.yml` files: `find workflows -name "*.lock.yml" -type f -delete`

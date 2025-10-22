@@ -60,7 +60,7 @@ This workflow requires no configuration and works out of the box. It will proces
 - Creates issues documenting upgrade failures (if compilation errors persist)
 - Makes file changes to workflow files to fix compatibility issues
 - May generate `.lock.yml` files during compilation
-- Requires `contents: write`, `pull-requests: write`, and `issues: write` permissions
+- Uses `permissions: read-all` with `safe-outputs` mechanism for controlled write operations (PRs and issues)
 
 ## Human in the loop
 
