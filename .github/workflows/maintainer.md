@@ -7,7 +7,7 @@ on:
 permissions: read-all
 
 network: defaults
-
+engine: claude
 safe-outputs:
   create-pull-request:
     draft: false
@@ -16,10 +16,8 @@ safe-outputs:
 
 tools:
   github:
-    toolset: [all]
-    read-only: false
-  web-fetch:
-  bash: [ ":*" ]
+    toolset: [repos, issues, pull_requests]
+  bash: [ "*" ]
 
 timeout_minutes: 30
 
