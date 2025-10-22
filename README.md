@@ -27,9 +27,6 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 - [🧪 Daily Test Coverage Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Performance Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 
-### Maintenance Workflows
-- [🔧 Maintainer](docs/maintainer.md) - Upgrade workflows to the latest version of gh-aw
-
 > [!WARNING] The workflows that help with coding tasks should be installed with caution and used only experimentally, then disabled. While the tasks are executed within GitHub Actions and have no access to secrets, they still operate in an environment where outward network requests are allowed. This means untrusted inputs such as issue descriptions, comments, and code could potentially be exploited to direct the models to access external content that in turn could be malicious. Pull requests and other outputs must be reviewed very carefully before merging.
 
 ## 💬 Share Feedback
