@@ -1,6 +1,8 @@
 ---
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [maintainer]
 
 permissions: read-all
 
