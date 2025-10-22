@@ -42,9 +42,9 @@ jobs:
         gh release create "${{ steps.get_tag.outputs.tag_name }}" \
           --title "Release ${{ steps.get_tag.outputs.tag_name }}" \
           --notes "## Release ${{ steps.get_tag.outputs.tag_name }}
-        
+
         This release was automatically created.
-        
+
         ### Changes
         See the [commit history](https://github.com/${{ github.repository }}/commits/${{ steps.get_tag.outputs.tag_name }}) for details."
 
@@ -63,7 +63,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             workflow_id: 'maintenance.yml',
-            ref: context.payload.repository.default_branch || 'main',
+            ref: context.payload.repository?.default_branch || 'main',
             inputs: {
               release_tag: '${{ needs.create-release.outputs.release_tag }}'
             }
