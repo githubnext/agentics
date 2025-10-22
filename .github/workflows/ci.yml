@@ -12,10 +12,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install gh-aw
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/githubnext/gh-aw/refs/heads/main/install-gh-aw.sh -o /tmp/install-gh-aw.sh
-          bash /tmp/install-gh-aw.sh
+        run: gh extension install githubnext/gh-aw
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUBT_TOKEN }}
       - name: Verify gh-aw installation
         run: ./gh-aw --version
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUBT_TOKEN }}
       - name: Compile workflows
         run: ./gh-aw compile --workflows-dir workflows --verbose
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUBT_TOKEN }}
