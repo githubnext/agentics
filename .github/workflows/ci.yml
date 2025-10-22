@@ -16,10 +16,10 @@ jobs:
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Verify gh-aw installation
-        run: ./gh-aw --version
+        run: gh aw --version
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Compile workflows
-        run: ./gh-aw compile --workflows-dir workflows --verbose
+        run: gh aw compile --workflows-dir workflows --verbose
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
