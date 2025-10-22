@@ -1,0 +1,39 @@
+name: Maintenance
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release tag that triggered this maintenance workflow'
+        required: false
+        type: string
+  workflow_call:
+    inputs:
+      release_tag:
+        description: 'Release tag that triggered this maintenance workflow'
+        required: false
+        type: string
+
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Run maintenance tasks
+      run: |
+        echo "Running maintenance tasks after release"
+        if [ -n "${{ inputs.release_tag }}" ]; then
+          echo "Triggered by release: ${{ inputs.release_tag }}"
+        fi
+        
+        # Add maintenance tasks here
+        # Examples:
+        # - Update documentation
+        # - Clean up old artifacts
+        # - Update dependencies
+        # - Send notifications
+        
+        echo "Maintenance tasks completed successfully"
