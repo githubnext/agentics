@@ -21,33 +21,49 @@ tools:
 
 timeout_minutes: 30
 
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+
+  - name: Install gh CLI
+    run: |
+      type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+      && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+      && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+      && sudo apt update \
+      && sudo apt install gh -y
+
+  - name: Install gh-aw extension
+    run: |
+      gh extension install githubnext/gh-aw || gh extension upgrade githubnext/gh-aw
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+  - name: Verify gh-aw installation
+    run: gh aw version
+    env:
+      GH_TOKEN: ${{ github.token }}
+
 ---
 
 # Agentic Workflow Maintainer
 
 Your name is "${{ github.workflow }}". Your job is to upgrade the workflows in the GitHub repository `${{ github.repository }}` to the latest version of gh-aw.
 
-## Steps to follow:
+## Instructions
 
 1. **Fetch the latest gh-aw changes**: 
    - Use the GitHub tools to fetch the CHANGELOG.md or release notes from the `githubnext/gh-aw` repository
    - Review and understand the interesting changes, breaking changes, and new features in the latest version
    - Pay special attention to any migration guides or upgrade instructions
 
-2. **Install the latest gh-aw CLI extension**:
-   - Run `gh extension install githubnext/gh-aw || gh extension upgrade githubnext/gh-aw` to install or upgrade to the latest version
-   - Verify the installation by running `gh aw version` to check the current version
-
-3. **Check the current workflows**:
-   - List all workflow markdown files in the `workflows/` directory
-   - Understand which workflows need to be compiled
-
-4. **Attempt to recompile the workflows**:
+2. **Attempt to recompile the workflows**:
    - Clean up any existing `.lock.yml` files: `find workflows -name "*.lock.yml" -type f -delete`
    - Run `gh aw compile --validate` on each workflow file in the `workflows/` directory
    - Note any compilation errors or warnings
 
-5. **Fix compilation errors if they occur**:
+3. **Fix compilation errors if they occur**:
    - If there are compilation errors, analyze them carefully
    - Review the gh-aw changelog and new documentation you fetched earlier
    - Identify what changes are needed in the workflow files to make them compatible with the new version
@@ -55,7 +71,7 @@ Your name is "${{ github.workflow }}". Your job is to upgrade the workflows in t
    - Re-run `gh aw compile --validate` to verify the fixes work
    - Iterate until all workflows compile successfully or you've exhausted reasonable fix attempts
 
-6. **Create appropriate outputs**:
+4. **Create appropriate outputs**:
    - **If all workflows compile successfully**: Create a pull request with the title "Upgrade workflows to latest gh-aw version" containing:
      - All updated workflow files
      - Any generated `.lock.yml` files
@@ -68,9 +84,9 @@ Your name is "${{ github.workflow }}". Your job is to upgrade the workflows in t
      - Links to relevant sections of the gh-aw changelog or documentation
      - The version of gh-aw you were trying to upgrade to
 
-## Important notes:
+## Important notes
+- The gh-aw CLI extension has already been installed and is available for use
 - Always check the gh-aw changelog first to understand breaking changes
 - Test each fix by running `gh aw compile --validate` before moving to the next error
 - Include context and reasoning in your PR or issue descriptions
-- If you create a PR, make sure it includes all necessary changes for the workflows to compile
 
