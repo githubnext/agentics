@@ -9,7 +9,10 @@ on:
 timeout_minutes: 30
 
 permissions:
-  all: read
+  contents: read
+  issues: read
+  pull-requests: read
+  discussions: read
   id-token: write  # for auth in some actions
 
 network: defaults

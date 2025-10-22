@@ -18,10 +18,10 @@ safe-outputs:
   add-comment:
     discussion: true
     max: 5
-  github:
-    toolset: [all]
 
 tools:
+  github:
+    toolset: [all]
   playwright:
   web-fetch:
   web-search:
