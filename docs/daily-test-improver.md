@@ -52,7 +52,7 @@ gh aw run daily-test-improver
 
 2. The first run of the workflow will also create an issue in the repository with a plan for improving test coverage. You can comment on this issue to provide feedback or adjustments to the plan. Comments will not be picked up until the next run.
 
-3. Use local configuation or comment on the plan to specify test generation strategies, high-priority areas and coverage targets. Local configuration can be done in `.github/workflows/agentics/daily-test-improver.config.md`.
+3. Use local configuration or comment on the plan to specify test generation strategies, high-priority areas and coverage targets. Local configuration can be done in `.github/workflows/agentics/daily-test-improver.config.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

@@ -46,7 +46,7 @@ gh aw run update-docs
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuation to configure documentation frameworks, documentation structure, themes, files, directories. Local configuration can be done in `.github/workflows/agentics/update-docs.config.md`.
+This workflow requires no configuration and works out of the box. You can use local configuration to configure documentation frameworks, documentation structure, themes, files, directories. Local configuration can be done in `.github/workflows/agentics/update-docs.config.md`.
 
 
 

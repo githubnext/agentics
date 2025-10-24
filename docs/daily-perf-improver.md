@@ -58,7 +58,7 @@ gh aw run daily-perf-improver --repeat 180
 
 2. The first run of the workflow will also create an issue in the repository with a plan for improving performance. You can comment on this issue to provide feedback or adjustments to the plan. Comments will not be picked up until the next run.
 
-3. Use local configuation to specify performance testing tools and benchmarking frameworks, optimization targets, performance metrics, and profiling strategies. Local configuration can be done in `.github/workflows/agentics/daily-perf-improver.config.md`.
+3. Use local configuration to specify performance testing tools and benchmarking frameworks, optimization targets, performance metrics, and profiling strategies. Local configuration can be done in `.github/workflows/agentics/daily-perf-improver.config.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
