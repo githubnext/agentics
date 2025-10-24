@@ -30,7 +30,7 @@ gh aw run daily-team-status
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuation to customize triage criteria, labeling logic, customize issue categorization, modify automated responses. Local configuration can be done in `.github/workflows/agentics/daily-team-status.config.md`.
+This workflow requires no configuration and works out of the box. You can use local configuration to customize triage criteria, labeling logic, customize issue categorization, modify automated responses. Local configuration can be done in `.github/workflows/agentics/daily-team-status.config.md`.
 
 2. Add MCPs to integrate with project management tools
 

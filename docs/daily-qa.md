@@ -32,7 +32,7 @@ gh aw run daily-qa
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuation to specify QA tasks, testing scenarios, reporting format, and frequency. Local configuration can be done in `.github/workflows/agentics/daily-qa.config.md`.
+This workflow requires no configuration and works out of the box. You can use local configuration to specify QA tasks, testing scenarios, reporting format, and frequency. Local configuration can be done in `.github/workflows/agentics/daily-qa.config.md`.
 
 
 

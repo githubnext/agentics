@@ -42,7 +42,7 @@ gh aw run daily-dependency-updates
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuation to specify dependency management tools (npm, pip, maven, etc.), customize dependency update strategies and version constraints, onfigure which dependencies to include/exclude from automated updates. Local configuration can be done in `.github/workflows/agentics/daily-dependency-updates.config.md`.
+This workflow requires no configuration and works out of the box. You can use local configuration to specify dependency management tools (npm, pip, maven, etc.), customize dependency update strategies and version constraints, configure which dependencies to include/exclude from automated updates. Local configuration can be done in `.github/workflows/agentics/daily-dependency-updates.config.md`.
 
 
 

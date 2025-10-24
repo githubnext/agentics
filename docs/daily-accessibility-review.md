@@ -32,7 +32,7 @@ gh aw run daily-accessibility-review
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuation to specify which accessibility standards to check (e.g., WCAG 2.1, WCAG 2.2), types of accessibility issues to prioritize, and reporting format. Local configuration can be done in `.github/workflows/agentics/daily-accessibility-review.config.md`.
+This workflow requires no configuration and works out of the box. You can use local configuration to specify which accessibility standards to check (e.g., WCAG 2.1, WCAG 2.2), types of accessibility issues to prioritize, and reporting format. Local configuration can be done in `.github/workflows/agentics/daily-accessibility-review.config.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
