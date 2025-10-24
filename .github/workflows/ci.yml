@@ -1,4 +1,4 @@
-name: Install gh-aw
+name: Compile workflows with latest gh-aw release
 
 on:
   push:
