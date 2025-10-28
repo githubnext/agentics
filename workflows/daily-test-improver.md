@@ -30,7 +30,7 @@ tools:
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
   github:
-    toolset: [all]
+    toolsets: [all]
 
 steps:
   - name: Checkout repository

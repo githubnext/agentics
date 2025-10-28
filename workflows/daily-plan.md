@@ -19,7 +19,7 @@ safe-outputs:
 
 tools:
   github:
-    toolset: [all]
+    toolsets: [all]
   web-fetch:
   web-search:
 

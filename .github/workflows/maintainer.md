@@ -16,7 +16,7 @@ safe-outputs:
 
 tools:
   github:
-    toolset: [repos, issues, pull_requests]
+    toolsets: [repos, issues, pull_requests]
   bash: [ "*" ]
 
 timeout_minutes: 30
