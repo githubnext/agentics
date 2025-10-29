@@ -24,7 +24,7 @@ tools:
   web-fetch:
   web-search:
   github:
-    toolset: [all]
+    toolsets: [all]
 
 timeout_minutes: 15
 

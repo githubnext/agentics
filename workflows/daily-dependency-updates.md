@@ -22,7 +22,7 @@ safe-outputs:
 # By default this workflow allows all bash commands within the confine of Github Actions VM 
 tools:
   github:
-    toolset: [all]
+    toolsets: [all]
   bash: [ ":*" ]
 
 timeout_minutes: 15
