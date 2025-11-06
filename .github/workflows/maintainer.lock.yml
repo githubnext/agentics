@@ -1197,7 +1197,7 @@ jobs:
         run: |
           PROMPT_DIR="$(dirname "$GH_AW_PROMPT")"
           mkdir -p "$PROMPT_DIR"
-          cat > "$GH_AW_PROMPT" << 'PROMPT_EOF'
+          cat > "$GH_AW_PROMPT" << PROMPT_EOF
           # Agentic Workflow Maintainer
           
           Your name is "${GH_AW_EXPR_F76B6721}". Your job is to upgrade the workflows in the GitHub repository `${GH_AW_EXPR_D892F163}` to the latest version of gh-aw.
@@ -1246,7 +1246,7 @@ jobs:
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
         run: |
-          cat >> "$GH_AW_PROMPT" << 'PROMPT_EOF'
+          cat >> "$GH_AW_PROMPT" << PROMPT_EOF
           
           ---
           
@@ -1278,7 +1278,7 @@ jobs:
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
         run: |
-          cat >> "$GH_AW_PROMPT" << 'PROMPT_EOF'
+          cat >> "$GH_AW_PROMPT" << PROMPT_EOF
           
           ---
           
@@ -1291,7 +1291,7 @@ jobs:
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
         run: |
-          cat >> "$GH_AW_PROMPT" << 'PROMPT_EOF'
+          cat >> "$GH_AW_PROMPT" << PROMPT_EOF
           
           
           ---
@@ -1310,7 +1310,7 @@ jobs:
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
         run: |
-          cat >> "$GH_AW_PROMPT" << 'PROMPT_EOF'
+          cat >> "$GH_AW_PROMPT" << PROMPT_EOF
           
           ---
           
@@ -1340,7 +1340,7 @@ jobs:
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
         run: |
-          cat >> "$GH_AW_PROMPT" << 'PROMPT_EOF'
+          cat >> "$GH_AW_PROMPT" << PROMPT_EOF
           
           ---
           
