@@ -33,8 +33,8 @@
 #     https://github.com/actions/github-script/commit/ed597411d8f924073f98dfc5c65a23a2325f34cd
 #   - actions/setup-node@v6 (2028fbc5c25fe9cf00d9f06a71cc4710d4507903)
 #     https://github.com/actions/setup-node/commit/2028fbc5c25fe9cf00d9f06a71cc4710d4507903
-#   - actions/upload-artifact@v4 (ea165f8d65b6e75b540449e92b4886f43607fa02)
-#     https://github.com/actions/upload-artifact/commit/ea165f8d65b6e75b540449e92b4886f43607fa02
+#   - actions/upload-artifact@v5 (330a01c490aca151604b8cf639adc76d48f6c5d4)
+#     https://github.com/actions/upload-artifact/commit/330a01c490aca151604b8cf639adc76d48f6c5d4
 
 name: "Agentic Workflow Maintainer"
 "on":
@@ -55,6 +55,8 @@ jobs:
     needs: pre_activation
     if: needs.pre_activation.outputs.activated == 'true'
     runs-on: ubuntu-slim
+    permissions:
+      contents: read
     steps:
       - name: Checkout workflows
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
@@ -114,14 +116,22 @@ jobs:
               core.info(`  Source modified: ${workflowStat.mtime.toISOString()}`);
               core.info(`  Lock modified: ${lockStat.mtime.toISOString()}`);
               if (workflowMtime > lockMtime) {
-                const warningMessage = `🔴🔴🔴 WARNING: Lock file '${lockFile}' is outdated! The workflow file '${workflowMdFile}' has been modified more recently. Run 'gh aw compile' to regenerate the lock file.`;
+                const warningMessage = `WARNING: Lock file '${lockFile}' is outdated! The workflow file '${workflowMdFile}' has been modified more recently. Run 'gh aw compile' to regenerate the lock file.`;
                 core.error(warningMessage);
-                await core.summary
-                  .addRaw("## ⚠️ Workflow Lock File Warning\n\n")
-                  .addRaw(`🔴🔴🔴 **WARNING**: Lock file \`${lockFile}\` is outdated!\n\n`)
-                  .addRaw(`The workflow file \`${workflowMdFile}\` has been modified more recently.\n\n`)
-                  .addRaw("Run `gh aw compile` to regenerate the lock file.\n\n")
-                  .write();
+                const workflowTimestamp = workflowStat.mtime.toISOString();
+                const lockTimestamp = lockStat.mtime.toISOString();
+                const gitSha = process.env.GITHUB_SHA;
+                let summary = core.summary
+                  .addRaw("### ⚠️ Workflow Lock File Warning\n\n")
+                  .addRaw("**WARNING**: Lock file is outdated and needs to be regenerated.\n\n")
+                  .addRaw("**Files:**\n")
+                  .addRaw(`- Source: \`${workflowMdFile}\` (modified: ${workflowTimestamp})\n`)
+                  .addRaw(`- Lock: \`${lockFile}\` (modified: ${lockTimestamp})\n\n`);
+                if (gitSha) {
+                  summary = summary.addRaw(`**Git Commit:** \`${gitSha}\`\n\n`);
+                }
+                summary = summary.addRaw("**Action Required:** Run `gh aw compile` to regenerate the lock file.\n\n");
+                await summary.write();
               } else {
                 core.info("✅ Lock file is up to date");
               }
@@ -228,7 +238,7 @@ jobs:
         with:
           node-version: '24'
       - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code@2.0.32
+        run: npm install -g @anthropic-ai/claude-code@2.0.33
       - name: Generate Claude Settings
         run: |
           mkdir -p /tmp/gh-aw/.claude
@@ -1395,10 +1405,14 @@ jobs:
               }
             }
             main();
-      - name: Print prompt to step summary
+      - name: Print prompt
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
         run: |
+          # Print prompt to workflow logs (equivalent to core.info)
+          echo "Generated Prompt:"
+          cat "$GH_AW_PROMPT"
+          # Print prompt to step summary
           {
             echo "<details>"
             echo "<summary>Generated Prompt</summary>"
@@ -1411,7 +1425,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Upload prompt
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: prompt.txt
           path: /tmp/gh-aw/aw-prompts/prompt.txt
@@ -1427,7 +1441,7 @@ jobs:
               engine_name: "Claude Code",
               model: "",
               version: "",
-              agent_version: "2.0.32",
+              agent_version: "2.0.33",
               workflow_name: "Agentic Workflow Maintainer",
               experimental: false,
               supports_tools_allowlist: true,
@@ -1454,7 +1468,7 @@ jobs:
             console.log(JSON.stringify(awInfo, null, 2));
       - name: Upload agentic run info
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: aw_info.json
           path: /tmp/gh-aw/aw_info.json
@@ -1671,7 +1685,7 @@ jobs:
           SECRET_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload Safe Outputs
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: safe_output.jsonl
           path: ${{ env.GH_AW_SAFE_OUTPUTS }}
@@ -2546,14 +2560,14 @@ jobs:
             await main();
       - name: Upload sanitized agent output
         if: always() && env.GH_AW_AGENT_OUTPUT
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: agent_output.json
           path: ${{ env.GH_AW_AGENT_OUTPUT }}
           if-no-files-found: warn
       - name: Upload MCP logs
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: mcp-logs
           path: /tmp/gh-aw/mcp-logs/
@@ -2999,7 +3013,7 @@ jobs:
             main();
       - name: Upload Agent Stdio
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: agent-stdio.log
           path: /tmp/gh-aw/agent-stdio.log
@@ -3365,7 +3379,7 @@ jobs:
           fi
       - name: Upload git patch
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: aw.patch
           path: /tmp/gh-aw/aw.patch
@@ -3420,6 +3434,57 @@ jobs:
               sanitized = sanitized.replace(/[<>&'"]/g, "");
               return sanitized.trim();
             }
+            const fs = require("fs");
+            function loadAgentOutput() {
+              const agentOutputFile = process.env.GH_AW_AGENT_OUTPUT;
+              if (!agentOutputFile) {
+                core.info("No GH_AW_AGENT_OUTPUT environment variable found");
+                return { success: false };
+              }
+              let outputContent;
+              try {
+                outputContent = fs.readFileSync(agentOutputFile, "utf8");
+              } catch (error) {
+                const errorMessage = `Error reading agent output file: ${error instanceof Error ? error.message : String(error)}`;
+                core.setFailed(errorMessage);
+                return { success: false, error: errorMessage };
+              }
+              if (outputContent.trim() === "") {
+                core.info("Agent output content is empty");
+                return { success: false };
+              }
+              core.info(`Agent output content length: ${outputContent.length}`);
+              let validatedOutput;
+              try {
+                validatedOutput = JSON.parse(outputContent);
+              } catch (error) {
+                const errorMessage = `Error parsing agent output JSON: ${error instanceof Error ? error.message : String(error)}`;
+                core.setFailed(errorMessage);
+                return { success: false, error: errorMessage };
+              }
+              if (!validatedOutput.items || !Array.isArray(validatedOutput.items)) {
+                core.info("No valid items found in agent output");
+                return { success: false };
+              }
+              return { success: true, items: validatedOutput.items };
+            }
+            async function generateStagedPreview(options) {
+              const { title, description, items, renderItem } = options;
+              let summaryContent = `## 🎭 Staged Mode: ${title} Preview\n\n`;
+              summaryContent += `${description}\n\n`;
+              for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                summaryContent += renderItem(item, i);
+                summaryContent += "---\n\n";
+              }
+              try {
+                await core.summary.addRaw(summaryContent).write();
+                core.info(summaryContent);
+                core.info(`📝 ${title} preview written to step summary`);
+              } catch (error) {
+                core.setFailed(error instanceof Error ? error : String(error));
+              }
+            }
             function generateFooter(
               workflowName,
               runUrl,
@@ -3447,58 +3512,33 @@ jobs:
               core.setOutput("issue_number", "");
               core.setOutput("issue_url", "");
               const isStaged = process.env.GH_AW_SAFE_OUTPUTS_STAGED === "true";
-              const agentOutputFile = process.env.GH_AW_AGENT_OUTPUT;
-              if (!agentOutputFile) {
-                core.info("No GH_AW_AGENT_OUTPUT environment variable found");
+              const result = loadAgentOutput();
+              if (!result.success) {
                 return;
               }
-              let outputContent;
-              try {
-                outputContent = require("fs").readFileSync(agentOutputFile, "utf8");
-              } catch (error) {
-                core.setFailed(`Error reading agent output file: ${error instanceof Error ? error.message : String(error)}`);
-                return;
-              }
-              if (outputContent.trim() === "") {
-                core.info("Agent output content is empty");
-                return;
-              }
-              core.info(`Agent output content length: ${outputContent.length}`);
-              let validatedOutput;
-              try {
-                validatedOutput = JSON.parse(outputContent);
-              } catch (error) {
-                core.setFailed(`Error parsing agent output JSON: ${error instanceof Error ? error.message : String(error)}`);
-                return;
-              }
-              if (!validatedOutput.items || !Array.isArray(validatedOutput.items)) {
-                core.info("No valid items found in agent output");
-                return;
-              }
-              const createIssueItems = validatedOutput.items.filter(item => item.type === "create_issue");
+              const createIssueItems = result.items.filter(item => item.type === "create_issue");
               if (createIssueItems.length === 0) {
                 core.info("No create-issue items found in agent output");
                 return;
               }
               core.info(`Found ${createIssueItems.length} create-issue item(s)`);
               if (isStaged) {
-                let summaryContent = "## 🎭 Staged Mode: Create Issues Preview\n\n";
-                summaryContent += "The following issues would be created if staged mode was disabled:\n\n";
-                for (let i = 0; i < createIssueItems.length; i++) {
-                  const item = createIssueItems[i];
-                  summaryContent += `### Issue ${i + 1}\n`;
-                  summaryContent += `**Title:** ${item.title || "No title provided"}\n\n`;
-                  if (item.body) {
-                    summaryContent += `**Body:**\n${item.body}\n\n`;
-                  }
-                  if (item.labels && item.labels.length > 0) {
-                    summaryContent += `**Labels:** ${item.labels.join(", ")}\n\n`;
-                  }
-                  summaryContent += "---\n\n";
-                }
-                await core.summary.addRaw(summaryContent).write();
-                core.info(summaryContent);
-                core.info("📝 Issue creation preview written to step summary");
+                await generateStagedPreview({
+                  title: "Create Issues",
+                  description: "The following issues would be created if staged mode was disabled:",
+                  items: createIssueItems,
+                  renderItem: (item, index) => {
+                    let content = `### Issue ${index + 1}\n`;
+                    content += `**Title:** ${item.title || "No title provided"}\n\n`;
+                    if (item.body) {
+                      content += `**Body:**\n${item.body}\n\n`;
+                    }
+                    if (item.labels && item.labels.length > 0) {
+                      content += `**Labels:** ${item.labels.join(", ")}\n\n`;
+                    }
+                    return content;
+                  },
+                });
                 return;
               }
               const parentIssueNumber = context.payload?.issue?.number;
@@ -4347,7 +4387,7 @@ jobs:
         with:
           node-version: '24'
       - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code@2.0.32
+        run: npm install -g @anthropic-ai/claude-code@2.0.33
       - name: Execute Claude Code CLI
         id: agentic_execution
         # Allowed tools (sorted):
@@ -4422,7 +4462,7 @@ jobs:
             }
       - name: Upload threat detection log
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: threat-detection.log
           path: /tmp/gh-aw/threat-detection/detection.log
