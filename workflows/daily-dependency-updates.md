@@ -17,13 +17,10 @@ safe-outputs:
     title-prefix: "${{ github.workflow }}"
     category: "announcements"
 
-# Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md
-#
-# By default this workflow allows all bash commands within the confine of Github Actions VM 
 tools:
   github:
     toolsets: [all]
-  bash: [ ":*" ]
+  bash:
 
 timeout_minutes: 15
 

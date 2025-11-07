@@ -29,11 +29,8 @@ tools:
   web-fetch:
   web-search:
   github:
-    toolsets: [all]  
-  # Configure bash build commands here, or in .github/workflows/agentics/daily-dependency-updates.config.md
-  #
-  # By default this workflow allows all bash commands within the confine of Github Actions VM 
-  bash: [ ":*" ]
+    toolsets: [all]
+  bash:
 
 steps:
   - name: Checkout repository

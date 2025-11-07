@@ -29,8 +29,7 @@ tools:
     toolsets: [all]
   web-fetch:
   web-search:
-  # By default this workflow allows all bash commands within the confine of Github Actions VM 
-  bash: [ ":*" ]
+  bash:
 
 ---
 
