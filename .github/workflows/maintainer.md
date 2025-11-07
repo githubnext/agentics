@@ -10,14 +10,13 @@ network: defaults
 engine: claude
 safe-outputs:
   create-pull-request:
-    draft: false
   create-issue:
-    title-prefix: "${{ github.workflow }}"
 
 tools:
   github:
     toolsets: [repos, issues, pull_requests]
-  bash: [ "*" ]
+  bash:
+    - "*"
 
 timeout_minutes: 30
 
