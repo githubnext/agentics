@@ -7,7 +7,7 @@ on:
 
     stop-after: +48h # workflow will no longer trigger after 48 hours
 
-timeout_minutes: 15
+timeout-minutes: 15
 
 permissions: read-all
 

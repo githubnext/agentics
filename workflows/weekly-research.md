@@ -22,7 +22,7 @@ tools:
   web-fetch:
   web-search:
 
-timeout_minutes: 15
+timeout-minutes: 15
 
 ---
 

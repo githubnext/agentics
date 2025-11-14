@@ -22,7 +22,7 @@ tools:
     toolsets: [all]
   bash:
 
-timeout_minutes: 15
+timeout-minutes: 15
 
 ---
 

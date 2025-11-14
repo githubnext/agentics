@@ -21,7 +21,7 @@ tools:
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
 
-timeout_minutes: 15
+timeout-minutes: 15
 ---
 
 # Update Docs

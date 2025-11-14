@@ -16,7 +16,7 @@ safe-outputs:
     title-prefix: "${{ github.workflow }}"
     category: "announcements"
 
-timeout_minutes: 15
+timeout-minutes: 15
 
 tools:
   github:

@@ -18,7 +18,7 @@ tools:
   bash:
     - "*"
 
-timeout_minutes: 30
+timeout-minutes: 30
 
 steps:
   - name: Checkout repository

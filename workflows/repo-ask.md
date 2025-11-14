@@ -18,7 +18,7 @@ tools:
   web-search:
   bash:
 
-timeout_minutes: 20
+timeout-minutes: 20
 
 ---
 

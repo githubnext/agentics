@@ -26,7 +26,7 @@ tools:
   github:
     toolsets: [all]
 
-timeout_minutes: 15
+timeout-minutes: 15
 
 steps:
   - name: Checkout repository
