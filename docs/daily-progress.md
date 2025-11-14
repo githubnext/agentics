@@ -140,7 +140,7 @@ The Daily Progress workflow follows a systematic 7-step process:
 - **Draft Pull Requests**: All feature changes are created as draft PRs for human review
 - **Roadmap Issues**: Central tracking of project goals and progress
 - **Scheduled Execution**: Runs only on weekdays to respect team schedules
-- **Timeout Protection**: Limited to 30 minutes per run with 48-hour stop-after
+g- **Timeout Protection**: Limited to 30 minutes per run with 1-month stop-after
 - **Safe Outputs**: Controlled limits on issues and PRs created
 
 ## Human in the loop

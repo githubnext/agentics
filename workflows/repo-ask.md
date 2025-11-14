@@ -3,7 +3,7 @@ on:
   command:
     name: repo-ask
   reaction: "eyes"
-  stop-after: +48h
+  stop-after: +1mo
 roles: [admin, maintainer, write]
 
 permissions: read-all
