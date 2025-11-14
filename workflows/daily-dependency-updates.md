@@ -4,7 +4,7 @@ on:
     schedule:
         # Run daily at 2am UTC, all days except Saturday and Sunday
         - cron: "0 2 * * 1-5"
-    stop-after: +48h # workflow will no longer trigger after 48 hours. Remove this and recompile to run indefinitely
+    stop-after: +1 month # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
 
 permissions: read-all
 

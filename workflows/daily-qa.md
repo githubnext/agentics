@@ -5,7 +5,7 @@ on:
       - cron: "0 3 * * 1-5"
     workflow_dispatch:
 
-    stop-after: +48h # workflow will no longer trigger after 48 hours
+    stop-after: +1 month # workflow will no longer trigger after 1 month
 
 timeout-minutes: 15
 
