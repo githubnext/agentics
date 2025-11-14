@@ -35,9 +35,8 @@ Create an upbeat daily status report for the team as a GitHub discussion.
 - Be positive, encouraging, and helpful 🌟
 - Use emojis moderately for engagement
 - Keep it concise - adjust length based on actual activity
-- End with a seasonal haiku
 
 ## Process
 
-1. Gather recent activity (issues, pull requests) from the repository
+1. Gather recent activity from the repository
 2. Create a new GitHub discussion with your findings and insights
