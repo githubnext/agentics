@@ -18,7 +18,7 @@ safe-outputs:
     title-prefix: "[team-status] "
     category: "announcements"
 imports:
-  - ./shared/reporting.md
+  - shared/reporting.md
 ---
 
 # Daily Team Status
