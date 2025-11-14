@@ -4,60 +4,40 @@ on:
     # Every day at 9am UTC, all days except Saturday and Sunday
     - cron: "0 9 * * 1-5"
   workflow_dispatch:
-
-  stop-after: +30d # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
-
-permissions: read-all
-
+  # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
+  stop-after: +30d 
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
 network: defaults
-
+tools:
+  github:
 safe-outputs:
   create-discussion:
     title-prefix: "[team-status] "
     category: "announcements"
-
-timeout-minutes: 15
-
-tools:
-  github:
 ---
 
 # Daily Team Status
 
-1. Search for recent open discussions with title "${{ github.workflow }}" in the repository. Read them to understand the context of the team and recent activity, and to avoid duplication.
+Create an upbeat daily status report for the team as a GitHub discussion.
 
-2. Write an upbeat, friendly, motiviating summary of recent activity in the repo.
+## What to include
 
-   - Include some or all of the following:
-     - Recent issues activity
-     - Recent pull requests
-     - Recent discussions
-     - Recent releases
-     - Recent comments
-     - Recent code reviews
-     - Recent code changes
-     - Recent failed CI runs
+- Recent repository activity (issues, PRs, discussions, releases, code changes)
+- Team productivity suggestions and improvement ideas
+- Community engagement highlights
+- Project investment and feature recommendations
 
-   - If little has happened, don't write too much.
+## Style
 
-   - Give some depth thought into ways the team can improve their productivity, and suggest some ways to do that.
+- Be positive, encouraging, and helpful 🌟
+- Use emojis moderately for engagement
+- Keep it concise - adjust length based on actual activity
+- End with a seasonal haiku
 
-   - Include a description of open source community engagement, if any.
+## Process
 
-   - Highlight suggestions for possible investment, ideas for features and project plan, ways to improve community engagement, and so on.
-
-   - Be helpful, thoughtful, respectful, positive, kind, and encouraging.
-
-   - Use emojis to make the report more engaging and fun, but don't overdo it.
-
-   - Include a short haiku at the end of the report to help orient the team to the season of their work.
-
-   - In a note at the end of the report, include a log of
-     - all search queries (web, issues, pulls, content) you used to generate the data for the report
-     - all commands you used to generate the data for the report
-     - all files you read to generate the data for the report
-     - places you didn't have time to read or search, but would have liked to
-
-   Create a new GitHub discussion containing a markdown report with your findings. Use links where appropriate.
-
-   Only a new discussion should be created, no existing discussions should be adjusted.
+1. Gather recent activity (issues, pull requests) from the repository
+2. Create a new GitHub discussion with your findings and insights
