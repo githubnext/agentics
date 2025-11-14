@@ -3,7 +3,7 @@ on:
   command:
     name: pr-fix
   reaction: "eyes"
-  stop-after: +1 month
+  stop-after: +1mo
 
 roles: [admin, maintainer, write]
 permissions: read-all

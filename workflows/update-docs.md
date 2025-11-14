@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  stop-after: +1 month # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
+  stop-after: +1mo # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
 
 permissions: read-all
 
