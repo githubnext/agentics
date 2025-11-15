@@ -1,4 +1,10 @@
 ---
+description: |
+  This workflow performs test enhancements by systematically improving test quality and coverage.
+  Operates in three phases: research testing landscape and create coverage plan, infer build
+  and coverage steps, then implement new tests targeting untested code. Generates coverage
+  reports, identifies gaps, creates comprehensive test suites, and submits draft PRs.
+
 on:
     workflow_dispatch:
     schedule:

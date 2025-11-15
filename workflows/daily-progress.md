@@ -1,4 +1,10 @@
 ---
+description: |
+  This workflow systematically delivers features from the project plan.
+  Operates in two phases: research roadmap and feature landscape to create prioritized plan,
+  then implement selected high-priority features via pull requests. Creates discussions to
+  coordinate with maintainers and advance the project toward its strategic goals.
+
 on:
     workflow_dispatch:
     schedule:

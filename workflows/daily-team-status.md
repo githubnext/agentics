@@ -1,4 +1,11 @@
 ---
+description: |
+  This workflow created daily team status reporter creating upbeat activity summaries.
+  Gathers recent repository activity (issues, PRs, discussions, releases, code changes)
+  and generates engaging GitHub discussions with productivity insights, community
+  highlights, and project recommendations. Uses a positive, encouraging tone with
+  moderate emoji usage to boost team morale.
+
 on:
   schedule:
     # Every day at 9am UTC, all days except Saturday and Sunday

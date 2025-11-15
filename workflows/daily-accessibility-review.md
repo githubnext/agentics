@@ -1,4 +1,11 @@
 ---
+description: |
+  This workflow is an automated accessibility compliance checker for web applications.
+  Reviews websites against WCAG 2.2 guidelines using Playwright browser automation.
+  Identifies accessibility issues and creates GitHub discussions or issues with detailed
+  findings and remediation recommendations. Helps maintain accessibility standards
+  continuously throughout the development cycle.
+
 on: 
   schedule:
     # Run daily at 3am UTC, all days except Saturday and Sunday

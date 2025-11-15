@@ -1,4 +1,10 @@
 ---
+description: |
+  This workflow performs systematic backlog management by working through issues and pull requests.
+  Operates in two phases: research entire backlog to categorize and prioritize items, then
+  systematically close, resolve, or advance selected items. Creates discussions to track
+  progress and gather maintainer feedback, helping reduce technical debt.
+
 on:
     workflow_dispatch:
     schedule:

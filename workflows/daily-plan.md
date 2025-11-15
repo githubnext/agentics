@@ -1,4 +1,11 @@
 ---
+description: |
+  This workflow performs strategic project planning by maintaining and updating the project roadmap.
+  Analyzes repository state including open issues, PRs, and completed work to formulate
+  a comprehensive project plan. Creates or updates a planning discussion with prioritized
+  tasks, dependencies, and suggested new issues (via gh commands but doesn't create them).
+  Incorporates maintainer feedback from comments on the plan.
+
 # Run once a day at midnight UTC
 on:
   schedule:

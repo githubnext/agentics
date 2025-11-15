@@ -1,4 +1,11 @@
 ---
+description: |
+  Intelligent issue triage assistant that processes new and reopened issues.
+  Analyzes issue content, selects appropriate labels, detects spam, gathers context
+  from similar issues, and provides analysis notes including debugging strategies,
+  reproduction steps, and resource links. Helps maintainers quickly understand and
+  prioritize incoming issues.
+
 on:
   issues:
     types: [opened, reopened]
