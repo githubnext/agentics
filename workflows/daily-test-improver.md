@@ -18,6 +18,8 @@ safe-outputs:
   create-discussion: # needed to create planning discussion
     title-prefix: "${{ github.workflow }}"
     category: "ideas"
+  create-issue: # can create an issue if it thinks it found bugs
+    max: 1
   add-comment:
     discussion: true
     target: "*" # can add a comment to any one single issue or pull request
@@ -82,6 +84,21 @@ To decide which phase to perform:
   - Opportunities for new ways of greatly increasing test coverage
   - Any questions or clarifications needed from maintainers
 
+   **Include a "How to Control this Workflow" section at the end of the discussion that explains:**
+   - The user can add comments to the discussion to provide feedback or adjustments to the plan
+   - The user can use these commands:
+
+      gh aw disable daily-test-improver --repo ${{ github.repository }}
+      gh aw enable daily-test-improver --repo ${{ github.repository }}
+      gh aw run daily-test-improver --repo ${{ github.repository }} --repeat <number-of-repeats>
+      gh aw logs daily-test-improver --repo ${{ github.repository }}
+
+   **Include a "What Happens Next" section at the end of the discussion that explains:**
+   - The next time this workflow runs, Phase 2 will be performed, which will analyze the codebase to create coverage steps configuration
+   - After Phase 2 completes, Phase 3 will begin on subsequent runs to implement actual test coverage improvements
+   - If running in "repeat" mode, the workflow will automatically run again to proceed to the next phase
+   - Humans can review this research and add comments before the workflow continues
+
 3. Exit this entire workflow, do not proceed to Phase 2 on this run. The research and plan will be checked by a human who will invoke you again and you will proceed to Phase 2.
 
 ## Phase 2 - Coverage steps inference and configuration
@@ -94,29 +111,39 @@ To decide which phase to perform:
 
 4. Before running any of the steps, make a pull request for the addition of the `action.yml` file, with title "${{ github.workflow }} - Updates to complete configuration". Encourage the maintainer to review the files carefully to ensure they are appropriate for the project.
 
-5. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 2e. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
+   **Include a "What Happens Next" section in the PR description that explains:**
+   - Once this PR is merged, the next workflow run will proceed to Phase 3, where actual test coverage improvements will be implemented
+   - Phase 3 will use the coverage steps to systematically improve test coverage
+   - If running in "repeat" mode, the workflow will automatically run again to proceed to Phase 3
+   - Humans can review and merge this configuration before continuing
 
-6. Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating what you've done. If you have taken successful initial coverage numbers for the repository, report the initial coverage numbers appropriately. Then exit the entire workflow.
+5. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 4. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
 
-## Phase 3 - Work selection, work and results
+6. Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating what you've done and giving links to the PR created. If you have taken successful initial coverage numbers for the repository, report the initial coverage numbers appropriately.
 
-1. **Decide what to work on**
+7. Exit this entire workflow, do not proceed to Phase 3 on this run. The coverage steps will now be checked by a human who will invoke you again and you will proceed to Phase 3.
 
-   a. You can assume that the repository is in a state where the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` have been run and a test coverage report has been generated, perhaps with other detailed coverage information. Look at the steps in `.github/actions/daily-test-improver/coverage-steps/action.yml` to work out what has been run and where the coverage report should be, and find it. Also read any output files such as `coverage-steps.log` to understand what has been done. If the coverage steps failed, work out what needs to be fixed in `.github/actions/daily-test-improver/coverage-steps/action.yml` and make a pull request for those fixes and exit the entire workflow. If you can't find the coverage report, read a previous actions log for the run, or otherwise work out why the build or coverage generation failed by going through it step by step, then create an issue describing the problem. Only continue if you have a valid fresh coverage report.
+## Phase 3 - Goal selection, work and results
 
-   b. Read the coverage report. Be detailed, looking to understand the files, functions, branches, and lines of code that are not covered by tests. Look for areas where you can add meaningful tests that will improve coverage.
+1. **Goal selection**. Build an understanding of what to work on and select an area of the test coverage plan to pursue
+
+   a. Repository is now test-ready. Review `coverage-steps/action.yml` and `coverage-steps.log` to understand setup. If coverage steps failed then create fix PR and exit.
+
+   b. Locate and read the coverage report. Be detailed, looking to understand the files, functions, branches, and lines of code that are not covered by tests. Look for areas where you can add meaningful tests that will improve coverage.
    
-   c. Check the most recent pull request with title starting with "${{ github.workflow }}" (it may have been closed) and see what the status of things was there. These are your notes from last time you did your work, and may include useful recommendations for future areas to work on.
-
-   d. Check for existing open pull opened by you starting with title "${{ github.workflow }}". Don't repeat work from any open pull requests.
+   c. Read the plan in the discussion mentioned earlier, along with comments.
    
-   e. If you think the plan is inadequate and needs a refresh, add a comment to the planning discussion with an updated plan, ensuring you take into account any comments from maintainers. Explain in the comment why the plan has been updated. Then continue to step (f).
+   d. Check the most recent pull request with title starting with "${{ github.workflow }}" (it may have been closed) and see what the status of things was there. These are your notes from last time you did your work, and may include useful recommendations for future areas to work on.
+
+   e. Check for existing open pull requests (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
+   
+   f. If plan needs updating then comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
   
-   f. Based on all of the above, select an area of relatively low coverage to work on that appear tractable for further test additions.
+   g. Based on all of the above, select an area of relatively low coverage to work on that appears tractable for further test additions. Ensure that you have a good understanding of the code and the testing requirements before proceeding.
 
-2. **Do the work**. Do the following:
+2. **Work towards your selected goal**. For the test coverage improvement goal you selected, do the following:
 
-   a. Create a new branch
+   a. Create a new branch starting with "test/".
    
    b. Write new tests to improve coverage. Ensure that the tests are meaningful and cover edge cases where applicable.
 
@@ -124,32 +151,39 @@ To decide which phase to perform:
    
    d. Run the new tests to ensure they pass.
 
-   e. Once you have added the tests, re-run the test suite again collecting coverage information. Check that overall coverage has improved. If coverage has not improved then exit.
+   e. Re-run the test suite collecting coverage information. Check that overall coverage has improved. Document measurement attempts even if unsuccessful. If no improvement then iterate, revert, or try different approach.
 
-   f. Apply any automatic code formatting used in the repo
+3. **Finalizing changes**
+
+   a. Apply any automatic code formatting used in the repo. If necessary check CI files to understand what code formatting is used.
    
-   g. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
+   b. Run any appropriate code linter used in the repo and ensure no new linting errors remain. If necessary check CI files to understand what code linting is used.
 
-   h. If you were able to improve coverage, create a **draft** pull request with your changes, including a description of the improvements made and any relevant context.
+4. **Results and learnings**
 
-    - Do NOT include the coverage report or any generated coverage files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large coverage files that you shouldn't, so be careful here.
+   a. If you succeeded in writing useful code changes that improve test coverage, create a **draft** pull request with your changes.
 
-    - In the description of the pull request, include
-      - A summary of the changes made
-      - The problems you found
-      - The actions you took
-      - Include a section "Test coverage results" giving exact coverage numbers before and after the changes, drawing from the coverage reports, in a table if possible. Include changes in numbers for overall coverage. If coverage numbers a guesstimates, rather than based on coverage reports, say so. Don't blag, be honest. Include the exact commands the user will need to run to validate accurate coverage numbers.
-      - Include a section "Replicating the test coverage measurements" with the exact commands needed to install dependencies, build the code, run tests, generate coverage reports including a summary before/after table, so that someone else can replicate them. If you used any scripts or programs to help with this, include them in the repository if appropriate, or include links to them if they are external.
-      - List possible other areas for future improvement
-      - In a collapsed section list
-        - all bash commands you ran
-        - all web searches you performed
-        - all web pages you fetched 
+      **Critical:** Exclude coverage reports and tool-generated files from PR. Double-check added files and remove any that don't belong.
 
-    - After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
+      Include a description of the improvements with evidence of impact. In the description, explain:
+      
+      - **Goal and rationale:** Coverage area chosen and why it matters
+      - **Approach:** Testing strategy, methodology, and implementation steps
+      - **Impact measurement:** How coverage was tested and results achieved
+      - **Trade-offs:** What changed (complexity, test maintenance)
+      - **Validation:** Testing approach and success criteria met
+      - **Future work:** Additional coverage opportunities identified
 
-3. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
+      **Test coverage results section:**
+      Document coverage impact with exact coverage numbers before and after the changes, drawing from the coverage reports, in a table if possible. Include changes in numbers for overall coverage. Be transparent about measurement limitations and methodology. Mark estimates clearly.
 
-4. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion titled "${{ github.workflow }}" found earlier, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not, and reporting the coverage improvement numbers achieved and current overall coverage numbers.
+      **Reproducibility section:**
+      Provide clear instructions to reproduce coverage testing, including setup commands (install dependencies, build code, run tests, generate coverage reports), measurement procedures, and expected results format.
+
+      After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
+
+   b. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
+
+5. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made, reporting the coverage improvement numbers achieved and current overall coverage numbers.
 
 

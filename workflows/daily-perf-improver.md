@@ -92,6 +92,21 @@ To decide which phase to perform:
 
 2. Use this research to create a discussion with title "${{ github.workflow }} - Research and Plan"
 
+   **Include a "How to Control this Workflow" section at the end of the discussion that explains:**
+   - The user can add comments to the discussion to provide feedback or adjustments to the plan
+   - The user can use these commands:
+
+      gh aw disable daily-perf-improver --repo ${{ github.repository }}
+      gh aw enable daily-perf-improver --repo ${{ github.repository }}
+      gh aw run daily-perf-improver --repo ${{ github.repository }} --repeat <number-of-repeats>
+      gh aw logs daily-perf-improver --repo ${{ github.repository }}
+
+   **Include a "What Happens Next" section at the end of the discussion that explains:**
+   - The next time this workflow runs, Phase 2 will be performed, which will analyze the codebase to create build steps configuration and performance engineering guides
+   - After Phase 2 completes, Phase 3 will begin on subsequent runs to implement actual performance improvements
+   - If running in "repeat" mode, the workflow will automatically run again to proceed to the next phase
+   - Humans can review this research and add comments before the workflow continues
+
 3. Exit this entire workflow, do not proceed to Phase 2 on this run. The research and plan will be checked by a human who will invoke you again and you will proceed to Phase 2.
 
 ## Phase 2 - Build steps inference and configuration and perf engineering guides
@@ -108,11 +123,21 @@ To decide which phase to perform:
   - Success metrics and testing approaches
   - How to do explore performance efficiently using focused, maximally-efficient measurements and rebuilds
 
-5. Create PR with title "${{ github.workflow }} - Updates to complete configuration" containing files from steps 2d-2e. Request maintainer review. Exit workflow.
+5. Create PR with title "${{ github.workflow }} - Updates to complete configuration" containing files from steps 2d-2e. Request maintainer review. 
+
+   **Include a "What Happens Next" section in the PR description that explains:**
+   - Once this PR is merged, the next workflow run will proceed to Phase 3, where actual performance improvements will be implemented
+   - Phase 3 will use the build steps and performance guides to systematically make performance improvements
+   - If running in "repeat" mode, the workflow will automatically run again to proceed to Phase 3
+   - Humans can review and merge this configuration before continuing
+
+   Exit workflow.
 
 6. Test build steps manually. If fixes needed then update the PR branch. If unable to resolve then create issue and exit.
 
-7. Exit this entire workflow, do not proceed to Phase 3 on this run. The build steps will now be checked by a human who will invoke you again and you will proceed to Phase 3.
+7. Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating progress made and giving links to the PR created.
+
+8. Exit this entire workflow, do not proceed to Phase 3 on this run. The build steps will now be checked by a human who will invoke you again and you will proceed to Phase 3.
 
 ## Phase 3 - Goal selection, work and results
 
@@ -150,9 +175,9 @@ To decide which phase to perform:
 
 3. **Finalizing changes**
 
-   a. Apply any automatic code formatting used in the repo.
-
-   b. Run any appropriate code linter used in the repo and ensure no new linting errors remain. Check the CI checks to see what linting is being used.
+   1. Apply any automatic code formatting used in the repo. If necessary check CI files to understand what code formatting is used.
+   
+   b. Run any appropriate code linter used in the repo and ensure no new linting errors remain. If necessary check CI files to understand what code linting is used.
 
 4. **Results and learnings**
 

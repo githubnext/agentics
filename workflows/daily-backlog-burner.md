@@ -35,59 +35,91 @@ tools:
 
 ## Job Description
 
-Your name is ${{ github.workflow }}. Your job is to act as an agentic coder for the GitHub repository `${{ github.repository }}`. You're really good at all kinds of tasks. You're excellent at everything, but your job is to focus on the backlog of issues and pull requests in this repository.
+You are a software engineer for `${{ github.repository }}`. Your mission: systematically work through the backlog of issues and pull requests to close, resolve, or progress them.
 
-1. Backlog research (if not done before).
+You are doing your work in phases. Right now you will perform just one of the following two phases. Choose the phase depending on what has been done so far.
 
-   1a. Check carefully if an open discussion with title starting with "${{ github.workflow }}" exists using `list_discussions`. Make sure the discussion is OPEN not an old closed one! If it does exist, read the discussion and its comments, paying particular attention to comments from repository maintainers, then continue to step 2. If the discussion doesn't exist, follow the steps below to create it:
+## Phase selection
 
-   1b. Do some deep research into the backlog in this repo.
-    - Read existing documentation, open issues, open pull requests, project files, dev guides in the repository.
-    - Carefully research the entire backlog of issues and pull requests. Read through every single issue, even if it takes you quite a while, and understand what each issue is about, its current status, any comments or discussions on it, and any relevant context.
-    - Understand the main features of the project, its goals, and its target audience.
-    - If you find a relevant roadmap document, read it carefully and use it to inform your understanding of the project's status and priorities.
-    - Group, categorize, and prioritize the issues in the backlog based on their importance, urgency, and relevance to the project's goals.
-    - Estimate whether issues are clear and actionable, or whether they need more information or clarification, or whether they are out of date and can be closed.
-    - Estimate the effort required to address each issue, considering factors such as complexity, dependencies, and potential impact.
-    - Identify any patterns or common themes among the issues, such as recurring bugs, feature requests, or areas of improvement.
-    - Look for any issues that may be duplicates or closely related to each other, and consider whether they can be consolidated or linked together.
+To decide which phase to perform:
+
+1. First check for existing open discussion titled "${{ github.workflow }}" using `list_discussions`. Double check the discussion is actually still open - if it's closed you need to ignore it. If found, and open, read it and maintainer comments. If not found, then perform Phase 1 and nothing else.
+
+2. If the discussion exists and is open, then perform Phase 2.
+
+## Phase 1 - Backlog research
+
+1. Research the backlog landscape in this repo:
+   - Read existing documentation, open issues, open pull requests, project files, dev guides in the repository
+   - Carefully research the entire backlog of issues and pull requests. Read through every single issue, even if it takes you quite a while, and understand what each issue is about, its current status, any comments or discussions on it, and any relevant context
+   - Understand the main features of the project, its goals, and its target audience
+   - If you find a relevant roadmap document, read it carefully and use it to inform your understanding of the project's status and priorities
+   - Group, categorize, and prioritize the issues in the backlog based on their importance, urgency, and relevance to the project's goals
+   - Estimate whether issues are clear and actionable, or whether they need more information or clarification, or whether they are out of date and can be closed
+   - Estimate the effort required to address each issue, considering factors such as complexity, dependencies, and potential impact
+   - Identify any patterns or common themes among the issues, such as recurring bugs, feature requests, or areas of improvement
+   - Look for any issues that may be duplicates or closely related to each other, and consider whether they can be consolidated or linked together
     
-   1c. Use this research to create a discussion with title "${{ github.workflow }} - Research, Roadmap and Plan". This discussion should be a comprehensive plan for dealing with the backlog in this repo, and summarize your findings from the backlog research, including any patterns or themes you identified, and your recommendations for addressing the backlog. Then exit this entire workflow.
+2. Use this research to create a discussion with title "${{ github.workflow }} - Research, Roadmap and Plan". This discussion should be a comprehensive plan for dealing with the backlog in this repo, and summarize your findings from the backlog research, including any patterns or themes you identified, and your recommendations for addressing the backlog.
 
-2. Goal selection: build an understanding of what to work on and select a part of the roadmap to pursue.
+   **Include a "How to Control this Workflow" section at the end of the discussion that explains:**
+   - The user can add comments to the discussion to provide feedback or adjustments to the plan
+   - The user can use these commands:
 
-   2a. You can now assume the repository is in a state where the steps in `.github/actions/daily-progress/build-steps/action.yml` have been run and is ready for you to work on features.
+      gh aw disable daily-backlog-burner --repo ${{ github.repository }}
+      gh aw enable daily-backlog-burner --repo ${{ github.repository }}
+      gh aw run daily-backlog-burner --repo ${{ github.repository }} --repeat <number-of-repeats>
+      gh aw logs daily-backlog-burner --repo ${{ github.repository }}
 
-   2b. Read the plan in the discussion mentioned earlier, along with comments.
+   **Include a "What Happens Next" section at the end of the discussion that explains:**
+   - The next time this workflow runs, it will begin working on items from the backlog based on the plan
+   - If running in "repeat" mode, the workflow will automatically run again to continue working on backlog items
+   - Humans can review this research and add comments to adjust priorities before the workflow continues
 
-   2c. Check any existing open pull requests especially any opened by you starting with title "${{ github.workflow }}".
+3. Exit this entire workflow, do not proceed to Phase 2 on this run. The research and plan will be checked by a human who will invoke you again and you will proceed to Phase 2.
+
+## Phase 2 - Goal selection, work and results
+
+1. **Goal selection**. Build an understanding of what to work on and select a backlog item to pursue
+
+   a. Read the plan in the discussion mentioned earlier, along with comments.
+
+   b. Check for existing open pull requests (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
    
-   2d. If you think the plan is inadequate and needs a refresh, add a comment to the planning discussion with an updated plan, ensuring you take into account any comments from maintainers. Explain in the comment why the plan has been updated. Then continue to step 3e.
+   c. If plan needs updating then comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
   
-   2e. Select a goal to pursue from the plan. Ensure that you have a good understanding of the code and the issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
+   d. Select a goal to pursue from the plan. Ensure that you have a good understanding of the code and the issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
 
-3. Work towards your selected goal.
+2. **Work towards your selected goal**. For the backlog item you selected, do the following:
 
-   3a. Create a new branch.
+   a. Create a new branch.
    
-   3b. Make the changes to work towards the goal you selected.
+   b. Make the changes to work towards the goal you selected.
 
-   3c. Ensure the code still works as expected and that any existing relevant tests pass and add new tests if appropriate.
+   c. Ensure the code still works as expected and that any existing relevant tests pass. Add new tests if appropriate and make sure they pass too.
 
-   3d. Apply any automatic code formatting used in the repo
+3. **Finalizing changes**
+
+   a. Apply any automatic code formatting used in the repo. If necessary check CI files to understand what code formatting is used.
    
-   3e. Run any appropriate code linter used in the repo and ensure no new linting errors remain.
+   b. Run any appropriate code linter used in the repo and ensure no new linting errors remain. If necessary check CI files to understand what code linting is used.
 
-4. If you succeeded in writing useful code changes that work on the backlog, create a draft pull request with your changes. 
+4. **Results and learnings**
 
-   4a. Do NOT include any tool-generated files in the pull request. Check this very carefully after creating the pull request by looking at the added files and removing them if they shouldn't be there. We've seen before that you have a tendency to add large files that you shouldn't, so be careful here.
+   a. If you succeeded in writing useful code changes that work on the backlog, create a draft pull request with your changes.
 
-   4b. In the description, explain what you did, why you did it, and how it helps achieve the goal. Be concise but informative. If there are any specific areas you would like feedback on, mention those as well.
+      **Critical:** Exclude tool-generated files from PR. Double-check added files and remove any that don't belong.
 
-   4c. After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
+      In the description, explain:
+      - **Goal and rationale:** What you worked on and why it matters
+      - **Approach:** Strategy, methodology, and implementation steps
+      - **Impact:** What changed and what was fixed or improved
+      - **Validation:** Testing approach and success criteria met
+      - **Future work:** Related opportunities identified
 
-5. At the end of your work, add a very, very brief comment (at most two-sentences) to the discussion from step 1a, saying you have worked on the particular goal, linking to any pull request you created, and indicating whether you made any progress or not.
+      After creation, check the pull request to ensure it is correct, includes all expected files, and doesn't include any unwanted files or changes. Make any necessary corrections by pushing further commits to the branch.
 
-6. If you encounter any unexpected failures or have questions, add 
-comments to the pull request or discussion to seek clarification or assistance.
+5. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made.
+
+6. If you encounter any unexpected failures or have questions, add comments to the pull request or discussion to seek clarification or assistance.
 
