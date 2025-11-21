@@ -18,6 +18,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
 - [👥 Daily Team Status](docs/daily-team-status.md) - Assess repository activity and create status reports
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
+- [📋 Plan Command](docs/plan.md) - Break down issues into actionable sub-tasks with /plan command
 
 ### Coding & Development Workflows
 - [⚡ Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap
