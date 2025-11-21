@@ -12,6 +12,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🔍 Repo Ask](docs/repo-ask.md) - Intelligent research assistant for repository questions and analysis
 - [🔍 Daily Accessibility Review](docs/daily-accessibility-review.md) - Review application accessibility by automatically running and using the application
+- [🔧 Q - Workflow Optimizer](docs/q.md) - Expert system that analyzes and optimizes agentic workflows
 
 ### Research, Status & Planning Workflows
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
