@@ -50,9 +50,9 @@ To trigger the workflow on a specific issue or pull request, add a comment with 
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can customize optimization behavior and analysis scope. Local configuration can be done in `.github/workflows/agentics/q.config.md`.
+This workflow requires no configuration and works out of the box. You can customize optimization behavior and analysis scope if needed.
 
-After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
+After editing the workflow file, recompile and commit all changes to the default branch.
 
 ## What it reads from GitHub
 

@@ -67,10 +67,9 @@ This workflow was triggered from a comment on issue #${{ github.event.issue.numb
 
 **Important**: Before proceeding with your analysis, retrieve the full issue details to understand the context of the work to be done:
 
-1. Use the `issue_read` tool with method `get` to fetch issue #${{ github.event.issue.number }}
-2. Review the issue title, body, and labels to understand what workflows or problems are being discussed
-3. Consider any linked issues or previous comments for additional context
-4. Use this issue context to inform your investigation and recommendations
+1. Read the issue title, body, and labels to understand what workflows or problems are being discussed
+2. Consider any linked issues or previous comments for additional context
+3. Use this issue context to inform your investigation and recommendations
 {{/if}}
 
 {{#if ${{ github.event.pull_request.number }} }}
@@ -80,10 +79,9 @@ This workflow was triggered from a comment on pull request #${{ github.event.pul
 
 **Important**: Before proceeding with your analysis, retrieve the full PR details to understand the context of the work to be done:
 
-1. Use the `pull_request_read` tool with method `get` to fetch PR #${{ github.event.pull_request.number }}
-2. Review the PR title, description, and changed files to understand what changes are being proposed
-3. Consider the PR's relationship to workflow optimizations or issues
-4. Use this PR context to inform your investigation and recommendations
+1. Review the PR title, description, and changed files to understand what changes are being proposed
+2. Consider the PR's relationship to workflow optimizations or issues
+3. Use this PR context to inform your investigation and recommendations
 {{/if}}
 
 {{#if ${{ github.event.discussion.number }} }}
@@ -93,10 +91,9 @@ This workflow was triggered from a comment on discussion #${{ github.event.discu
 
 **Important**: Before proceeding with your analysis, retrieve the full discussion details to understand the context of the work to be done:
 
-1. Use GitHub tools to fetch discussion #${{ github.event.discussion.number }}
-2. Review the discussion title and body to understand the topic being discussed
-3. Consider the discussion context when planning your workflow optimizations
-4. Use this discussion context to inform your investigation and recommendations
+1. Review the discussion title and body to understand the topic being discussed
+2. Consider the discussion context when planning your workflow optimizations
+3. Use this discussion context to inform your investigation and recommendations
 {{/if}}
 </current_context>
 
@@ -164,17 +161,14 @@ Based on your analysis, make targeted improvements to workflow files:
 
 If logs show missing tool reports:
 - Add the tools to the appropriate workflow frontmatter
-- Ensure proper MCP server configuration
 - Add shared imports if the tool has a standard configuration
 
 Example:
 ```yaml
 tools:
-  github:
-    allowed: 
-      - issue_read
-      - list_commits
-      - create_issue_comment
+  web-search:
+  bash:
+  edit:
 ```
 
 #### 4.2 Fix Permission Issues
