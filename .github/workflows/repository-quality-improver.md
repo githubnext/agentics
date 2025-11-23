@@ -27,6 +27,7 @@ timeout-minutes: 20
 strict: true
 imports:
   - shared/reporting.md
+  - shared/mcp/serena.md
 ---
 
 # Repository Quality Improvement Agent
