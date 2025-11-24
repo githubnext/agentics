@@ -7,6 +7,7 @@ all: setup compile
 install:
 	@echo "Installing githubnext/gh-aw extension..."
 	gh extension install githubnext/gh-aw
+	gh extension upgrade githubnext/gh-aw
 
 # Run gh aw compile
 compile:
