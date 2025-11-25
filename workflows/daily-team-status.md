@@ -24,8 +24,6 @@ safe-outputs:
   create-discussion:
     title-prefix: "[team-status] "
     category: "announcements"
-imports:
-  - shared/reporting.md
 ---
 
 # Daily Team Status
