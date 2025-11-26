@@ -8,7 +8,7 @@ The [daily dependency updater workflow](../workflows/daily-dependency-updates.md
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Daily Dependency Updater workflow to your repository
 gh aw add githubnext/agentics/daily-dependency-updates --pr

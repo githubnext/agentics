@@ -8,7 +8,7 @@ The [weekly research workflow](../workflows/weekly-research.md?plain=1) will run
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Weekly Research workflow to your repository
 gh aw add githubnext/agentics/weekly-research --pr

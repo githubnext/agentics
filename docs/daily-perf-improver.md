@@ -8,7 +8,7 @@ The [daily performance improver workflow](../workflows/daily-perf-improver.md?pl
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Daily Performance Improver workflow to your repository
 gh aw add githubnext/agentics/daily-perf-improver --pr

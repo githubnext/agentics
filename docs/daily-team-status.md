@@ -8,7 +8,7 @@ The [daily team status workflow](../workflows/daily-team-status.md?plain=1) will
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Daily Team Status workflow to your repository
 gh aw add githubnext/agentics/daily-team-status --pr

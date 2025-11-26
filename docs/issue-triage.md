@@ -8,7 +8,7 @@ The [issue triage workflow](../workflows/issue-triage.md?plain=1) will when issu
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Issue Triage workflow to your repository
 gh aw add githubnext/agentics/issue-triage --pr

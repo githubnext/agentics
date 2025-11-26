@@ -20,7 +20,7 @@ or by writing a comment with a specific request:
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Q workflow to your repository
 gh aw add githubnext/agentics/q --pr

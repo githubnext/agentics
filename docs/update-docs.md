@@ -8,7 +8,7 @@ The [update documentation workflow](../workflows/update-docs.md?plain=1) will ru
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Update Docs workflow to your repository
 gh aw add githubnext/agentics/update-docs --pr
