@@ -8,7 +8,7 @@ The [daily accessibility review workflow](../workflows/daily-accessibility-revie
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Daily Accessibility Review workflow to your repository
 gh aw add githubnext/agentics/daily-accessibility-review --pr

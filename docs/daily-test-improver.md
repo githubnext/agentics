@@ -8,7 +8,7 @@ The [daily test coverage improver workflow](../workflows/daily-test-improver.md?
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Daily Test Coverage Improver workflow to your repository
 gh aw add githubnext/agentics/daily-test-improver --pr

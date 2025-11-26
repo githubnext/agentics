@@ -8,7 +8,7 @@ The [daily progress workflow](../workflows/daily-progress.md?plain=1) is an auto
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Daily Progress workflow to your repository
 gh aw add githubnext/agentics/daily-progress --pr

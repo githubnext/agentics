@@ -20,7 +20,7 @@ or by writing a comment:
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the PR Fix workflow to your repository
 gh aw add githubnext/agentics/pr-fix --pr
