@@ -8,7 +8,7 @@ The [CI Doctor workflow](../workflows/ci-doctor.md?plain=1) monitors your GitHub
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the CI Doctor workflow to your repository
 gh aw add githubnext/agentics/ci-doctor --pr
