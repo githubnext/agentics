@@ -13,7 +13,7 @@ install:
 compile:
 	@echo "Running gh aw compile..."
 	gh aw compile
-	gh aw compile --workflows-dir workflows
+	gh aw compile --dir workflows
 
 # Setup: install extension and compile
 setup: install compile
