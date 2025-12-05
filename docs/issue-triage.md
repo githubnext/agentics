@@ -16,7 +16,7 @@ gh aw add githubnext/agentics/issue-triage --pr
 
 This creates a pull request to add the workflow to your repository.
 
-You must also add [choose a coding agent](https://githubnext.github.io/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+You must also [choose a coding agent](https://githubnext.github.io/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
 
 You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
