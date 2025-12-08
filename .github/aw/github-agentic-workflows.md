@@ -29,6 +29,45 @@ Natural language description of what the AI should do.
 Use GitHub context expressions like ${{ github.event.issue.number }}.
 ```
 
+## Compiling Workflows
+
+**⚠️ IMPORTANT**: After creating or modifying a workflow file, you must compile it to generate the GitHub Actions YAML file.
+
+Agentic workflows (`.md` files) must be compiled to GitHub Actions YAML (`.lock.yml` files) before they can run:
+
+```bash
+# Compile all workflows in .github/workflows/
+gh aw compile
+
+# Compile a specific workflow by name (without .md extension)
+gh aw compile my-workflow
+```
+
+**Compilation Process:**
+- `.github/workflows/example.md` → `.github/workflows/example.lock.yml`
+- Include dependencies are resolved and merged
+- Tool configurations are processed
+- GitHub Actions syntax is generated
+
+**Additional Compilation Options:**
+```bash
+# Compile with strict security checks
+gh aw compile --strict
+
+# Remove orphaned .lock.yml files (no corresponding .md)
+gh aw compile --purge
+
+# Run security scanners
+gh aw compile --actionlint  # Includes shellcheck
+gh aw compile --zizmor      # Security vulnerability scanner
+gh aw compile --poutine     # Supply chain security analyzer
+
+# Strict mode with all scanners
+gh aw compile --strict --actionlint --zizmor --poutine
+```
+
+**Best Practice**: Always run `gh aw compile` after every workflow change to ensure the GitHub Actions YAML is up to date.
+
 ## Complete Frontmatter Schema
 
 The YAML frontmatter supports these fields:
@@ -69,15 +108,77 @@ The YAML frontmatter supports these fields:
 - **`roles:`** - Repository access roles that can trigger workflow (array or "all")
   - Default: `[admin, maintainer, write]`
   - Available roles: `admin`, `maintainer`, `write`, `read`, `all`
-- **`strict:`** - Enable enhanced validation for production workflows (boolean)
+- **`strict:`** - Enable enhanced validation for production workflows (boolean, defaults to `true`)
+  - When omitted, workflows enforce strict mode security constraints
+  - Set to `false` to explicitly disable strict mode for development/testing
+  - Strict mode enforces: no write permissions, explicit network config, pinned actions to SHAs, no wildcard domains
 - **`features:`** - Feature flags for experimental features (object)
+- **`imports:`** - Array of workflow specifications to import (array)
+  - Format: `owner/repo/path@ref` or local paths like `shared/common.md`
+  - Markdown files under `.github/agents/` are treated as custom agent files
+  - Only one agent file is allowed per workflow
+  - See [Imports Field](#imports-field) section for detailed documentation
+- **`mcp-servers:`** - MCP (Model Context Protocol) server definitions (object)
+  - Defines custom MCP servers for additional tools beyond built-in ones
+  - See [Custom MCP Tools](#custom-mcp-tools) section for detailed documentation
+
+- **`tracker-id:`** - Optional identifier to tag all created assets (string)
+  - Must be at least 8 characters and contain only alphanumeric characters, hyphens, and underscores
+  - This identifier is inserted in the body/description of all created assets (issues, discussions, comments, pull requests)
+  - Enables searching and retrieving assets associated with this workflow
+  - Examples: `"workflow-2024-q1"`, `"team-alpha-bot"`, `"security_audit_v2"`
+
+- **`secret-masking:`** - Configuration for secret redaction behavior in workflow outputs and artifacts (object)
+  - `steps:` - Additional secret redaction steps to inject after the built-in secret redaction (array)
+  - Use this to mask secrets in generated files using custom patterns
+  - Example:
+    ```yaml
+    secret-masking:
+      steps:
+        - name: Redact custom secrets
+          run: find /tmp/gh-aw -type f -exec sed -i 's/password123/REDACTED/g' {} +
+    ```
+
+- **`runtimes:`** - Runtime environment version overrides (object)
+  - Allows customizing runtime versions (e.g., Node.js, Python) or defining new runtimes
+  - Runtimes from imported shared workflows are also merged
+  - Each runtime is identified by a runtime ID (e.g., 'node', 'python', 'go')
+  - Runtime configuration properties:
+    - `version:` - Runtime version as string or number (e.g., '22', '3.12', 'latest', 22, 3.12)
+    - `action-repo:` - GitHub Actions repository for setup (e.g., 'actions/setup-node')
+    - `action-version:` - Version of the setup action (e.g., 'v4', 'v5')
+  - Example:
+    ```yaml
+    runtimes:
+      node:
+        version: "22"
+      python:
+        version: "3.12"
+        action-repo: "actions/setup-python"
+        action-version: "v5"
+    ```
+
+- **`jobs:`** - Groups together all the jobs that run in the workflow (object)
+  - Standard GitHub Actions jobs configuration
+  - Each job can have: `name`, `runs-on`, `steps`, `needs`, `if`, `env`, `permissions`, `timeout-minutes`, etc.
+  - For most agentic workflows, jobs are auto-generated; only specify this for advanced multi-job workflows
+  - Example:
+    ```yaml
+    jobs:
+      custom-job:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Custom step
+            run: echo "Custom job"
+    ```
 
 - **`engine:`** - AI processor configuration
-  - String format: `"copilot"` (default), `"claude"`, `"codex"`, `"custom"` (⚠️ experimental)
+  - String format: `"copilot"` (default, recommended), `"custom"` (user-defined steps)
+  - ⚠️ **Experimental engines**: `"claude"` and `"codex"` are available but experimental
   - Object format for extended configuration:
     ```yaml
     engine:
-      id: copilot                       # Required: coding agent identifier (copilot, claude, codex, custom)
+      id: copilot                       # Required: coding agent identifier (copilot, custom, or experimental: claude, codex)
       version: beta                     # Optional: version of the action (has sensible default)
       model: gpt-5                      # Optional: LLM model to use (has sensible default)
       max-turns: 5                      # Optional: maximum chat iterations per run (has sensible default)
@@ -177,28 +278,62 @@ The YAML frontmatter supports these fields:
     ```yaml
     safe-outputs:
       create-issue:
-        title-prefix: "[ai] "           # Optional: prefix for issue titles  
+        title-prefix: "[ai] "           # Optional: prefix for issue titles
         labels: [automation, agentic]    # Optional: labels to attach to issues
+        assignees: [user1, copilot]     # Optional: assignees (use 'copilot' for bot)
         max: 5                          # Optional: maximum number of issues (default: 1)
+        target-repo: "owner/repo"       # Optional: cross-repository
     ```
     When using `safe-outputs.create-issue`, the main job does **not** need `issues: write` permission since issue creation is handled by a separate job with appropriate permissions.
+
+    **Temporary IDs and Sub-Issues:**
+    When creating multiple issues, use `temporary_id` (format: `aw_` + 12 hex chars) to reference parent issues before creation. References like `#aw_abc123def456` in issue bodies are automatically replaced with actual issue numbers. Use the `parent` field to create sub-issue relationships:
+    ```json
+    {"type": "create_issue", "temporary_id": "aw_abc123def456", "title": "Parent", "body": "Parent issue"}
+    {"type": "create_issue", "parent": "aw_abc123def456", "title": "Sub-task", "body": "References #aw_abc123def456"}
+    ```
+  - `close-issue:` - Close issues with comment
+    ```yaml
+    safe-outputs:
+      close-issue:
+        target: "triggering"              # Optional: "triggering" (default), "*", or number
+        required-labels: [automated]      # Optional: only close with any of these labels
+        required-title-prefix: "[bot]"    # Optional: only close matching prefix
+        max: 20                           # Optional: max closures (default: 1)
+        target-repo: "owner/repo"         # Optional: cross-repository
+    ```
   - `create-discussion:` - Safe GitHub discussion creation (status, audits, reports, logs)
     ```yaml
     safe-outputs:
       create-discussion:
-        title-prefix: "[ai] "           # Optional: prefix for discussion titles  
+        title-prefix: "[ai] "           # Optional: prefix for discussion titles
         category: "General"             # Optional: discussion category name, slug, or ID (defaults to first category if not specified)
         max: 3                          # Optional: maximum number of discussions (default: 1)
+        target-repo: "owner/repo"       # Optional: cross-repository
     ```
     The `category` field is optional and can be specified by name (e.g., "General"), slug (e.g., "general"), or ID (e.g., "DIC_kwDOGFsHUM4BsUn3"). If not specified, discussions will be created in the first available category. Category resolution tries ID first, then name, then slug.
-    
+
     When using `safe-outputs.create-discussion`, the main job does **not** need `discussions: write` permission since discussion creation is handled by a separate job with appropriate permissions.
-  - `add-comment:` - Safe comment creation on issues/PRs
+  - `close-discussion:` - Close discussions with comment and resolution
+    ```yaml
+    safe-outputs:
+      close-discussion:
+        target: "triggering"              # Optional: "triggering" (default), "*", or number
+        required-category: "Ideas"        # Optional: only close in category
+        required-labels: [resolved]       # Optional: only close with labels
+        required-title-prefix: "[ai]"     # Optional: only close matching prefix
+        max: 1                            # Optional: max closures (default: 1)
+        target-repo: "owner/repo"         # Optional: cross-repository
+    ```
+    Resolution reasons: `RESOLVED`, `DUPLICATE`, `OUTDATED`, `ANSWERED`.
+  - `add-comment:` - Safe comment creation on issues/PRs/discussions
     ```yaml
     safe-outputs:
       add-comment:
         max: 3                          # Optional: maximum number of comments (default: 1)
         target: "*"                     # Optional: target for comments (default: "triggering")
+        discussion: true                # Optional: target discussions
+        target-repo: "owner/repo"       # Optional: cross-repository
     ```
     When using `safe-outputs.add-comment`, the main job does **not** need `issues: write` or `pull-requests: write` permissions since comment creation is handled by a separate job with appropriate permissions.
   - `create-pull-request:` - Safe pull request creation with git patches
@@ -207,7 +342,10 @@ The YAML frontmatter supports these fields:
       create-pull-request:
         title-prefix: "[ai] "           # Optional: prefix for PR titles
         labels: [automation, ai-agent]  # Optional: labels to attach to PRs
+        reviewers: [user1, copilot]     # Optional: reviewers (use 'copilot' for bot)
         draft: true                     # Optional: create as draft PR (defaults to true)
+        if-no-changes: "warn"           # Optional: "warn" (default), "error", or "ignore"
+        target-repo: "owner/repo"       # Optional: cross-repository
     ```
     When using `output.create-pull-request`, the main job does **not** need `contents: write` or `pull-requests: write` permissions since PR creation is handled by a separate job with appropriate permissions.
   - `create-pull-request-review-comment:` - Safe PR review comment creation on code lines
@@ -216,9 +354,11 @@ The YAML frontmatter supports these fields:
       create-pull-request-review-comment:
         max: 3                          # Optional: maximum number of review comments (default: 1)
         side: "RIGHT"                   # Optional: side of diff ("LEFT" or "RIGHT", default: "RIGHT")
+        target: "*"                     # Optional: "triggering" (default), "*", or number
+        target-repo: "owner/repo"       # Optional: cross-repository
     ```
     When using `safe-outputs.create-pull-request-review-comment`, the main job does **not** need `pull-requests: write` permission since review comment creation is handled by a separate job with appropriate permissions.
-  - `update-issue:` - Safe issue updates 
+  - `update-issue:` - Safe issue updates
     ```yaml
     safe-outputs:
       update-issue:
@@ -227,8 +367,133 @@ The YAML frontmatter supports these fields:
         title: true                     # Optional: allow updating issue title
         body: true                      # Optional: allow updating issue body
         max: 3                          # Optional: maximum number of issues to update (default: 1)
+        target-repo: "owner/repo"       # Optional: cross-repository
     ```
     When using `safe-outputs.update-issue`, the main job does **not** need `issues: write` permission since issue updates are handled by a separate job with appropriate permissions.
+  - `update-pull-request:` - Update PR title or body
+    ```yaml
+    safe-outputs:
+      update-pull-request:
+        title: true                     # Optional: enable title updates (default: true)
+        body: true                      # Optional: enable body updates (default: true)
+        max: 1                          # Optional: max updates (default: 1)
+        target: "*"                     # Optional: "triggering" (default), "*", or number
+        target-repo: "owner/repo"       # Optional: cross-repository
+    ```
+    Operation types: `append` (default), `prepend`, `replace`.
+  - `close-pull-request:` - Safe pull request closing with filtering
+    ```yaml
+    safe-outputs:
+      close-pull-request:
+        required-labels: [test, automated]  # Optional: only close PRs with these labels
+        required-title-prefix: "[bot]"      # Optional: only close PRs with this title prefix
+        target: "triggering"                # Optional: "triggering" (default), "*" (any PR), or explicit PR number
+        max: 10                             # Optional: maximum number of PRs to close (default: 1)
+        target-repo: "owner/repo"           # Optional: cross-repository
+    ```
+    When using `safe-outputs.close-pull-request`, the main job does **not** need `pull-requests: write` permission since PR closing is handled by a separate job with appropriate permissions.
+  - `add-labels:` - Safe label addition to issues or PRs
+    ```yaml
+    safe-outputs:
+      add-labels:
+        allowed: [bug, enhancement, documentation]  # Optional: restrict to specific labels
+        max: 3                                      # Optional: maximum number of labels (default: 3)
+        target: "*"                                 # Optional: "triggering" (default), "*" (any issue/PR), or number
+        target-repo: "owner/repo"                   # Optional: cross-repository
+    ```
+    When using `safe-outputs.add-labels`, the main job does **not** need `issues: write` or `pull-requests: write` permission since label addition is handled by a separate job with appropriate permissions.
+  - `add-reviewer:` - Add reviewers to pull requests
+    ```yaml
+    safe-outputs:
+      add-reviewer:
+        reviewers: [user1, copilot]     # Optional: restrict to specific reviewers
+        max: 3                          # Optional: max reviewers (default: 3)
+        target: "*"                     # Optional: "triggering" (default), "*", or number
+        target-repo: "owner/repo"       # Optional: cross-repository
+    ```
+    Use `reviewers: copilot` to assign Copilot PR reviewer bot. Requires PAT as `COPILOT_GITHUB_TOKEN`.
+  - `assign-milestone:` - Assign issues to milestones
+    ```yaml
+    safe-outputs:
+      assign-milestone:
+        allowed: [v1.0, v2.0]           # Optional: restrict to specific milestone titles
+        max: 1                          # Optional: max assignments (default: 1)
+        target-repo: "owner/repo"       # Optional: cross-repository
+    ```
+  - `link-sub-issue:` - Safe sub-issue linking
+    ```yaml
+    safe-outputs:
+      link-sub-issue:
+        parent-required-labels: [epic]     # Optional: parent must have these labels
+        parent-title-prefix: "[Epic]"      # Optional: parent must match this prefix
+        sub-required-labels: [task]        # Optional: sub-issue must have these labels
+        sub-title-prefix: "[Task]"         # Optional: sub-issue must match this prefix
+        max: 1                             # Optional: maximum number of links (default: 1)
+        target-repo: "owner/repo"          # Optional: cross-repository
+    ```
+    Links issues as sub-issues using GitHub's parent-child relationships. Agent output includes `parent_issue_number` and `sub_issue_number`. Use with `create-issue` temporary IDs or existing issue numbers.
+  - `update-project:` - Manage GitHub Projects boards
+    ```yaml
+    safe-outputs:
+      update-project:
+        max: 20                         # Optional: max project operations (default: 10)
+        github-token: ${{ secrets.PROJECTS_PAT }}  # Optional: token with projects:write
+    ```
+    Not supported for cross-repository operations.
+  - `push-to-pull-request-branch:` - Push changes to PR branch
+    ```yaml
+    safe-outputs:
+      push-to-pull-request-branch:
+        target: "*"                     # Optional: "triggering" (default), "*", or number
+        title-prefix: "[bot] "          # Optional: require title prefix
+        labels: [automated]             # Optional: require all labels
+        if-no-changes: "warn"           # Optional: "warn" (default), "error", or "ignore"
+    ```
+    Not supported for cross-repository operations.
+  - `update-release:` - Update GitHub release descriptions
+    ```yaml
+    safe-outputs:
+      update-release:
+        max: 1                          # Optional: max releases (default: 1, max: 10)
+        target-repo: "owner/repo"       # Optional: cross-repository
+        github-token: ${{ secrets.CUSTOM_TOKEN }}  # Optional: custom token
+    ```
+    Operation types: `replace`, `append`, `prepend`.
+  - `create-code-scanning-alert:` - Generate SARIF security advisories
+    ```yaml
+    safe-outputs:
+      create-code-scanning-alert:
+        max: 50                         # Optional: max findings (default: unlimited)
+    ```
+    Severity levels: error, warning, info, note.
+  - `create-agent-task:` - Create GitHub Copilot agent tasks
+    ```yaml
+    safe-outputs:
+      create-agent-task:
+        base: main                      # Optional: base branch (defaults to current)
+        target-repo: "owner/repo"       # Optional: cross-repository
+    ```
+    Requires PAT as `COPILOT_GITHUB_TOKEN`.
+  - `assign-to-agent:` - Assign Copilot agents to issues
+    ```yaml
+    safe-outputs:
+      assign-to-agent:
+        name: "copilot"                 # Optional: agent name
+        target-repo: "owner/repo"       # Optional: cross-repository
+    ```
+    Requires PAT with elevated permissions as `GH_AW_AGENT_TOKEN`.
+  - `noop:` - Log completion message for transparency (auto-enabled)
+    ```yaml
+    safe-outputs:
+      noop:
+    ```
+    The noop safe-output provides a fallback mechanism ensuring workflows never complete silently. When enabled (automatically by default), agents can emit human-visible messages even when no other actions are required (e.g., "Analysis complete - no issues found"). This ensures every workflow run produces visible output.
+  - `missing-tool:` - Report missing tools or functionality (auto-enabled)
+    ```yaml
+    safe-outputs:
+      missing-tool:
+    ```
+    The missing-tool safe-output allows agents to report when they need tools or functionality not currently available. This is automatically enabled by default and helps track feature requests from agents.
 
   **Global Safe Output Configuration:**
   - `github-token:` - Custom GitHub token for all safe output jobs
@@ -674,8 +939,9 @@ imports:
 
 ### Import File Structure
 Import files are in `.github/workflows/shared/` and can contain:
-- Tool configurations (frontmatter only)
-- Text content 
+- Tool configurations
+- Safe-outputs configurations
+- Text content
 - Mixed frontmatter + content
 
 Example import file with tools:
@@ -684,6 +950,9 @@ Example import file with tools:
 tools:
   github:
     allowed: [get_repository, list_commits]
+safe-outputs:
+  create-issue:
+    labels: [automation]
 ---
 
 Additional instructions for the coding agent.
@@ -839,10 +1108,12 @@ on:
   issues:
     types: [opened, reopened]
 permissions:
-  issues: write
-tools:
-  github:
-    allowed: [get_issue, add_issue_comment, update_issue]
+  contents: read
+  actions: read
+safe-outputs:
+  add-labels:
+    allowed: [bug, enhancement, question, documentation]
+  add-comment:
 timeout-minutes: 5
 ---
 
@@ -850,7 +1121,7 @@ timeout-minutes: 5
 
 Analyze issue #${{ github.event.issue.number }} and:
 1. Categorize the issue type
-2. Add appropriate labels  
+2. Add appropriate labels from the allowed list
 3. Post helpful triage comment
 ```
 
@@ -861,8 +1132,8 @@ on:
   schedule:
     - cron: "0 9 * * 1"  # Monday 9AM
 permissions:
-  issues: write
   contents: read
+  actions: read
 tools:
   web-fetch:
   web-search:
@@ -890,7 +1161,8 @@ on:
   command:
     name: helper-bot
 permissions:
-  issues: write
+  contents: read
+  actions: read
 safe-outputs:
   add-comment:
 ---
@@ -953,9 +1225,9 @@ gh aw logs
 gh aw logs weekly-research
 
 # Filter logs by AI engine type
-gh aw logs --engine claude           # Only Claude workflows
-gh aw logs --engine codex            # Only Codex workflows
 gh aw logs --engine copilot          # Only Copilot workflows
+gh aw logs --engine claude           # Only Claude workflows (experimental)
+gh aw logs --engine codex            # Only Codex workflows (experimental)
 
 # Limit number of runs and filter by date (absolute dates)
 gh aw logs -c 10 --start-date 2024-01-01 --end-date 2024-01-31
@@ -1148,7 +1420,7 @@ The workflow frontmatter is validated against JSON Schema during compilation. Co
 
 - **Invalid field names** - Only fields in the schema are allowed
 - **Wrong field types** - e.g., `timeout-minutes` must be integer
-- **Invalid enum values** - e.g., `engine` must be "copilot", "claude", "codex" or "custom"
+- **Invalid enum values** - e.g., `engine` must be "copilot", "custom", or experimental: "claude", "codex"
 - **Missing required fields** - Some triggers require specific configuration
 
 Use `gh aw compile --verbose` to see detailed validation messages, or `gh aw compile <workflow-id> --verbose` to validate a specific workflow.
