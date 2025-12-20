@@ -5,6 +5,11 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 > [!WARNING]
 > GitHub Agentic Workflows are a research demonstrator, and these workflows are demonstrator samples only. They are not intended for production use. Use at your own risk.
 
+> [!TIP]
+> **🚀 Getting Started**: Want to use these workflows in your own repository? Use our [agentics-template](https://github.com/githubnext/agentics-template) to quickly set up GitHub Agentic Workflows with all the necessary configuration.
+> 
+> **[📦 Create a new repository from the template →](https://github.com/githubnext/agentics-template/generate)**
+
 ## 📂 Available Workflows
 
 ### Depth Triage & Analysis Workflows
