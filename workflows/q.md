@@ -5,7 +5,7 @@ description: |
   identifying missing tools, and detecting inefficiencies.
 
 on:
-  command:
+  slash_command:
     name: q
   reaction: rocket
   stop-after: +1mo
