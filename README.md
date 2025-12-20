@@ -31,6 +31,12 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 
 > [!WARNING] The workflows that help with coding tasks should be installed with caution and used only experimentally, then disabled. While the tasks are executed within GitHub Actions and have no access to secrets, they still operate in an environment where outward network requests are allowed. This means untrusted inputs such as issue descriptions, comments, and code could potentially be exploited to direct the models to access external content that in turn could be malicious. Pull requests and other outputs must be reviewed very carefully before merging.
 
+## 📖 Using These Workflows
+
+For information about how to properly reference and update these workflows in your repository, see [WORKFLOWS.md](WORKFLOWS.md).
+
+**Important**: Always reference workflows by branch (`@main`) or tag (`@v1.0.0`), not by commit SHA, to ensure the `gh aw update` command works correctly.
+
 ## 💬 Share Feedback
 
 Is your favorite agentic workflow not here? Do you have an idea for a new one? Clone this repo and explore, create! Tell us about it! You can file bugs and feature requests as issues in this repository and share your thoughts in the `#continuous-ai` channel in the [GitHub Next Discord](https://gh.io/next-discord).
