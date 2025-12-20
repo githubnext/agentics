@@ -7,7 +7,7 @@ description: |
   development flowing.
 
 on:
-  command:
+  slash_command:
     name: pr-fix
   reaction: "eyes"
   stop-after: +1mo
