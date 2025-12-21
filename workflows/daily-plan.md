@@ -6,13 +6,9 @@ description: |
   tasks, dependencies, and suggested new issues (via gh commands but doesn't create them).
   Incorporates maintainer feedback from comments on the plan.
 
-# Run once a day at midnight UTC
 on:
-  schedule:
-        # Run daily at 2am UTC, all days except Saturday and Sunday
-        - cron: "0 2 * * 1-5"
+  schedule: daily
   workflow_dispatch:
-
   stop-after: +1mo # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
 
 permissions: read-all
