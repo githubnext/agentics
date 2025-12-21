@@ -7,9 +7,7 @@ description: |
   moderate emoji usage to boost team morale.
 
 on:
-  schedule:
-    # Every day at 9am UTC, all days except Saturday and Sunday
-    - cron: "0 9 * * 1-5"
+  schedule: daily
   workflow_dispatch:
   # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
   stop-after: +1mo 
