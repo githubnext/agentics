@@ -7,11 +7,9 @@ description: |
   attempts for problematic updates.
 
 on:
-    workflow_dispatch:
-    schedule:
-        # Run daily at 2am UTC, all days except Saturday and Sunday
-        - cron: "0 2 * * 1-5"
-    stop-after: +1mo # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
+  schedule: daily
+  workflow_dispatch:
+  stop-after: +1mo # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
 
 permissions: read-all
 
