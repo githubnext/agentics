@@ -14,6 +14,14 @@ timeout-minutes: 30
 
 network: defaults
 
+permissions:
+  actions: read
+  contents: read
+  discussions: read
+  issues: read
+  pull-requests: read
+  security-events: read
+
 safe-outputs:
   create-discussion:
     title-prefix: "${{ github.workflow }}"
