@@ -1,0 +1,6 @@
+{
+    "recommendations": [
+        "astro-build.astro-vscode",
+        "davidanson.vscode-markdownlint"
+    ]
+}
