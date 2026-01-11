@@ -22,9 +22,7 @@ safe-outputs:
   create-issue:
     title-prefix: "[team-status] "
     labels: [report, daily-status]
-  close-issue:
-    required-title-prefix: "[team-status] "
-    max: 20
+    close-older-issues: true
 ---
 
 # Daily Team Status
@@ -48,4 +46,3 @@ Create an upbeat daily status report for the team as a GitHub issue.
 
 1. Gather recent activity from the repository
 2. Create a new GitHub issue with your findings and insights
-3. Close older status report issues to keep things tidy
