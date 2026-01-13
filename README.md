@@ -5,6 +5,11 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 > [!WARNING]
 > GitHub Agentic Workflows are a research demonstrator, and these workflows are demonstrator samples only. They are not intended for production use. Use at your own risk.
 
+> [!TIP]
+> **🚀 Getting Started**: Want to use these workflows in your own repository? Use our [agentics-template](https://github.com/githubnext/agentics-template) to quickly set up GitHub Agentic Workflows with all the necessary configuration.
+> 
+> **[📦 Create a new repository from the template →](https://github.com/githubnext/agentics-template/generate)**
+
 ## 📂 Available Workflows
 
 ### Depth Triage & Analysis Workflows
@@ -12,11 +17,13 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🔍 Repo Ask](docs/repo-ask.md) - Intelligent research assistant for repository questions and analysis
 - [🔍 Daily Accessibility Review](docs/daily-accessibility-review.md) - Review application accessibility by automatically running and using the application
+- [🔧 Q - Workflow Optimizer](docs/q.md) - Expert system that analyzes and optimizes agentic workflows
 
 ### Research, Status & Planning Workflows
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
 - [👥 Daily Team Status](docs/daily-team-status.md) - Assess repository activity and create status reports
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
+- [📋 Plan Command](docs/plan.md) - Break down issues into actionable sub-tasks with /plan command
 
 ### Coding & Development Workflows
 - [⚡ Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap

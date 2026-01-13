@@ -8,7 +8,7 @@ The [daily team status workflow](../workflows/daily-team-status.md?plain=1) will
 
 ```bash
 # Install the 'gh aw' extension
-gh aw extension install githubnext/agentics
+gh extension install githubnext/gh-aw
 
 # Add the Daily Team Status workflow to your repository
 gh aw add githubnext/agentics/daily-team-status --pr
@@ -44,8 +44,9 @@ This workflow requires no configuration and works out of the box. You can use lo
 
 ## What it creates
 
-- Creates new status report issues
-- Updates existing status issues with new information
+- Creates new daily status report issues with the `[team-status]` prefix
+- Automatically closes older status report issues to prevent clutter
+- Labels new issues with `report` and `daily-status` tags
 - Requires `issues: write` permission
 
 ## Human in the loop

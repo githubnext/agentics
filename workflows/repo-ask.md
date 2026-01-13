@@ -7,7 +7,7 @@ description: |
   queries.
 
 on:
-  command:
+  slash_command:
     name: repo-ask
   reaction: "eyes"
   stop-after: +1mo

@@ -19,7 +19,11 @@ jobs:
         run: gh aw --version
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Compile workflows
+      - name: Compile workflows in .github/workflows
+        run: gh aw compile --verbose
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compile workflows in workflows directory
         run: gh aw compile --workflows-dir workflows --verbose
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

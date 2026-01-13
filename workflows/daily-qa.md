@@ -6,12 +6,9 @@ description: |
   with improvements. Provides continuous quality monitoring throughout development.
 
 on:
-    schedule:
-      # Run daily at 3am UTC, all days except Saturday and Sunday
-      - cron: "0 3 * * 1-5"
-    workflow_dispatch:
-
-    stop-after: +1mo # workflow will no longer trigger after 1 month
+  schedule: daily
+  workflow_dispatch:
+  stop-after: +1mo # workflow will no longer trigger after 1 month
 
 timeout-minutes: 15
 

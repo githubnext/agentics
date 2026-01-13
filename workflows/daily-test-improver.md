@@ -6,11 +6,9 @@ description: |
   reports, identifies gaps, creates comprehensive test suites, and submits draft PRs.
 
 on:
-    workflow_dispatch:
-    schedule:
-        # Run daily at 2am UTC, all days except Saturday and Sunday
-        - cron: "0 2 * * 1-5"
-    stop-after: +1mo # workflow will no longer trigger after 1 month
+  schedule: daily
+  workflow_dispatch:
+  stop-after: +1mo # workflow will no longer trigger after 1 month
 
 timeout-minutes: 30
 

@@ -2,14 +2,12 @@
 description: |
   This workflow created daily team status reporter creating upbeat activity summaries.
   Gathers recent repository activity (issues, PRs, discussions, releases, code changes)
-  and generates engaging GitHub discussions with productivity insights, community
+  and generates engaging GitHub issues with productivity insights, community
   highlights, and project recommendations. Uses a positive, encouraging tone with
   moderate emoji usage to boost team morale.
 
 on:
-  schedule:
-    # Every day at 9am UTC, all days except Saturday and Sunday
-    - cron: "0 9 * * 1-5"
+  schedule: daily
   workflow_dispatch:
   # workflow will no longer trigger after 30 days. Remove this and recompile to run indefinitely
   stop-after: +1mo 
@@ -21,16 +19,15 @@ network: defaults
 tools:
   github:
 safe-outputs:
-  create-discussion:
+  create-issue:
     title-prefix: "[team-status] "
-    category: "announcements"
-imports:
-  - shared/reporting.md
+    labels: [report, daily-status]
+    close-older-issues: true
 ---
 
 # Daily Team Status
 
-Create an upbeat daily status report for the team as a GitHub discussion.
+Create an upbeat daily status report for the team as a GitHub issue.
 
 ## What to include
 
@@ -48,4 +45,4 @@ Create an upbeat daily status report for the team as a GitHub discussion.
 ## Process
 
 1. Gather recent activity from the repository
-2. Create a new GitHub discussion with your findings and insights
+2. Create a new GitHub issue with your findings and insights
