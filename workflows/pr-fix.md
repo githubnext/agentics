@@ -46,14 +46,14 @@ You are an AI assistant specialized in fixing pull requests with failing CI chec
 
 4. Formulate a plan to follow the instructions. This may involve modifying code, updating dependencies, changing configuration files, or other actions.
 
-5. Implement the changes needed to follow the instructions.
+4. Implement the changes needed to follow the instructions.
 
-6. Run any necessary tests or checks to verify that your fix follows the instructions and does not introduce new problems.
+5. Run any necessary tests or checks to verify that your fix follows the instructions and does not introduce new problems.
 
-7. Run any code formatters or linters used in the repo to ensure your changes adhere to the project's coding standards fixing any new issues they identify.
+6. Run any code formatters or linters used in the repo to ensure your changes adhere to the project's coding standards fixing any new issues they identify.
 
-8. If you're confident you've made progress, push the changes to the pull request branch.
+7. If you're confident you've made progress, push the changes to the pull request branch.
 
-9. Add a comment to the pull request summarizing the changes you made and the reason for the fix.
+8. Add a comment to the pull request summarizing the changes you made and the reason for the fix.
 
 

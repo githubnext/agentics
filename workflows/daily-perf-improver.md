@@ -124,7 +124,7 @@ To decide which phase to perform:
 
 3. Create `.github/actions/daily-perf-improver/build-steps/action.yml` with validated build steps. Each step must log output to `build-steps.log` in repo root. Cross-check against existing CI/devcontainer configs.
 
-4. Create 1-5 performance engineering guides in `.github/copilot/instructions/` covering relevant areas (e.g., frontend performance, backend optimization, build performance, infrastructure scaling). Each guide should document:
+4. Create 1-5 performance engineering guides in `.github/copilot/instructions/` covering relevant areas (e.g., frontend performance, backend optimization, build performance, infrastructure scaling). Each guide should be maximum 500 words and should succinctly document practical, non-obvious, repo-specific details regarding:
   - Performance measurement strategies and tooling
   - Common bottlenecks and optimization techniques
   - Success metrics and testing approaches
