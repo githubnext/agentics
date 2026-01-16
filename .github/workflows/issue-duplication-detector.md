@@ -11,7 +11,7 @@ tools:
   github:
     toolsets: [default]
   bash:
-    - "date *"
+    - "*"
 
 safe-outputs:
   add-comment:
