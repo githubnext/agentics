@@ -14,6 +14,8 @@ timeout-minutes: 30
 
 network: defaults
 
+permissions: read-all
+
 safe-outputs:
   create-discussion:
     title-prefix: "${{ github.workflow }}"
