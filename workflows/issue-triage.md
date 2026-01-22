@@ -23,7 +23,6 @@ safe-outputs:
 
 tools:
   web-fetch:
-  web-search:
 
 timeout-minutes: 10
 ---
