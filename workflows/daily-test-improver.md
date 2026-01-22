@@ -31,7 +31,6 @@ safe-outputs:
 
 tools:
   web-fetch:
-  web-search:
   bash:
   github:
     toolsets: [all]

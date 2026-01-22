@@ -27,7 +27,6 @@ safe-outputs:
 tools:
   playwright:
   web-fetch:
-  web-search:
   github:
     toolsets: [all]
 

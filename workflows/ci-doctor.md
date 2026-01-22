@@ -31,7 +31,6 @@ safe-outputs:
 tools:
   cache-memory: true
   web-fetch:
-  web-search:
 
 timeout-minutes: 10
 

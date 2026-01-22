@@ -31,7 +31,6 @@ safe-outputs:
 
 tools:
   agentic-workflows:
-  web-search:
   bash:
   edit:
 
@@ -166,7 +165,6 @@ If logs show missing tool reports:
 Example:
 ```yaml
 tools:
-  web-search:
   bash:
   edit:
 ```

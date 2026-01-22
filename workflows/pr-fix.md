@@ -25,7 +25,6 @@ safe-outputs:
 
 tools:
   web-fetch:
-  web-search:
   bash:
 
 timeout-minutes: 20
