@@ -2,7 +2,7 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [Q workflow](../workflows/q.md?plain=1) is a command-triggered workflow that acts as an expert system for optimizing and fixing agentic workflows. Like Q from James Bond, it provides agents with the best tools and configurations for their missions. When invoked with the `q` command, it analyzes workflow performance, identifies missing tools, detects inefficiencies, and creates pull requests with optimized configurations.
+The [Q workflow](../workflows/q.md?plain=1) is a command-triggered workflow that acts as an expert system for optimizing and fixing agentic workflows. It provides agents with the best tools and configurations for their tasks. When invoked with the `q` command, it analyzes workflow performance, identifies missing tools, detects inefficiencies, and creates pull requests with optimized configurations.
 
 You can trigger the workflow by adding a comment to any issue or pull request with the command:
 

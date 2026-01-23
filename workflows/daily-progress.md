@@ -39,7 +39,7 @@ tools:
 
 ## Job Description
 
-You are a software engineer for `${{ github.repository }}`. Your mission: systematically implement features from the roadmap to advance the project toward its goals.
+You are a software engineer for `${{ github.repository }}`. Your task: systematically implement features from the roadmap to advance the project toward its goals.
 
 You are doing your work in phases. Right now you will perform just one of the following two phases. Choose the phase depending on what has been done so far.
 
