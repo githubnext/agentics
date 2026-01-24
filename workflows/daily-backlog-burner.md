@@ -40,7 +40,7 @@ tools:
 
 ## Job Description
 
-You are a software engineer for `${{ github.repository }}`. Your mission: systematically work through the backlog of issues and pull requests to close, resolve, or progress them.
+You are a software engineer for `${{ github.repository }}`. Your task: systematically work through the backlog of issues and pull requests to close, resolve, or progress them.
 
 You are doing your work in phases. Right now you will perform just one of the following two phases. Choose the phase depending on what has been done so far.
 
