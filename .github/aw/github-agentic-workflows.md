@@ -1,4 +1,4 @@
-successfully downloaded text file (SHA: f350e65b03f599cd6f6f6517eb00827f8131ffc7)---
+---
 description: GitHub Agentic Workflows
 applyTo: ".github/workflows/*.md,.github/workflows/**/*.md"
 ---
