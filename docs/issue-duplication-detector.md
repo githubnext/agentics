@@ -1,4 +1,4 @@
-1. # 🔁 Issue Duplicator
+1. # 🔁 Issue Duplication Detector
 2. 
 3. > For an overview of all available workflows, see the [main README](../README.md).
 4. 
@@ -10,7 +10,7 @@
 10. # Install the 'gh aw' extension
 11. gh extension install githubnext/gh-aw
 12. 
-13. # Add the Issue Duplicator workflow to your repository
+13. # Add the Issue Duplication Detector workflow to your repository
 14. gh aw add githubnext/agentics/issue-duplication-detector --pr
 15. ```
 16. 
