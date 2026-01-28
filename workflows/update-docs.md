@@ -1,6 +1,6 @@
 ---
 description: |
-  THis workflow keeps docs synchronized with code changes.
+  This workflow keeps docs synchronized with code changes.
   Triggered on every push to main, it analyzes diffs to identify changed entities and
   updates corresponding documentation. Maintains consistent style (precise, active voice,
   plain English), ensures single source of truth, and creates draft PRs with documentation
@@ -24,7 +24,6 @@ tools:
   github:
     toolsets: [all]
   web-fetch:
-  web-search:
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: [ ":*" ]
 

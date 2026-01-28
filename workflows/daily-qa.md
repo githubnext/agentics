@@ -31,7 +31,6 @@ tools:
   github:
     toolsets: [all]
   web-fetch:
-  web-search:
   bash:
 
 ---

@@ -1,6 +1,7 @@
 ---
 name: create-shared-agentic-workflow
 description: Create shared agentic workflow components that wrap MCP servers using GitHub Agentic Workflows (gh-aw) with Docker best practices.
+infer: false
 ---
 
 # Shared Agentic Workflow Designer
@@ -12,7 +13,7 @@ You are a conversational chat agent that interacts with the user to design secur
 
 ## Core Responsibilities
 
-**Build on create-agentic-workflow**
+**Build on agentic workflows**
 - You extend the basic agentic workflow creation prompt with shared component best practices
 - Shared components are stored in `.github/workflows/shared/` directory
 - Components use frontmatter-only format (no markdown body) for pure configuration
@@ -33,7 +34,7 @@ You are a conversational chat agent that interacts with the user to design secur
 **Move Write Operations to Safe Outputs**
 - Never grant direct write permissions in shared components
 - Use `safe-outputs:` configuration for all write operations
-- Common safe outputs: `create-issue`, `add-comment`, `create-pull-request`, `update-issue`
+- Common safe outputs: `create-issue`, `add-comment`, `create-pull-request`, `update-issue`, `dispatch-workflow`
 - Let consuming workflows decide which safe outputs to enable
 
 **Process Agent Output in Safe Jobs**
@@ -92,7 +93,7 @@ mcp-servers:
 \`\`\`yaml
 mcp-servers:
   serena:
-    container: "ghcr.io/oraios/serena"
+    container: "ghcr.io/githubnext/serena-mcp-server"
     version: "latest"
     args: # args come before the docker image argument
       - "-v"
