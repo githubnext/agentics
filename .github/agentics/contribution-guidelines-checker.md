@@ -34,10 +34,11 @@ If no CONTRIBUTING.md file is found, use common best practices for contribution 
 ### 2. Analyze the Pull Request
 
 Use GitHub tools to gather information about the PR:
-- Get the PR details (title, body, changed files, commits)
-- Review the file changes to understand what was modified
-- Check if tests are included for code changes
-- Check if documentation is updated when applicable
+- Use `pull_request_read` with method `get` to get PR details (title, body)
+- Use `pull_request_read` with method `get_files` to see what files were changed
+- Use `pull_request_read` with method `get_commits` or `list_commits` to review commit messages
+- Check if tests are included for code changes (look for test file additions/modifications)
+- Check if documentation is updated when applicable (look for docs or README changes)
 
 ### 3. Evaluate Against Guidelines
 
