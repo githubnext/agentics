@@ -12,7 +12,7 @@ permissions: read-all
 
 network: defaults
 
-roles: read
+roles: [read]
 
 tools:
   github:
