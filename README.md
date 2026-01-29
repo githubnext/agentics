@@ -14,6 +14,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github
 
 ### Depth Triage & Analysis Workflows
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
+- [🔁 Issue Duplication Detector](docs/issue-duplication-detector.md) - Detect and comment on duplicate issues automatically
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🔍 Repo Ask](docs/repo-ask.md) - Intelligent research assistant for repository questions and analysis
 - [🔍 Daily Accessibility Review](docs/daily-accessibility-review.md) - Review application accessibility by automatically running and using the application
