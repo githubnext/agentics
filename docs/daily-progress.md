@@ -11,14 +11,12 @@ The [daily progress workflow](../workflows/daily-progress.md?plain=1) is an auto
 gh extension install github/gh-aw
 
 # Add the Daily Progress workflow to your repository
-gh aw add githubnext/agentics/daily-progress --pr
+gh aw add githubnext/agentics/daily-progress
 ```
 
-This creates a pull request to add the workflow to your repository.
+This walks you through adding the workflow to your repository.
 
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+You can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-progress
@@ -26,17 +24,7 @@ gh aw run daily-progress
 
 **Mandatory Checklist**
 
-* [ ] I have read the notes on coding tasks in the [main README](../README.md) and understand the implications.
-
 * [ ] I understand that this workflow will generate and run bash commands in the confine of the GitHub Actions VM, with network access.
-
-* [ ] I am a repository admin or have sufficient permissions, and am happy for this workflow to create issues, pull requests, and push new branches to the repository.
-
-* [ ] I have enabled "Allow GitHub Actions to create and approve pull requests" in the repository settings under "Actions > General"
-
-* [ ] I have considered enabling "Always suggest updating pull request branches" in the repository settings
-
-* [ ] If in a fork, I have enabled "GitHub Actions" and "GitHub Issues" in the fork repository settings
 
 * [ ] I will review all pull requests and issues created by this workflow very carefully, and carefully monitor the repository.
 

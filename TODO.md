@@ -9,7 +9,7 @@ The agentic workflows have been updated to use GitHub Discussions instead of Iss
 - **Description**: Important updates and status reports for the project
 - **Used by workflows**:
   - daily-plan.md
-  - daily-team-status.md
+  - daily-repo-status.md
   - daily-dependency-updates.md
 
 ### 2. Ideas

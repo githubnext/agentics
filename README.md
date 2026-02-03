@@ -15,7 +15,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ### Research, Status & Planning Workflows
 
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
-- [👥 Daily Team Status](docs/daily-team-status.md) - Assess repository activity and create status reports
+- [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
 - [📋 Plan Command](docs/plan.md) - Break down issues into actionable sub-tasks with /plan command
 

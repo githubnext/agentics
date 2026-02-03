@@ -11,10 +11,10 @@ The [daily dependency updater workflow](../workflows/daily-dependency-updates.md
 gh extension install github/gh-aw
 
 # Add the Daily Dependency Updater workflow to your repository
-gh aw add githubnext/agentics/daily-dependency-updates --pr
+gh aw add githubnext/agentics/daily-dependency-updates
 ```
 
-This creates a pull request to add the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+This walks you through adding the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-dependency-updates

@@ -23,12 +23,10 @@ or by writing a comment with a specific question:
 gh extension install github/gh-aw
 
 # Add the Repo Ask workflow to your repository
-gh aw add githubnext/agentics/repo-ask --pr
+gh aw add githubnext/agentics/repo-ask
 ```
 
-This creates a pull request to add the workflow to your repository.
-
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+This walks you through adding the workflow to your repository.
 
 You can't start a run of this workflow directly as it is triggered in the context of an issue or pull request comment.
 
@@ -38,19 +36,9 @@ To trigger the workflow on a specific issue or pull request, add a comment with 
 /repo-ask [your question here]
 ```
 
-**Mandatory Checklist**
-
-* [ ] I have read the notes on coding tasks in the [main README](../README.md) and understand the implications.
-
-* [ ] I understand that this workflow will generate and run bash commands in the confine of the GitHub Actions VM, with network access.
-
-* [ ] I am a repository admin, maintainer, or have write permissions to trigger this workflow.
-
-* [ ] If in a fork, I have enabled "GitHub Actions" and "GitHub Issues" in the fork repository settings.
-
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can customize research behavior, response format, and allowed tools. Local configuration can be done in `.github/workflows/agentics/repo-ask.config.md`.
+This workflow requires no configuration and works out of the box. You can customize research behavior, response format, and allowed tools if needed by editing the workflow file.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

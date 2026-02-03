@@ -11,14 +11,12 @@ The [weekly research workflow](../workflows/weekly-research.md?plain=1) will run
 gh extension install github/gh-aw
 
 # Add the Weekly Research workflow to your repository
-gh aw add githubnext/agentics/weekly-research --pr
+gh aw add githubnext/agentics/weekly-research
 ```
 
-This creates a pull request to add the workflow to your repository. 
+This walks you through adding the workflow to your repository. 
 
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+You can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run weekly-research
@@ -30,7 +28,7 @@ gh aw run weekly-research
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuration to customize output format, research topics, report length, focus areas or to adjust frequency or timing. Local configuration can be done in `.github/workflows/agentics/daily-plan.config.md`.
+This workflow requires no configuration and works out of the box. You customize output format, research topics, report length, focus areas or to adjust frequency or timing by editing the workflow file.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
