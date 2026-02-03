@@ -11,22 +11,12 @@ The [daily accessibility review workflow](../workflows/daily-accessibility-revie
 gh extension install github/gh-aw
 
 # Add the Daily Accessibility Review workflow to your repository
-gh aw add githubnext/agentics/daily-accessibility-review --pr
+gh aw add githubnext/agentics/daily-accessibility-review
 ```
 
-This creates an issue in your repository recording accessibility problems found.
-
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
-
-```bash
-gh aw run daily-accessibility-review
-```
+This walks you through adding the workflow to your repository.
 
 **Mandatory Checklist**
-
-* [ ] I understand that, by default, the agentic portion of this workflow will generate and run bash commands in the confine of the GitHub Actions VM, with network access.
 
 * [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
 

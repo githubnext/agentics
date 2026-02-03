@@ -23,36 +23,28 @@ or by writing a comment with a specific request:
 gh extension install github/gh-aw
 
 # Add the Q workflow to your repository
-gh aw add githubnext/agentics/q --pr
+gh aw add githubnext/agentics/q
 ```
 
-This creates a pull request to add the workflow to your repository.
-
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+This walks you through adding the workflow to your repository.
 
 You can't start a run of this workflow directly as it is triggered in the context of an issue or pull request comment.
 
 To trigger the workflow on a specific issue or pull request, add a comment with the command:
 
-```
+```text
 /q [your optimization request here]
 ```
 
 **Mandatory Checklist**
 
-* [ ] I have read the notes on coding tasks in the [main README](../README.md) and understand the implications.
-
 * [ ] I understand that this workflow will analyze workflows and create pull requests with optimizations.
-
-* [ ] I am a repository admin, maintainer, or have write permissions to trigger this workflow.
-
-* [ ] If in a fork, I have enabled "GitHub Actions" and "GitHub Issues" in the fork repository settings.
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can customize optimization behavior and analysis scope if needed.
+This workflow requires no configuration and works out of the box. You can customize optimization behavior and analysis scope if needed by editing the workflow file.
 
-After editing the workflow file, recompile and commit all changes to the default branch.
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
 

@@ -11,14 +11,12 @@ The [daily Adhoc QA workflow](../workflows/daily-qa.md?plain=1) will perform adh
 gh extension install github/gh-aw
 
 # Add the Daily QA workflow to your repository
-gh aw add githubnext/agentics/daily-qa --pr
+gh aw add githubnext/agentics/daily-qa
 ```
 
-This creates a pull request to add the workflow to your repository.
+This walks you through adding the workflow to your repository.
 
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+You can start a run of this workflow immediately by running:
 
 ```bash
 gh aw run daily-qa

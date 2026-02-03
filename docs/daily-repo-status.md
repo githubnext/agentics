@@ -1,8 +1,8 @@
-# 👥 Daily Team Status
+# 👥 Daily Repo Status
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [daily team status workflow](../workflows/daily-team-status.md?plain=1) will assess activity in the repository and create a status report issue. You can edit the workflow to adjust the topics and texture of the report. 
+The [daily repo status workflow](../workflows/daily-repo-status.md?plain=1) will assess activity in the repository and create a status report issue. You can edit the workflow to adjust the topics and texture of the report. 
 
 ## Installation
 
@@ -10,29 +10,21 @@ The [daily team status workflow](../workflows/daily-team-status.md?plain=1) will
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Daily Team Status workflow to your repository
-gh aw add githubnext/agentics/daily-team-status --pr
+# Add the Daily Repo Status workflow to your repository
+gh aw add githubnext/agentics/daily-repo-status
 ```
 
-This creates a pull request to add the workflow to your repository.
+This walks you through adding the workflow to your repository.
 
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
+You can start a run of this workflow immediately by running:
 
 ```bash
-gh aw run daily-team-status
+gh aw run daily-repo-status
 ```
-
-**Mandatory Checklist**
-
-* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuration to customize triage criteria, labeling logic, customize issue categorization, modify automated responses. Local configuration can be done in `.github/workflows/agentics/daily-team-status.config.md`.
-
-2. Add MCPs to integrate with project management tools
+This workflow requires no configuration and works out of the box. You can use edit the workflow to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.
 
 ## What it reads from GitHub
 

@@ -11,18 +11,10 @@ The [daily plan workflow](../workflows/daily-plan.md?plain=1) will run daily to 
 gh extension install github/gh-aw
 
 # Add the Daily Plan workflow to your repository
-gh aw add githubnext/agentics/daily-plan --pr
+gh aw add githubnext/agentics/daily-plan
 ```
 
-This creates a pull request to add the workflow to your repository.
-
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
-
-```bash
-gh aw run daily-plan
-```
+This walks you through adding the workflow to your repository and running the workflow for the first time.
 
 **Mandatory Checklist**
 

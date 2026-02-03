@@ -11,14 +11,12 @@ The [CI Doctor workflow](../workflows/ci-doctor.md?plain=1) monitors your GitHub
 gh extension install github/gh-aw
 
 # Add the CI Doctor workflow to your repository
-gh aw add githubnext/agentics/ci-doctor --pr
+gh aw add githubnext/agentics/ci-doctor
 ```
 
-This creates a pull request to add the workflow to your repository.
+This walks you through adding the workflow to your repository.
 
-You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-After merging the PR, the workflow will automatically trigger when monitored CI workflows fail. You cannot start this workflow manually as it responds to workflow failure events.
+After adding, the workflow will automatically trigger when monitored CI workflows fail. You cannot start this workflow manually as it responds to workflow failure events.
 
 **Mandatory Checklist**
 
