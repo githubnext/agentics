@@ -17,10 +17,10 @@
 #
 # To update this file, edit the corresponding .md file and run:
 #   gh aw compile
-# For more information: https://github.com/githubnext/gh-aw/blob/main/.github/aw/github-agentic-workflows.md
+# For more information: https://github.com/github/gh-aw/blob/main/.github/aw/github-agentic-workflows.md
 #
 
-name: "Daily Workflow Sync from githubnext/gh-aw"
+name: "Daily Workflow Sync from github/gh-aw"
 "on":
   schedule:
   - cron: "0 13 * * 1-5"
@@ -31,7 +31,7 @@ permissions: {}
 concurrency:
   group: "gh-aw-${{ github.workflow }}"
 
-run-name: "Daily Workflow Sync from githubnext/gh-aw"
+run-name: "Daily Workflow Sync from github/gh-aw"
 
 jobs:
   activation:
@@ -43,7 +43,7 @@ jobs:
       comment_repo: ""
     steps:
       - name: Setup Scripts
-        uses: githubnext/gh-aw/actions/setup@v0.37.20
+        uses: github/gh-aw/actions/setup@v0.37.20
         with:
           destination: /opt/gh-aw/actions
       - name: Check workflow file timestamps
@@ -80,7 +80,7 @@ jobs:
       secret_verification_result: ${{ steps.validate-secret.outputs.verification_result }}
     steps:
       - name: Setup Scripts
-        uses: githubnext/gh-aw/actions/setup@v0.37.20
+        uses: github/gh-aw/actions/setup@v0.37.20
         with:
           destination: /opt/gh-aw/actions
       - name: Create gh-aw temp directory
@@ -92,7 +92,7 @@ jobs:
       - env:
           GH_TOKEN: ${{ github.token }}
         name: Install gh-aw extension
-        run: gh extension install githubnext/gh-aw || gh extension upgrade githubnext/gh-aw
+        run: gh extension install github/gh-aw || gh extension upgrade github/gh-aw
 
       - name: Configure Git credentials
         env:
@@ -120,7 +120,7 @@ jobs:
             await main();
       - name: Validate COPILOT_GITHUB_TOKEN secret
         id: validate-secret
-        run: /opt/gh-aw/actions/validate_multi_secret.sh COPILOT_GITHUB_TOKEN 'GitHub Copilot CLI' https://githubnext.github.io/gh-aw/reference/engines/#github-copilot-default
+        run: /opt/gh-aw/actions/validate_multi_secret.sh COPILOT_GITHUB_TOKEN 'GitHub Copilot CLI' https://github.github.com/gh-aw/reference/engines/#github-copilot-default
         env:
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
       - name: Install GitHub Copilot CLI
@@ -138,7 +138,7 @@ jobs:
             const determineAutomaticLockdown = require('/opt/gh-aw/actions/determine_automatic_lockdown.cjs');
             await determineAutomaticLockdown(github, context, core);
       - name: Download container images
-        run: bash /opt/gh-aw/actions/download_docker_images.sh ghcr.io/github/github-mcp-server:v0.29.0 ghcr.io/githubnext/gh-aw-mcpg:v0.0.78 node:lts-alpine
+        run: bash /opt/gh-aw/actions/download_docker_images.sh ghcr.io/github/github-mcp-server:v0.29.0 ghcr.io/github/gh-aw-mcpg:v0.0.78 node:lts-alpine
       - name: Write Safe Outputs Config
         run: |
           mkdir -p /opt/gh-aw/safeoutputs
@@ -461,7 +461,7 @@ jobs:
           # Register API key as secret to mask it from logs
           echo "::add-mask::${MCP_GATEWAY_API_KEY}"
           export GH_AW_ENGINE="copilot"
-          export MCP_GATEWAY_DOCKER_COMMAND='docker run -i --rm --network host -v /var/run/docker.sock:/var/run/docker.sock -e MCP_GATEWAY_PORT -e MCP_GATEWAY_DOMAIN -e MCP_GATEWAY_API_KEY -e DEBUG="*" -e MCP_GATEWAY_LOG_DIR -e GH_AW_MCP_LOG_DIR -e GH_AW_SAFE_OUTPUTS -e GH_AW_SAFE_OUTPUTS_CONFIG_PATH -e GH_AW_SAFE_OUTPUTS_TOOLS_PATH -e GH_AW_ASSETS_BRANCH -e GH_AW_ASSETS_MAX_SIZE_KB -e GH_AW_ASSETS_ALLOWED_EXTS -e DEFAULT_BRANCH -e GITHUB_MCP_SERVER_TOKEN -e GITHUB_MCP_LOCKDOWN -e GITHUB_REPOSITORY -e GITHUB_SERVER_URL -e GITHUB_SHA -e GITHUB_WORKSPACE -e GITHUB_TOKEN -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ATTEMPT -e GITHUB_JOB -e GITHUB_ACTION -e GITHUB_EVENT_NAME -e GITHUB_EVENT_PATH -e GITHUB_ACTOR -e GITHUB_ACTOR_ID -e GITHUB_TRIGGERING_ACTOR -e GITHUB_WORKFLOW -e GITHUB_WORKFLOW_REF -e GITHUB_WORKFLOW_SHA -e GITHUB_REF -e GITHUB_REF_NAME -e GITHUB_REF_TYPE -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GH_AW_SAFE_OUTPUTS_PORT -e GH_AW_SAFE_OUTPUTS_API_KEY -v /opt:/opt:ro -v /tmp:/tmp:rw -v '"${GITHUB_WORKSPACE}"':'"${GITHUB_WORKSPACE}"':rw ghcr.io/githubnext/gh-aw-mcpg:v0.0.78'
+          export MCP_GATEWAY_DOCKER_COMMAND='docker run -i --rm --network host -v /var/run/docker.sock:/var/run/docker.sock -e MCP_GATEWAY_PORT -e MCP_GATEWAY_DOMAIN -e MCP_GATEWAY_API_KEY -e DEBUG="*" -e MCP_GATEWAY_LOG_DIR -e GH_AW_MCP_LOG_DIR -e GH_AW_SAFE_OUTPUTS -e GH_AW_SAFE_OUTPUTS_CONFIG_PATH -e GH_AW_SAFE_OUTPUTS_TOOLS_PATH -e GH_AW_ASSETS_BRANCH -e GH_AW_ASSETS_MAX_SIZE_KB -e GH_AW_ASSETS_ALLOWED_EXTS -e DEFAULT_BRANCH -e GITHUB_MCP_SERVER_TOKEN -e GITHUB_MCP_LOCKDOWN -e GITHUB_REPOSITORY -e GITHUB_SERVER_URL -e GITHUB_SHA -e GITHUB_WORKSPACE -e GITHUB_TOKEN -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RUN_ATTEMPT -e GITHUB_JOB -e GITHUB_ACTION -e GITHUB_EVENT_NAME -e GITHUB_EVENT_PATH -e GITHUB_ACTOR -e GITHUB_ACTOR_ID -e GITHUB_TRIGGERING_ACTOR -e GITHUB_WORKFLOW -e GITHUB_WORKFLOW_REF -e GITHUB_WORKFLOW_SHA -e GITHUB_REF -e GITHUB_REF_NAME -e GITHUB_REF_TYPE -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GH_AW_SAFE_OUTPUTS_PORT -e GH_AW_SAFE_OUTPUTS_API_KEY -v /opt:/opt:ro -v /tmp:/tmp:rw -v '"${GITHUB_WORKSPACE}"':'"${GITHUB_WORKSPACE}"':rw ghcr.io/github/gh-aw-mcpg:v0.0.78'
           
           mkdir -p /home/runner/.copilot
           cat << MCPCONFIG_EOF | bash /opt/gh-aw/actions/start_mcp_gateway.sh
@@ -506,7 +506,7 @@ jobs:
               version: "",
               agent_version: "0.0.394",
               cli_version: "v0.37.20",
-              workflow_name: "Daily Workflow Sync from githubnext/gh-aw",
+              workflow_name: "Daily Workflow Sync from github/gh-aw",
               experimental: false,
               supports_tools_allowlist: true,
               supports_http_transport: true,
@@ -609,9 +609,9 @@ jobs:
           </system>
           PROMPT_EOF
           cat << 'PROMPT_EOF' >> "$GH_AW_PROMPT"
-          # Daily Workflow Sync from githubnext/gh-aw
+          # Daily Workflow Sync from github/gh-aw
           
-          You are an automated workflow synchronization agent. Your job is to keep the workflows in this repository (`__GH_AW_GITHUB_REPOSITORY__`) in sync with the latest workflows from the `githubnext/gh-aw` repository.
+          You are an automated workflow synchronization agent. Your job is to keep the workflows in this repository (`__GH_AW_GITHUB_REPOSITORY__`) in sync with the latest workflows from the `github/gh-aw` repository.
           
           ## Your Mission
           
@@ -624,10 +624,10 @@ jobs:
           - If found, note the PR number for later use
           - This determines whether to use `create-pull-request` or `push-to-pull-request-branch`
           
-          ### 2. Fetch workflows from githubnext/gh-aw
+          ### 2. Fetch workflows from github/gh-aw
           
           Get the list of workflow files from the upstream repository:
-          - Use GitHub tool to get contents of `githubnext/gh-aw` at path `.github/workflows/`
+          - Use GitHub tool to get contents of `github/gh-aw` at path `.github/workflows/`
           - Filter for files ending in `.md` (these are agentic workflow source files)
           - Exclude any `.lock.yml` files (these are generated artifacts)
           - Also check for the `.github/workflows/shared/` directory and list any shared workflows
@@ -644,7 +644,7 @@ jobs:
           ### 4. Fetch and write workflow content
           
           For each workflow file you want to sync:
-          - Use GitHub tool `get_file_contents` to fetch from `githubnext/gh-aw` repository
+          - Use GitHub tool `get_file_contents` to fetch from `github/gh-aw` repository
           - Path: `.github/workflows/<workflow-name>.md`
           - Parse the frontmatter to check for any `imports:` field
           - If imports are present, fetch those shared workflow files too from `.github/workflows/shared/`
@@ -662,21 +662,21 @@ jobs:
           - Use the `output.create-pull-request` safe output
           - Provide:
             - **title**: "Sync workflows from gh-aw"
-            - **body**: A description of what workflows were added/updated, with links to githubnext/gh-aw
+            - **body**: A description of what workflows were added/updated, with links to github/gh-aw
             - Note that lock files are excluded and will be generated on merge
           - The built-in safe output will automatically create the PR with your file changes
           
           **If an existing PR was found:**
           - Use the `output.push-to-pull-request-branch` safe output
           - This will push your file changes to the existing PR branch
-          - Then use `output.add-comment` to add a comment like: "🔄 Updated with latest changes from githubnext/gh-aw"
+          - Then use `output.add-comment` to add a comment like: "🔄 Updated with latest changes from github/gh-aw"
           
           ## Important Guidelines
           
           - **Use the `edit` tool for all file changes** - don't try to write files manually
           - **DO NOT include .lock.yml files** - only sync .md source files
           - Focus on workflow source files (`.md` files only)
-          - When fetching workflows, get them from `githubnext/gh-aw` repository's `.github/workflows/` directory
+          - When fetching workflows, get them from `github/gh-aw` repository's `.github/workflows/` directory
           - When saving locally, save to `workflows/` directory (without the `.github/` prefix)
           - Be selective - only sync workflows that are relevant for this repo
           - Include shared workflow dependencies when needed
@@ -916,7 +916,7 @@ jobs:
       total_count: ${{ steps.missing_tool.outputs.total_count }}
     steps:
       - name: Setup Scripts
-        uses: githubnext/gh-aw/actions/setup@v0.37.20
+        uses: github/gh-aw/actions/setup@v0.37.20
         with:
           destination: /opt/gh-aw/actions
       - name: Debug job inputs
@@ -947,7 +947,7 @@ jobs:
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
           GH_AW_NOOP_MAX: 1
-          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from githubnext/gh-aw"
+          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from github/gh-aw"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
@@ -960,7 +960,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from githubnext/gh-aw"
+          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from github/gh-aw"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
@@ -973,7 +973,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from githubnext/gh-aw"
+          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from github/gh-aw"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
           GH_AW_SECRET_VERIFICATION_RESULT: ${{ needs.agent.outputs.secret_verification_result }}
@@ -990,7 +990,7 @@ jobs:
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
           CREATE_PR_ERROR_MESSAGE: ${{ needs.create_pull_request.outputs.error_message }}
-          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from githubnext/gh-aw"
+          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from github/gh-aw"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
@@ -1007,7 +1007,7 @@ jobs:
           GH_AW_COMMENT_ID: ${{ needs.activation.outputs.comment_id }}
           GH_AW_COMMENT_REPO: ${{ needs.activation.outputs.comment_repo }}
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from githubnext/gh-aw"
+          GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from github/gh-aw"
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
           GH_AW_DETECTION_CONCLUSION: ${{ needs.detection.result }}
         with:
@@ -1030,7 +1030,7 @@ jobs:
       success: ${{ steps.parse_results.outputs.success }}
     steps:
       - name: Setup Scripts
-        uses: githubnext/gh-aw/actions/setup@v0.37.20
+        uses: github/gh-aw/actions/setup@v0.37.20
         with:
           destination: /opt/gh-aw/actions
       - name: Download agent artifacts
@@ -1053,7 +1053,7 @@ jobs:
       - name: Setup threat detection
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
         env:
-          WORKFLOW_NAME: "Daily Workflow Sync from githubnext/gh-aw"
+          WORKFLOW_NAME: "Daily Workflow Sync from github/gh-aw"
           WORKFLOW_DESCRIPTION: "No description provided"
           HAS_PATCH: ${{ needs.agent.outputs.has_patch }}
         with:
@@ -1110,7 +1110,7 @@ jobs:
           touch /tmp/gh-aw/threat-detection/detection.log
       - name: Validate COPILOT_GITHUB_TOKEN secret
         id: validate-secret
-        run: /opt/gh-aw/actions/validate_multi_secret.sh COPILOT_GITHUB_TOKEN 'GitHub Copilot CLI' https://githubnext.github.io/gh-aw/reference/engines/#github-copilot-default
+        run: /opt/gh-aw/actions/validate_multi_secret.sh COPILOT_GITHUB_TOKEN 'GitHub Copilot CLI' https://github.github.com/gh-aw/reference/engines/#github-copilot-default
         env:
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
       - name: Install GitHub Copilot CLI
@@ -1177,13 +1177,13 @@ jobs:
     env:
       GH_AW_ENGINE_ID: "copilot"
       GH_AW_WORKFLOW_ID: "daily-workflow-sync"
-      GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from githubnext/gh-aw"
+      GH_AW_WORKFLOW_NAME: "Daily Workflow Sync from github/gh-aw"
     outputs:
       process_safe_outputs_processed_count: ${{ steps.process_safe_outputs.outputs.processed_count }}
       process_safe_outputs_temporary_id_map: ${{ steps.process_safe_outputs.outputs.temporary_id_map }}
     steps:
       - name: Setup Scripts
-        uses: githubnext/gh-aw/actions/setup@v0.37.20
+        uses: github/gh-aw/actions/setup@v0.37.20
         with:
           destination: /opt/gh-aw/actions
       - name: Download agent output artifact

@@ -8,7 +8,7 @@ The [daily test coverage improver workflow](../workflows/daily-test-improver.md?
 
 ```bash
 # Install the 'gh aw' extension
-gh extension install githubnext/gh-aw
+gh extension install github/gh-aw
 
 # Add the Daily Test Coverage Improver workflow to your repository
 gh aw add githubnext/agentics/daily-test-improver --pr
@@ -16,7 +16,7 @@ gh aw add githubnext/agentics/daily-test-improver --pr
 
 This creates a pull request to add the workflow to your repository.
 
-You must also add [choose a coding agent](https://githubnext.github.io/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
+You must also add [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
 
 After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
 

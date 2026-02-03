@@ -1647,13 +1647,13 @@ Use `gh aw compile --verbose` to see detailed validation messages, or `gh aw com
 ### Installation
 
 ```bash
-gh extension install githubnext/gh-aw
+gh extension install github/gh-aw
 ```
 
 If there are authentication issues, use the standalone installer:
 
 ```bash
-curl -O https://raw.githubusercontent.com/githubnext/gh-aw/main/install-gh-aw.sh
+curl -O https://raw.githubusercontent.com/github/gh-aw/main/install-gh-aw.sh
 chmod +x install-gh-aw.sh
 ./install-gh-aw.sh
 ```
@@ -1682,4 +1682,4 @@ gh aw logs <workflow-id>
 
 ### Documentation
 
-For complete CLI documentation, see: https://githubnext.github.io/gh-aw/setup/cli/
+For complete CLI documentation, see: https://github.github.com/gh-aw/setup/cli/
