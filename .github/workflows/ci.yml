@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install gh-aw
-        run: gh extension install githubnext/gh-aw
+        run: gh extension install github/gh-aw
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Verify gh-aw installation

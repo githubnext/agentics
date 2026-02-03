@@ -1,6 +1,6 @@
 # ✨ The Agentics
 
-A sample family of reusable [GitHub Agentic Workflows](https://githubnext.github.io/gh-aw/).
+A sample family of reusable [GitHub Agentic Workflows](https://github.github.com/gh-aw/).
 
 > [!WARNING]
 > GitHub Agentic Workflows are a research demonstrator, and these workflows are demonstrator samples only. They are not intended for production use. Use at your own risk.

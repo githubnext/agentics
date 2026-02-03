@@ -17,7 +17,7 @@
 #
 # To regenerate this workflow, run:
 #   gh aw compile
-# For more information: https://github.com/githubnext/gh-aw/blob/main/.github/aw/github-agentic-workflows.md
+# For more information: https://github.com/github/gh-aw/blob/main/.github/aw/github-agentic-workflows.md
 #
 # Alternative regeneration methods:
 # make recompile
@@ -45,7 +45,7 @@ jobs:
       discussions: write
     steps:
       - name: Setup Scripts
-        uses: githubnext/gh-aw/actions/setup@v0.37.0
+        uses: github/gh-aw/actions/setup@v0.37.0
         with:
           destination: /opt/gh-aw/actions
 
@@ -64,7 +64,7 @@ jobs:
       issues: write
     steps:
       - name: Setup Scripts
-        uses: githubnext/gh-aw/actions/setup@v0.37.0
+        uses: github/gh-aw/actions/setup@v0.37.0
         with:
           destination: /opt/gh-aw/actions
 

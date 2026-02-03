@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       workflow_name:
-        description: "Name of the workflow to migrate from githubnext/gh-aw (e.g., 'triage-issues' or 'triage-issues.md')"
+        description: "Name of the workflow to migrate from github/gh-aw (e.g., 'triage-issues' or 'triage-issues.md')"
         required: true
         type: string
 permissions: read-all
@@ -14,7 +14,7 @@ network:
     - raw.githubusercontent.com
 steps:
   - name: Install gh-aw extension
-    run: gh extension install githubnext/gh-aw
+    run: gh extension install github/gh-aw
     env:
       GH_TOKEN: ${{ github.token }}
 tools:
@@ -29,9 +29,9 @@ safe-outputs:
   create-pull-request:
 ---
 
-# Migrate Agentic Workflow from githubnext/gh-aw
+# Migrate Agentic Workflow from github/gh-aw
 
-You are tasked with migrating an agentic workflow from the **githubnext/gh-aw** repository to this repository.
+You are tasked with migrating an agentic workflow from the **github/gh-aw** repository to this repository.
 
 ## Workflow to Migrate
 
@@ -44,8 +44,8 @@ Target workflow: **${{ inputs.workflow_name }}**
    - Otherwise, append `.md` to the workflow name
    - Store the normalized name (e.g., `triage-issues.md`)
 
-2. **Fetch the workflow from githubnext/gh-aw**:
-   - Use the GitHub tool to fetch the content from `githubnext/gh-aw` repository
+2. **Fetch the workflow from github/gh-aw**:
+   - Use the GitHub tool to fetch the content from `github/gh-aw` repository
    - Path: `.github/workflows/<workflow_name>`
    - If the workflow is not found, try searching in subdirectories
 
@@ -55,7 +55,7 @@ Target workflow: **${{ inputs.workflow_name }}**
 
 4. **Fetch all shared workflows**:
    - For each shared workflow identified in the imports:
-     - Fetch it from `githubnext/gh-aw` at path `.github/workflows/shared/<shared-workflow-name>`
+     - Fetch it from `github/gh-aw` at path `.github/workflows/shared/<shared-workflow-name>`
      - Save it to `.github/workflows/shared/<shared-workflow-name>` in this repository
 
 5. **Save the main workflow**:
@@ -64,7 +64,7 @@ Target workflow: **${{ inputs.workflow_name }}**
 
 6. **Update the source field**:
    - If the workflow has a `source:` field in its frontmatter, update it to reflect the migration
-   - Add or update it to: `source: githubnext/gh-aw/.github/workflows/<workflow_name>@main`
+   - Add or update it to: `source: github/gh-aw/.github/workflows/<workflow_name>@main`
 
 7. **Compile the workflow**:
    - **IMPORTANT**: Use the globally installed `gh aw` CLI (via `which gh`), NOT any locally built version from the source repository
@@ -87,7 +87,7 @@ Target workflow: **${{ inputs.workflow_name }}**
 
 ## Error Handling
 
-If the workflow is not found in githubnext/gh-aw:
+If the workflow is not found in github/gh-aw:
 - Check if the user provided the correct name
-- Suggest using `gh aw list` or checking the githubnext/gh-aw repository directly
+- Suggest using `gh aw list` or checking the github/gh-aw repository directly
 - List available workflows if possible

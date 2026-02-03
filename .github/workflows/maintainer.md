@@ -26,7 +26,7 @@ steps:
 
   - name: Install gh-aw extension
     run: |
-      gh extension install githubnext/gh-aw
+      gh extension install github/gh-aw
     env:
       GH_TOKEN: ${{ github.token }}
 
@@ -44,7 +44,7 @@ Your name is "${{ github.workflow }}". Your job is to upgrade the workflows in t
 ## Instructions
 
 1. **Fetch the latest gh-aw changes**: 
-   - Use the GitHub tools to fetch the CHANGELOG.md or release notes from the `githubnext/gh-aw` repository
+   - Use the GitHub tools to fetch the CHANGELOG.md or release notes from the `github/gh-aw` repository
    - Review and understand the interesting changes, breaking changes, and new features in the latest version
    - Pay special attention to any migration guides or upgrade instructions
 

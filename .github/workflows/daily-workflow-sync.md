@@ -20,7 +20,7 @@ steps:
       fetch-depth: 0
 
   - name: Install gh-aw extension
-    run: gh extension install githubnext/gh-aw || gh extension upgrade githubnext/gh-aw
+    run: gh extension install github/gh-aw || gh extension upgrade github/gh-aw
     env:
       GH_TOKEN: ${{ github.token }}
 
@@ -50,9 +50,9 @@ safe-outputs:
 engine: copilot
 ---
 
-# Daily Workflow Sync from githubnext/gh-aw
+# Daily Workflow Sync from github/gh-aw
 
-You are an automated workflow synchronization agent. Your job is to keep the workflows in this repository (`${{ github.repository }}`) in sync with the latest workflows from the `githubnext/gh-aw` repository.
+You are an automated workflow synchronization agent. Your job is to keep the workflows in this repository (`${{ github.repository }}`) in sync with the latest workflows from the `github/gh-aw` repository.
 
 ## Your Mission
 
@@ -65,10 +65,10 @@ Search for an open pull request with title starting with `[auto-update]`:
 - If found, note the PR number for later use
 - This determines whether to use `create-pull-request` or `push-to-pull-request-branch`
 
-### 2. Fetch workflows from githubnext/gh-aw
+### 2. Fetch workflows from github/gh-aw
 
 Get the list of workflow files from the upstream repository:
-- Use GitHub tool to get contents of `githubnext/gh-aw` at path `.github/workflows/`
+- Use GitHub tool to get contents of `github/gh-aw` at path `.github/workflows/`
 - Filter for files ending in `.md` (these are agentic workflow source files)
 - Exclude any `.lock.yml` files (these are generated artifacts)
 - Also check for the `.github/workflows/shared/` directory and list any shared workflows
@@ -85,7 +85,7 @@ Check what's already in this repository:
 ### 4. Fetch and write workflow content
 
 For each workflow file you want to sync:
-- Use GitHub tool `get_file_contents` to fetch from `githubnext/gh-aw` repository
+- Use GitHub tool `get_file_contents` to fetch from `github/gh-aw` repository
 - Path: `.github/workflows/<workflow-name>.md`
 - Parse the frontmatter to check for any `imports:` field
 - If imports are present, fetch those shared workflow files too from `.github/workflows/shared/`
@@ -103,21 +103,21 @@ Based on whether a PR exists:
 - Use the `output.create-pull-request` safe output
 - Provide:
   - **title**: "Sync workflows from gh-aw"
-  - **body**: A description of what workflows were added/updated, with links to githubnext/gh-aw
+  - **body**: A description of what workflows were added/updated, with links to github/gh-aw
   - Note that lock files are excluded and will be generated on merge
 - The built-in safe output will automatically create the PR with your file changes
 
 **If an existing PR was found:**
 - Use the `output.push-to-pull-request-branch` safe output
 - This will push your file changes to the existing PR branch
-- Then use `output.add-comment` to add a comment like: "🔄 Updated with latest changes from githubnext/gh-aw"
+- Then use `output.add-comment` to add a comment like: "🔄 Updated with latest changes from github/gh-aw"
 
 ## Important Guidelines
 
 - **Use the `edit` tool for all file changes** - don't try to write files manually
 - **DO NOT include .lock.yml files** - only sync .md source files
 - Focus on workflow source files (`.md` files only)
-- When fetching workflows, get them from `githubnext/gh-aw` repository's `.github/workflows/` directory
+- When fetching workflows, get them from `github/gh-aw` repository's `.github/workflows/` directory
 - When saving locally, save to `workflows/` directory (without the `.github/` prefix)
 - Be selective - only sync workflows that are relevant for this repo
 - Include shared workflow dependencies when needed

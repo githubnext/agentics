@@ -3,11 +3,11 @@
 # Default target
 all: setup compile
 
-# Install the githubnext/gh-aw extension
+# Install the github/gh-aw extension
 install:
-	@echo "Installing githubnext/gh-aw extension..."
-	gh extension install githubnext/gh-aw
-	gh extension upgrade githubnext/gh-aw
+	@echo "Installing github/gh-aw extension..."
+	gh extension install github/gh-aw
+	gh extension upgrade github/gh-aw
 
 # Run gh aw compile
 compile:
@@ -21,13 +21,13 @@ setup: install compile
 
 # Clean up (uninstall extension if needed)
 clean:
-	@echo "Uninstalling githubnext/gh-aw extension..."
-	gh extension remove githubnext/gh-aw || true
+	@echo "Uninstalling github/gh-aw extension..."
+	gh extension remove github/gh-aw || true
 
 # Show help
 help:
 	@echo "Available targets:"
-	@echo "  install  - Install the githubnext/gh-aw extension"
+	@echo "  install  - Install the github/gh-aw extension"
 	@echo "  compile  - Run gh aw compile"
 	@echo "  setup    - Install extension and compile (default)"
 	@echo "  clean    - Uninstall the extension"
