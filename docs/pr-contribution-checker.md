@@ -2,7 +2,7 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [PR contribution guidelines checker workflow](../.github/workflows/pr-contribution-checker.md?plain=1) automatically reviews incoming pull requests to ensure they meet the contribution guidelines for your repository.
+The [PR contribution guidelines checker workflow](../workflows/pr-contribution-checker.md?plain=1) automatically reviews incoming pull requests to ensure they meet the contribution guidelines for your repository.
 
 ## What it does
 
