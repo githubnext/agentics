@@ -32,7 +32,8 @@ Analyze recently created or updated issues to determine if they are duplicates o
 
 1. **Find recent issues to check**:
    - Use GitHub tools to search for issues in this repository that were created or updated in the last 10 minutes
-   - Query: `repo:${{ github.repository }} is:issue updated:>=$(date -u -d '10 minutes ago' +%Y-%m-%dT%H:%M:%SZ)`
+   - Construct a query like: `repo:${{ github.repository }} is:issue updated:>=<timestamp-10-minutes-ago>`
+   - Where the timestamp should be in ISO 8601 format (e.g., 2024-02-04T23:08:00Z)
    - This captures any issues that might have been created or edited since the last run
    - If no recent issues are found, exit successfully without further action
 
