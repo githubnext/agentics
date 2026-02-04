@@ -2,7 +2,7 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [issue duplication detector workflow](../workflows/issue-duplication-detector.md?plain=1) runs every 5 minutes to detect duplicate issues in the repository and suggest next steps.
+The [issue duplication detector workflow](../workflows/issue-duplication-detector.md?plain=1) runs every 6 hours to detect duplicate issues in the repository and suggest next steps.
 
 ## Installation
 
@@ -18,7 +18,7 @@ This walks you through adding the workflow to your repository.
 
 You must also [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
 
-You can manually trigger this workflow using `gh aw run issue-duplication-detector` or wait for it to run automatically on its 5-minute schedule.
+You can manually trigger this workflow using `gh aw run issue-duplication-detector` or wait for it to run automatically on its 6-hour schedule.
 
 **Mandatory Checklist**
 
@@ -30,9 +30,9 @@ This workflow requires no configuration and works out of the box. The workflow u
 
 ### How It Works
 
-The workflow operates on a 5-minute batch schedule:
+The workflow operates on a 6-hour batch schedule:
 
-1. **Searches for recent issues**: Queries for issues created or updated in the last 10 minutes
+1. **Searches for recent issues**: Queries for issues created or updated in the last 6 hours
 2. **Analyzes each issue**: Extracts key information from the issue title and body
 3. **Searches for duplicates**: Uses GitHub search with keywords to find similar existing issues
 4. **Compares semantically**: Analyzes whether issues describe the same underlying problem or request
@@ -43,7 +43,7 @@ The workflow operates on a 5-minute batch schedule:
 
 ### Batch Processing & Cost Control
 
-- Runs every 5 minutes to batch-process multiple issues in a single workflow run
+- Runs every 6 hours to batch-process multiple issues in a single workflow run
 - Only comments when high-confidence duplicates are found
 - Maximum 10 comments per run to prevent excessive API usage
 - 15-minute timeout ensures predictable runtime costs
@@ -52,7 +52,7 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 
 ## What it reads from GitHub
 
-- Recently created or updated issues (last 10 minutes)
+- Recently created or updated issues (last 6 hours)
 - Full issue details including title, body, and metadata
 - Repository issue history for duplicate detection
 - Both open and closed issues for comprehensive analysis

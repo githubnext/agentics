@@ -1,8 +1,8 @@
 ---
-description: Detect duplicate issues and suggest next steps (batched every 5 minutes)
+description: Detect duplicate issues and suggest next steps (batched every 6 hours)
 on:
   schedule:
-    - cron: "*/5 * * * *"  # Every 5 minutes
+    - cron: "0 */6 * * *"  # Every 6 hours
   workflow_dispatch:
 
 permissions: read-all
@@ -26,14 +26,14 @@ You are an AI agent that detects duplicate issues in the repository `${{ github.
 
 ## Your Task
 
-Analyze recently created or updated issues to determine if they are duplicates of existing issues. This workflow runs every 5 minutes to batch-process issues, providing cost control and natural request batching.
+Analyze recently created or updated issues to determine if they are duplicates of existing issues. This workflow runs every 6 hours to batch-process issues, providing cost control and natural request batching.
 
 ## Instructions
 
 1. **Find recent issues to check**:
-   - Use GitHub tools to search for issues in this repository that were created or updated in the last 10 minutes
-   - Construct a query like: `repo:${{ github.repository }} is:issue updated:>=<timestamp-10-minutes-ago>`
-   - Where the timestamp should be in ISO 8601 format (e.g., 2024-02-04T23:08:00Z)
+   - Use GitHub tools to search for issues in this repository that were created or updated in the last 6 hours
+   - Construct a query like: `repo:${{ github.repository }} is:issue updated:>=<timestamp-6-hours-ago>`
+   - Where the timestamp should be in ISO 8601 format (e.g., 2024-02-04T17:00:00Z)
    - This captures any issues that might have been created or edited since the last run
    - If no recent issues are found, exit successfully without further action
 
@@ -79,7 +79,7 @@ Analyze recently created or updated issues to determine if they are duplicates o
 - **Be accurate**: Only flag clear duplicates to avoid false positives
 - **Be helpful**: Provide clear reasoning and actionable suggestions
 - **Use safe-outputs**: Always use `output.add-comment` for commenting, never try to use GitHub write APIs directly
-- **Cost control**: The 5-minute batching window provides a natural upper bound on costs
+- **Cost control**: The 6-hour batching window provides a natural upper bound on costs
 
 ## Example Comment Format
 
