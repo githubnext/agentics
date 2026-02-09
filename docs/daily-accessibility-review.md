@@ -11,18 +11,14 @@ The [daily accessibility review workflow](../workflows/daily-accessibility-revie
 gh extension install github/gh-aw
 
 # Add the Daily Accessibility Review workflow to your repository
-gh aw add githubnext/agentics/daily-accessibility-review
+gh aw add-wizard githubnext/agentics/daily-accessibility-review
 ```
 
 This walks you through adding the workflow to your repository.
 
-**Mandatory Checklist**
-
-* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
-
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuration to specify which accessibility standards to check (e.g., WCAG 2.1, WCAG 2.2), types of accessibility issues to prioritize, and reporting format. Local configuration can be done in `.github/workflows/agentics/daily-accessibility-review.config.md`.
+This workflow requires no configuration and works out of the box.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

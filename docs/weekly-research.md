@@ -11,20 +11,10 @@ The [weekly research workflow](../workflows/weekly-research.md?plain=1) will run
 gh extension install github/gh-aw
 
 # Add the Weekly Research workflow to your repository
-gh aw add githubnext/agentics/weekly-research
+gh aw add-wizard githubnext/agentics/weekly-research
 ```
 
 This walks you through adding the workflow to your repository. 
-
-You can start a run of this workflow immediately by running:
-
-```bash
-gh aw run weekly-research
-```
-
-**Mandatory Checklist**
-
-* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
 
 ## Configuration
 

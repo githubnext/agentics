@@ -11,7 +11,7 @@ The [update documentation workflow](../workflows/update-docs.md?plain=1) will ru
 gh extension install github/gh-aw
 
 # Add the Update Docs workflow to your repository
-gh aw add githubnext/agentics/update-docs
+gh aw add-wizard githubnext/agentics/update-docs
 ```
 
 This walks you through adding the workflow to your repository.
@@ -21,10 +21,6 @@ You can start a run of this workflow immediately by running:
 ```bash
 gh aw run update-docs
 ```
-
-**Mandatory Checklist**
-
-* [ ] I will review all pull requests very carefully, and carefully monitor the repository. 
 
 ## Configuration
 

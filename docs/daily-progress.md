@@ -11,7 +11,7 @@ The [daily progress workflow](../workflows/daily-progress.md?plain=1) is an auto
 gh extension install github/gh-aw
 
 # Add the Daily Progress workflow to your repository
-gh aw add githubnext/agentics/daily-progress
+gh aw add-wizard githubnext/agentics/daily-progress
 ```
 
 This walks you through adding the workflow to your repository.
@@ -22,19 +22,9 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-progress
 ```
 
-**Mandatory Checklist**
-
-* [ ] I understand that this workflow will generate and run bash commands in the confine of the GitHub Actions VM, with network access.
-
-* [ ] I will review all pull requests and issues created by this workflow very carefully, and carefully monitor the repository.
-
 ## Configuration
 
-This workflow requires no configuration and works out of the box. However, you can customize it as follows:
-
-1. **Local configuration**: Customize development focus areas, coding standards, and workflow behavior. Local configuration can be done in `.github/workflows/agentics/daily-progress.config.md`.
-
-2. **Build steps**: The workflow will automatically create a build configuration file at `.github/actions/daily-progress/build-steps/action.yml` to set up the development environment for feature work.
+The workflow will self-configure to create a build configuration file at `.github/actions/daily-progress/build-steps/action.yml` to set up the development environment for feature work.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

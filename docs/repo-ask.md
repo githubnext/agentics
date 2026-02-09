@@ -6,13 +6,13 @@ The [repo-ask workflow](../workflows/repo-ask.md?plain=1) is a command-triggered
 
 You can trigger the workflow by adding a comment to any issue or pull request with the command:
 
-```
+```text
 /repo-ask
 ```
 
 or by writing a comment with a specific question:
 
-```
+```text
 /repo-ask How does the authentication system work in this project?
 ```
 
@@ -23,7 +23,7 @@ or by writing a comment with a specific question:
 gh extension install github/gh-aw
 
 # Add the Repo Ask workflow to your repository
-gh aw add githubnext/agentics/repo-ask
+gh aw add-wizard githubnext/agentics/repo-ask
 ```
 
 This walks you through adding the workflow to your repository.

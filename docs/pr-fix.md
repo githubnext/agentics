@@ -2,17 +2,17 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The ["@pr-fix" workflow](../workflows/pr-fix.md?plain=1) is an alias workflow "@pr-fix" that will help you fix and complete pull requests. By default it will analyze failing CI checks in pull requests, identify root causes, and implement fixes to resolve issues and get PRs back to a passing state. 
+The ["pr-fix" workflow](../workflows/pr-fix.md?plain=1) is an alias workflow "/pr-fix" that will help you fix and complete pull requests. By default it will analyze failing CI checks in pull requests, identify root causes, and implement fixes to resolve issues and get PRs back to a passing state. 
 
 You can trigger the workflow in default mode by adding a comment to a pull request with the command:
 
-```
+```text
 /pr-fix
 ```
 
 or by writing a comment:
 
-```
+```text
 /pr-fix Please add more tests.
 ```
 
@@ -23,7 +23,7 @@ or by writing a comment:
 gh extension install github/gh-aw
 
 # Add the PR Fix workflow to your repository
-gh aw add githubnext/agentics/pr-fix
+gh aw add-wizard githubnext/agentics/pr-fix
 ```
 
 This walks you through adding the workflow to your repository.
@@ -36,15 +36,9 @@ To trigger the workflow on a specific pull request, add a comment with the comma
 /pr-fix
 ```
 
-**Mandatory Checklist**
-
-* [ ] I have read the notes on coding tasks in the [main README](../README.md) and understand the implications.
-
-* [ ] I will review all pull requests very carefully, and carefully monitor the repository. 
-
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuration to specify custom build commands, testing procedures, linting rules, and code formatting standards. Local configuration can be done in `.github/workflows/agentics/pr-fix.config.md`.
+This workflow requires no configuration and works out of the box. You can edit it to specify custom build commands, testing procedures, linting rules, and code formatting standards, or customize these for all agents in AGENTS.md in your repository.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

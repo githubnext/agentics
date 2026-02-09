@@ -11,7 +11,7 @@ The [daily performance improver workflow](../workflows/daily-perf-improver.md?pl
 gh extension install github/gh-aw
 
 # Add the Daily Performance Improver workflow to your repository
-gh aw add githubnext/agentics/daily-perf-improver
+gh aw add-wizard githubnext/agentics/daily-perf-improver
 ```
 
 This walks you through adding the workflow to your repository and running the workflow for the first time.
@@ -28,19 +28,11 @@ To run repeatedly (at most one instance running at a time and sending a trigger 
 gh aw run daily-perf-improver --repeat 180
 ```
 
-**Mandatory Checklist**
-
-* [ ] I understand that, by default, the agentic portion of this workflow will generate and run bash commands in the confine of the GitHub Actions VM, with network access.
-
-* [ ] I will review all pull requests very carefully, and carefully monitor the repository. 
-
 ## Configuration
 
 1. The first run of the workflow will produce a pull request with inferred action pre-steps that need approval
 
 2. The first run of the workflow will also create an issue in the repository with a plan for improving performance. You can comment on this issue to provide feedback or adjustments to the plan. Comments will not be picked up until the next run.
-
-3. Use local configuration to specify performance testing tools and benchmarking frameworks, optimization targets, performance metrics, and profiling strategies. Local configuration can be done in `.github/workflows/agentics/daily-perf-improver.config.md`.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

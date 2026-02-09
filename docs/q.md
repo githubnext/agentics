@@ -23,7 +23,7 @@ or by writing a comment with a specific request:
 gh extension install github/gh-aw
 
 # Add the Q workflow to your repository
-gh aw add githubnext/agentics/q
+gh aw add-wizard githubnext/agentics/q
 ```
 
 This walks you through adding the workflow to your repository.
@@ -35,10 +35,6 @@ To trigger the workflow on a specific issue or pull request, add a comment with 
 ```text
 /q [your optimization request here]
 ```
-
-**Mandatory Checklist**
-
-* [ ] I understand that this workflow will analyze workflows and create pull requests with optimizations.
 
 ## Configuration
 

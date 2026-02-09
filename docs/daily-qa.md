@@ -11,7 +11,7 @@ The [daily Adhoc QA workflow](../workflows/daily-qa.md?plain=1) will perform adh
 gh extension install github/gh-aw
 
 # Add the Daily QA workflow to your repository
-gh aw add githubnext/agentics/daily-qa
+gh aw add-wizard githubnext/agentics/daily-qa
 ```
 
 This walks you through adding the workflow to your repository.
@@ -22,17 +22,9 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-qa
 ```
 
-**Mandatory Checklist**
-
-* [ ] I understand that, by default, the agentic portion of this workflow will generate and run bash commands in the confine of the GitHub Actions VM, with network access.
-
-* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
-
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuration to specify QA tasks, testing scenarios, reporting format, and frequency. Local configuration can be done in `.github/workflows/agentics/daily-qa.config.md`.
-
-
+This workflow requires no configuration and works out of the box. You can edit it to specify QA tasks, testing scenarios, reporting format, and frequency.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

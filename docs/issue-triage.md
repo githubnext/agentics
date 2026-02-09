@@ -11,7 +11,7 @@ The [issue triage workflow](../workflows/issue-triage.md?plain=1) will when issu
 gh extension install github/gh-aw
 
 # Add the Issue Triage workflow to your repository
-gh aw add githubnext/agentics/issue-triage
+gh aw add-wizard githubnext/agentics/issue-triage
 ```
 
 This walks you through adding the workflow to your repository.
@@ -20,15 +20,9 @@ You must also [choose a coding agent](https://github.github.com/gh-aw/reference/
 
 You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
-**Mandatory Checklist**
-
-* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
-
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuration to customize triage criteria, labeling logic, customize issue categorization, modify automated responses. Local configuration can be done in `.github/workflows/agentics/issue-triage.config.md`.
-
-2. Add MCPs to integrate with project management tools
+This workflow requires no configuration and works out of the box. You can edit it to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

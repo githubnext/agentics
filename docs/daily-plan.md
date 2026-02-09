@@ -11,18 +11,14 @@ The [daily plan workflow](../workflows/daily-plan.md?plain=1) will run daily to 
 gh extension install github/gh-aw
 
 # Add the Daily Plan workflow to your repository
-gh aw add githubnext/agentics/daily-plan
+gh aw add-wizard githubnext/agentics/daily-plan
 ```
 
 This walks you through adding the workflow to your repository and running the workflow for the first time.
 
-**Mandatory Checklist**
-
-* [ ] If in a fork, enable GitHub Actions and Issues in the fork settings
-
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use local configuration to specify planning focus areas, reporting format, and frequency. Local configuration can be done in `.github/workflows/agentics/daily-plan.config.md`.
+This workflow requires no configuration and works out of the box. 
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
