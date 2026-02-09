@@ -29,6 +29,37 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [🧪 Daily Test Coverage Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Performance Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 
+## 🔄 Updating Workflows
+
+Keep your agentic workflows up to date with the latest features and improvements:
+
+### Using the CLI
+
+Upgrade the AW engine version and update your workflows:
+
+```bash
+gh aw upgrade  # Upgrade to latest gh-aw engine version
+gh aw update   # Update added workflows
+```
+
+This automatically updates agent files, applies codemods, updates actions versions, and recompiles all workflows.
+
+### Using the Agentic Workflows Agent
+
+Alternatively, you can prompt the agentic-workflows agent to update your workflows:
+
+```
+/agent agentic-workflows upgrade all workflows to the latest version
+```
+
+Or update individual workflows:
+
+```
+/agent agentic-workflows update the issue-triage workflow
+```
+
+📖 [Learn more about GitHub Agentic Workflows](https://github.github.io/gh-aw/)
+
 ## 💬 Share Feedback
 
 Is your favorite agentic workflow not here? Do you have an idea for a new one? Clone this repo and explore, create! Tell us about it! You can file bugs and feature requests as issues in this repository and share your thoughts in the `#continuous-ai` channel in the [GitHub Next Discord](https://gh.io/next-discord).
