@@ -55,7 +55,7 @@ Alternatively, you can prompt the agentic-workflows agent to update your workflo
 Or update individual workflows:
 
 ```
-/agent agentic-workflows update the issue-triage workflow to add web-fetch tool
+/agent agentic-workflows update the issue-triage workflow
 ```
 
 📖 [Learn more about GitHub Agentic Workflows](https://github.github.io/gh-aw/)
