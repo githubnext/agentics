@@ -25,7 +25,7 @@ safe-outputs:
 tools:
   github:
     toolsets: [all]
-  bash:
+  bash: true
 
 timeout-minutes: 15
 

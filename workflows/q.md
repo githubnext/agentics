@@ -31,7 +31,7 @@ safe-outputs:
 
 tools:
   agentic-workflows:
-  bash:
+  bash: true
   edit:
 
 timeout-minutes: 15
@@ -165,7 +165,7 @@ If logs show missing tool reports:
 Example:
 ```yaml
 tools:
-  bash:
+  bash: true
   edit:
 ```
 
