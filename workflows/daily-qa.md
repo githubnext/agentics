@@ -31,7 +31,7 @@ tools:
   github:
     toolsets: [all]
   web-fetch:
-  bash:
+  bash: true
 
 ---
 

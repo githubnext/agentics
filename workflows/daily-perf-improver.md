@@ -33,7 +33,7 @@ tools:
   web-fetch:
   github:
     toolsets: [all]
-  bash:
+  bash: true
 
 steps:
   - name: Checkout repository
