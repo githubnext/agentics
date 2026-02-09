@@ -35,10 +35,11 @@ Keep your agentic workflows up to date with the latest features and improvements
 
 ### Using the CLI
 
-Run the upgrade command to update all workflows to the latest gh-aw version:
+Upgrade the AW engine version and update your workflows:
 
 ```bash
-gh aw upgrade
+gh aw upgrade  # Upgrade to latest gh-aw engine version
+gh aw update   # Update added workflows
 ```
 
 This automatically updates agent files, applies codemods, updates actions versions, and recompiles all workflows.
@@ -48,13 +49,13 @@ This automatically updates agent files, applies codemods, updates actions versio
 Alternatively, you can prompt the agentic-workflows agent to update your workflows:
 
 ```
-@agentic-workflows upgrade all workflows to the latest version
+/agent agentic-workflows upgrade all workflows to the latest version
 ```
 
 Or update individual workflows:
 
 ```
-@agentic-workflows update the issue-triage workflow to add web-fetch tool
+/agent agentic-workflows update the issue-triage workflow to add web-fetch tool
 ```
 
 📖 [Learn more about GitHub Agentic Workflows](https://github.github.io/gh-aw/)
