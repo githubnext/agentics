@@ -23,6 +23,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 - [⚡ Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap
 - [📦 Daily Dependency Updater](docs/daily-dependency-updates.md) - Update dependencies and create pull requests
+- [:dependabot: Dependabot Burner](docs/dependabot-burner.md) - Bundle Dependabot PRs to reduce noise
 - [📖 Regular Documentation Update](docs/update-docs.md) - Update documentation automatically
 - [🏥 PR Fix](docs/pr-fix.md) - Analyze failing CI checks and implement fixes for pull requests
 - [🔎 Daily Adhoc QA](docs/daily-qa.md) - Perform adhoc explorative quality assurance tasks
@@ -38,7 +39,7 @@ Keep your agentic workflows up to date with the latest features and improvements
 Upgrade the AW engine version and update your workflows:
 
 ```bash
-gh extensions upgrade github/gh-aw # Update cli extensiô
+gh extensions upgrade github/gh-aw # Update cli extension
 gh aw upgrade  # Upgrade to latest gh aw engine version
 gh aw update   # Update added workflows
 ```
