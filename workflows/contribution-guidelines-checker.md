@@ -8,7 +8,6 @@ description: |
 on:
   pull_request:
     types: [opened, edited, synchronize]
-  stop-after: +1mo # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
   reaction: eyes
 
 permissions: read-all

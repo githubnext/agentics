@@ -65,8 +65,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Merge approved performance improvements after thorough testing
 - Disable or uninstall the workflow if performance optimizations are not effective or introduce bugs
 
-## Activity duration
-
-- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
-

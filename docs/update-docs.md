@@ -55,8 +55,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Test documentation examples and instructions for correctness
 - Disable or uninstall the workflow if documentation updates are not improving quality
 
-## Activity duration
-
-- By default this workflow will trigger for at most 30 days, after which it will stop triggering. 
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
-

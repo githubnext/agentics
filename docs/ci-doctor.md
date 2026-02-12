@@ -55,7 +55,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Monitor for recurring failure patterns and adjust workflows accordingly
 - Disable or uninstall the workflow if failure investigations are not providing value
 
-## Activity duration
-
-- By default this workflow will trigger for at most 30 days, after which it will stop triggering.
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.

@@ -8,7 +8,6 @@ description: |
 on:
   schedule: daily
   workflow_dispatch:
-  stop-after: +1mo # workflow will no longer trigger after 1 month
 
 timeout-minutes: 30
 
@@ -26,6 +25,7 @@ safe-outputs:
     max: 3
   create-pull-request:
     draft: true
+    labels: [automation, progress]
 
 tools:
   github:

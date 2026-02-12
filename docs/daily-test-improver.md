@@ -52,8 +52,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Ensure tests are meaningful and not just coverage-padding
 - Merge approved test improvements after verification
 - Disable or uninstall the workflow if test additions are not improving code quality
-
-## Activity duration
-
-- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.

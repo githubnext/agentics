@@ -56,7 +56,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - This workflow does not modify existing issues or other repository content
 - This workflow does web searches and fetches content from the web
 
-## Activity duration
-
-- By default this workflow will trigger for at most 30 days, after which it will stop triggering.
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.

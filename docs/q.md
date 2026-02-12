@@ -77,7 +77,7 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - **Permission Issues**: Fix workflows with insufficient permissions
 - **Pattern Extraction**: Create shared configurations for common workflow patterns
 - **Error Analysis**: Investigate recurring workflow failures and propose fixes
-- **Configuration Improvements**: Add timeouts, stop-after limits, and other best practice settings
+- **Configuration Improvements**: Add timeouts limits, and other best practice settings
 
 ## Example Commands
 

@@ -10,7 +10,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  stop-after: +1mo # workflow will no longer trigger after 1 month. Remove this and recompile to run indefinitely
 
 permissions: read-all
 
@@ -19,6 +18,7 @@ network: defaults
 safe-outputs:
   create-pull-request:
     draft: true
+    labels: [automation, documentation]
 
 tools:
   github:

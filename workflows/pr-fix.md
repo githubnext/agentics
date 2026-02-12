@@ -10,9 +10,7 @@ on:
   slash_command:
     name: pr-fix
   reaction: "eyes"
-  stop-after: +1mo
 
-roles: [admin, maintainer, write]
 permissions: read-all
 
 network: defaults
@@ -21,6 +19,7 @@ safe-outputs:
   push-to-pull-request-branch:
   create-issue:
     title-prefix: "${{ github.workflow }}"
+    labels: [automation, pr-fix]
   add-comment:
 
 tools:

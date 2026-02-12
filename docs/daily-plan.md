@@ -46,7 +46,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Use planning issues as input for team coordination and sprint planning
 - Disable or uninstall the workflow if planning automation is not helpful
 
-## Activity duration
-
-- By default this workflow will trigger for at most 30 days, after which it will stop triggering. 
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.

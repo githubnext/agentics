@@ -48,8 +48,3 @@ This workflow requires no configuration and works out of the box. You can use ed
 - Comment on issues to provide additional context or corrections
 - Use status reports to inform team meetings and planning decisions
 - Disable or uninstall the workflow if status reports don't provide valuable insights
-
-## Activity duration
-
-- By default this workflow will trigger for at most 30 days, after which it will stop triggering. 
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.

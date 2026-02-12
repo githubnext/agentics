@@ -50,8 +50,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Monitor for any issues after dependency updates are deployed
 - Disable or uninstall the workflow if dependency updates cause more problems than benefits
 
-## Activity duration
-
-- By default this workflow will trigger for at most 48 hours, after which it will stop triggering. 
-- This allows you to experiment with the workflow for a limited time before deciding whether to keep it active.
-

@@ -9,7 +9,6 @@ description: |
 on:
   schedule: daily
   workflow_dispatch:
-  stop-after: +1mo # workflow will no longer trigger after 1 month
 
 timeout-minutes: 60
 
@@ -28,6 +27,7 @@ safe-outputs:
     target: "*" # can add a comment to any one single issue or pull request
   create-pull-request:
     draft: true
+    labels: [automation, performance]
 
 tools:
   web-fetch:

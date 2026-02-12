@@ -10,8 +10,6 @@ on:
   slash_command:
     name: repo-ask
   reaction: "eyes"
-  stop-after: +1mo
-roles: [admin, maintainer, write]
 
 permissions: read-all
 
@@ -37,5 +35,3 @@ You have been invoked in the context of the pull request or issue #${{ github.ev
 Take heed of these instructions: "${{ needs.activation.outputs.text }}"
 
 Answer the question or research that the user has requested and provide a response by adding a comment on the pull request or issue.
-
-

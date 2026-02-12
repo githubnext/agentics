@@ -8,7 +8,6 @@ description: |
 on:
   schedule: daily
   workflow_dispatch:
-  stop-after: +1mo # workflow will no longer trigger after 1 month
 
 timeout-minutes: 30
 
@@ -23,11 +22,13 @@ safe-outputs:
     category: "ideas"
   create-issue: # can create an issue if it thinks it found bugs
     max: 1
+    labels: [automation, testing, bug]
   add-comment:
     discussion: true
     target: "*" # can add a comment to any one single issue or pull request
   create-pull-request: # can create a pull request
     draft: true
+    labels: [automation, testing]
 
 tools:
   web-fetch:

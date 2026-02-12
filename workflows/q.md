@@ -8,9 +8,6 @@ on:
   slash_command:
     name: q
   reaction: rocket
-  stop-after: +1mo
-
-roles: [admin, maintainer, write]
 
 permissions:
   contents: read
