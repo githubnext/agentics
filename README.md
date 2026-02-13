@@ -7,6 +7,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ### Triage Workflows
 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
+- [🧹 Draft PR Cleanup](docs/draft-pr-cleanup.md) - Automatically manage and close stale draft pull requests
 
 ## Fault Analysis Workflows
 
