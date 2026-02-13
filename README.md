@@ -22,6 +22,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
 - [👥 Daily Team Status](docs/daily-team-status.md) - Create upbeat daily team activity summaries with productivity insights
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
+- [📊 Artifacts Summary](docs/artifacts-summary.md) - Analyze GitHub Actions artifacts usage and provide storage optimization recommendations
 
 ### Dependency Management Workflows
 
