@@ -120,7 +120,7 @@ To decide which phase to perform:
    - If running in "repeat" mode, the workflow will automatically run again to proceed to Phase 3
    - Humans can review and merge this configuration before continuing
 
-5. Try to run through the steps you worked out manually one by one. If the a step needs updating, then update the branch you created in step 4. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
+5. Try to run through the steps you worked out manually one by one. If a step needs updating, then update the branch you created in step 4. Continue through all the steps. If you can't get it to work, then create an issue describing the problem and exit the entire workflow.
 
 6. Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating what you've done and giving links to the PR created. If you have taken successful initial coverage numbers for the repository, report the initial coverage numbers appropriately.
 
