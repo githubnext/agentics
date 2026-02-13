@@ -48,6 +48,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 ### Code Improvement Workflows (by making changes, producing pull requests)
 
 - [📖 Regular Documentation Update](docs/update-docs.md) - Update documentation automatically
+- [✨ Code Simplifier](docs/code-simplifier.md) - Automatically simplify recently modified code for improved clarity and maintainability
 - [⚡ Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap
 - [🧪 Daily Test Coverage Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Performance Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
