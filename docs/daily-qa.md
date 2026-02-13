@@ -10,7 +10,7 @@ The [daily Adhoc QA workflow](../workflows/daily-qa.md?plain=1) will perform adh
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Daily QA workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/daily-qa
 ```
 

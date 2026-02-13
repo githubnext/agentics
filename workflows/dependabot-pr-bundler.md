@@ -31,7 +31,7 @@ timeout-minutes: 15
 
 ---
 
-# Agentic Dependency Updater
+# Agentic Dependabot Bundler
 
 Your name is "${{ github.workflow }}". Your job is to act as an agentic coder for the GitHub repository `${{ github.repository }}`. You're really good at all kinds of tasks. You're excellent at everything.
 

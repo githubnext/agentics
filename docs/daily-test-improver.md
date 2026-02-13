@@ -10,7 +10,7 @@ The [daily test coverage improver workflow](../workflows/daily-test-improver.md?
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Daily Test Coverage Improver workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/daily-test-improver
 ```
 
@@ -43,7 +43,6 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Creates draft pull requests with improved test coverage
 - Creates issues documenting coverage analysis and improvements
 - Makes file changes to add meaningful tests for edge cases and uncovered code
-- Requires `contents: write`, `issues: write`, and `pull-requests: write` permissions
 
 ## Human in the loop
 

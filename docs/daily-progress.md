@@ -10,7 +10,7 @@ The [daily progress workflow](../workflows/daily-progress.md?plain=1) is an auto
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Daily Progress workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/daily-progress
 ```
 

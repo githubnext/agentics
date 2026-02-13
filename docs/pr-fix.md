@@ -22,7 +22,7 @@ or by writing a comment:
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the PR Fix workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/pr-fix
 ```
 
@@ -56,7 +56,6 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Pushes fixes directly to the pull request branch
 - Adds comments to pull requests explaining the changes made
 - May create issues for complex problems requiring human intervention
-- Requires `contents: write` and `pull-requests: write` permissions
 
 ## What web searches it performs
 

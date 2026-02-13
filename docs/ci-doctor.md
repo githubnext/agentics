@@ -10,7 +10,7 @@ The [CI Doctor workflow](../workflows/ci-doctor.md?plain=1) monitors your GitHub
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the CI Doctor workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/ci-doctor
 ```
 

@@ -10,7 +10,7 @@ The [update documentation workflow](../workflows/update-docs.md?plain=1) will ru
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Update Docs workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/update-docs
 ```
 
@@ -40,7 +40,6 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Creates pull requests with documentation updates
 - Creates new branches for the documentation changes
 - Makes file changes to update or add documentation
-- Requires `contents: write` and `pull-requests: write` permissions
 
 ## What web searches it performs
 

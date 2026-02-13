@@ -22,7 +22,7 @@ or by writing a comment with a specific question:
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Repo Ask workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/repo-ask
 ```
 

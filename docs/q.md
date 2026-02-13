@@ -22,7 +22,7 @@ or by writing a comment with a specific request:
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Q workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/q
 ```
 
@@ -54,7 +54,6 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 
 - Pull requests with workflow optimizations (if changes are needed)
 - Comments with analysis findings and recommendations
-- Requires `contents: write`, `pull-requests: write`, and `issues: write` permissions
 
 ## What web searches it performs
 

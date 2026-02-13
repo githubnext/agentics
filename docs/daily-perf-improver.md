@@ -10,7 +10,7 @@ The [daily performance improver workflow](../workflows/daily-perf-improver.md?pl
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Daily Performance Improver workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/daily-perf-improver
 ```
 
@@ -49,7 +49,6 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Creates draft pull requests with optimized code and benchmark results
 - Creates issues documenting performance analysis and improvements
 - Makes file changes to optimize algorithms and data structures
-- Requires `contents: write`, `issues: write`, and `pull-requests: write` permissions
 
 ## What web searches it performs
 

@@ -10,7 +10,7 @@ The [daily plan workflow](../workflows/daily-plan.md?plain=1) will run daily to 
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Daily Plan workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/daily-plan
 ```
 

@@ -10,7 +10,7 @@ The [daily repo status workflow](../workflows/daily-repo-status.md?plain=1) will
 # Install the 'gh aw' extension
 gh extension install github/gh-aw
 
-# Add the Daily Repo Status workflow to your repository
+# Add the workflow to your repository
 gh aw add-wizard githubnext/agentics/daily-repo-status
 ```
 
