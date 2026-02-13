@@ -2,7 +2,7 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [issue triage workflow](../workflows/issue-triage.md?plain=1) will when issues are created or reopened to triage issues in the repository.
+The [issue triage workflow](../workflows/issue-triage.md?plain=1) will run when issues are created or reopened to triage issues in the repository.
 
 ## Installation
 
