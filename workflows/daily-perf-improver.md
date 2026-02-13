@@ -126,7 +126,7 @@ To decide which phase to perform:
   - Success metrics and testing approaches
   - How to do explore performance efficiently using focused, maximally-efficient measurements and rebuilds
 
-5. Create PR with title "${{ github.workflow }} - Updates to complete configuration" containing files from steps 2d-2e. Request maintainer review. 
+5. Create PR with title "${{ github.workflow }} - Updates to complete configuration" containing files from steps 3-4. Request maintainer review. 
 
    **Include a "What Happens Next" section in the PR description that explains:**
    - Once this PR is merged, the next workflow run will proceed to Phase 3, where actual performance improvements will be implemented
