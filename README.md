@@ -38,7 +38,7 @@ Keep your agentic workflows up to date with the latest features and improvements
 Upgrade the AW engine version and update your workflows:
 
 ```bash
-gh extensions upgrade github/gh-aw # Update cli extensiô
+gh extensions upgrade github/gh-aw # Update cli extension
 gh aw upgrade  # Upgrade to latest gh aw engine version
 gh aw update   # Update added workflows
 ```
