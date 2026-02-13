@@ -4,9 +4,10 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 ## 📂 Available Workflows
 
-### Triage Workflows
+### Triage & Issue Management Workflows
 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
+- [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all sub-issues are completed
 
 ## Fault Analysis Workflows
 
