@@ -1,6 +1,6 @@
 ---
 description: |
-  This workflow performs adhoc quality assurance by validating project health daily.
+  This workflow performs ad hoc quality assurance by validating project health daily.
   Checks that code builds and runs, tests pass, documentation is clear, and code
   is well-structured. Creates discussions for findings and can submit draft PRs
   with improvements. Provides continuous quality monitoring throughout development.

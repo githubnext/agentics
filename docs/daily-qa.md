@@ -1,8 +1,8 @@
-# 🔍 Daily Adhoc QA
+# 🔍 Daily Ad hoc QA
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [daily Adhoc QA workflow](../workflows/daily-qa.md?plain=1) will perform adhoc quality assurance tasks in the repository, such as following the instructions in the README.md, tutorials and walkthroughs to check that the code builds and runs, and that the getting started process is simple and works well. You can edit and configure the workflow to describe more tasks. 
+The [daily Ad hoc QA workflow](../workflows/daily-qa.md?plain=1) will perform ad hoc quality assurance tasks in the repository, such as following the instructions in the README.md, tutorials and walkthroughs to check that the code builds and runs, and that the getting started process is simple and works well. You can edit and configure the workflow to describe more tasks. 
 
 ## Installation
 
