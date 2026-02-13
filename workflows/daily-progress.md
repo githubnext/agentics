@@ -66,8 +66,6 @@ To decide which phase to perform:
     
 2. Use this research to create a discussion with title "${{ github.workflow }} - Research, Roadmap and Plan".
 
-2. Use this research to create a discussion with title "${{ github.workflow }} - Research, Roadmap and Plan".
-
    **Include a "How to Control this Workflow" section at the end of the discussion that explains:**
    - The user can add comments to the discussion to provide feedback or adjustments to the plan
    - The user can use these commands:
