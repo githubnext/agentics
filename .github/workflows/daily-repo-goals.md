@@ -1,6 +1,6 @@
 ---
 description: |
-  This workflow performs daily repository hygiene by ensuring consistency across
+  This workflow works regularly towards repo goals by ensuring consistency across
   workflows, documentation, and README entries, and by discovering new high-value
   general-purpose workflows from Peli's Agent Factory (github/gh-aw) that could
   be adapted for broader use. At most one new workflow is proposed per run.
@@ -53,7 +53,7 @@ Check the repository for consistency across three layers:
 
 If any glaring mutual inconsistencies are found, create a pull request that fixes them. If creating a new docs page, follow the style of existing docs pages. If adding a README entry, place it in the appropriate category section.
 
-If everything is consistent, proceed to Phase 2.
+Then proceed to Phase 2. Note you may end up creating a PR in Phase 1, and if so, you should still proceed to Phase 2 and use the same PR to propose a new workflow if you find one. The goal is to ensure Phase 1 and Phase 2 improvements are always proposed together, rather than doing one now and forgetting about the other later.
 
 ## Phase 2 — Workflow Discovery
 

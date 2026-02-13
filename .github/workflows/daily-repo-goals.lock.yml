@@ -19,17 +19,17 @@
 #   gh aw compile
 # For more information: https://github.com/github/gh-aw/blob/main/.github/aw/github-agentic-workflows.md
 #
-# This workflow performs daily repository hygiene by ensuring consistency across
+# This workflow works regularly towards repo goals by ensuring consistency across
 # workflows, documentation, and README entries, and by discovering new high-value
 # general-purpose workflows from Peli's Agent Factory (github/gh-aw) that could
 # be adapted for broader use. At most one new workflow is proposed per run.
 #
-# frontmatter-hash: 89a8542e91cfba2bed2f054c4c72ed7b94c21a4dde9ff150961544b74506e85d
+# frontmatter-hash: becdcbc12f5e462dd9a13d5a4c419dd90b6166ab7ab750552258195a568ca8c5
 
 name: "Daily Repo Hygiene"
 "on":
   schedule:
-  - cron: "9 6 * * *"
+  - cron: "20 1 * * *"
     # Friendly format: daily (scattered)
   workflow_dispatch:
 
@@ -56,7 +56,7 @@ jobs:
       - name: Check workflow file timestamps
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
-          GH_AW_WORKFLOW_FILE: "daily-repo-hygiene.lock.yml"
+          GH_AW_WORKFLOW_FILE: "daily-repo-goals.lock.yml"
         with:
           script: |
             const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
@@ -623,7 +623,7 @@ jobs:
           </system>
           GH_AW_PROMPT_EOF
           cat << 'GH_AW_PROMPT_EOF' >> "$GH_AW_PROMPT"
-          {{#runtime-import .github/workflows/daily-repo-hygiene.md}}
+          {{#runtime-import .github/workflows/daily-repo-goals.md}}
           GH_AW_PROMPT_EOF
       - name: Substitute placeholders
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
@@ -915,7 +915,7 @@ jobs:
           GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
-          GH_AW_WORKFLOW_ID: "daily-repo-hygiene"
+          GH_AW_WORKFLOW_ID: "daily-repo-goals"
           GH_AW_SECRET_VERIFICATION_RESULT: ${{ needs.agent.outputs.secret_verification_result }}
           GH_AW_CHECKOUT_PR_SUCCESS: ${{ needs.agent.outputs.checkout_pr_success }}
         with:
@@ -1011,7 +1011,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           WORKFLOW_NAME: "Daily Repo Hygiene"
-          WORKFLOW_DESCRIPTION: "This workflow performs daily repository hygiene by ensuring consistency across\nworkflows, documentation, and README entries, and by discovering new high-value\ngeneral-purpose workflows from Peli's Agent Factory (github/gh-aw) that could\nbe adapted for broader use. At most one new workflow is proposed per run."
+          WORKFLOW_DESCRIPTION: "This workflow works regularly towards repo goals by ensuring consistency across\nworkflows, documentation, and README entries, and by discovering new high-value\ngeneral-purpose workflows from Peli's Agent Factory (github/gh-aw) that could\nbe adapted for broader use. At most one new workflow is proposed per run."
           HAS_PATCH: ${{ needs.agent.outputs.has_patch }}
         with:
           script: |
@@ -1090,7 +1090,7 @@ jobs:
     timeout-minutes: 15
     env:
       GH_AW_ENGINE_ID: "copilot"
-      GH_AW_WORKFLOW_ID: "daily-repo-hygiene"
+      GH_AW_WORKFLOW_ID: "daily-repo-goals"
       GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
     outputs:
       create_discussion_error_count: ${{ steps.process_safe_outputs.outputs.create_discussion_error_count }}

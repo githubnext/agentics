@@ -1,7 +1,6 @@
 ---
 description: |
-  This workflow performs automated dependency management by monitoring and updating project dependencies.
-  Checks Dependabot alerts and updates dependencies in package manifests (not just lock files).
+  This workflow checks Dependabot alerts and updates dependencies in package manifests (not just lock files).
   Bundles multiple compatible updates into single pull requests, runs tests to verify
   compatibility, and creates draft PRs with working changes. Documents investigation
   attempts for problematic updates.
