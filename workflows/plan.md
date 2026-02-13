@@ -1,19 +1,32 @@
 ---
 name: Plan Command
 description: Generates project plans and task breakdowns when invoked with /plan command in issues or PRs
+
 on:
   slash_command:
     name: plan
     events: [issue_comment, discussion_comment]
+
 permissions:
   contents: read
   discussions: read
   issues: read
   pull-requests: read
+
 engine: copilot
+
 tools:
   github:
     toolsets: [default, discussions]
+    # If in a public repo, setting `lockdown: false` allows
+    # reading issues, pull requets and comments from 3rd-parties
+    # If in a private repo this has no particular effect.
+    #
+    # This allows the maintainer to use /plan in discussions and issues created
+    # by 3rd parties, and to read the content of those discussions and issues
+    # turning the content into actionable tasks.
+    lockdown: false
+
 safe-outputs:
   create-issue:
     title-prefix: "[task] "

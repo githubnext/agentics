@@ -18,6 +18,10 @@ network: defaults
 
 tools:
   github:
+    # If in a public repo, setting `lockdown: false` allows
+    # reading issues, pull requets and comments from 3rd-parties
+    # If in a private repo this has no particular effect.
+    lockdown: false
 
 safe-outputs:
   create-issue:

@@ -21,6 +21,16 @@ safe-outputs:
 tools:
   web-fetch:
   bash: true
+  github:
+    toolsets: [default, discussions]
+    # If in a public repo, setting `lockdown: false` allows
+    # reading issues, pull requets and comments from 3rd-parties
+    # If in a private repo this has no particular effect.
+    #
+    # This allows the maintainer to use /repo-ask in discussions and issues created
+    # by 3rd parties, and to read the content of those discussions and issues
+    # turning the content into actionable tasks.
+    lockdown: false
 
 timeout-minutes: 20
 

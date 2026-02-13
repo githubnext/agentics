@@ -5,6 +5,11 @@
       "version": "v4",
       "sha": "34e114876b0b11c390a56381ad16ebd13914f8d5"
     },
+    "actions/checkout@v5": {
+      "repo": "actions/checkout",
+      "version": "v5",
+      "sha": "93cb6efe18208431cddfb8368fd83d5badbf9bfd"
+    },
     "actions/github-script@v8": {
       "repo": "actions/github-script",
       "version": "v8",
