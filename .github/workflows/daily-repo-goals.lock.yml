@@ -24,9 +24,9 @@
 # general-purpose workflows from Peli's Agent Factory (github/gh-aw) that could
 # be adapted for broader use. At most one new workflow is proposed per run.
 #
-# frontmatter-hash: becdcbc12f5e462dd9a13d5a4c419dd90b6166ab7ab750552258195a568ca8c5
+# frontmatter-hash: 5c4aefa9f5bf7bd7aabdb3c253da0bcf00c17b285cb4b9e402e6a813ebc5823c
 
-name: "Daily Repo Hygiene"
+name: "Daily Repo Goal Achiever"
 "on":
   schedule:
   - cron: "20 1 * * *"
@@ -38,7 +38,7 @@ permissions: {}
 concurrency:
   group: "gh-aw-${{ github.workflow }}"
 
-run-name: "Daily Repo Hygiene"
+run-name: "Daily Repo Goal Achiever"
 
 jobs:
   activation:
@@ -150,7 +150,7 @@ jobs:
               version: "",
               agent_version: "0.0.407",
               cli_version: "v0.43.13",
-              workflow_name: "Daily Repo Hygiene",
+              workflow_name: "Daily Repo Goal Achiever",
               experimental: false,
               supports_tools_allowlist: true,
               supports_http_transport: true,
@@ -886,7 +886,7 @@ jobs:
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
           GH_AW_NOOP_MAX: 1
-          GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
+          GH_AW_WORKFLOW_NAME: "Daily Repo Goal Achiever"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
@@ -899,7 +899,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
+          GH_AW_WORKFLOW_NAME: "Daily Repo Goal Achiever"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
@@ -912,7 +912,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
+          GH_AW_WORKFLOW_NAME: "Daily Repo Goal Achiever"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
           GH_AW_WORKFLOW_ID: "daily-repo-goals"
@@ -930,7 +930,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
+          GH_AW_WORKFLOW_NAME: "Daily Repo Goal Achiever"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
           GH_AW_NOOP_MESSAGE: ${{ steps.noop.outputs.noop_message }}
@@ -947,7 +947,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
+          GH_AW_WORKFLOW_NAME: "Daily Repo Goal Achiever"
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
@@ -964,7 +964,7 @@ jobs:
           GH_AW_COMMENT_ID: ${{ needs.activation.outputs.comment_id }}
           GH_AW_COMMENT_REPO: ${{ needs.activation.outputs.comment_repo }}
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
+          GH_AW_WORKFLOW_NAME: "Daily Repo Goal Achiever"
           GH_AW_AGENT_CONCLUSION: ${{ needs.agent.result }}
           GH_AW_DETECTION_CONCLUSION: ${{ needs.detection.result }}
         with:
@@ -1010,7 +1010,7 @@ jobs:
       - name: Setup threat detection
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
-          WORKFLOW_NAME: "Daily Repo Hygiene"
+          WORKFLOW_NAME: "Daily Repo Goal Achiever"
           WORKFLOW_DESCRIPTION: "This workflow works regularly towards repo goals by ensuring consistency across\nworkflows, documentation, and README entries, and by discovering new high-value\ngeneral-purpose workflows from Peli's Agent Factory (github/gh-aw) that could\nbe adapted for broader use. At most one new workflow is proposed per run."
           HAS_PATCH: ${{ needs.agent.outputs.has_patch }}
         with:
@@ -1091,7 +1091,7 @@ jobs:
     env:
       GH_AW_ENGINE_ID: "copilot"
       GH_AW_WORKFLOW_ID: "daily-repo-goals"
-      GH_AW_WORKFLOW_NAME: "Daily Repo Hygiene"
+      GH_AW_WORKFLOW_NAME: "Daily Repo Goal Achiever"
     outputs:
       create_discussion_error_count: ${{ steps.process_safe_outputs.outputs.create_discussion_error_count }}
       create_discussion_errors: ${{ steps.process_safe_outputs.outputs.create_discussion_errors }}

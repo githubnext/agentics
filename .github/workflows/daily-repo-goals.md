@@ -13,6 +13,8 @@ timeout-minutes: 30
 
 network: defaults
 
+engine: copilot
+
 permissions: read-all
 
 tools:
@@ -31,7 +33,7 @@ safe-outputs:
     labels: [automation, hygiene, factory]
 ---
 
-# Daily Repo Hygiene
+# Daily Repo Goal Achiever
 
 ## Job Description
 
