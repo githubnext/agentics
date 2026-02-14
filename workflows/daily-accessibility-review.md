@@ -20,7 +20,6 @@ safe-outputs:
     category: "q-a"
     max: 5
   add-comment:
-    discussion: true
     max: 5
 
 tools:

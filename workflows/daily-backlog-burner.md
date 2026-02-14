@@ -21,7 +21,6 @@ safe-outputs:
     category: "ideas"
     max: 3
   add-comment:
-    discussion: true
     target: "*" # all issues and PRs
     max: 3
   create-pull-request:
@@ -127,4 +126,3 @@ To decide which phase to perform:
 5. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made.
 
 6. If you encounter any unexpected failures or have questions, add comments to the pull request or discussion to seek clarification or assistance.
-
