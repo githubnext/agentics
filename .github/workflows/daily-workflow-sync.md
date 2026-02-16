@@ -11,7 +11,7 @@ timeout-minutes: 30
 network:
   allowed:
     - node
-    - raw.githubusercontent.com
+    - github
 
 steps:
   - name: Checkout repository

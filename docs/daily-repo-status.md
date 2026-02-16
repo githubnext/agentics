@@ -24,7 +24,7 @@ gh aw run daily-repo-status
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can use edit the workflow to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.
+This workflow requires no configuration and works out of the box. You can edit the workflow to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.
 
 ## What it reads from GitHub
 

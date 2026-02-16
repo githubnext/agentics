@@ -24,7 +24,6 @@ safe-outputs:
     max: 1
     labels: [automation, testing, bug]
   add-comment:
-    discussion: true
     target: "*" # can add a comment to any one single issue or pull request
   create-pull-request: # can create a pull request
     draft: true
@@ -188,5 +187,3 @@ To decide which phase to perform:
    b. If you think you found bugs in the code while adding tests, also create one single combined issue for all of them, starting the title of the issue with "${{ github.workflow }}". Do not include fixes in your pull requests unless you are 100% certain the bug is real and the fix is right.
 
 5. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made, reporting the coverage improvement numbers achieved and current overall coverage numbers.
-
-
