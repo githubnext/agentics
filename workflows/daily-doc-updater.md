@@ -22,8 +22,6 @@ tools:
 
 timeout-minutes: 30
 
-category: maintenance
-
 safe-outputs:
   create-pull-request:
     expires: 2d
