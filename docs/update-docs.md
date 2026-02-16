@@ -2,7 +2,7 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [update documentation workflow](../workflows/update-docs.md?plain=1) will run on each push to main to try to update documentation in the repository. It defaults to using [Astro Starlight] (https://starlight.astro.build) for documentation generation, but you can edit it to use other frameworks if necessary.
+The [update documentation workflow](../workflows/update-docs.md?plain=1) will run on each push to main to try to update documentation in the repository. It defaults to using [Astro Starlight](https://starlight.astro.build) for documentation generation, but you can edit it to use other frameworks if necessary.
 
 ## Installation
 
