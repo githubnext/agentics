@@ -6,8 +6,6 @@ description: |
   Helps maintainers efficiently prioritize community contributions by highlighting PRs that
   are ready for review, need work, or fall outside contribution guidelines.
 
-source: https://github.com/github/gh-aw/blob/main/.github/workflows/contribution-check.md
-
 on:
   schedule: "every 4 hours"
   workflow_dispatch:
