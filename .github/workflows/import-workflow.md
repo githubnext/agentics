@@ -78,7 +78,6 @@ The workflow from the source repository may contain project-specific references.
 - Generalize the prompt to work across different repository types and languages
 - Keep the core value and behavior of the workflow intact
 - Preserve the frontmatter structure (triggers, permissions, safe-outputs, tools, timeout)
-- Add a `source:` field in the frontmatter pointing to the original workflow URL
 
 Save the adapted workflow to `workflows/<workflow-name>.md`.
 

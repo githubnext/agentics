@@ -37,7 +37,6 @@ safe-outputs:
     max: 5
     allowed-reasons: [spam]
   threat-detection: false
-source: https://github.com/github/gh-aw/blob/main/.github/workflows/ai-moderator.md
 ---
 # AI Moderator
 
