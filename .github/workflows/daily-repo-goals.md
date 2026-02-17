@@ -22,6 +22,7 @@ tools:
     toolsets: [all]
   web-fetch:
   cache-memory: true
+  bash: true
 
 safe-outputs:
   create-issue:
@@ -72,7 +73,9 @@ This tells you what has already been considered, proposed, or rejected. Do not r
 
 ### Step 2: Research Peli's Agent Factory
 
-Clone the gh-aw repository (https://github.com/github/gh-aw) and browse the blog series at https://github.github.io/gh-aw/blog/2026-01-12-welcome-to-pelis-agent-factory/ to find workflows.
+Clone the gh-aw repository (https://github.com/github/gh-aw) 
+
+Read the blog series that documents the workflows in gh-aw 'docs' directory, `blog/2026-01-12-welcome-to-pelis-agent-factory...`, paying particular attention to the merge rate statistics for each workflow. The merge rates give an indication of which workflows have been most successful and well-received by maintainers.
 
 The workflow source files are in `.github/workflows/*.md` in the gh-aw repository. The blog series documents the workflows and includes merge rate statistics.
 
@@ -82,6 +85,67 @@ The workflow source files are in `.github/workflows/*.md` in the gh-aw repositor
 - General applicability (can be generalised so they are not specific to any language, framework, or the gh-aw project itself)
 - Simple, clear intent (the simpler the better)
 - Practical value for a wide range of software repositories
+
+The workflows in the blog series are:
+
+* "agent-performance-analyzer.md",
+* "audit-workflows.md",
+* "blog-auditor.md",
+* "breaking-change-checker.md",
+* "changeset.md",
+* "ci-coach.md",
+* "ci-doctor.md",
+* "cli-consistency-checker.md",
+* "code-simplifier.md",
+* "copilot-agent-analysis.md",
+* "copilot-pr-nlp-analysis.md",
+* "copilot-session-insights.md",
+* "daily-compiler-quality.md",
+* "daily-doc-updater.md",
+* "daily-file-diet.md",
+* "daily-malicious-code-scan.md",
+* "daily-multi-device-docs-tester.md",
+* "daily-news.md",
+* "daily-repo-chronicle.md",
+* "daily-secrets-analysis.md",
+* "daily-team-status.md",
+* "daily-testify-uber-super-expert.md",
+* "daily-workflow-updater.md",
+* "discussion-task-miner.md",
+* "docs-noob-tester.md",
+* "duplicate-code-detector.md",
+* "firewall.md",
+* "github-mcp-tools-report.md",
+* "glossary-maintainer.md",
+* "go-fan.md",
+* "grumpy-reviewer.md",
+* "issue-arborist.md",
+* "issue-monster.md",
+* "issue-triage-agent.md",
+* "mcp-inspector.md",
+* "mergefest.md",
+* "metrics-collector.md",
+* "org-health-report.md",
+* "plan.md",
+* "poem-bot.md",
+* "portfolio-analyst.md",
+* "prompt-clustering-analysis.md",
+* "q.md",
+* "repository-quality-improver.md",
+* "schema-consistency-checker.md",
+* "security-compliance.md",
+* "semantic-function-refactor.md",
+* "slide-deck-maintainer.md",
+* "stale-repo-identifier.md",
+* "static-analysis-report.md",
+* "sub-issue-closer.md",
+* "terminal-stylist.md",
+* "typist.md",
+* "ubuntu-image-analyzer.md",
+* "unbloat-docs.md",
+* "weekly-issue-summary.md",
+* "workflow-generator.md",
+* "workflow-health-manager.md",
 
 **Exclude workflows that are:**
 

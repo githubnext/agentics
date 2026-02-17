@@ -1,5 +1,8 @@
 {
     "github.copilot.enable": {
         "markdown": true
+    },
+    "search.exclude": {
+      ".github/workflows/*.lock.yml": true
     }
 }
