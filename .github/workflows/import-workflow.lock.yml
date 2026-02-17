@@ -26,7 +26,7 @@
 # page following the established pattern, updates the README, and compiles the
 # workflow lock file. Triggered manually with the workflow identifier as input.
 #
-# frontmatter-hash: dbce600030ccf02fb0bc39d5ac7175916254496e6858d4ee1d44e3f0f339c0b6
+# frontmatter-hash: 08382fa0d8a5b881d418a1ca45b2beddb8e756133320b364e62594937f4ea127
 
 name: "Import Workflow from Prompt Repository"
 "on":

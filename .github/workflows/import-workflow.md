@@ -70,7 +70,26 @@ Before importing, verify the workflow does not already exist in this repository:
 - Check `README.md` for an existing entry
 - If the workflow already exists, exit with a clear message explaining the duplicate
 
-## Step 3: Adapt the workflow for general use
+## Step 3: Check for custom agent references
+
+Before adapting the workflow, check if it references any custom agents:
+
+1. **Check the `engine.agent` field** in the workflow frontmatter:
+   - If `engine.agent` is present, it references `.github/agents/{agent}.agent.md` from the source repository
+   - Example: `agent: technical-doc-writer` → `.github/agents/technical-doc-writer.agent.md`
+
+2. **Check the `imports` array** for `.github/agents/` references:
+   - Imports can include paths like `.github/agents/my-agent.agent.md`
+   - These are custom agent files that need to be imported alongside the workflow
+
+3. **Fetch referenced custom agents** from the source repository:
+   - Use `get_file_contents` to fetch each custom agent file from the source repository
+   - Custom agent files are markdown files with frontmatter and agent instructions
+   - Save each custom agent to `.github/agents/<agent-name>.agent.md` in this repository
+
+4. **Note**: According to gh-aw documentation, only one custom agent file is allowed per workflow
+
+## Step 4: Adapt the workflow for general use
 
 The workflow from the source repository may contain project-specific references. Adapt it:
 
@@ -79,10 +98,11 @@ The workflow from the source repository may contain project-specific references.
 - Keep the core value and behavior of the workflow intact
 - Preserve the frontmatter structure (triggers, permissions, safe-outputs, tools, timeout)
 - Add a `source:` field in the frontmatter pointing to the original workflow URL
+- **Preserve custom agent references** (engine.agent and imports) if they were imported
 
 Save the adapted workflow to `workflows/<workflow-name>.md`.
 
-## Step 4: Create the documentation page
+## Step 5: Create the documentation page
 
 Create a new file at `docs/<workflow-name>.md` following the established documentation pattern used by other docs pages in this repository. The documentation page MUST include these sections:
 
@@ -120,7 +140,7 @@ Create a new file at `docs/<workflow-name>.md` following the established documen
 
 Study the existing docs pages (e.g., `docs/ci-doctor.md`, `docs/issue-triage.md`, `docs/plan.md`, `docs/daily-doc-updater.md`) to match the tone and style.
 
-## Step 5: Update README.md
+## Step 6: Update README.md
 
 Add the new workflow to the appropriate section in `README.md`. The existing categories are:
 
@@ -138,18 +158,19 @@ Use the format: `- [<Emoji> <Title>](docs/<name>.md) - <Short description>`
 
 If the workflow doesn't fit any existing category, create a new appropriately-named category section. Place it logically among the existing sections.
 
-## Step 6: Compile the workflow
+## Step 7: Compile the workflow
 
 Run `gh aw compile --dir workflows` to generate the `.lock.yml` file for the new workflow.
 
 If `gh aw` is not installed, install it first with `gh extension install github/gh-aw`.
 
-## Step 7: Create a pull request
+## Step 8: Create a pull request
 
 Create a draft pull request with all the changes:
 
 - The new workflow file in `workflows/`
 - The compiled `.lock.yml` file
+- Any imported custom agent files in `.github/agents/`
 - The new documentation page in `docs/`
 - The updated `README.md`
 
@@ -158,6 +179,7 @@ The PR description should include:
 - **Source**: Link to the original workflow in the source repository
 - **What it does**: Brief description of the workflow's purpose
 - **Adaptations**: What was changed to generalize the workflow
+- **Custom agents**: List any custom agent files that were imported
 - **Category**: Which README section it was added to
 
 ## Important Guidelines
