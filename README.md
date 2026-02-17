@@ -49,6 +49,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 
 - [📖 Regular Documentation Update](docs/update-docs.md) - Update documentation automatically
 - [📖 Daily Documentation Updater](docs/daily-doc-updater.md) - Automatically update documentation based on recent code changes and merged PRs
+- [📖 Glossary Maintainer](docs/glossary-maintainer.md) - Automatically maintain project glossary based on codebase changes
 - [🔗 Link Checker](docs/link-checker.md) - Daily automated link checker that finds and fixes broken links in documentation
 - [✨ Code Simplifier](docs/code-simplifier.md) - Automatically simplify recently modified code for improved clarity and maintainability
 - [⚡ Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap
