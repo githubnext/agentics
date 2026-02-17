@@ -60,6 +60,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 
 - [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
 - [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
+- [🧹 Draft PR Cleanup](docs/draft-pr-cleanup.md) - Automatically manage stale draft pull requests with fair warning and cleanup policies
 
 ## Meta-Workflows
 
