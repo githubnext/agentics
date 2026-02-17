@@ -7,7 +7,6 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ### Triage Workflows
 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
-- [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
 
 ## Fault Analysis Workflows
 
@@ -16,7 +15,6 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ## Code Review Workflows
 
 - [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
-- [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
 
 ### Research, Status & Planning Workflows
 
@@ -57,6 +55,11 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🧪 Daily Test Coverage Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Performance Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 - [🔥 Daily Backlog Burner](docs/daily-backlog-burner.md) - Systematically manage and reduce backlog through strategic cleanup
+
+## Maintainer
+
+- [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
+- [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
 
 ## Meta-Workflows
 
