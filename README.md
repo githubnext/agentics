@@ -16,6 +16,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ## Code Review Workflows
 
 - [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
+- [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
 
 ### Research, Status & Planning Workflows
 
