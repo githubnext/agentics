@@ -115,7 +115,7 @@ Added 1 link to the unfixable list:
 The workflow is configured to:
 - Run on weekdays only to avoid Monday backlog
 - Use a 60-minute timeout for processing large documentation sets
-- Create draft PRs for review before merging
+- Create ready-to-review PRs (non-draft) for quick merging
 - Warn if no changes are needed (via `if-no-changes: "warn"`)
 
 ## Future Enhancements
