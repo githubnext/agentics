@@ -16,6 +16,7 @@ on:
         description: 'Source repository to import from (e.g. "owner/repo"). Required when workflow_id is a name rather than a full URL or owner/repo/name path.'
         required: false
         type: string
+        default: "github/gh-aw"
 
 permissions: read-all
 

@@ -26,13 +26,14 @@
 # page following the established pattern, updates the README, and compiles the
 # workflow lock file. Triggered manually with the workflow identifier as input.
 #
-# frontmatter-hash: 98da1d3eeab9da12497f1d3e5d37c05c2c49d78081444517873578d159993970
+# frontmatter-hash: dbce600030ccf02fb0bc39d5ac7175916254496e6858d4ee1d44e3f0f339c0b6
 
 name: "Import Workflow from Prompt Repository"
 "on":
   workflow_dispatch:
     inputs:
       prompt_repo:
+        default: github/gh-aw
         description: Source repository to import from (e.g. "owner/repo"). Required when workflow_id is a name rather than a full URL or owner/repo/name path.
         required: false
         type: string
