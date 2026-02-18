@@ -175,6 +175,10 @@ If you found a strong candidate, create a pull request that adds a new workflow 
 - **Generalization plan**: How it would be adapted (what to remove, what to generalize)
 - **Proposed name**: A clear name for the generalized workflow
 
+The adapted workflow should retain the core value of the original while being applicable to a wide range of repositories. The documentation should clearly explain the workflow's purpose, how it works, and how to use it.
+
+Do not include any "## Generalization Notes" or "## Adaptation Notes" sections in the docs page, do not include a link back to the original gh-aw workflow in the docs. You can include a link to the blog entry if you think it adds value, but it's not essential.
+
 If no good candidate was found this run, that is fine. Use the `noop` safe output to explain what you checked and why nothing was suitable.
 
 ### Step 5: Update memory
