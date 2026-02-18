@@ -120,13 +120,13 @@ Hey @alice 👋 — thanks for working on the auth refactor! Here are a few thin
 
 If you'd like a hand, you can assign this prompt to your coding agent:
 
-````prompt
+` `` prompt
 Add unit tests for the rate-limiting middleware in src/auth/limiter.ts.
 Cover the following scenarios:
 1. Request under the limit — should pass through.
 2. Request at the limit — should return 429.
 3. Limit reset after window expires.
-````
+` ``
 ```
 
 ## Important
