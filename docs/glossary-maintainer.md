@@ -132,26 +132,9 @@ When the workflow finds new terms, it creates a PR like:
 - PR #123: Implement safe-outputs validation
 ```
 
-## Source and Success Rate
+## Source
 
-This workflow is adapted from Peli's Agent Factory, where it achieved:
-
-- **100% merge rate** (10 out of 10 PRs merged)
-- **Perfect accuracy** in identifying relevant terminology
-- **High value** for documentation consistency
-
-Source: [Glossary Maintainer](https://github.com/github/gh-aw/blob/v0.45.5/.github/workflows/glossary-maintainer.md) from [github/gh-aw](https://github.com/github/gh-aw)
-
-Read more: [Meet the Workflows: Continuous Documentation](https://github.github.com/gh-aw/blog/2026-01-13-meet-the-workflows-documentation/)
-
-## Generalization Notes
-
-This workflow has been adapted from the gh-aw repository to work with any project:
-
-- **Flexible glossary location**: Automatically finds glossary files in common locations
-- **Structure-agnostic**: Works with alphabetical or categorical organization
-- **No external dependencies**: Doesn't require Serena or project-specific tools
-- **Universal terminology**: Identifies terms based on usage patterns, not hard-coded lists
+This workflow is adapted from Peli's Agent Factory. Read more: [Meet the Workflows: Continuous Documentation](https://github.github.com/gh-aw/blog/2026-01-13-meet-the-workflows-documentation/)
 
 ## Use Cases
 
