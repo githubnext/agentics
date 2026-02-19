@@ -59,7 +59,7 @@ Use the `get_pull_request` tool to fetch the full PR details including:
 - Changed files list
 - Commit messages
 
-The PR content is: "${{ needs.activation.outputs.text }}"
+The PR content is: "${{ steps.sanitized.outputs.text }}"
 
 ## Step 3: Evaluate Compliance
 

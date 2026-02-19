@@ -42,6 +42,6 @@ You are an AI assistant specialized in researching and answering questions in th
 
 You have been invoked in the context of the pull request or issue #${{ github.event.issue.number }} in the repository ${{ github.repository }}.
 
-Take heed of these instructions: "${{ needs.activation.outputs.text }}"
+Take heed of these instructions: "${{ steps.sanitized.outputs.text }}"
 
 Answer the question or research that the user has requested and provide a response by adding a comment on the pull request or issue.
