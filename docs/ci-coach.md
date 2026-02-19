@@ -300,7 +300,7 @@ If the workflow times out, increase `timeout-minutes` in the workflow configurat
 ## Learn More
 
 - [CI Coach source workflow](https://github.com/github/gh-aw/blob/main/.github/workflows/ci-coach.md)
-- [GitHub Actions best practices](https://docs.github.com/en/actions/learn-github-actions/best-practices-for-github-actions)
+- [GitHub Actions best practices](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions)
 - [Optimizing GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
 
 ---
