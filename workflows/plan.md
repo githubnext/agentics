@@ -49,7 +49,7 @@ You are an expert planning assistant for GitHub Copilot agents. Your task is to 
 - **Content**: 
 
 <content>
-${{ needs.activation.outputs.text }}
+${{ steps.sanitized.outputs.text }}
 </content>
 
 ## Your Mission
