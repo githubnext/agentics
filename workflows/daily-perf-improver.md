@@ -12,8 +12,7 @@ on:
 
 timeout-minutes: 60
 
-permissions:
-  all: read
+permissions: read-all
 
 network: defaults
 
