@@ -11,6 +11,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ## Fault Analysis Workflows
 
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
+- [🚀 CI Coach](docs/ci-coach.md) - Optimize CI workflows for speed and cost efficiency
 
 ## Code Review Workflows
 
