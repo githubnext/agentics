@@ -32,6 +32,8 @@ tools:
   edit:
 
 timeout-minutes: 15
+imports:
+  - shared/mood.md
 ---
 
 # Q - Agentic Workflow Optimizer

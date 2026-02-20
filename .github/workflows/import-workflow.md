@@ -98,6 +98,8 @@ The workflow from the source repository may contain project-specific references.
 - Keep the core value and behavior of the workflow intact
 - Preserve the frontmatter structure (triggers, permissions, safe-outputs, tools, timeout)
 - **Preserve custom agent references** (engine.agent and imports) if they were imported
+- **Remove `{{#runtime-import? ...}}` macros** from the workflow body (e.g. `{{#runtime-import? .github/shared-instructions.md}}`); these reference source-project-specific files that do not exist in this repository
+- **Remove HTML comments about runtime importing** such as `<!-- This prompt will be imported in the agentic workflow ... at runtime. -->` and `<!-- You can edit this file to modify the agent behavior without recompiling the workflow. -->`; these are source-project-specific annotations that do not apply to the workflow library format used here
 
 Save the adapted workflow to `workflows/<workflow-name>.md`.
 

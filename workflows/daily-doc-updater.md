@@ -29,6 +29,9 @@ safe-outputs:
     labels: [documentation, automation]
     draft: false
 
+imports:
+  - shared/mood.md
+
 ---
 
 # Daily Documentation Updater

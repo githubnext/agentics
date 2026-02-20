@@ -32,6 +32,9 @@ tools:
 
 timeout-minutes: 10
 
+imports:
+  - shared/mood.md
+
 ---
 
 # CI Failure Doctor

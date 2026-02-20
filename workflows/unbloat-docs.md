@@ -74,6 +74,8 @@ safe-outputs:
 
 # Timeout
 timeout-minutes: 30
+imports:
+  - shared/mood.md
 ---
 
 # Documentation Unbloat Workflow

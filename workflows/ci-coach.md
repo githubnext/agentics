@@ -20,6 +20,8 @@ safe-outputs:
     expires: 2d
     title-prefix: "[ci-coach] "
 timeout-minutes: 30
+imports:
+  - shared/mood.md
 ---
 
 # CI Optimization Coach

@@ -13,6 +13,7 @@ permissions:
 tracker-id: code-simplifier
 
 imports:
+  - shared/mood.md
   - shared/reporting.md
 
 safe-outputs:
@@ -28,9 +29,6 @@ tools:
 timeout-minutes: 30
 strict: true
 ---
-
-<!-- This prompt will be imported in the agentic workflow .github/workflows/code-simplifier.md at runtime. -->
-<!-- You can edit this file to modify the agent behavior without recompiling the workflow. -->
 
 # Code Simplifier Agent
 

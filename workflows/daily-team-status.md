@@ -25,6 +25,8 @@ safe-outputs:
     title-prefix: "[team-status] "
     labels: [report, daily-status]
     # close-older-issues: true TODO
+imports:
+  - shared/mood.md
 ---
 
 # Daily Team Status

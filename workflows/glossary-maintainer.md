@@ -34,6 +34,9 @@ tools:
 
 timeout-minutes: 20
 
+imports:
+  - shared/mood.md
+
 ---
 
 # Glossary Maintainer
