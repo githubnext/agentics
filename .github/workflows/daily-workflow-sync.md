@@ -18,6 +18,7 @@ steps:
     uses: actions/checkout@v4
     with:
       fetch-depth: 0
+      persist-credentials: false
 
   - name: Install gh-aw extension
     run: gh extension install github/gh-aw || gh extension upgrade github/gh-aw

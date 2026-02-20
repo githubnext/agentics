@@ -36,6 +36,9 @@ tools:
 steps:
   - name: Checkout repository
     uses: actions/checkout@v5
+    with:
+      fetch-depth: 0
+      persist-credentials: false
 
   - name: Check if action.yml exists
     id: check_build_steps_file

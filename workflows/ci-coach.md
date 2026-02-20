@@ -1,20 +1,27 @@
 ---
 description: Daily CI optimization coach that analyzes GitHub Actions workflows for efficiency improvements and cost reduction opportunities
+
 on:
   schedule:
     - cron: daily
   workflow_dispatch:
+
 permissions:
   contents: read
   actions: read
   pull-requests: read
+  issues: read
+
 tracker-id: ci-coach-daily
+
 engine: copilot
+
 tools:
   github:
     toolsets: [default]
   bash: true
   web-fetch:
+
 safe-outputs:
   create-pull-request:
     expires: 2d
@@ -135,22 +142,14 @@ If no significant improvements are found:
      needs: [build]  # Both run in parallel after build
    ```
 
-2. **Dependency Caching**
-   ```yaml
-   - uses: actions/cache@v4
-     with:
-       path: ~/.cache/pip
-       key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-   ```
-
-3. **Matrix Balancing**
+2. **Matrix Balancing**
    ```yaml
    # Balance test distribution across matrix jobs
    matrix:
      group: [1, 2, 3, 4]  # Evenly distributed
    ```
 
-4. **Path Filtering**
+3. **Path Filtering**
    ```yaml
    on:
      push:
