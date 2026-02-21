@@ -1,4 +1,3 @@
-````markdown
 # 🤖 Repo Assist
 
 > For an overview of all available workflows, see the [main README](../README.md).
@@ -29,13 +28,19 @@ gh aw run repo-assist
 graph LR
     A[Read Memory] --> B[Triage Issues]
     B --> C[Fix Bugs via PR]
-    C --> D[Propose Improvements]
-    D --> E[Update Own PRs]
-    E --> F[Nudge Stale PRs]
-    F --> G[Manage Labels]
-    G --> H[Prepare Releases]
-    H --> I[Welcome Contributors]
-    I --> J[Update Activity Summary]
+    B --> D[Propose Improvements]
+    B --> E[Update Own PRs]
+    B --> F[Nudge Stale PRs]
+    B --> G[Manage Labels]
+    B --> H[Prepare Releases]
+    B --> I[Welcome Contributors]
+    C --> J[Update Activity Summary]
+        D --> J
+        E --> J
+        F --> J
+        G --> J
+        H --> J
+        I --> J
     J --> K[Save Memory]
 ````
 
@@ -148,4 +153,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - 🔀 **Merge PR** #45: Simple null check fix, tests pass — [Review](link)
 - ✅ **Close issue** #38: Duplicate of #42 — [View](link)
 ```
-````
