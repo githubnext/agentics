@@ -8,14 +8,15 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
 
-## Fault Analysis Workflows
+### Fault Analysis Workflows
 
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🚀 CI Coach](docs/ci-coach.md) - Optimize CI workflows for speed and cost efficiency
 
-## Code Review Workflows
+### Code Review Workflows
 
 - [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
+- [😤 Grumpy Reviewer](docs/grumpy-reviewer.md) - On-demand opinionated code review by a grumpy but thorough senior developer
 
 ### Research, Status & Planning Workflows
 
