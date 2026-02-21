@@ -1,7 +1,4 @@
 ---
-imports:
-  - shared/formatting.md
----
 
 ## Report Formatting
 

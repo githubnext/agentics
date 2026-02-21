@@ -190,6 +190,7 @@ If logs show excessive repetitive tool calls:
 Example of creating a shared import:
 ```yaml
 imports:
+  - shared/formatting.md
   - shared/reporting.md
 ```
 
