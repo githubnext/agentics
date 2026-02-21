@@ -1,5 +1,3 @@
----
-
 ## Report Formatting
 
 Follow the content structure and formatting guidelines from the imported formatting fragment above.
