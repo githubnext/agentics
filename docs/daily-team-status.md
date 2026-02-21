@@ -22,6 +22,16 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-team-status
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Gather Recent Activity] --> B[Analyze Contributions]
+    B --> C[Identify Highlights]
+    C --> D[Generate Insights]
+    D --> E[Create Status Issue]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. It will automatically gather repository activity and create daily status reports. You can edit it to customize the tone, included metrics, and reporting frequency.

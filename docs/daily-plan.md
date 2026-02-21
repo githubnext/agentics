@@ -16,6 +16,17 @@ gh aw add-wizard githubnext/agentics/daily-plan
 
 This walks you through adding the workflow to your repository and running the workflow for the first time.
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Read Repository] --> B[Analyze PRs & Issues]
+    B --> C[Assess Priorities]
+    C --> D{Plan Exists?}
+    D -->|No| E[Create Planning Issue]
+    D -->|Yes| F[Update Planning Issue]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. 

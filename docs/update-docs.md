@@ -22,6 +22,18 @@ You can start a run of this workflow immediately by running:
 gh aw run update-docs
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Push to Main] --> B[Analyze Changes]
+    B --> C[Generate Docs]
+    C --> D{Updates Needed?}
+    D -->|Yes| E[Create Doc Branch]
+    E --> F[Create PR]
+    D -->|No| G[Report: Docs Current]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. You can configure documentation frameworks, documentation structure, themes, files, directories by editing the workflow file.

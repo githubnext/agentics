@@ -22,6 +22,18 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-doc-updater
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Scan Recent PRs] --> B[Find Code Changes]
+    B --> C[Identify Doc Gaps]
+    C --> D{Updates Needed?}
+    D -->|Yes| E[Update Documentation]
+    E --> F[Create PR]
+    D -->|No| G[Report: Docs Current]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. It automatically:

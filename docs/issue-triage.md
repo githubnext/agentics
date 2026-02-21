@@ -20,6 +20,17 @@ You must also [choose a coding agent](https://github.github.com/gh-aw/reference/
 
 You can't start a run of this workflow directly as it is triggered in the context of an issue.
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Issue Created/Reopened] --> B[Analyze Content]
+    B --> C[Check Related Items]
+    C --> D[Categorize Issue]
+    D --> E[Add Labels]
+    E --> F[Post Triage Comment]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. You can edit it to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.

@@ -24,6 +24,17 @@ gh aw run daily-test-improver
 
 ## How It Works
 
+````mermaid
+graph LR
+    A[Research Testing Setup] --> B[Analyze Coverage]
+    B --> C[Select Target Area]
+    C --> D[Write New Tests]
+    D --> E[Validate Tests]
+    E --> F{Tests Pass?}
+    F -->|Yes| G[Create Draft PR]
+    F -->|No| H[Create Bug Issue]
+````
+
 The workflow operates in two phases:
 
 **Phase 1 - Testing Research:** On the first run, the workflow researches the repository's testing landscape, identifies build and coverage commands, and creates a discussion with the plan. Memory notes are stored persistently in a `memory/daily-test-improver` branch for future runs.

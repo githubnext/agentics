@@ -20,6 +20,17 @@ You must also [choose a coding agent](https://github.github.com/gh-aw/reference/
 
 You can't start a run of this workflow directly as it is triggered automatically when issues, comments, or pull requests are created.
 
+## How It Works
+
+````mermaid
+graph LR
+    A[New Issue/PR/Comment] --> B[Analyze Content]
+    B --> C{Spam or<br/>AI-Generated?}
+    C -->|Spam| D[Add Label & Hide]
+    C -->|AI-Generated| E[Add ai-generated Label]
+    C -->|Clean| F[Add ai-inspected Label]
+````
+
 ## Configuration
 
 This workflow works out of the box with sensible defaults. You can customize:

@@ -20,6 +20,16 @@ This walks you through adding the workflow to your repository. After merging the
 gh aw run dependabot-issue-bundler
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Check Dependabot Alerts] --> B[Group by Ecosystem]
+    B --> C{Alerts Found?}
+    C -->|Yes| D[Create/Update Issues]
+    C -->|No| E[Report: All Clear]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. Configure the workflow by editing it.

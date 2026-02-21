@@ -16,6 +16,17 @@ or by writing a comment:
 /pr-fix Please add more tests.
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[/pr-fix Command] --> B[Analyze CI Failures]
+    B --> C[Identify Root Cause]
+    C --> D[Implement Fix]
+    D --> E[Push to Branch]
+    E --> F[Comment on PR]
+````
+
 ## Installation
 
 ```bash

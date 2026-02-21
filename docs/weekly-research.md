@@ -16,6 +16,17 @@ gh aw add-wizard githubnext/agentics/weekly-research
 
 This walks you through adding the workflow to your repository. 
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Monday Morning] --> B[Search Industry News]
+    B --> C[Analyze Trends]
+    C --> D[Gather Team Updates]
+    D --> E[Generate Report]
+    E --> F[Create Research Issue]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. You customize output format, research topics, report length, focus areas or to adjust frequency or timing by editing the workflow file.

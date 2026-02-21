@@ -14,6 +14,19 @@ The Link Checker is an automated agentic workflow that:
 
 ## How it works
 
+````mermaid
+graph LR
+    A[Scan Markdown Files] --> B[Extract Links]
+    B --> C[Test Each Link]
+    C --> D{Broken?}
+    D -->|Yes| E[Search for Replacement]
+    E --> F{Fixable?}
+    F -->|Yes| G[Update Link]
+    F -->|No| H[Add to Cache]
+    D -->|No| I[Skip]
+    G --> J[Create PR]
+````
+
 ### Pre-Processing Step (Scripting)
 
 Before the AI agent runs, a bash script:

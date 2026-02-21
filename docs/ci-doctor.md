@@ -16,6 +16,18 @@ gh aw add-wizard githubnext/agentics/ci-doctor
 
 This walks you through adding the workflow to your repository.
 
+## How It Works
+
+````mermaid
+graph LR
+    A[CI Failure Detected] --> B[Collect Logs]
+    B --> C[Analyze Root Cause]
+    C --> D[Search for Patterns]
+    D --> E{Solution Found?}
+    E -->|Yes| F[Create Investigation Issue]
+    E -->|No| G[Report: Needs Human Review]
+````
+
 ## Configuration
 
 You can specify which workflows to monitor (currently monitors "Daily Perf Improver" and "Daily Test Improver") by editing the workflow directly.
