@@ -1,6 +1,6 @@
 ---
 imports:
-  - shared/formatting.md
+  - formatting.md
 ---
 
 ## Report Formatting
