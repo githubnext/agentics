@@ -50,7 +50,7 @@ The workflow operates through ten coordinated tasks each run:
 
 ### Task 1: Triage and Comment on Open Issues
 
-Repo Assist reviews open issues and comments **only when it has something genuinely valuable to add**. It identifies issue types (bug reports, feature requests, questions) and provides helpful responses while avoiding noise.
+Repo Assist reviews open issues and comments **only when it has something genuinely valuable to add**. It identifies issue types (bug reports, feature requests, questions) and provides helpful responses while avoiding noise. It processes up to 30 issues per run and saves its position so each run continues from where the last one left off, systematically covering the entire backlog over time. It also re-engages with issues when new human comments have been added since its last response.
 
 ### Task 2: Fix Issues via Pull Requests
 
@@ -128,12 +128,13 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 
 ## Guidelines Repo Assist Follows
 
-- **Quality over quantity**: Silence is preferable to noise
+- **Quality over quantity**: Silence is preferable to noise on any individual action
+- **Systematic backlog coverage**: Works through all open issues across runs using a memory-backed cursor
 - **No breaking changes**: Never changes public APIs without explicit approval
 - **No new dependencies**: Discusses in an issue first
 - **Small, focused PRs**: One concern per PR
 - **AI transparency**: Every output includes robot emoji disclosure
-- **Anti-spam**: Never posts repeated or follow-up comments to itself
+- **Anti-spam**: Never posts repeated or follow-up comments to itself; re-engages only when new human comments appear
 - **Build and test verification**: Never creates PRs with failing builds
 
 ## Example Monthly Activity Issue
