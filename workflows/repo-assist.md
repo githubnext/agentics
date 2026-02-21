@@ -39,13 +39,14 @@ safe-outputs:
     labels: [automation, repo-assist]
     max: 3
   update-issue:
-    target: "[Repo Assist]*"
+     target: "*"
+     #title-prefix: "[Repo Assist] "
   add-labels:
-    allowed: [bug, enhancement, "help wanted", "good first issue"]
+    allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic"]
     max: 3                       # max labels (default: 3)
     target: "*"                  # "triggering" (default), "*", or number
   remove-labels:
-    allowed: [bug, enhancement, "help wanted", "good first issue"]
+    allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic"]
     max: 3                       # max labels (default: 3)
     target: "*"                  # "triggering" (default), "*", or number
 
@@ -125,7 +126,7 @@ Note: In issue comments and PR descriptions, identify yourself as "Repo Assist".
       - Restatements of what the issue author already said
       - Follow-ups to your own previous comments
    g. **AI Disclosure**: Begin every comment with a brief disclosure, e.g.:
-      > 🤖 *This is an automated response from the repository's AI assistant.*
+      > 🤖 *This is an automated response from RepoAssist, the repository's AI assistant.*
 3. Update your memory to note which issues you commented on. **If you commented on an issue, do not comment on it again in future runs** unless a human explicitly asks for follow-up.
 
 ### Task 2: Fix Issues via Pull Requests
@@ -305,7 +306,7 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
 
 1. **Find or create the activity issue**:
    a. Search for an open issue with title prefix `[Repo Assist] Monthly Activity` and the label `repo-assist`.
-   b. If one exists for the current month, update it. If it exists but is for a previous month, close it and create a new one for the current month.
+   b. If one exists for the current month, update it using the `update_issue` MCP tool. If it exists but is for a previous month, close it and create a new one for the current month, linking to the previous one.
    c. If none exists, create a new issue.
 2. **Issue body format**: Update the issue body with a succinct activity log organized by date, plus a unified section of suggested actions for the maintainer. Use the following structure:
 
