@@ -27,14 +27,16 @@ gh aw run repo-assist
 ````mermaid
 graph LR
     A[Read Memory] --> B[Triage Issues]
-    B --> C[Fix Bugs via PR]
-    B --> D[Propose Improvements]
-    B --> E[Update Own PRs]
-    B --> F[Nudge Stale PRs]
-    B --> G[Manage Labels]
-    B --> H[Prepare Releases]
-    B --> I[Welcome Contributors]
-    C --> J[Update Activity Summary]
+    A --> C[Fix Bugs via PR]
+    A --> D[Propose Improvements]
+    A --> E[Update Own PRs]
+    A --> F[Nudge Stale PRs]
+    A --> G[Manage Labels]
+    A --> H[Prepare Releases]
+    A --> I[Welcome Contributors]
+    A --> J[Update Activity Summary]
+        B --> J
+        C --> J
         D --> J
         E --> J
         F --> J
