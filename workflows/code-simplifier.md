@@ -12,9 +12,6 @@ permissions:
 
 tracker-id: code-simplifier
 
-imports:
-  - shared/reporting.md
-
 safe-outputs:
   create-pull-request:
     title-prefix: "[code-simplifier] "
