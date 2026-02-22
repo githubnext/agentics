@@ -1,6 +1,8 @@
 # 🔍 Duplicate Code Detector
 
-The **Duplicate Code Detector** workflow automatically identifies duplicate code patterns across your codebase and suggests refactoring opportunities to improve maintainability.
+> For an overview of all available workflows, see the [main README](../README.md).
+
+The [Duplicate Code Detector workflow](../workflows/duplicate-code-detector.md?plain=1) automatically identifies duplicate code patterns across your codebase and suggests refactoring opportunities to improve maintainability.
 
 ## What It Does
 

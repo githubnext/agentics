@@ -1,6 +1,8 @@
 # 🔗 Link Checker
 
-**Workflow file:** [`.github/workflows/link-checker.md`](../.github/workflows/link-checker.md)
+> For an overview of all available workflows, see the [main README](../README.md).
+
+The [Link Checker workflow](../workflows/link-checker.md?plain=1) is an automated agentic workflow that scans documentation for broken links and fixes them automatically.
 
 ## What It Does
 

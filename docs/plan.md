@@ -1,5 +1,7 @@
 # 📋 Plan Command
 
+> For an overview of all available workflows, see the [main README](../README.md).
+
 The Plan Command is an agentic workflow that helps break down complex issues or discussions into manageable, actionable sub-tasks for GitHub Copilot agents.
 
 > [!WARNING]

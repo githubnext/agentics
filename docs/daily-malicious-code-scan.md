@@ -1,6 +1,8 @@
 # 🔍 Daily Malicious Code Scan
 
-The **Daily Malicious Code Scan** workflow automatically reviews recent code changes for suspicious patterns that could indicate malicious activity, supply chain attacks, or unintended security regressions.
+> For an overview of all available workflows, see the [main README](../README.md).
+
+The [Daily Malicious Code Scan workflow](../workflows/daily-malicious-code-scan.md?plain=1) automatically reviews recent code changes for suspicious patterns that could indicate malicious activity, supply chain attacks, or unintended security regressions.
 
 ## What It Does
 

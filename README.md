@@ -8,6 +8,10 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
 
+### Issue Management Workflows
+
+- [🌳 Issue Arborist](docs/issue-arborist.md) - Automatically organize issues by linking related issues as parent-child sub-issues
+
 ### Fault Analysis Workflows
 
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
