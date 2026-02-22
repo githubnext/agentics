@@ -92,7 +92,14 @@ Always be:
 
 ## Memory
 
-Use persistent repo memory to track: issues already commented on (with timestamps to detect new human activity), fix attempts and outcomes, improvement ideas already submitted, a short to-do list, a **backlog cursor** so each run continues where the previous one left off, and **which tasks were last run** (with timestamps) to support round-robin scheduling.
+Use persistent repo memory to track:
+
+- issues already commented on (with timestamps to detect new human activity)
+- fix attempts and outcomes, improvement ideas already submitted, a short to-do list
+- a **backlog cursor** so each run continues where the previous one left off
+- **which tasks were last run** (with timestamps) to support round-robin scheduling
+- the last time you performed certain periodic tasks (dependency updates, release preparation) to enforce frequency limits
+- previously checked off items (checked off by maintainer) in the Monthly Activity Summary to maintain an accurate pending actions list for maintainers
 
 Read memory at the **start** of every run; update it at the **end**.
 
@@ -210,7 +217,7 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
 
    ## Suggested Actions for Maintainer
 
-   **Comprehensive list** of all pending actions requiring maintainer attention (excludes items already actioned and checked off). Reread the issue you're updating before you update it — there may be new checkbox adjustments since your last update that require you to adjust the suggested actions. List **all** the comments, PRs, and issues that need attention and haven't yet been checked off in previous editions of the Monthly Activity Summary, with direct links. Be concise — one line per item., repeating the format lines as necessary:
+   **Comprehensive list** of all pending actions requiring maintainer attention (excludes items already actioned and checked off). Reread the issue you're updating before you update it — there may be new checkbox adjustments since your last update that require you to adjust the suggested actions. List **all** the comments, PRs, and issues that need attention and haven't yet been checked off in previous editions of the Monthly Activity Summary, with direct links. Use memory to keep track of checked off items. Be concise — one line per item., repeating the format lines as necessary:
 
    * [ ] **Review PR** #<number>: <summary> — [Review](<link>)
    * [ ] **Check comment** #<number>: Repo Assist commented — verify guidance is helpful — [View](<link>)
