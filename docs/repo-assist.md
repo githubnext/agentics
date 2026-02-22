@@ -154,6 +154,7 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 ## Suggested Actions for Maintainer
 
 * [ ] **Review PR** #45: Fix null check in config parser — [Review](link)
+* [ ] **Check comment** #42: Repo Assist commented — verify guidance is helpful — [View](link)
 * [ ] **Close issue** #38: Duplicate of #42 — [View](link)
 
 ## Future Work for Repo Assist

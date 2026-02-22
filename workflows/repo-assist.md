@@ -20,7 +20,10 @@ timeout-minutes: 60
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+  - defaults
+  - dotnet
 
 safe-outputs:
   add-comment:
@@ -31,24 +34,27 @@ safe-outputs:
     draft: true
     title-prefix: "[Repo Assist] "
     labels: [automation, repo-assist]
+    max: 4
   push-to-pull-request-branch:
-    target: "*"                 # "triggering" (default), "*", or number
+    target: "*"
     title-prefix: "[Repo Assist] "
+    max: 4
   create-issue:
     title-prefix: "[Repo Assist] "
     labels: [automation, repo-assist]
-    max: 3
+    max: 4
   update-issue:
-     target: "*"
-     #title-prefix: "[Repo Assist] "
+    target: "*"
+    title-prefix: "[Repo Assist] "
+    max: 1
   add-labels:
     allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
     max: 30
-    target: "*"                  # "triggering" (default), "*", or number
+    target: "*" 
   remove-labels:
     allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
-    max: 30
-    target: "*"                  # "triggering" (default), "*", or number
+    max: 5
+    target: "*" 
 
 tools:
   web-fetch:
@@ -202,6 +208,7 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
    Based on current repository state, consider these **pending** actions (excludes items already actioned):
 
    * [ ] **Review PR** #<number>: <summary> — [Review](<link>)
+   * [ ] **Check comment** #<number>: Repo Assist commented — verify guidance is helpful — [View](<link>)
    * [ ] **Merge PR** #<number>: <reason> — [Review](<link>)
    * [ ] **Close issue** #<number>: <reason> — [View](<link>)
    * [ ] **Close PR** #<number>: <reason> — [View](<link>)
