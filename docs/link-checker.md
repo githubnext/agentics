@@ -2,7 +2,7 @@
 
 **Workflow file:** [`.github/workflows/link-checker.md`](../.github/workflows/link-checker.md)
 
-## What it does
+## What It Does
 
 The Link Checker is an automated agentic workflow that:
 
@@ -12,7 +12,20 @@ The Link Checker is an automated agentic workflow that:
 4. **Remembers unfixable links** using cache memory to avoid repeated attempts
 5. **Creates pull requests** with the fixed links when changes are made
 
-## How it works
+## How It Works
+
+````mermaid
+graph LR
+    A[Scan Markdown Files] --> B[Extract Links]
+    B --> C[Test Each Link]
+    C --> D{Broken?}
+    D -->|Yes| E[Search for Replacement]
+    E --> F{Fixable?}
+    F -->|Yes| G[Update Link]
+    F -->|No| H[Add to Cache]
+    D -->|No| I[Skip]
+    G --> J[Create PR]
+````
 
 ### Pre-Processing Step (Scripting)
 
@@ -53,7 +66,7 @@ The workflow maintains a persistent cache of unfixable broken links:
 
 This prevents the workflow from repeatedly attempting to fix links that are permanently broken.
 
-## When it runs
+## When It Runs
 
 - **Daily on weekdays** (automatic fuzzy scheduling)
 - **Manually** via workflow_dispatch (automatically enabled for fuzzy schedules)

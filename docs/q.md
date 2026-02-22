@@ -16,6 +16,18 @@ or by writing a comment with a specific request:
 /q Analyze and optimize all workflows in this repository
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[/q Command] --> B[Analyze Workflows]
+    B --> C[Check Logs & Metrics]
+    C --> D{Issues Found?}
+    D -->|Yes| E[Optimize Configuration]
+    E --> F[Create PR]
+    D -->|No| G[Report: All Optimized]
+````
+
 ## Installation
 
 ```bash

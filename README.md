@@ -20,6 +20,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ### Research, Status & Planning Workflows
 
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
+- [📊 Weekly Issue Summary](docs/weekly-issue-summary.md) - Weekly issue activity report with trend charts and recommendations
 - [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
 - [👥 Daily Team Status](docs/daily-team-status.md) - Create upbeat daily team activity summaries with productivity insights
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
@@ -60,10 +61,15 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [⚡ Daily Performance Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 - [🔥 Daily Backlog Burner](docs/daily-backlog-burner.md) - Systematically manage and reduce backlog through strategic cleanup
 
+## Security Workflows
+
+- [🔍 Daily Malicious Code Scan](docs/daily-malicious-code-scan.md) - Daily scan of recent code changes for suspicious patterns indicating malicious activity or supply chain attacks
+
 ## Maintainer
 
 - [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
 - [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
+- [🤖 Repo Assist](docs/repo-assist.md) - Daily repository assistant that triages issues, fixes bugs, proposes improvements, and maintains activity summaries
 
 ## Meta-Workflows
 

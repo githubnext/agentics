@@ -22,6 +22,18 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-backlog-burner
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Research Backlog] --> B[Categorize Items]
+    B --> C[Prioritize]
+    C --> D{Action Needed?}
+    D -->|Close| E[Close Stale Items]
+    D -->|Fix| F[Create Draft PR]
+    D -->|Discuss| G[Create Discussion]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. It will automatically analyze your backlog and suggest items for closure or resolution. You can edit it to customize prioritization criteria and decision-making logic.

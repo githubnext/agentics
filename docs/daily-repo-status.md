@@ -22,6 +22,17 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-repo-status
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Gather Activity Data] --> B[Analyze PRs & Issues]
+    B --> C[Check Workflows]
+    C --> D[Generate Metrics]
+    D --> E[Create Status Report]
+    E --> F[Close Old Reports]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. You can edit the workflow to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.

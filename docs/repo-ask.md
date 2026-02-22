@@ -16,6 +16,17 @@ or by writing a comment with a specific question:
 /repo-ask How does the authentication system work in this project?
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[/repo-ask Question] --> B[Analyze Repository]
+    B --> C[Search Codebase]
+    C --> D[Research Online]
+    D --> E[Compose Answer]
+    E --> F[Post Comment]
+````
+
 ## Installation
 
 ```bash

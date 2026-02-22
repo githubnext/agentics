@@ -16,6 +16,17 @@ gh aw add-wizard githubnext/agentics/daily-accessibility-review
 
 This walks you through adding the workflow to your repository.
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Scan Repository] --> B[Analyze Accessibility]
+    B --> C[Check WCAG 2.2]
+    C --> D{Issues Found?}
+    D -->|Yes| E[Create Issue Report]
+    D -->|No| F[Report: All Accessible]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box.

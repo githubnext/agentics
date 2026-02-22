@@ -13,6 +13,17 @@ When you comment `/plan` on an issue or discussion, this workflow analyzes the c
 - Are properly sequenced with dependencies considered
 - Can be completed independently by GitHub Copilot agents
 
+## How It Works
+
+````mermaid
+graph LR
+    A[/plan Command] --> B[Analyze Issue/Discussion]
+    B --> C[Break Down Work]
+    C --> D[Create Sub-Issues]
+    D --> E[Link to Parent]
+    E --> F[Assign to Copilot]
+````
+
 ## How to Use
 
 1. **In an Issue**: Comment `/plan` to break down the issue into sub-tasks

@@ -20,6 +20,21 @@ You must also [choose a coding agent](https://github.github.com/gh-aw/reference/
 
 You can trigger this workflow manually via workflow_dispatch or let it run on its configured schedule.
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Fetch Open PRs] --> B[Pre-filter Candidates]
+    B --> C[Check CONTRIBUTING.md]
+    C --> D{Compliant?}
+    D -->|Ready| E[Label: lgtm]
+    D -->|Needs Work| F[Add Feedback Comment]
+    D -->|Off Guidelines| G[Label: spam]
+    E --> H[Create Report Issue]
+    F --> H
+    G --> H
+````
+
 ## Configuration
 
 The workflow uses a pre-filtering step to intelligently select PRs for evaluation. You can customize:

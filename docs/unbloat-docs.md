@@ -30,6 +30,16 @@ Or trigger it in a pull request comment with:
 
 ## What It Does
 
+````mermaid
+graph LR
+    A[Scan Documentation] --> B[Identify Verbosity]
+    B --> C{Bloat Found?}
+    C -->|Yes| D[Remove Redundancy]
+    D --> E[Preserve Accuracy]
+    E --> F[Create PR]
+    C -->|No| G[Report: Docs are Lean]
+````
+
 The Documentation Unbloat workflow runs daily and can be triggered via `/unbloat` command in PR comments. It:
 
 1. **Scans Documentation** - Reviews markdown files in the repository for bloat
