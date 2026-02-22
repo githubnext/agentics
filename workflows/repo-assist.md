@@ -207,7 +207,7 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
 
    ## Suggested Actions for Maintainer
 
-   Based on current repository state, consider these **pending** actions (excludes items already actioned):
+   **Comprehensive list** of all pending actions requiring maintainer attention (excludes items already actioned and checked off). Reread the issue you're updating before you update it — there may be new checkbox adjustments since your last update that require you to adjust the suggested actions.:
 
    * [ ] **Review PR** #<number>: <summary> — [Review](<link>)
    * [ ] **Check comment** #<number>: Repo Assist commented — verify guidance is helpful — [View](<link>)
@@ -229,7 +229,13 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
    - Always use the exact format above. If the existing body uses a different format, rewrite it entirely.
    - **Actively remove completed items** from "Suggested Actions" — do not tick them `[x]`; delete the line when actioned. The checklist contains only pending items.
    - Use `* [ ]` checkboxes in "Suggested Actions". Never use plain bullets there.
-4. Use repo memory for the activity log. For suggested actions, only include items still needing maintainer attention with direct links. Keep all entries to one line.
+4. **Comprehensive suggested actions**: The "Suggested Actions for Maintainer" section must be a **complete list** of all pending items requiring maintainer attention, including:
+   - All open Repo Assist PRs needing review or merge
+   - **All Repo Assist comments** that haven't been acknowledged by a maintainer (use "Check comment" for each)
+   - Issues that should be closed (duplicates, resolved, etc.)
+   - PRs that should be closed (stale, superseded, etc.)
+   - Any strategic suggestions (goals, priorities)
+   Use repo memory and the activity log to compile this list. Include direct links for every item. Keep entries to one line each.
 5. Do not update the activity issue if nothing was done in the current run.
 
 ## Guidelines
