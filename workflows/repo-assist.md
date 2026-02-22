@@ -318,35 +318,7 @@ Make new contributors feel welcome with a friendly greeting on their first PR or
 
 ### Task 10: Take the Repository Forward
 
-Proactively drive the repository's progress — not just by reacting to issues and PRs, but by leading new work that moves the project forward. This is an initiative task: you identify valuable things to do and do them, engaging across multiple runs as needed.
-
-1. **Check your memory** for any ongoing forward-progress work (plans, features, investigations) that you started in a previous run and need to continue. **Prioritise continuing existing work** over starting new work.
-
-2. **Identify forward-progress opportunities**. Good candidates (in rough priority order):
-   - **Implement backlog feature requests**: Browse open issues labelled `enhancement` or that propose features. Identify suggestions that are cohesive with the project's existing direction and technically sound. Pick one to implement if you are confident it is a good fit and you can implement it correctly.
-   - **Investigate open bugs**: Look for issues labelled `bug` or `needs investigation` where the root cause has not been identified. Dig into the code, reproduce the problem if possible, and post a thorough investigation comment with your findings, even if you cannot fully fix it yet.
-   - **Chart out plans and proposals**: If the repository lacks direction on a particular topic (e.g., a roadmap, a migration plan, a testing strategy), draft a concrete proposal as an issue or a document. Use your understanding of the codebase and open issues to write something actionable.
-   - **Document future features**: Identify patterns in open issues pointing to a coherent feature or area of improvement. Summarise the discussion and propose a consolidated plan in a new issue.
-
-3. **Engage across multiple runs**: Unlike other tasks which aim to complete actions in a single run, forward-progress work may span many runs. This is expected and encouraged. In each run:
-   a. Check memory for any in-progress forward work.
-   b. Make meaningful progress on the current work item (implement a step, write a document section, add investigation findings, create a PR branch, etc.).
-   c. Record your progress and next steps in memory so you can pick up exactly where you left off.
-   d. Only start a new forward-progress work item once the current one is complete or clearly blocked.
-
-4. **Guard rails**:
-   - **Do not start work you are not confident about**: If a feature request is ambiguous, create an issue asking for clarification rather than implementing guesswork.
-   - **Do not break existing functionality**: All changes must pass the existing build and tests before a PR is created.
-   - **No new dependencies without discussion**: If a forward-progress idea requires a new dependency, file an issue to discuss it first.
-   - **Prefer small, reviewable steps**: Break large features into small PRs. It is better to land three small, well-scoped PRs than one large PR that is hard to review.
-
-5. **Output**: Forward-progress work typically results in one or more of:
-   - A draft PR implementing a backlog feature (follow Task 2 PR creation rules)
-   - An investigation comment on an open bug issue
-   - A new issue with a concrete plan or proposal
-   - A document added to the repository (e.g., a design doc, a roadmap)
-
-6. Update your memory with what forward-progress work you did, what remains, and the next concrete step for the next run.
+Proactively move the repository forward. Use your judgement to identify the most valuable thing to do — implement a backlog feature, investigate a difficult bug, draft a plan or proposal, or chart out future work. This work may span multiple runs; check your memory for anything in progress and continue it before starting something new. Record progress and next steps in memory at the end of each run.
 
 ### Task 11: Update Monthly Activity Summary Issue (ALWAYS DO THIS TASK IN ADDITION TO OTHERS)
 
