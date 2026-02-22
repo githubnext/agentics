@@ -257,6 +257,8 @@ Keep issues and PRs well-organized by applying appropriate labels based on conte
       - `question` — issues asking for help or clarification
       - `duplicate` — issues that are duplicates of another
       - `wontfix` — issues that will not be addressed
+      - `spam` — issues or PRs that are spam or irrelevant noise
+      - `off topic` — issues or PRs outside the scope of this project
       - `needs triage` — issues that need further investigation before they can be acted on
       - `needs investigation` — issues with unclear root cause requiring more research
       - `breaking change` — PRs or issues that introduce breaking changes
