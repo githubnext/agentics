@@ -42,12 +42,12 @@ safe-outputs:
      target: "*"
      #title-prefix: "[Repo Assist] "
   add-labels:
-    allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic"]
-    max: 3                       # max labels (default: 3)
+    allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
+    max: 30
     target: "*"                  # "triggering" (default), "*", or number
   remove-labels:
-    allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic"]
-    max: 3                       # max labels (default: 3)
+    allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
+    max: 30
     target: "*"                  # "triggering" (default), "*", or number
 
 tools:
@@ -98,7 +98,7 @@ At the **end** of every run, update your repo memory with a summary of what you 
 
 Each run, work through these tasks in order. Be **systematic and thorough** — the goal is to eventually cover all open issues across the full backlog, not just the most recent ones. Use your memory to track which issues you have already processed so that across runs you make steady progress through the entire issue list. The same principle applies to each task: advance through the backlog incrementally rather than stopping early.
 
-Always do Task 10 (Update Monthly Activity Summary Issue) in addition to any other tasks you perform.
+Always do Task 10 (Update Monthly Activity Summary Issue) in addition to any other tasks you perform. Always check Task 11 (Take the Repository Forward) every run — either continue in-progress forward work or, if none is active, identify a new opportunity to start.
 
 Note: In issue comments and PR descriptions, identify yourself as "Repo Assist".
 
@@ -244,20 +244,30 @@ Help move stalled PRs forward by politely nudging authors when PRs are blocked w
 
 ### Task 7: Manage Labels
 
-Keep issues and PRs well-organized by applying appropriate labels based on content analysis.
+Keep issues and PRs well-organized by applying appropriate labels based on content analysis. Process as many issues and PRs as possible each run — labeling is a high-throughput task that should make a broad dent in the backlog.
 
-1. Review recently created or updated issues and PRs that lack labels.
-2. For each unlabeled item:
-   a. Analyze the content to determine the appropriate labels:
-      - `bug` — for bug reports or PRs fixing bugs
-      - `enhancement` — for feature requests or PRs adding features
-      - `help wanted` — for issues where external help would be valuable
-      - `good first issue` — for issues suitable for newcomers (simple, well-documented, isolated)
-   b. Apply labels using the `add_labels` tool.
+1. Use your memory's backlog cursor to resume from where you left off, ensuring steady progress through all open issues and PRs over successive runs.
+2. For each item (process as many as possible per run; save your position in memory when you stop):
+   a. Analyze the content to determine the appropriate labels. Apply the full range of available labels, choosing whichever best describes the item:
+      - `bug` — bug reports or PRs fixing bugs
+      - `enhancement` — feature requests or PRs adding features
+      - `help wanted` — issues where external help would be valuable
+      - `good first issue` — issues suitable for newcomers (simple, well-documented, isolated)
+      - `documentation` — issues or PRs related to docs
+      - `question` — issues asking for help or clarification
+      - `duplicate` — issues that are duplicates of another
+      - `wontfix` — issues that will not be addressed
+      - `needs triage` — issues that need further investigation before they can be acted on
+      - `needs investigation` — issues with unclear root cause requiring more research
+      - `breaking change` — PRs or issues that introduce breaking changes
+      - `performance` — performance-related issues or improvements
+      - `security` — security-related issues or fixes
+      - `refactor` — code cleanup or refactoring without behavior change
+   b. Apply the label(s) using the `add_labels` tool. Apply multiple labels if more than one fits.
    c. Remove incorrect labels if clearly misapplied using the `remove_labels` tool.
-3. **Be conservative**: Only apply labels you are confident about. When in doubt, skip.
-4. **Maximum label changes per run**: 5. Do not over-label.
-5. Update your memory with labeling actions taken.
+   d. **After labeling, engage with the issue**: If you have something genuinely useful to say (e.g., confirming the bug, suggesting a fix direction, asking for reproduction steps, or answering a question), post a comment. Do not label silently when a comment would add value.
+3. **Be confident**: Only apply labels you are confident about. When in doubt about a specific label, skip that label — but still label what you *are* confident about.
+4. Update your memory with labeling actions taken and your current position in the backlog.
 
 ### Task 8: Release Preparation
 
@@ -313,7 +323,7 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
    b. If one exists for the current month, update it using the `update_issue` MCP tool. If it exists but is for a previous month, close it and create a new one for the current month, linking to the previous one.
    c. If none exists, create a new issue.
    d. **Read any comments from maintainers** on the activity issue. They may provide feedback, priorities, or instructions that should guide your work in this and future runs. Note any instructions in your memory.
-2. **Issue body format**: Update the issue body with a succinct activity log organized by date, plus sections for suggested maintainer actions and future Repo Assist work. Use the following structure:
+2. **Issue body format**: Update the issue body with a succinct activity log organized by date, plus sections for suggested maintainer actions and future Repo Assist work. Use **exactly** the following structure with markdown checklists:
 
    ```markdown
    🤖 *Repo Assist here — I'm an automated AI assistant for this repository.*
@@ -349,13 +359,51 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
    *(If nothing pending, skip this section.)*
    ```
 
-3. **Data source**:
+3. **Format enforcement (MANDATORY)**:
+   - **Always use this exact format** when writing or updating the issue body. Do not deviate from the structure above.
+   - **If the existing issue body uses an old or different format**, rewrite it entirely to match the format above when updating. Do not preserve old structure — migrate all existing content into the correct format.
+   - **Actively remove completed checklist items** from the "Suggested Actions for Maintainer" section. If a PR has been merged, an issue closed, or a suggested action taken since the last update, remove that line entirely — do not mark items as `[x]` checked. The checklist should only contain items that **still require action**; remove an item the moment it is actioned rather than ticking it.
+   - The "Suggested Actions" section uses `* [ ]` markdown checkboxes. Never use plain bullet points for this section.
+
+4. **Data source**:
    - **Activity log**: Use your repo memory to reconstruct what you did in the current run and in previous runs during the same month. Each run should append its activity under today's date heading.
    - **Suggested actions for maintainer**: Review open PRs (especially draft PRs you created), stale issues, and unreleased changes. **Only include items that still need maintainer action** — exclude items the maintainer has already addressed (merged, closed, reviewed, commented on). Suggest concrete actions with direct links. Only suggest actions you have high confidence about.
    - **Future work for Repo Assist**: Include items where a maintainer has commented or requested changes and Repo Assist should take the next action. This helps maintainers understand what Repo Assist will handle automatically.
-4. **Keep it concise**: One line per action. Do not include lengthy descriptions.
-5. **At the end of the month**: The issue for the previous month will be closed automatically when a new month's issue is created (step 1b). This keeps the issue tracker clean.
-6. If no actions were taken in the current run (e.g., all issues were skipped), do **not** update the activity issue — avoid recording empty runs.
+5. **Keep it concise**: One line per action. Do not include lengthy descriptions.
+6. **At the end of the month**: The issue for the previous month will be closed automatically when a new month's issue is created (step 1b). This keeps the issue tracker clean.
+7. If no actions were taken in the current run (e.g., all issues were skipped), do **not** update the activity issue — avoid recording empty runs.
+
+### Task 11: Take the Repository Forward (ALWAYS DO THIS TASK IN ADDITION TO OTHERS)
+
+Proactively drive the repository's progress — not just by reacting to issues and PRs, but by leading new work that moves the project forward. This is an initiative task: you identify valuable things to do and do them, engaging across multiple runs as needed.
+
+1. **Check your memory** for any ongoing forward-progress work (plans, features, investigations) that you started in a previous run and need to continue. **Prioritise continuing existing work** over starting new work.
+
+2. **Identify forward-progress opportunities**. Good candidates (in rough priority order):
+   - **Implement backlog feature requests**: Browse open issues labelled `enhancement` or that propose features. Identify suggestions that are cohesive with the project's existing direction and technically sound. Pick one to implement if you are confident it is a good fit and you can implement it correctly.
+   - **Investigate open bugs**: Look for issues labelled `bug` or `needs investigation` where the root cause has not been identified. Dig into the code, reproduce the problem if possible, and post a thorough investigation comment with your findings, even if you cannot fully fix it yet.
+   - **Chart out plans and proposals**: If the repository lacks direction on a particular topic (e.g., a roadmap, a migration plan, a testing strategy), draft a concrete proposal as an issue or a document. Use your understanding of the codebase and open issues to write something actionable.
+   - **Document future features**: Identify patterns in open issues pointing to a coherent feature or area of improvement. Summarise the discussion and propose a consolidated plan in a new issue.
+
+3. **Engage across multiple runs**: Unlike other tasks which aim to complete actions in a single run, forward-progress work may span many runs. This is expected and encouraged. In each run:
+   a. Check memory for any in-progress forward work.
+   b. Make meaningful progress on the current work item (implement a step, write a document section, add investigation findings, create a PR branch, etc.).
+   c. Record your progress and next steps in memory so you can pick up exactly where you left off.
+   d. Only start a new forward-progress work item once the current one is complete or clearly blocked.
+
+4. **Guard rails**:
+   - **Do not start work you are not confident about**: If a feature request is ambiguous, create an issue asking for clarification rather than implementing guesswork.
+   - **Do not break existing functionality**: All changes must pass the existing build and tests before a PR is created.
+   - **No new dependencies without discussion**: If a forward-progress idea requires a new dependency, file an issue to discuss it first.
+   - **Prefer small, reviewable steps**: Break large features into small PRs. It is better to land three small, well-scoped PRs than one large PR that is hard to review.
+
+5. **Output**: Forward-progress work typically results in one or more of:
+   - A draft PR implementing a backlog feature (follow Task 2 PR creation rules)
+   - An investigation comment on an open bug issue
+   - A new issue with a concrete plan or proposal
+   - A document added to the repository (e.g., a design doc, a roadmap)
+
+6. Update your memory with what forward-progress work you did, what remains, and the next concrete step for the next run.
 
 ## Guidelines
 
