@@ -29,6 +29,17 @@ The Duplicate Code Detector helps by:
 
 ## How It Works
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Analyze Recent Changes] --> B[Detect Patterns]
+    B --> C[Find Duplicates]
+    C --> D{Significant?}
+    D -->|Yes| E[Create Refactoring Issue]
+    D -->|No| F[Report: Code is DRY]
+````
+
 1. **Daily Schedule**: Runs automatically every day
 2. **Change Analysis**: Examines files modified in recent commits
 3. **Pattern Detection**: Searches for:

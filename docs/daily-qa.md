@@ -22,6 +22,17 @@ You can start a run of this workflow immediately by running:
 gh aw run daily-qa
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Read README/Tutorials] --> B[Follow Instructions]
+    B --> C[Test Build/Run]
+    C --> D{Issues Found?}
+    D -->|Yes| E[Create QA Issue]
+    D -->|No| F[Report: QA Passed]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. You can edit it to specify QA tasks, testing scenarios, reporting format, and frequency.

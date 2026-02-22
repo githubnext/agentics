@@ -28,6 +28,18 @@ To run repeatedly (at most one instance running at a time and sending a trigger 
 gh aw run daily-perf-improver --repeat 180
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Analyze Codebase] --> B[Identify Bottlenecks]
+    B --> C[Run Benchmarks]
+    C --> D{Improvements Found?}
+    D -->|Yes| E[Implement Optimizations]
+    E --> F[Create Draft PR]
+    D -->|No| G[Report: Performance OK]
+````
+
 ## Configuration
 
 1. The first run of the workflow will produce a pull request with inferred action pre-steps that need approval

@@ -30,6 +30,16 @@ The Code Simplifier workflow runs daily and:
 
 ## How It Works
 
+````mermaid
+graph LR
+    A[Find Recent Changes] --> B[Analyze Code Quality]
+    B --> C{Simplifications<br/>Possible?}
+    C -->|Yes| D[Apply Improvements]
+    D --> E[Run Tests]
+    E --> F[Create PR]
+    C -->|No| G[Report: Code is Clean]
+````
+
 The workflow focuses exclusively on **recently modified code** (last 24 hours), making it a continuous cleanup process that trails behind active development:
 
 ### Simplification Principles

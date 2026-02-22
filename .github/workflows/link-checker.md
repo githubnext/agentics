@@ -14,6 +14,7 @@ steps:
     uses: actions/checkout@v4
     with:
       fetch-depth: 0
+      persist-credentials: false
 
   - name: Check and test all documentation links
     id: link-check

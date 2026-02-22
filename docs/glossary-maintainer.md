@@ -34,6 +34,18 @@ The Glossary Maintainer workflow runs daily on weekdays and:
 
 ## How It Works
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Scan Recent Changes] --> B[Identify New Terms]
+    B --> C[Check Glossary]
+    C --> D{Updates Needed?}
+    D -->|Yes| E[Add/Update Definitions]
+    E --> F[Create PR]
+    D -->|No| G[Report: Glossary Current]
+````
+
 ### Incremental vs Full Scans
 
 - **Daily (Mon-Fri)**: Incremental scan of last 24 hours

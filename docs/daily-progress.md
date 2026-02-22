@@ -30,6 +30,18 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 
 ## How it Works
 
+````mermaid
+graph LR
+    A[Read Roadmap] --> B[Select Goal]
+    B --> C[Implement Feature]
+    C --> D[Run Tests]
+    D --> E{Tests Pass?}
+    E -->|Yes| F[Create Draft PR]
+    E -->|No| G[Create Issue]
+    F --> H[Update Roadmap]
+    G --> H
+````
+
 The Daily Progress workflow follows a systematic 7-step process:
 
 ### 1. Roadmap Research

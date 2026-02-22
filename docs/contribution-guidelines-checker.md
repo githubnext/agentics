@@ -18,6 +18,17 @@ This walks you through adding the workflow to your repository.
 
 The workflow automatically runs on pull requests. You can also trigger it with a 👀 (eyes) reaction on any pull request.
 
+## How It Works
+
+````mermaid
+graph LR
+    A[PR Created/Updated] --> B[Read CONTRIBUTING.md]
+    B --> C[Review PR Content]
+    C --> D{Guidelines Met?}
+    D -->|Yes| E[Add contribution-ready Label]
+    D -->|No| F[Comment with Feedback]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. It will automatically review contribution guidelines documents in your repository and check PRs against them.

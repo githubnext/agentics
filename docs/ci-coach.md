@@ -1,6 +1,26 @@
 # 🚀 CI Coach
 
+> For an overview of all available workflows, see the [main README](../README.md).
+
 **Automated CI/CD optimization expert that analyzes your GitHub Actions workflows and proposes efficiency improvements**
+
+## Installation
+
+```bash
+# Install the 'gh aw' extension
+gh extension install github/gh-aw
+
+# Add the workflow to your repository
+gh aw add-wizard githubnext/agentics/ci-coach
+```
+
+This walks you through adding the workflow to your repository.
+
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run ci-coach
+```
 
 ## What It Does
 
@@ -31,6 +51,7 @@ From Peli's Agent Factory:
 > "CI Optimization Coach has contributed **9 merged PRs out of 9 proposed (100% merge rate)**, optimizing CI pipelines for speed and efficiency with perfect execution."
 
 Examples of improvements made:
+
 - [Removing unnecessary test dependencies](https://github.com/github/gh-aw/pull/13925)
 - [Fixing duplicate test execution](https://github.com/github/gh-aw/pull/8176)
 
@@ -81,6 +102,7 @@ graph LR
 ### Sample Optimizations
 
 **Before: Sequential Execution**
+
 ```yaml
 test:
   needs: [build]
@@ -92,6 +114,7 @@ lint:
 ```
 
 **After: Parallel Execution**
+
 ```yaml
 test:
   needs: [build]
@@ -119,6 +142,7 @@ Each PR includes:
 ### Evidence-Based Recommendations
 
 All suggestions are backed by:
+
 - Actual workflow run data
 - Performance metrics
 - Before/after comparisons
@@ -127,6 +151,7 @@ All suggestions are backed by:
 ### Safe, Surgical Changes
 
 CI Coach follows strict quality standards:
+
 - ✅ Minimal, focused changes
 - ✅ Low-risk optimizations prioritized
 - ✅ Clear documentation
@@ -222,6 +247,7 @@ CI Coach won't create noise:
 ### Time Savings Example
 
 A typical repository might see:
+
 - **5-10 minutes** per CI run saved
 - **50+ runs** per month
 - **250-500 minutes** saved monthly
@@ -230,6 +256,7 @@ A typical repository might see:
 ### Cost Savings Example
 
 For a repository running CI 200 times/month:
+
 - **Before**: 15 minutes/run = 3,000 minutes/month
 - **After**: 10 minutes/run = 2,000 minutes/month
 - **Savings**: 1,000 minutes/month

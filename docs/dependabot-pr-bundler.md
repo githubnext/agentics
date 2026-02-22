@@ -20,6 +20,18 @@ This walks you through adding the workflow to your repository. After merging the
 gh aw run dependabot-pr-bundler
 ```
 
+## How It Works
+
+````mermaid
+graph LR
+    A[Check Dependabot Alerts] --> B[Group Updates]
+    B --> C[Update Dependencies]
+    C --> D[Run Tests]
+    D --> E{Tests Pass?}
+    E -->|Yes| F[Create Bundled PR]
+    E -->|No| G[Report Issues]
+````
+
 ## Configuration
 
 This workflow requires no configuration and works out of the box. Configure the workflow by editing it.

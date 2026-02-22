@@ -33,6 +33,9 @@ timeout-minutes: 15
 steps:
   - name: Checkout repository
     uses: actions/checkout@v4
+    with:
+      fetch-depth: 0
+      persist-credentials: false
   - name: Build and run app in background
     run: |
       # This step should set up the runtime environment for your app, 
