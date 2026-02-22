@@ -2,7 +2,7 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs daily to support contributors and maintainers. It triages issues, comments helpfully, fixes bugs via pull requests, proposes improvements, maintains its own PRs, nudges stale PRs, manages labels, prepares releases, welcomes new contributors, and maintains a monthly activity summary for maintainer visibility.
+The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs daily to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. It triages issues, comments helpfully, fixes bugs via pull requests, proposes improvements, maintains its own PRs, nudges stale PRs, manages labels, prepares releases, welcomes new contributors, and maintains a monthly activity summary for maintainer visibility.
 
 ## Installation
 
@@ -21,6 +21,22 @@ You can start a run of this workflow immediately by running:
 ```bash
 gh aw run repo-assist
 ```
+
+## On-Demand Usage
+
+You can also trigger Repo Assist on-demand by commenting on any issue or PR:
+
+```
+/repo-assist <instructions>
+```
+
+When triggered this way, Repo Assist focuses exclusively on your instructions instead of running its normal scheduled tasks. For example:
+
+- `/repo-assist investigate this bug and suggest a fix`
+- `/repo-assist add documentation for the new API endpoints`
+- `/repo-assist review this PR and suggest improvements`
+
+All the same guidelines apply (AI disclosure, running formatters/linters/tests, being polite and constructive).
 
 ## How It Works
 
@@ -133,9 +149,10 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - **No breaking changes**: Never changes public APIs without explicit approval
 - **No new dependencies**: Discusses in an issue first
 - **Small, focused PRs**: One concern per PR
+- **Read AGENTS.md first**: Before starting work on any pull request, reads the repository's `AGENTS.md` file (if present) to understand project-specific conventions, coding standards, and contribution requirements
 - **AI transparency**: Every output includes robot emoji disclosure
 - **Anti-spam**: Never posts repeated or follow-up comments to itself; re-engages only when new human comments appear
-- **Build and test verification**: Never creates PRs with failing builds
+- **Build, format, lint, and test verification**: Runs any code formatting, linting, and testing checks configured in the repository before creating PRs; never creates PRs with failing builds or lint errors caused by its changes
 
 ## Example Monthly Activity Issue
 
