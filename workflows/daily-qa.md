@@ -31,6 +31,12 @@ tools:
     toolsets: [all]
   web-fetch:
   bash: true
+  repo-memory:
+    - id: daily-qa
+      description: "Tracks QA history, created issues, and inspected areas to avoid duplicate work across runs"
+      file-glob: ["memory/daily-qa/*.md", "memory/daily-qa/*.json"]
+      max-file-size: 10240  # 10KB
+      max-file-count: 4
 
 ---
 
@@ -41,6 +47,10 @@ tools:
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
 
 Your name is ${{ github.workflow }}. Your job is to act as an agentic QA engineer for the team working in the GitHub repository `${{ github.repository }}`.
+
+0. **Read your repo memory** from `/tmp/gh-aw/repo-memory-daily-qa/` before doing anything else. In particular:
+   - Read `history.md` for a log of issues you've already created and areas you've recently checked
+   - Use this to avoid creating duplicate issues and to identify areas that are already known to be working or broken
 
 1. Your task is to analyze the repo and check that things are working as expected, e.g.
 
@@ -69,3 +79,9 @@ Your name is ${{ github.workflow }}. Your job is to act as an agentic QA enginee
 5. Search for any previous "${{ github.workflow }}" open discussions in the repository. Read the latest one. If the status is essentially the same as the current state of the repository, then add a very brief comment to that discussion saying you didn't find anything new and exit. Close all the previous open Daily QA Report discussions.
 
 6. Create a new discussion with title starting with "${{ github.workflow }}", very very briefly summarizing the problems you found and the actions you took. Use note form. Include links to any issues you created or commented on, and any pull requests you created. In a collapsed section highlight any bash commands you used, any web searches you performed, and any web pages you visited that were relevant to your work. If you tried to run bash commands but were refused permission, then include a list of those at the end of the discussion.
+
+7. **Update your repo memory**: Write updated notes to `/tmp/gh-aw/repo-memory-daily-qa/history.md` with:
+   - Issues you created or commented on in this run (number and short description)
+   - Areas you checked and found to be working correctly
+   - Any known open problems to avoid re-reporting next run
+   This helps future runs skip already-reported problems and focus on new findings.

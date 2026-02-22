@@ -32,6 +32,12 @@ tools:
   github:
     toolsets: [all]
   bash: true
+  repo-memory:
+    - id: daily-backlog-burner
+      description: "Tracks backlog progress cursor, processed items, and work history across runs"
+      file-glob: ["memory/daily-backlog-burner/*.md", "memory/daily-backlog-burner/*.json"]
+      max-file-size: 10240  # 10KB
+      max-file-count: 4
 
 ---
 
@@ -86,13 +92,17 @@ To decide which phase to perform:
 
 1. **Goal selection**. Build an understanding of what to work on and select a backlog item to pursue
 
-   a. Read the plan in the discussion mentioned earlier, along with comments.
+   a. **Read your repo memory** from `/tmp/gh-aw/repo-memory-daily-backlog-burner/` to understand what work has already been done across previous runs. In particular:
+      - Read `progress.md` for a summary of completed work, known in-progress items, and the backlog cursor (last issue/PR number processed)
+      - This ensures you continue from where the previous run left off rather than restarting from the top of the backlog
 
-   b. Check for existing open pull requests (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
+   b. Read the plan in the discussion mentioned earlier, along with comments.
+
+   c. Check for existing open pull requests (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
    
-   c. If plan needs updating then comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
+   d. If plan needs updating then comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
   
-   d. Select a goal to pursue from the plan. Ensure that you have a good understanding of the code and the issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
+   e. Select a goal to pursue from the plan. Use the backlog cursor from memory to continue processing from where you left off rather than always restarting. Ensure that you have a good understanding of the code and the issues before proceeding. Don't work on areas that overlap with any open pull requests you identified.
 
 2. **Work towards your selected goal**. For the backlog item you selected, do the following:
 
@@ -125,4 +135,11 @@ To decide which phase to perform:
 
 5. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made.
 
-6. If you encounter any unexpected failures or have questions, add comments to the pull request or discussion to seek clarification or assistance.
+6. **Update your repo memory**: Write updated notes to `/tmp/gh-aw/repo-memory-daily-backlog-burner/progress.md` with:
+   - The backlog item you worked on this run (issue/PR number and short description)
+   - The outcome (PR created, closed, commented, etc.)
+   - The updated backlog cursor (the next item to process in the next run)
+   - Any items you identified as high priority or needing future attention
+   This helps the next run continue from where you left off and avoids duplicate work.
+
+7. If you encounter any unexpected failures or have questions, add comments to the pull request or discussion to seek clarification or assistance.

@@ -35,7 +35,7 @@ graph LR
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. You can edit it to specify QA tasks, testing scenarios, reporting format, and frequency.
+This workflow requires no configuration and works out of the box. It uses repo-memory to track QA history across runs—recording issues already created and areas previously checked—so it avoids filing duplicate issues and focuses on new findings. You can edit it to specify QA tasks, testing scenarios, reporting format, and frequency.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
@@ -46,6 +46,7 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Discussions and community content
 - Actions workflow runs and results
 - Checks and status information
+- Its own memory from previous runs (stored in a repo-memory branch)
 
 ## What it creates
 

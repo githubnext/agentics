@@ -32,6 +32,12 @@ tools:
   github:
     toolsets: [all]
   bash: true
+  repo-memory:
+    - id: daily-perf-improver
+      description: "Tracks performance optimization history, tried approaches, and outcomes across runs"
+      file-glob: ["memory/daily-perf-improver/*.md", "memory/daily-perf-improver/*.json"]
+      max-file-size: 10240  # 10KB
+      max-file-count: 4
 
 steps:
   - name: Checkout repository
@@ -149,15 +155,19 @@ To decide which phase to perform:
 
    a. Repository is now performance-ready. Review `build-steps/action.yml` and `build-steps.log` to understand setup. If build failed then create fix PR and exit.
    
-   b. Read the plan in the discussion mentioned earlier, along with comments.
+   b. **Read your repo memory** from `/tmp/gh-aw/repo-memory-daily-perf-improver/` to understand what optimizations have already been attempted across previous runs. In particular:
+      - Read `progress.md` for a summary of optimization areas tried, their outcomes, and what remains to explore
+      - Use this to avoid repeating approaches that didn't improve performance and to continue systematically through the plan
 
-   c. Check for existing performance PRs (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
+   c. Read the plan in the discussion mentioned earlier, along with comments.
+
+   d. Check for existing performance PRs (especially yours with "${{ github.workflow }}" prefix). Avoid duplicate work.
    
-   d. If plan needs updating then comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
+   e. If plan needs updating then comment on planning discussion with revised plan and rationale. Consider maintainer feedback.
   
-   e. Select a performance improvement goal to pursue from the plan. Ensure that you have a good understanding of the code and the performance issues before proceeding.
+   f. Select a performance improvement goal to pursue from the plan that you have **not** already attempted (per your memory). Ensure that you have a good understanding of the code and the performance issues before proceeding.
 
-   f. Select and read the appropriate performance engineering guide(s) in `.github/copilot/instructions/` to help you with your work. If it doesn't exist, create it and later add it to your pull request.
+   g. Select and read the appropriate performance engineering guide(s) in `.github/copilot/instructions/` to help you with your work. If it doesn't exist, create it and later add it to your pull request.
 
 2. **Work towards your selected goal**. For the performance improvement goal you selected, do the following:
 
@@ -208,4 +218,11 @@ To decide which phase to perform:
 
    b. If failed or lessons learned then add more files to the PR branch to update relevant performance guide in `.github/copilot/instructions/` with insights. Create a new guide if needed, or split, merge or delete existing guides as appropriate. This is your chance to improve the performance engineering documentation for next time, so you and your team don't make the same mistakes again! Make the most of it!
 
-5. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made.
+5. **Update your repo memory**: Write updated notes to `/tmp/gh-aw/repo-memory-daily-perf-improver/progress.md` with:
+   - The optimization goal attempted this run and the approach taken
+   - The outcome (improvement achieved, no improvement found, partial progress, etc.)
+   - Any performance areas you have now exhausted or found unproductive
+   - Suggestions for what to try next run
+   This ensures future runs don't repeat failed approaches and build systematically on prior work.
+
+6. **Final update**: Add brief comment (1 or 2 sentences) to the discussion identified at the start of the workflow stating goal worked on, PR links, and progress made.

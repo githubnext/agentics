@@ -2,7 +2,7 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [daily backlog burner workflow](../workflows/daily-backlog-burner.md?plain=1) performs systematic backlog management by working through issues and pull requests. It operates in two phases: first researching the entire backlog to categorize and prioritize items, then systematically closing, resolving, or advancing selected items. Creates discussions to track progress and gather maintainer feedback, helping reduce technical debt.
+The [daily backlog burner workflow](../workflows/daily-backlog-burner.md?plain=1) performs systematic backlog management by working through issues and pull requests. It operates in two phases: first researching the entire backlog to categorize and prioritize items, then systematically closing, resolving, or advancing selected items. It uses repo-memory to maintain a backlog cursor across runs, ensuring steady progress through the full issue list without repeating work. Creates discussions to track progress and gather maintainer feedback, helping reduce technical debt.
 
 ## Installation
 
@@ -36,7 +36,7 @@ graph LR
 
 ## Configuration
 
-This workflow requires no configuration and works out of the box. It will automatically analyze your backlog and suggest items for closure or resolution. You can edit it to customize prioritization criteria and decision-making logic.
+This workflow requires no configuration and works out of the box. It uses repo-memory to track a backlog cursor and work history across runs, allowing it to systematically advance through issues and PRs without repeating work. You can edit it to customize prioritization criteria and decision-making logic.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
@@ -46,6 +46,7 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Issue and PR comments, labels, and activity history
 - Repository policies and contribution guidelines
 - Discussions and community feedback
+- Its own memory from previous runs (stored in a repo-memory branch)
 
 ## What it creates
 

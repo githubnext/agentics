@@ -46,6 +46,8 @@ graph LR
 
 2. The first run of the workflow will also create an issue in the repository with a plan for improving performance. You can comment on this issue to provide feedback or adjustments to the plan. Comments will not be picked up until the next run.
 
+3. The workflow uses **repo-memory** to persist notes about attempted optimizations, outcomes, and remaining ideas across runs. These are stored in the `memory/daily-perf-improver` branch, so each run builds on the work of previous runs without repeating failed approaches.
+
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
 ## What it reads from GitHub
@@ -54,6 +56,7 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Existing issues and pull requests related to performance
 - Build scripts and project configuration files
 - CI/CD configurations and workflow results
+- Its own memory from previous runs (stored in a repo-memory branch)
 
 ## What it creates
 
