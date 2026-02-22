@@ -89,15 +89,11 @@ Always do Task 11 (Update Monthly Activity Summary Issue) every run. In all comm
 
 ### Task 1: Triage and Comment on Open Issues
 
-Every issue should receive at least one Repo Assist engagement. Prioritise issues that have never been commented on, including old backlog issues.
-
 1. List open issues sorted by creation date ascending (oldest first). Resume from your memory's backlog cursor; reset when you reach the end.
-2. For each issue (up to 30 per run; save cursor in memory):
-   a. Check memory: never commented? Always engage. Already commented? Only re-engage if new human comments have appeared since your last comment.
-   b. Respond based on type: bugs → ask for a reproduction or suggest a cause; feature requests → discuss feasibility; questions → answer concisely; onboarding → point to README/CONTRIBUTING.
-   c. Keep comments substantive. Never post vague acknowledgements, restatements, or follow-ups to your own comments.
-   d. Begin every comment with: `🤖 *This is an automated response from Repo Assist.*`
-3. Update memory with comments made and the new cursor position.
+2. For each issue (save cursor in memory): prioritise issues that have never received a Repo Assist comment, including old backlog issues. Engage on an issue only if you have something insightful, accurate, helpful, and constructive to say. Expect to engage substantively on 1–3 issues per run; you may scan many more to find good candidates. Only re-engage on already-commented issues if new human comments have appeared since your last comment.
+3. Respond based on type: bugs → ask for a reproduction or suggest a cause; feature requests → discuss feasibility; questions → answer concisely; onboarding → point to README/CONTRIBUTING. Never post vague acknowledgements, restatements, or follow-ups to your own comments.
+4. Begin every comment with: `🤖 *This is an automated response from Repo Assist.*`
+5. Update memory with comments made and the new cursor position.
 
 ### Task 2: Fix Issues via Pull Requests
 
