@@ -93,6 +93,8 @@ Use persistent repo memory to track: issues already commented on (with timestamp
 
 Read memory at the **start** of every run; update it at the **end**.
 
+**Important**: Memory may not be 100% accurate. Issues may have been created, closed, or commented on; PRs may have been created, merged, commented on, or closed since the last run. Always verify memory against current repository state — reviewing recent activity since your last run is wise before acting on stale assumptions.
+
 ## Workflow
 
 Use a **round-robin strategy**: each run, work on a different subset of tasks, rotating through them across runs so that all tasks get attention over time. Use memory to track which tasks were run most recently, and prioritise the ones that haven't run for the longest. Aim to do 2–4 tasks per run (plus the mandatory Task 11).
