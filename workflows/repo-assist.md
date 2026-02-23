@@ -42,10 +42,12 @@ safe-outputs:
     title-prefix: "[Repo Assist] "
     labels: [automation, repo-assist]
     max: 4
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Repo Assist] "
     max: 4
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
   create-issue:
     title-prefix: "[Repo Assist] "
     labels: [automation, repo-assist]
@@ -158,12 +160,11 @@ Always do Task 11 (Update Monthly Activity Summary Issue) every run. In all comm
 
 ### Task 4: Update Dependencies and Engineering
 
-**At most once per week** (check memory for last run date).
-
 1. Check for outdated dependencies. Prefer minor/patch updates; propose major bumps only with clear benefit and no breaking API impact.
 2. Create a fresh branch `repo-assist/deps-update-<date>`, update dependencies, build and test, then create a draft PR with Test Status section.
-3. Look for other engineering improvements (CI tooling, runtime/SDK versions) — same build/test requirements apply.
-4. Update memory with what was checked and when.
+3. **Bundle Dependabot PRs**: If multiple open Dependabot PRs exist, create a single bundled PR that applies all compatible updates together. Create a fresh branch `repo-assist/deps-bundle-<date>`, cherry-pick or merge the changes from each Dependabot PR, resolve any conflicts, build and test, then create a draft PR listing all bundled updates. Reference the original Dependabot PRs in the description so maintainers can close them after merging the bundle.
+4. Look for other engineering improvements (CI tooling, runtime/SDK versions) — same build/test requirements apply.
+5. Update memory with what was checked and when.
 
 ### Task 5: Maintain Repo Assist Pull Requests
 
@@ -187,8 +188,6 @@ For each item, apply the best-fitting labels from: `bug`, `enhancement`, `help w
 Update memory with labels applied and cursor position.
 
 ### Task 8: Release Preparation
-
-**At most once per week** (check memory).
 
 1. Find merged PRs since the last release (check changelog or release tags).
 2. If significant unreleased changes exist, determine the version bump (patch/minor/major — never propose major without maintainer approval), create a fresh branch `repo-assist/release-vX.Y.Z`, update the changelog, and create a draft PR with AI disclosure and Test Status section.
@@ -217,16 +216,6 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
 
    ## Activity for <Month Year>
 
-   ### <Date>
-   - 💬 Commented on #<number>: <short description>
-   - 🔧 Created PR #<number>: <short description>
-   - 🏷️ Labelled #<number> with `<label>`
-   - 📝 Created issue #<number>: <short description>
-
-   ### <Date>
-   - 🔄 Updated PR #<number>: <short description>
-   - 💬 Commented on PR #<number>: <short description>
-
    ## Suggested Actions for Maintainer
 
    **Comprehensive list** of all pending actions requiring maintainer attention (excludes items already actioned and checked off). 
@@ -252,10 +241,25 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
    {List future work for Repo Assist}
 
    *(If nothing pending, skip this section.)*
+
+   ## Run History
+
+   ### <YYYY-MM-DD HH:MM UTC> — [Run](<https://github.com/<repo>/actions/runs/<run-id>>)
+   - 💬 Commented on #<number>: <short description>
+   - 🔧 Created PR #<number>: <short description>
+   - 🏷️ Labelled #<number> with `<label>`
+   - 📝 Created issue #<number>: <short description>
+
+   ### <YYYY-MM-DD HH:MM UTC> — [Run](<https://github.com/<repo>/actions/runs/<run-id>>)
+   - 🔄 Updated PR #<number>: <short description>
+   - 💬 Commented on PR #<number>: <short description>
    ```
 
 3. **Format enforcement (MANDATORY)**:
    - Always use the exact format above. If the existing body uses a different format, rewrite it entirely.
+   - **Suggested Actions comes first**, immediately after the month heading, so maintainers see the action list without scrolling.
+   - **Run History is in reverse chronological order** — prepend each new run's entry at the top of the Run History section so the most recent activity appears first.
+   - **Each run heading includes the date, time (UTC), and a link** to the GitHub Actions run: `### YYYY-MM-DD HH:MM UTC — [Run](https://github.com/<repo>/actions/runs/<run-id>)`. Use `${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}` for the current run's link.
    - **Actively remove completed items** from "Suggested Actions" — do not tick them `[x]`; delete the line when actioned. The checklist contains only pending items.
    - Use `* [ ]` checkboxes in "Suggested Actions". Never use plain bullets there.
 4. **Comprehensive suggested actions**: The "Suggested Actions for Maintainer" section must be a **complete list** of all pending items requiring maintainer attention, including:

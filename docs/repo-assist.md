@@ -78,7 +78,7 @@ Repo Assist identifies improvement opportunities like documentation gaps, test c
 
 ### Task 4: Update Dependencies and Engineering
 
-Periodically (at most weekly), Repo Assist checks for dependency updates and engineering improvements, creating PRs for beneficial changes.
+Periodically (at most weekly), Repo Assist checks for dependency updates and engineering improvements, creating PRs for beneficial changes. It also bundles multiple open Dependabot PRs into a single consolidated update PR that applies all compatible updates together.
 
 ### Task 5: Maintain Repo Assist Pull Requests
 
@@ -128,6 +128,12 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Issues to track improvement ideas or monthly activity summaries
 - Requires `issues: write`, `pull-requests: write`, and `contents: write` permissions
 
+## Triggering CI on Pull Requests
+
+By default, pull requests created by this workflow do not trigger CI workflow runs. This is a GitHub Actions feature to prevent event cascades.
+
+To trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
+
 ## What web searches it performs
 
 - May search for documentation or solutions related to issues being addressed
@@ -161,13 +167,6 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 
 ## Activity for February 2026
 
-### 2026-02-21
-- 💬 Commented on #42: Provided reproduction steps for auth bug
-- 🔧 Created PR #45: Fix null check in config parser
-
-### 2026-02-20
-- 📝 Created issue #44: Suggest adding JSDoc to exported functions
-
 ## Suggested Actions for Maintainer
 
 * [ ] **Review PR** #45: Fix null check in config parser — [Review](link)
@@ -177,4 +176,13 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 ## Future Work for Repo Assist
 
 - 🔧 **Fix PR** #43: Maintainer requested test coverage — will address next run
+
+## Run History
+
+### 2026-02-21 14:32 UTC — [Run](https://github.com/org/repo/actions/runs/12345678)
+- 💬 Commented on #42: Provided reproduction steps for auth bug
+- 🔧 Created PR #45: Fix null check in config parser
+
+### 2026-02-20 09:15 UTC — [Run](https://github.com/org/repo/actions/runs/12345600)
+- 📝 Created issue #44: Suggest adding JSDoc to exported functions
 ```

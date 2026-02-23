@@ -26,6 +26,7 @@ safe-outputs:
   create-pull-request:
     expires: 2d
     title-prefix: "[ci-coach] "
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 timeout-minutes: 30
 ---
 

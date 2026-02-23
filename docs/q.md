@@ -67,6 +67,12 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 - Pull requests with workflow optimizations (if changes are needed)
 - Comments with analysis findings and recommendations
 
+## Triggering CI on Pull Requests
+
+By default, pull requests created by this workflow do not trigger CI workflow runs. This is a GitHub Actions feature to prevent event cascades.
+
+To trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
+
 ## What web searches it performs
 
 - Searches for GitHub Actions agentic workflow best practices

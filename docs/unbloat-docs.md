@@ -94,6 +94,12 @@ The workflow uses cache memory to track previously cleaned files, avoiding dupli
 
 ## Trigger Options
 
+### Triggering CI on Pull Requests
+
+By default, pull requests created by this workflow do not trigger CI workflow runs. This is a GitHub Actions feature to prevent event cascades.
+
+To trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
+
 ### Daily Schedule
 
 Runs automatically once per day at a scattered execution time to continuously improve documentation.

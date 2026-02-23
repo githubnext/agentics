@@ -25,6 +25,7 @@ safe-outputs:
     labels: [automation, workflow-optimization]
     draft: false
     if-no-changes: "ignore"
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 tools:
   agentic-workflows:

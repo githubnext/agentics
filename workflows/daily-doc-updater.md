@@ -28,6 +28,7 @@ safe-outputs:
     title-prefix: "[docs] "
     labels: [documentation, automation]
     draft: false
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 ---
 

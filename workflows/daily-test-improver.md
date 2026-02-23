@@ -27,6 +27,7 @@ safe-outputs:
   create-pull-request: # can create a pull request
     draft: true
     labels: [automation, testing]
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 tools:
   web-fetch:

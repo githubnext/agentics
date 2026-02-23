@@ -105,6 +105,7 @@ safe-outputs:
     labels: [documentation, automated]
     draft: false
     if-no-changes: "warn"
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
   noop:
 ---
 
