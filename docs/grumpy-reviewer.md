@@ -74,7 +74,7 @@ gh aw add-wizard githubnext/agentics/grumpy-reviewer
 
 ````mermaid
 graph LR
-    A[/grumpy command] --> B[Read PR diff]
+    A[grumpy command] --> B[Read PR diff]
     B --> C[Check cache memory]
     C --> D[Analyze changed files]
     D --> E{Issues found?}
