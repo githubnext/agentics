@@ -7,7 +7,6 @@ on:
 permissions:
   contents: read
   pull-requests: read
-engine: copilot
 tools:
   cache-memory: true
   github:

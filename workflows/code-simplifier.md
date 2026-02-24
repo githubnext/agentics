@@ -5,10 +5,16 @@ on:
   schedule: daily
   skip-if-match: 'is:pr is:open in:title "[code-simplifier]"'
 
-permissions:
-  contents: read
-  issues: read
-  pull-requests: read
+network:
+  allowed:
+  - defaults
+  - dotnet
+  - node
+  - python
+  - rust
+  - java
+
+permissions: read-all
 
 tracker-id: code-simplifier
 

@@ -13,8 +13,6 @@ permissions:
   issues: read
   pull-requests: read
 
-engine: copilot
-
 tools:
   github:
     toolsets: [default, discussions]

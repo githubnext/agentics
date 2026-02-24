@@ -13,7 +13,6 @@ timeout-minutes: 30
 
 network: defaults
 
-engine: copilot
 
 permissions: read-all
 

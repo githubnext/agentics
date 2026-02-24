@@ -8,7 +8,6 @@ permissions:
   actions: read
   security-events: read
 tracker-id: malicious-code-scan
-engine: copilot
 tools:
   github:
     toolsets: [repos, code_security]

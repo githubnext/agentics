@@ -6,15 +6,18 @@ on:
     - cron: daily
   workflow_dispatch:
 
-permissions:
-  contents: read
-  actions: read
-  pull-requests: read
-  issues: read
+network:
+  allowed:
+  - defaults
+  - dotnet
+  - node
+  - python
+  - rust
+  - java
+
+permissions: read-all
 
 tracker-id: ci-coach-daily
-
-engine: copilot
 
 tools:
   github:

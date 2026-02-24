@@ -71,14 +71,6 @@ tools:
   bash: true
   repo-memory: true
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v5
-    with:
-      fetch-depth: 0
-      persist-credentials: false
-
-engine: copilot
 ---
 
 # Repo Assist

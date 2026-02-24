@@ -48,7 +48,7 @@ Example commands:
 
 ```
 /q Analyze all workflows and suggest optimizations
-/q Fix the missing tools in the daily-progress workflow
+/q Fix the missing tools in the repo-assist workflow
 /q Investigate why the CI doctor workflow is failing
 /q Extract common patterns from coding workflows into a shared config
 /q Optimize workflows with high token usage

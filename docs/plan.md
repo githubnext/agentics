@@ -52,4 +52,3 @@ After editing run `gh aw compile` to update the workflow and commit all changes 
 
 - [Issue Triage](issue-triage.md) - For triaging incoming issues
 - [Daily Plan](daily-plan.md) - For strategic project planning
-- [Daily Progress](daily-progress.md) - For automated feature development
