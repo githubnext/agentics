@@ -1,5 +1,7 @@
 # 🔗 Link Checker
 
+> For an overview of all available workflows, see the [main README](../README.md).
+
 **Workflow file:** [`.github/workflows/link-checker.md`](../.github/workflows/link-checker.md)
 
 ## What It Does
