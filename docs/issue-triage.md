@@ -2,7 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [issue triage workflow](../workflows/issue-triage.md?plain=1) will run when issues are created or reopened to triage issues in the repository.
+**Automatically triage issues when they are created or reopened**
+
+The [Issue Triage workflow](../workflows/issue-triage.md?plain=1) runs when issues are created or reopened to analyze content, check related items, categorize, add labels, and post triage comments.
 
 ## Installation
 
@@ -16,51 +18,31 @@ gh aw add-wizard githubnext/agentics/issue-triage
 
 This walks you through adding the workflow to your repository.
 
-You must also [choose a coding agent](https://github.github.com/gh-aw/reference/engines/) and add an API key secret for the agent to your repository.
-
-You can't start a run of this workflow directly as it is triggered in the context of an issue.
-
 ## How It Works
 
-````mermaid
+```mermaid
 graph LR
     A[Issue Created/Reopened] --> B[Analyze Content]
     B --> C[Check Related Items]
     C --> D[Categorize Issue]
     D --> E[Add Labels]
     E --> F[Post Triage Comment]
-````
+```
 
-## Configuration
+The workflow may search for relevant documentation, error messages, or similar issues online to assist with triage.
 
-This workflow requires no configuration and works out of the box. You can edit it to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.
+## Usage
+
+This workflow triggers automatically when issues are created or reopened—you cannot start it manually.
+
+### Configuration
+
+This workflow requires no configuration and works out of the box. You can customize triage criteria, labeling logic, and automated responses.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-## What it reads from GitHub
+### Human in the Loop
 
-- The specific issue being triaged and its details
-- Repository contents and file structure
-- Pull requests and their metadata
-- Actions workflow runs and results
-- Checks and status information
-
-## What it creates
-
-- Adds comments to issues with triage information
-- Updates issue labels, assignees, or other metadata
-- Requires `issues: write` permission
-
-## What web searches it performs
-
-- Searches for relevant information to assist with issue triage
-- May look up documentation, error messages, or similar issues
-
-## Human in the loop
-
-- Review triage comments added to issues for accuracy
+- Review triage comments for accuracy
 - Validate label assignments and priority assessments
 - Override or adjust triage decisions when needed
-- Monitor triaged issues to ensure proper follow-up and resolution
-- Disable or uninstall the workflow if triage automation is not accurate or helpful
-

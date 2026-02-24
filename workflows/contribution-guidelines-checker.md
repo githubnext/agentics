@@ -7,7 +7,7 @@ description: |
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    types: [opened, synchronize]
   reaction: eyes
 
 permissions: read-all

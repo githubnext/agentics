@@ -7,12 +7,19 @@ on:
     - cron: daily
   workflow_dispatch:
 
+network:
+  allowed:
+  - defaults
+  - dotnet
+  - node
+  - python
+  - rust
+  - java
+
 permissions:
   contents: read
   issues: read
   pull-requests: read
-
-engine: copilot
 
 tools:
   github:
@@ -28,7 +35,6 @@ safe-outputs:
     title-prefix: "[docs] "
     labels: [documentation, automation]
     draft: false
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 ---
 

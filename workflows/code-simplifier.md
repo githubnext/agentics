@@ -5,10 +5,16 @@ on:
   schedule: daily
   skip-if-match: 'is:pr is:open in:title "[code-simplifier]"'
 
-permissions:
-  contents: read
-  issues: read
-  pull-requests: read
+network:
+  allowed:
+  - defaults
+  - dotnet
+  - node
+  - python
+  - rust
+  - java
+
+permissions: read-all
 
 tracker-id: code-simplifier
 
@@ -21,7 +27,6 @@ safe-outputs:
     title-prefix: "[code-simplifier] "
     labels: [refactoring, code-quality, automation]
     expires: 1d
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 tools:
   github:

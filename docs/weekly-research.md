@@ -2,7 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [weekly research workflow](../workflows/weekly-research.md?plain=1) will run each Monday morning to collect research updates from the team and post them to a new issue in the repository. You can edit the workflow to adjust the topics, length and texture of the report. 
+**Collect research updates and post them to a new issue each Monday morning**
+
+The [Weekly Research workflow](../workflows/weekly-research.md?plain=1) runs each Monday to search industry news, analyze trends, gather team updates, and generate a comprehensive research report issue.
 
 ## Installation
 
@@ -14,56 +16,38 @@ gh extension install github/gh-aw
 gh aw add-wizard githubnext/agentics/weekly-research
 ```
 
-This walks you through adding the workflow to your repository. 
+This walks you through adding the workflow to your repository.
 
 ## How It Works
 
-````mermaid
+```mermaid
 graph LR
     A[Monday Morning] --> B[Search Industry News]
     B --> C[Analyze Trends]
     C --> D[Gather Team Updates]
     D --> E[Generate Report]
     E --> F[Create Research Issue]
-````
+```
 
-## Configuration
+The workflow searches for latest trends from software industry sources, related products, research papers, and market opportunities.
 
-This workflow requires no configuration and works out of the box. You customize output format, research topics, report length, focus areas or to adjust frequency or timing by editing the workflow file.
+## Usage
+
+### Configuration
+
+This workflow requires no configuration and works out of the box. You can customize output format, research topics, report length, and frequency.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-## What it reads from GitHub
+### Human in the Loop
 
-- Repository contents and file structure
-- Pull requests and their metadata
-- Discussions and community content
-- Actions workflow runs and results
-- Checks and status information
+- Review the research report for accuracy
+- Add additional context via comments
+- Close the issue once insights have been reviewed
 
-## What it creates
+### Security
 
-- Creates a new issue containing a research report
-
-## What web searches it performs
-
-- Searches for latest trends and news from software industry sources
-- Looks up information about related products and competitive analysis
-- Searches for relevant research papers and academic content
-- May search for market opportunities and business insights
-
-## Human in the loop
-
-- Review the research report issue created by the workflow
-- Validate research findings and sources for accuracy
-- Add additional context or follow-up questions as comments
-- Close or update the issue once insights have been reviewed and acted upon
-- Disable or uninstall the workflow if research reports are not useful or relevant
-
-## Security
-
-- This workflow uses "safe outputs" to create a new issue containing a research report. The overall workflow has `issues: write` permission, but the agentic step doing the research only has `issues: read` permission and runs with no GitHub write permissions
-- This workflow has no access to secrets
-- This workflow does not modify existing issues or other repository content
-- This workflow does web searches and fetches content from the web
-
+- The agentic step runs with read-only GitHub permissions
+- No access to secrets
+- Does not modify existing issues
+- Uses "safe outputs" to create the research report issue

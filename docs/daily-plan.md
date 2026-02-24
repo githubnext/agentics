@@ -2,7 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [daily plan workflow](../workflows/daily-plan.md?plain=1) will run daily to update a planning issue for the team. This planning issue can be used by other workflows as a reference for what the team is working on and what the current priorities are. You can edit the workflow to adjust the planning and report. 
+**Run daily to update a planning issue for the team with current priorities**
+
+The [Daily Plan workflow](../workflows/daily-plan.md?plain=1) reads repository contents and pull request metadata, assesses priorities, and creates or updates planning issues that other workflows can reference for team priorities.
 
 ## Installation
 
@@ -14,46 +16,31 @@ gh extension install github/gh-aw
 gh aw add-wizard githubnext/agentics/daily-plan
 ```
 
-This walks you through adding the workflow to your repository and running the workflow for the first time.
+This walks you through adding the workflow to your repository.
 
 ## How It Works
 
-````mermaid
+```mermaid
 graph LR
     A[Read Repository] --> B[Analyze PRs & Issues]
     B --> C[Assess Priorities]
     C --> D{Plan Exists?}
     D -->|No| E[Create Planning Issue]
     D -->|Yes| F[Update Planning Issue]
-````
+```
 
-## Configuration
+## Usage
 
-This workflow requires no configuration and works out of the box. 
+### Configuration
+
+This workflow requires no configuration and works out of the box. You can customize the planning and report format.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-## What it reads from GitHub
+### Commands
 
-- Repository contents and file structure
-- Pull requests and their metadata
+You can start a run of this workflow immediately by running:
 
-## What it creates
-
-- Creates new planning issues for the team
-- Updates existing planning issues with current information
-- Requires `issues: write` permission
-
-## What web searches it performs
-
-- Searches for additional planning information and best practices
-- May look up industry trends or project management insights
-
-## Human in the loop
-
-- Review and validate planning issues created or updated by the workflow
-- Adjust priorities and tasks based on team feedback
-- Add missing context or clarifications to planning issues
-- Use planning issues as input for team coordination and sprint planning
-- Disable or uninstall the workflow if planning automation is not helpful
-
+```bash
+gh aw run daily-plan
+```

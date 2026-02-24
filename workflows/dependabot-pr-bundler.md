@@ -17,7 +17,6 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, dependencies]
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
   create-discussion:
     title-prefix: "${{ github.workflow }}"
     category: "announcements"

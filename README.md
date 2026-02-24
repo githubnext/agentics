@@ -57,10 +57,8 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🗜️ Documentation Unbloat](docs/unbloat-docs.md) - Automatically simplify documentation by reducing verbosity while maintaining clarity
 - [✨ Code Simplifier](docs/code-simplifier.md) - Automatically simplify recently modified code for improved clarity and maintainability
 - [🔍 Duplicate Code Detector](docs/duplicate-code-detector.md) - Identify duplicate code patterns and suggest refactoring opportunities
-- [⚡ Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap
-- [🧪 Daily Test Coverage Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
-- [⚡ Daily Performance Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
-- [🔥 Daily Backlog Burner](docs/daily-backlog-burner.md) - Systematically manage and reduce backlog through strategic cleanup
+- [🧪 Daily Test Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
+- [⚡ Daily Perf Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 
 ## Security Workflows
 
