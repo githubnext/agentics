@@ -14,7 +14,14 @@ timeout-minutes: 60
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+  - defaults
+  - dotnet
+  - node
+  - python
+  - rust
+  - java
 
 safe-outputs:
   create-discussion:
@@ -26,7 +33,6 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, performance]
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 tools:
   web-fetch:
@@ -40,21 +46,6 @@ steps:
     with:
       fetch-depth: 0
       persist-credentials: false
-
-  - name: Check if action.yml exists
-    id: check_build_steps_file
-    run: |
-      if [ -f ".github/actions/daily-perf-improver/build-steps/action.yml" ]; then
-        echo "exists=true" >> $GITHUB_OUTPUT
-      else
-        echo "exists=false" >> $GITHUB_OUTPUT
-      fi
-    shell: bash
-  - name: Build the project ready for performance testing, logging to build-steps.log
-    if: steps.check_build_steps_file.outputs.exists == 'true'
-    uses: ./.github/actions/daily-perf-improver/build-steps
-    id: build-steps
-    continue-on-error: true # the model may not have got it right, so continue anyway, the model will check the results and try to fix the steps
 
 ---
 
@@ -72,13 +63,12 @@ To decide which phase to perform:
 
 1. First check for existing open discussion titled "${{ github.workflow }}" using `list_discussions`. Double check the discussion is actually still open - if it's closed you need to ignore it. If found, and open, read it and maintainer comments. If not found, then perform Phase 1 and nothing else.
 
-2. Next check if `.github/actions/daily-perf-improver/build-steps/action.yml` exists. If yes then read it. If not then perform Phase 2 and nothing else.
-
-3. Finally, if both those exist, then perform Phase 3.
+2. Finally, if both those exist, then perform Phase 2.
 
 ## Phase 1 - Performance research
 
 1. Research performance landscape in this repo:
+
   - Current performance testing practices and tooling
   - User-facing performance concerns (load times, responsiveness, throughput)
   - System performance bottlenecks (compute, memory, I/O, network)
@@ -120,7 +110,7 @@ To decide which phase to perform:
 
 2. Analyze existing CI files, build scripts, and documentation to determine build commands needed for performance development, testing tools (if any used in repo), linting tools (if any used in repo), code formatting tools (if any used in repo) and other environment setup.
 
-3. Create `.github/actions/daily-perf-improver/build-steps/action.yml` with validated build steps. Each step must log output to `build-steps.log` in repo root. Cross-check against existing CI/devcontainer configs.
+3. Work out validated build steps. Cross-check against existing CI/devcontainer configs.
 
 4. Create 1-5 performance engineering guides in `.github/copilot/instructions/` covering relevant areas (e.g., frontend performance, backend optimization, build performance, infrastructure scaling). Each guide should be maximum 200 words and should succinctly document practical, non-obvious, repo-specific details regarding:
   - Performance measurement strategies and tooling
@@ -129,14 +119,6 @@ To decide which phase to perform:
   - How to do explore performance efficiently using focused, maximally-efficient measurements and rebuilds
 
 5. Create PR with title "${{ github.workflow }} - Updates to complete configuration" containing files from steps 3-4. Request maintainer review. 
-
-   **Include a "What Happens Next" section in the PR description that explains:**
-   - Once this PR is merged, the next workflow run will proceed to Phase 3, where actual performance improvements will be implemented
-   - Phase 3 will use the build steps and performance guides to systematically make performance improvements
-   - If running in "repeat" mode, the workflow will automatically run again to proceed to Phase 3
-   - Humans can review and merge this configuration before continuing
-
-   Exit workflow.
 
 6. Test build steps manually. If fixes needed then update the PR branch. If unable to resolve then create issue and exit.
 
@@ -148,7 +130,7 @@ To decide which phase to perform:
 
 1. **Goal selection**. Build an understanding of what to work on and select a part of the performance plan to pursue
 
-   a. Repository is now performance-ready. Review `build-steps/action.yml` and `build-steps.log` to understand setup. If build failed then create fix PR and exit.
+   a. Repository is now performance-ready. Review build steps to understand setup. If build failed then create fix PR and exit.
    
    b. Read the plan in the discussion mentioned earlier, along with comments.
 

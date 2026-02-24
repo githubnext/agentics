@@ -64,7 +64,6 @@ safe-outputs:
     labels: [documentation, automation]
     draft: true
     fallback-as-issue: false
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
   add-comment:
     max: 1
   messages:

@@ -2,7 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [daily test coverage improver workflow](../workflows/daily-test-improver.md?plain=1) will analyze test coverage and add tests to improve coverage in under-tested areas of the codebase.
+**Analyze test coverage and add tests to improve coverage in under-tested areas**
+
+The [Daily Test Coverage Improver workflow](../workflows/daily-test-improver.md?plain=1) analyzes your test coverage, writes new tests, and submits draft PRs with coverage improvements.
 
 ## Installation
 
@@ -16,15 +18,9 @@ gh aw add-wizard githubnext/agentics/daily-test-improver
 
 This walks you through adding the workflow to your repository.
 
-You can start a run of this workflow immediately by running:
-
-```bash
-gh aw run daily-test-improver
-```
-
 ## How It Works
 
-````mermaid
+```mermaid
 graph LR
     A[Research Testing Setup] --> B[Analyze Coverage]
     B --> C[Select Target Area]
@@ -33,51 +29,36 @@ graph LR
     E --> F{Tests Pass?}
     F -->|Yes| G[Create Draft PR]
     F -->|No| H[Create Bug Issue]
-````
+```
 
 The workflow operates in two phases:
 
-**Phase 1 - Testing Research:** On the first run, the workflow researches the repository's testing landscape, identifies build and coverage commands, and creates a discussion with the plan. Memory notes are stored persistently in a `memory/daily-test-improver` branch for future runs.
+**Phase 1 - Testing Research:** On the first run, researches the testing landscape, identifies build and coverage commands, and creates a discussion with the plan. Memory notes are stored in a `memory/daily-test-improver` branch.
 
-**Phase 2 - Goal Selection, Work and Results:** On subsequent runs, the workflow consults its memory notes, selects a coverage area to improve, writes new tests, and submits draft PRs with coverage improvements.
+**Phase 2 - Test Development:** On subsequent runs, consults memory notes, selects a coverage area to improve, writes new tests, and submits draft PRs.
 
-## Configuration
+## Usage
 
-1. The first run of the workflow will create a **discussion** in the repository with a research summary and plan for improving test coverage. Review the plan and provide feedback via comments.
+### Configuration
 
-2. The workflow uses **repo-memory** to persist notes about build commands, coverage steps, and testing strategies across runs. These are stored in the `memory/daily-test-improver` branch.
-
-3. Subsequent runs will implement test improvements based on the plan and create draft pull requests.
+The first run creates a discussion with a research summary and plan. Review the plan and provide feedback via comments.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-## What it reads from GitHub
+### Commands
 
-- Repository contents and source code for coverage analysis
-- Existing test files and test coverage reports
-- Build scripts and testing configuration files
-- Previous issues, pull requests, and discussions related to testing
-- Its own memory notes from previous runs (stored in `memory/daily-test-improver` branch)
+You can start a run immediately:
 
-## What it creates
+```bash
+gh aw run daily-test-improver
+```
 
-- Creates discussions with testing research and coverage improvement plans
-- Creates new branches (prefixed with `test/`) with additional test cases
-- Creates draft pull requests with improved test coverage
-- Creates issues if bugs are discovered while adding tests
-- Stores persistent memory notes for build commands, coverage steps, and testing strategies
+### Triggering CI on Pull Requests
 
-## Triggering CI on Pull Requests
+To automatically trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
 
-By default, pull requests created by this workflow do not trigger CI workflow runs. This is a GitHub Actions feature to prevent event cascades.
+### Human in the Loop
 
-To trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
-
-## Human in the loop
-
-- Review the initial research discussion and provide feedback on the coverage plan
-- Review test coverage improvement pull requests for test quality
-- Validate that new tests properly cover edge cases and uncovered code
+- Review the initial research discussion and provide feedback
+- Validate that new tests properly cover edge cases
 - Ensure tests are meaningful and not just coverage-padding
-- Merge approved test improvements after verification
-- Disable or uninstall the workflow if test additions are not improving code quality

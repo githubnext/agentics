@@ -60,7 +60,6 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [⚡ Daily Progress](docs/daily-progress.md) - Automated daily feature development following a structured roadmap
 - [🧪 Daily Test Coverage Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Performance Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
-- [🔥 Daily Backlog Burner](docs/daily-backlog-burner.md) - Systematically manage and reduce backlog through strategic cleanup
 
 ## Security Workflows
 

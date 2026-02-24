@@ -1,5 +1,5 @@
 ---
-# Shared content formatting fragment — imported by other fragments
+# Shared content formatting fragment  -  imported by other fragments
 ---
 
 ## Content Structure

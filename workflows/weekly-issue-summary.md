@@ -43,8 +43,8 @@ Create a comprehensive weekly summary of issue activity for repository ${{ githu
 
 Use GitHub API tools to gather data for the past 30 days:
 
-1. **Issue Activity Data** — Count of issues opened per day, closed per day, and running open count
-2. **Issue Resolution Data** — Average time to close issues, distribution of issue lifespans, breakdown by label
+1. **Issue Activity Data**  -  Count of issues opened per day, closed per day, and running open count
+2. **Issue Resolution Data**  -  Average time to close issues, distribution of issue lifespans, breakdown by label
 
 Fetch enough issues to compute weekly and daily trends over the past 30 days. Use the GitHub toolset to query issues filtered by `created` and `closed` dates.
 
@@ -112,7 +112,7 @@ Create a discussion with the title format: `Weekly Summary - [YYYY-MM-DD]`
 #### Weekly Activity Patterns
 ![Issue Activity Trends]({chart_1_url})
 
-[2–3 sentences: describe the trend — are issues accumulating, being resolved quickly, or holding steady?]
+[2–3 sentences: describe the trend  -  are issues accumulating, being resolved quickly, or holding steady?]
 
 #### Resolution Time Analysis
 ![Issue Resolution Trends]({chart_2_url})

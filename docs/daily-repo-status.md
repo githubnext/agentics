@@ -2,7 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [daily repo status workflow](../workflows/daily-repo-status.md?plain=1) will assess activity in the repository and create a status report issue. You can edit the workflow to adjust the topics and texture of the report. 
+**Assess repository activity and create status report issues**
+
+The [Daily Repo Status workflow](../workflows/daily-repo-status.md?plain=1) gathers activity data, analyzes PRs and issues, checks workflow results, and creates status report issues. Previous reports are automatically closed when new ones are created.
 
 ## Installation
 
@@ -16,46 +18,31 @@ gh aw add-wizard githubnext/agentics/daily-repo-status
 
 This walks you through adding the workflow to your repository.
 
-You can start a run of this workflow immediately by running:
-
-```bash
-gh aw run daily-repo-status
-```
-
 ## How It Works
 
-````mermaid
+```mermaid
 graph LR
     A[Gather Activity Data] --> B[Analyze PRs & Issues]
     B --> C[Check Workflows]
     C --> D[Generate Metrics]
     D --> E[Create Status Report]
     E --> F[Close Old Reports]
-````
+```
 
-## Configuration
+Reports are created with the `[team-status]` prefix.
 
-This workflow requires no configuration and works out of the box. You can edit the workflow to customize triage criteria, labeling logic, customize issue categorization, modify automated responses.
+## Usage
 
-## What it reads from GitHub
+### Configuration
 
-- Repository contents and file structure
-- Pull requests and their metadata
-- Discussions and community content
-- Actions workflow runs and results
-- Checks and status information
+This workflow requires no configuration and works out of the box. You can customize triage criteria, labeling logic, and report format.
 
-## What it creates
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-- Creates new daily status report issues with the `[team-status]` prefix
-- Automatically closes older status report issues to prevent clutter
-- Labels new issues with `report` and `daily-status` tags
-- Requires `issues: write` permission
+### Commands
 
-## Human in the loop
+You can start a run of this workflow immediately by running:
 
-- Review daily status report issues for accuracy and completeness
-- Validate team activity assessments and metrics
-- Comment on issues to provide additional context or corrections
-- Use status reports to inform team meetings and planning decisions
-- Disable or uninstall the workflow if status reports don't provide valuable insights
+```bash
+gh aw run daily-repo-status
+```

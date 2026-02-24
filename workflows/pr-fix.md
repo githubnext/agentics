@@ -17,7 +17,6 @@ network: defaults
 
 safe-outputs:
   push-to-pull-request-branch:
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
   create-issue:
     title-prefix: "${{ github.workflow }}"
     labels: [automation, pr-fix]

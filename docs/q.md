@@ -2,31 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [Q workflow](../workflows/q.md?plain=1) is a command-triggered workflow that acts as an expert system for optimizing and fixing agentic workflows. It provides agents with the best tools and configurations for their tasks. When invoked with the `q` command, it analyzes workflow performance, identifies missing tools, detects inefficiencies, and creates pull requests with optimized configurations.
+**Expert system for optimizing and fixing agentic workflows**
 
-You can trigger the workflow by adding a comment to any issue or pull request with the command:
-
-```
-/q
-```
-
-or by writing a comment with a specific request:
-
-```
-/q Analyze and optimize all workflows in this repository
-```
-
-## How It Works
-
-````mermaid
-graph LR
-    A[/q Command] --> B[Analyze Workflows]
-    B --> C[Check Logs & Metrics]
-    C --> D{Issues Found?}
-    D -->|Yes| E[Optimize Configuration]
-    E --> F[Create PR]
-    D -->|No| G[Report: All Optimized]
-````
+The [Q workflow](../workflows/q.md?plain=1) analyzes workflow performance, identifies missing tools, detects inefficiencies, and creates pull requests with optimized configurations.
 
 ## Installation
 
@@ -40,87 +18,54 @@ gh aw add-wizard githubnext/agentics/q
 
 This walks you through adding the workflow to your repository.
 
-You can't start a run of this workflow directly as it is triggered in the context of an issue or pull request comment.
+## How It Works
 
-To trigger the workflow on a specific issue or pull request, add a comment with the command:
-
-```text
-/q [your optimization request here]
+```mermaid
+graph LR
+    A[/q Command] --> B[Analyze Workflows]
+    B --> C[Check Logs & Metrics]
+    C --> D{Issues Found?}
+    D -->|Yes| E[Optimize Configuration]
+    E --> F[Create PR]
+    D -->|No| G[Report: All Optimized]
 ```
 
-## Configuration
+The workflow downloads recent workflow logs and audit information, examines workflow files, researches best practices, and validates changes using the compile tool.
 
-This workflow requires no configuration and works out of the box. You can customize optimization behavior and analysis scope if needed by editing the workflow file.
+## Usage
 
-After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
+This workflow triggers from issue or PR comments - you cannot start it manually.
 
-## What it reads from GitHub
+### Usage as a General-Purpose Assistant
 
-- Workflow files and configurations in `workflows/` directory
-- Actions workflow runs, logs, and audit information
-- Issue or pull request context where the command was triggered
-- Repository structure and shared workflow configurations
-- Workflow execution history and performance metrics
+Trigger on any issue or PR:
 
-## What it creates
+```
+/q
+```
 
-- Pull requests with workflow optimizations (if changes are needed)
-- Comments with analysis findings and recommendations
-
-## Triggering CI on Pull Requests
-
-By default, pull requests created by this workflow do not trigger CI workflow runs. This is a GitHub Actions feature to prevent event cascades.
-
-To trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
-
-## What web searches it performs
-
-- Searches for GitHub Actions agentic workflow best practices
-- Looks up tool documentation for missing or misconfigured tools
-- Researches performance optimization strategies
-- Finds solutions for identified error patterns
-
-## What bash commands it runs
-
-- File inspection commands to analyze workflow files
-- Directory traversal to find workflow configurations
-- Text processing to identify patterns and issues
-- Any other commands needed to analyze workflow structure
-
-## Use Cases
-
-- **Performance Optimization**: Identify and fix workflows with high token usage or excessive turns
-- **Missing Tools**: Detect and add missing tools that workflows attempt to use
-- **Permission Issues**: Fix workflows with insufficient permissions
-- **Pattern Extraction**: Create shared configurations for common workflow patterns
-- **Error Analysis**: Investigate recurring workflow failures and propose fixes
-- **Configuration Improvements**: Add timeouts limits, and other best practice settings
-
-## Example Commands
+Example commands:
 
 ```
 /q Analyze all workflows and suggest optimizations
 /q Fix the missing tools in the daily-progress workflow
 /q Investigate why the CI doctor workflow is failing
 /q Extract common patterns from coding workflows into a shared config
-/q Add missing permissions to workflows that have errors
 /q Optimize workflows with high token usage
-/q Review and improve workflow timeout settings
 ```
 
-## How It Works
+### Configuration
 
-1. **Context Analysis**: Parses the triggering comment to understand what needs optimization
-2. **Data Gathering**: Downloads recent workflow logs and audit information using the agentic-workflows tool
-3. **Code Analysis**: Examines workflow files to identify issues and patterns
-4. **Research**: Uses web search to find solutions and best practices
-5. **Improvements**: Makes targeted changes to workflow files
-6. **Validation**: Validates changes using the compile tool
-7. **Pull Request**: Creates a PR with optimizations (or comments if no changes needed)
+This workflow requires no configuration and works out of the box.
 
-## Human in the loop
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
+
+### Triggering CI on Pull Requests
+
+To automatically trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
+
+### Human in the Loop
 
 - Review the analysis and findings before accepting optimizations
-- Validate that suggested changes align with your workflow requirements
-- Test workflow changes in a development environment before merging
-- Provide feedback on optimization recommendations
+- Validate that suggested changes align with your requirements
+- Test workflow changes before merging

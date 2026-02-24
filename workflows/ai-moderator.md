@@ -78,7 +78,7 @@ Analyze for link spam indicators:
 ### 3. AI-Generated Content Detection
 
 Analyze for AI-generated content indicators:
-- Use of em-dashes (—) in casual contexts
+- Use of em-dashes ( - ) in casual contexts
 - Excessive use of emoji, especially in technical discussions
 - Perfect grammar and punctuation in informal settings
 - Constructions like "it's not X - it's Y" or "X isn't just Y - it's Z"

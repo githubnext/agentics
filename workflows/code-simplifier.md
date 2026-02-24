@@ -21,7 +21,6 @@ safe-outputs:
     title-prefix: "[code-simplifier] "
     labels: [refactoring, code-quality, automation]
     expires: 1d
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 tools:
   github:

@@ -13,7 +13,14 @@ timeout-minutes: 30
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+  - defaults
+  - dotnet
+  - node
+  - python
+  - rust
+  - java
 
 safe-outputs:
   create-discussion: # needed to create planning discussion
@@ -27,7 +34,6 @@ safe-outputs:
   create-pull-request: # can create a pull request
     draft: true
     labels: [automation, testing]
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 
 tools:
   web-fetch:
