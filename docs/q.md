@@ -22,7 +22,7 @@ This walks you through adding the workflow to your repository.
 
 ```mermaid
 graph LR
-    A[/q Command] --> B[Analyze Workflows]
+    A["/q Command"] --> B[Analyze Workflows]
     B --> C[Check Logs & Metrics]
     C --> D{Issues Found?}
     D -->|Yes| E[Optimize Configuration]
