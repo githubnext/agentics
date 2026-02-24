@@ -183,7 +183,7 @@ The PR description should include:
 
 ## Important Guidelines
 
-- Always review and generalize imported workflows — do not blindly copy project-specific content
+- Always review and generalize imported workflows  -  do not blindly copy project-specific content
 - Match the documentation style of existing pages in `docs/`
 - Keep the workflow prompt clear, actionable, and concise
 - Preserve security-first design: minimal permissions, explicit network access, safe outputs

@@ -48,7 +48,6 @@ safe-outputs:
   add-comment:
     max: 1
 
-engine: copilot
 ---
 
 # Daily Workflow Sync from github/gh-aw

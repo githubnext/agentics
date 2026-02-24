@@ -1,18 +1,21 @@
 ---
 description: Creates weekly summary of issue activity including trends, charts, and insights every Monday
+
 timeout-minutes: 20
-strict: true
+
 on:
   schedule:
     - cron: "0 15 * * 1"  # Weekly on Mondays at 3 PM UTC
   workflow_dispatch:
+
 permissions:
   issues: read
-engine: copilot
+
 network:
   allowed:
     - defaults
     - python
+
 tools:
   edit:
   bash:
@@ -21,12 +24,14 @@ tools:
     lockdown: true
     toolsets:
       - issues
+
 safe-outputs:
   upload-asset:
   create-discussion:
     title-prefix: "[Weekly Summary] "
     category: "audits"
     close-older-discussions: true
+
 steps:
   - name: Setup Python environment
     run: |
@@ -43,8 +48,8 @@ Create a comprehensive weekly summary of issue activity for repository ${{ githu
 
 Use GitHub API tools to gather data for the past 30 days:
 
-1. **Issue Activity Data** — Count of issues opened per day, closed per day, and running open count
-2. **Issue Resolution Data** — Average time to close issues, distribution of issue lifespans, breakdown by label
+1. **Issue Activity Data**  -  Count of issues opened per day, closed per day, and running open count
+2. **Issue Resolution Data**  -  Average time to close issues, distribution of issue lifespans, breakdown by label
 
 Fetch enough issues to compute weekly and daily trends over the past 30 days. Use the GitHub toolset to query issues filtered by `created` and `closed` dates.
 
@@ -57,6 +62,7 @@ Write Python scripts to create exactly 2 high-quality trend charts and execute t
 Save data to `/tmp/data/issue_activity.csv` with columns: `date,opened,closed,open_total`
 
 Generate a multi-line chart:
+
 - Issues opened per week (bar or line)
 - Issues closed per week (bar or line)
 - Running total of open issues (secondary line)
@@ -69,6 +75,7 @@ Generate a multi-line chart:
 Save data to `/tmp/data/issue_resolution.csv` with columns: `date,avg_days,median_days`
 
 Generate a line chart with moving average overlay:
+
 - Average time to close (7-day moving average line)
 - Median time to close
 - Shaded variance band
@@ -112,7 +119,7 @@ Create a discussion with the title format: `Weekly Summary - [YYYY-MM-DD]`
 #### Weekly Activity Patterns
 ![Issue Activity Trends]({chart_1_url})
 
-[2–3 sentences: describe the trend — are issues accumulating, being resolved quickly, or holding steady?]
+[2–3 sentences: describe the trend  -  are issues accumulating, being resolved quickly, or holding steady?]
 
 #### Resolution Time Analysis
 ![Issue Resolution Trends]({chart_2_url})

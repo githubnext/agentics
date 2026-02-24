@@ -2,7 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [daily Ad hoc QA workflow](../workflows/daily-qa.md?plain=1) will perform ad hoc quality assurance tasks in the repository, such as following the instructions in the README.md, tutorials and walkthroughs to check that the code builds and runs, and that the getting started process is simple and works well. You can edit and configure the workflow to describe more tasks. 
+**Perform ad hoc quality assurance by following README instructions, tutorials, and walkthroughs**
+
+The [Daily Ad hoc QA workflow](../workflows/daily-qa.md?plain=1) reads your documentation, follows instructions, tests build and run processes, and creates issues for problems found.
 
 ## Installation
 
@@ -16,49 +18,33 @@ gh aw add-wizard githubnext/agentics/daily-qa
 
 This walks you through adding the workflow to your repository.
 
-You can start a run of this workflow immediately by running:
-
-```bash
-gh aw run daily-qa
-```
-
 ## How It Works
 
-````mermaid
+```mermaid
 graph LR
     A[Read README/Tutorials] --> B[Follow Instructions]
     B --> C[Test Build/Run]
     C --> D{Issues Found?}
     D -->|Yes| E[Create QA Issue]
     D -->|No| F[Report: QA Passed]
-````
+```
 
-## Configuration
+## Usage
 
-This workflow requires no configuration and works out of the box. You can edit it to specify QA tasks, testing scenarios, reporting format, and frequency.
+### Configuration
+
+This workflow requires no configuration and works out of the box. You can customize QA tasks, testing scenarios, reporting format, and frequency.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-## What it reads from GitHub
+### Commands
 
-- Repository contents and source code
-- Pull requests and their metadata
-- Discussions and community content
-- Actions workflow runs and results
-- Checks and status information
+You can start a run of this workflow immediately by running:
 
-## What it creates
+```bash
+gh aw run daily-qa
+```
 
-- Creates new issues for problems found during QA
-- Updates existing issues with QA findings
-- Adds comments to issues with QA results
-- Requires `issues: write` permission
+### Triggering CI on Pull Requests
 
-## Human in the loop
-
-- Review QA issues to validate reported problems
-- Reproduce and confirm issues identified by the workflow
-- Prioritize QA findings and assign them for resolution
-- Close issues once problems have been addressed
-- Disable or uninstall the workflow if QA findings are not actionable or valuable
-
+To automatically trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.

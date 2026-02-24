@@ -8,7 +8,6 @@ permissions:
   actions: read
   security-events: read
 tracker-id: malicious-code-scan
-engine: copilot
 tools:
   github:
     toolsets: [repos, code_security]
@@ -226,7 +225,7 @@ When suspicious patterns are found, create code-scanning alerts with this struct
 - **Be thorough but focused**: Analyze all changed files, but prioritize high-risk areas
 - **Minimize false positives**: Only alert on genuine suspicious patterns
 - **Provide actionable details**: Each alert should guide developers on next steps
-- **Consider context**: Not all unusual code is malicious — look for converging patterns
+- **Consider context**: Not all unusual code is malicious  -  look for converging patterns
 - **Document reasoning**: Explain clearly why code is flagged as suspicious
 
 ### Performance Considerations
@@ -276,7 +275,7 @@ Your output MUST:
      }
    }
    ```
-   - **DO NOT just write this message in your output text** — you MUST actually invoke the `noop` tool
+   - **DO NOT just write this message in your output text**  -  you MUST actually invoke the `noop` tool
 
 3. **Analysis summary** (in alert descriptions or noop message):
    - Number of files analyzed

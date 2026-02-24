@@ -2,7 +2,9 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-The [dependency PR bundler workflow](../workflows/dependabot-pr-bundler.md?plain=1) will check for Dependabot alerts in the repository and create pull requests that group together updates and fully update the dependencies to the latest versions. It will attempt to test the updates and ensure they are compatible, but human review and testing is required before merging.
+**Bundle Dependabot alerts into grouped pull requests with full dependency updates**
+
+The [Dependabot PR Bundler workflow](../workflows/dependabot-pr-bundler.md?plain=1) checks for Dependabot alerts, groups updates, updates dependencies to latest versions, tests compatibility, and creates bundled pull requests.
 
 ## Installation
 
@@ -14,15 +16,11 @@ gh extension install github/gh-aw
 gh aw add-wizard githubnext/agentics/dependabot-pr-bundler
 ```
 
-This walks you through adding the workflow to your repository. After merging the PR and syncing to main, you can start a run of this workflow immediately by running:
-
-```bash
-gh aw run dependabot-pr-bundler
-```
+This walks you through adding the workflow to your repository.
 
 ## How It Works
 
-````mermaid
+```mermaid
 graph LR
     A[Check Dependabot Alerts] --> B[Group Updates]
     B --> C[Update Dependencies]
@@ -30,30 +28,30 @@ graph LR
     D --> E{Tests Pass?}
     E -->|Yes| F[Create Bundled PR]
     E -->|No| G[Report Issues]
-````
+```
 
-## Configuration
+## Usage
 
-This workflow requires no configuration and works out of the box. Configure the workflow by editing it.
+### Configuration
+
+This workflow requires no configuration and works out of the box.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-## What it reads from GitHub
+### Commands
 
-- Repository contents and dependency files
-- Issues and their metadata
-- Security events and Dependabot alerts
+You can start a run immediately:
 
-## What it creates
+```bash
+gh aw run dependabot-pr-bundler
+```
 
-- Creates pull requests with dependency updates
-- Creates new branches for the dependency changes
-- Makes file changes to update dependency versions
+### Triggering CI on Pull Requests
 
-## Human in the loop
+To automatically trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
 
-- Review dependency update pull requests for breaking changes
-- Test updated dependencies to ensure compatibility
-- Merge approved pull requests after validation
-- Monitor for any issues after dependency updates are deployed
-- Disable or uninstall the workflow if dependency updates cause more problems than benefits
+### Human in the Loop
+
+- Review dependency update PRs for breaking changes
+- Test updated dependencies for compatibility
+- Monitor for issues after updates are deployed

@@ -6,15 +6,18 @@ on:
     - cron: daily
   workflow_dispatch:
 
-permissions:
-  contents: read
-  actions: read
-  pull-requests: read
-  issues: read
+network:
+  allowed:
+  - defaults
+  - dotnet
+  - node
+  - python
+  - rust
+  - java
+
+permissions: read-all
 
 tracker-id: ci-coach-daily
-
-engine: copilot
 
 tools:
   github:
@@ -26,6 +29,7 @@ safe-outputs:
   create-pull-request:
     expires: 2d
     title-prefix: "[ci-coach] "
+    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
 timeout-minutes: 30
 ---
 

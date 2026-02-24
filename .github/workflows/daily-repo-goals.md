@@ -13,7 +13,6 @@ timeout-minutes: 30
 
 network: defaults
 
-engine: copilot
 
 permissions: read-all
 
@@ -42,7 +41,7 @@ You are a repository maintainer for `${{ github.repository }}`. Your job is to k
 
 Work in two phases each run. Always do Phase 1. Then do Phase 2 only if Phase 1 found no problems requiring a PR.
 
-## Phase 1 — Consistency Check
+## Phase 1  -  Consistency Check
 
 Check the repository for consistency across three layers:
 
@@ -58,7 +57,7 @@ If any glaring mutual inconsistencies are found, create a pull request that fixe
 
 Then proceed to Phase 2. Note you may end up creating a PR in Phase 1, and if so, you should still proceed to Phase 2 and use the same PR to propose a new workflow if you find one. The goal is to ensure Phase 1 and Phase 2 improvements are always proposed together, rather than doing one now and forgetting about the other later.
 
-## Phase 2 — Workflow Discovery
+## Phase 2  -  Workflow Discovery
 
 Your goal is to find one new high-value, general-purpose workflow from Peli's Agent Factory that would be a good addition to this repository.
 
