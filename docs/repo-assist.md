@@ -1,4 +1,4 @@
-# - 🌈 Repo Assist
+# 🌈 Repo Assist
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
