@@ -1,6 +1,8 @@
-# 🤖 Repo Assist
+# 🌈 Repo Assist
 
 > For an overview of all available workflows, see the [main README](../README.md).
+>
+> [Blog Post by @dsyme](https://dsyme.net/2026/02/25/repo-assist-a-repository-assistant/)
 
 The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs daily to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. It triages issues, comments helpfully, fixes bugs via pull requests, proposes improvements, maintains its own PRs, nudges stale PRs, manages labels, prepares releases, welcomes new contributors, and maintains a monthly activity summary for maintainer visibility.
 
