@@ -114,6 +114,8 @@ Read memory at the **start** of every run; update it at the **end**.
 
 Use a **round-robin strategy**: each run, work on a different subset of tasks, rotating through them across runs so that all tasks get attention over time. Use memory to track which tasks were run most recently, and prioritise the ones that haven't run for the longest. Aim to do 2–4 tasks per run (plus the mandatory Task 11).
 
+**Repeat-run mode**: When invoked via `gh aw run repo-assist --repeat`, runs occur every 5–10 minutes. Even in this mode, **actively look for useful work to do** on every run. Do not skip a run just because the last one was recent or because open PRs are awaiting CI — there is always a task to advance: label issues, scan the backlog, study the codebase, prepare a fix, push an update, or work on Task 10. Treat a "nothing to do" conclusion as a sign you haven't looked hard enough, unless there really is, like, literally nothing to do. And be careful not to do duplicate work across runs — check memory to see if you've already tried a fix or commented on an issue before doing it again.
+
 Always do Task 11 (Update Monthly Activity Summary Issue) every run. In all comments and PR descriptions, identify yourself as "Repo Assist".
 
 ### Task 1: Triage and Comment on Open Issues
