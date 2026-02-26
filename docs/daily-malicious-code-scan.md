@@ -2,8 +2,6 @@
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-**Automatically review recent code changes for suspicious patterns indicating malicious activity or security regressions**
-
 The [Daily Malicious Code Scan workflow](../workflows/daily-malicious-code-scan.md?plain=1) examines files changed in the past 72 hours, searching for secret exfiltration, out-of-context code, suspicious network activity, system access patterns, obfuscation, and supply chain indicators. Findings appear as GitHub code-scanning alerts with threat scores and remediation recommendations.
 
 ## Installation
