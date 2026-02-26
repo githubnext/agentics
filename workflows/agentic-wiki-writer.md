@@ -21,12 +21,13 @@ steps:
       cp "$GITHUB_EVENT_PATH" /tmp/gh-aw/event.json
       echo "Event payload staged to /tmp/gh-aw/event.json"
       cat /tmp/gh-aw/event.json
+  - name: Create agentic-wiki directory
+    run: mkdir -p .github/agentic-wiki
 tools:
   bash:
     - "find * -type f -not -path '*/node_modules/*' -not -path '*/.git/*'"
     - "tree *"
     - "wc *"
-    - "mkdir -p .github/agentic-wiki"
   repo-memory:
     branch-name: memory/agentic-wiki
     description: "Source file mappings, content hashes, and file summaries for incremental wiki regeneration"
@@ -84,8 +85,8 @@ You are a wiki generator for this repository. Your job is to produce high-qualit
 
 **CRITICAL: Sandbox constraints.** Read this carefully — violating these will cause permission errors.
 
-- **Allowed bash commands:** Only `find`, `tree`, `wc`, `mkdir -p .github/agentic-wiki`, and read-only commands (`cat`, `ls`, `head`) work. All other bash commands (`git`, `echo >`, `touch`, `cp`, `tee`, `node`, `python`, `install`) will be denied.
-- **Creating files:** Use the `write` tool. The only `mkdir` allowed is `mkdir -p .github/agentic-wiki`. Do NOT try to mkdir any other path.
+- **Allowed bash commands:** Only `find`, `tree`, `wc`, and read-only commands (`cat`, `ls`, `head`) work. All other bash commands (`git`, `echo >`, `touch`, `cp`, `tee`, `node`, `python`, `install`, `mkdir`) will be denied.
+- **Creating files:** Use the `write` tool. The `.github/agentic-wiki/` directory is pre-created before your session starts. Do NOT try to mkdir any path.
 - **Wiki page output:** Do NOT write wiki pages to disk. Do NOT create output directories. Construct all page content as strings and pass them to the `push-wiki` safe-output as JSON. See Step 3f.
 - **Repo info for source links:** Do NOT use `git` commands. Read `.git/config` with `cat` to find the remote URL. The default branch is `main`.
 - **Repo memory path:** Do NOT hardcode the repo-memory path. Discover it by running `ls /tmp/gh-aw/repo-memory/` to find the directory name, then use that path. It is typically `/tmp/gh-aw/repo-memory/default/`. All memory files must be flat (no subdirectories) — you cannot mkdir inside repo-memory.
