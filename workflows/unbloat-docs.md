@@ -21,11 +21,6 @@ permissions:
 
 strict: true
 
-# AI engine configuration
-engine:
-  id: claude
-  max-turns: 90
-
 # Network access for documentation research
 network:
   allowed:
