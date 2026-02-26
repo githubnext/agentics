@@ -8,7 +8,6 @@ permissions:
   contents: read
   issues: read
   pull-requests: read
-engine: codex
 safe-outputs:
   create-issue:
     expires: 2d

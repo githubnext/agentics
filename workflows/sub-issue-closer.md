@@ -7,7 +7,6 @@ on:
 permissions:
   contents: read
   issues: read
-engine: copilot
 strict: true
 network:
   allowed:

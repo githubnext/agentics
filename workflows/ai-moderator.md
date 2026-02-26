@@ -19,7 +19,6 @@ rate-limit:
 concurrency:
   group: "gh-aw-${{ github.workflow }}-${{ github.event.issue.number || github.event.pull_request.number }}"
   cancel-in-progress: false
-engine: codex
 tools:
   github:
     mode: local

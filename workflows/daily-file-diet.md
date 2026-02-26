@@ -13,7 +13,6 @@ permissions:
   pull-requests: read
 
 tracker-id: daily-file-diet
-engine: copilot
 
 safe-outputs:
   create-issue:
