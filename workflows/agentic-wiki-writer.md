@@ -468,18 +468,19 @@ Do NOT start any page with an H1 heading (`# Title`). The page title is already 
 
 GitHub wiki supports rich markdown features. Use them when they genuinely clarify — never for decoration. Plain prose is the default.
 
-**Mermaid diagrams** — Most pages should NOT have a diagram. Only include one when the concept has spatial or temporal relationships that prose cannot efficiently convey.
+**Mermaid diagrams** — Include a diagram on any page where it helps the reader understand relationships, flows, or architecture. Most pages that describe how components interact, how data flows, or how processes work benefit from a diagram.
 
-Use a diagram when:
-- 3+ components interact and the reader needs to see how data/control flows between them
-- An entity has a non-obvious state lifecycle with multiple transitions
-- The instruction explicitly asks for a diagram or data flow
+Include a diagram when:
+- The page describes architecture, pipelines, or system components
+- 2+ components interact and a visual clarifies the relationships
+- There is a data flow, request/response exchange, or state lifecycle
+- The instruction mentions workflows, CI/CD, build processes, or integrations
+- The page would otherwise be a wall of text describing interconnected parts
 
-Do NOT use a diagram when:
-- The flow is linear (A then B then C) — a sentence or bullet list is clearer
-- It would merely restate what surrounding bullet points already say
-- The page documents a list of things rather than how things connect
-- It would have fewer than 4 nodes or more than 15 nodes
+Skip a diagram only when:
+- The page is a simple reference list (config options, API parameters)
+- A diagram would have fewer than 3 nodes
+- The content is purely procedural (step 1, step 2, step 3) with no branching
 
 Diagram type by use case: `flowchart LR` for architecture/data flow; `sequenceDiagram` for multi-step request/response exchanges; `stateDiagram-v2` for lifecycles; `classDiagram` only when 3+ types have non-obvious relationships.
 
