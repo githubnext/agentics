@@ -23,6 +23,6 @@ mcp-servers:
 #
 # Usage:
 #   imports:
-#     - shared/mcp/arxiv.md
+#     - shared/arxiv.md
 
 -->

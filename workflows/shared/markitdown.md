@@ -22,5 +22,5 @@ mcp-servers:
 #
 # Usage:
 #   imports:
-#     - shared/mcp/markitdown.md
+#     - shared/markitdown.md
 -->
