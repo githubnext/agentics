@@ -24,6 +24,8 @@ tools:
     lockdown: false
 
 safe-outputs:
+  mentions: false
+  allowed-github-references: []
   create-issue:
     title-prefix: "[repo-status] "
     labels: [report, daily-status]

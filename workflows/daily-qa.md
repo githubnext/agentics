@@ -16,6 +16,8 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
+  mentions: false
+  allowed-github-references: []
   create-discussion:
     title-prefix: "${{ github.workflow }}"
     category: "q-a"
