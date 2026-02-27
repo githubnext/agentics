@@ -76,6 +76,26 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 
 - [🔧 Q - Workflow Optimizer](docs/q.md) - Expert system that analyzes and optimizes agentic workflows
 
+## 🧩 Shared Workflow Fragments
+
+Shared workflow fragments are reusable building blocks that can be imported into other workflows using `imports: [shared/name.md]`. They provide pre-configured tools, MCP servers, and setup steps.
+
+### MCP Servers
+
+- **[arXiv](workflows/shared/arxiv.md)** - Access arXiv research papers: search, get paper details, and retrieve PDFs
+- **[MarkItDown](workflows/shared/markitdown.md)** - Convert PDFs, Word documents, PowerPoints, HTML, and other formats to Markdown
+- **[Microsoft Docs](workflows/shared/mcp/microsoft-docs.md)** - Access Microsoft's documentation via `learn.microsoft.com`
+
+### Tools & Setup
+
+- **[FFmpeg](workflows/shared/ffmpeg.md)** - Install and use FFmpeg for video/audio processing (extract audio, frames, scene detection, etc.)
+- **[sq](workflows/shared/sq.md)** - Install and use `sq` for querying structured data (CSV, Excel, JSON, SQL databases) with jq-like syntax
+
+### Formatting & Reporting
+
+- **[Formatting](workflows/shared/formatting.md)** - Standard content structure with overview and collapsible details sections
+- **[Reporting](workflows/shared/reporting.md)** - Guidelines for reporting workflow run information with clickable run ID links
+
 ## 🔄 Updating Workflows
 
 Keep your agentic workflows up to date with the latest features and improvements:
