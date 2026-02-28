@@ -15,6 +15,8 @@ on:
     branches: [main]
 permissions:
   contents: read
+  issues: read
+  pull-requests: read
 steps:
   - name: Pre-stage event payload for sandbox
     run: |
@@ -38,7 +40,7 @@ tools:
     max-file-size: 1048576
     max-file-count: 50
   github:
-    toolsets: [repos]
+    toolsets: [default]
   write: {}
 safe-outputs:
   create-pull-request:
