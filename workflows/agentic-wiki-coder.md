@@ -29,7 +29,7 @@ steps:
       GH_TOKEN: ${{ github.token }}
       GITHUB_REPOSITORY: ${{ github.repository }}
     run: |
-      git clone "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git" /tmp/gh-aw/wiki
+      gh repo clone "${GITHUB_REPOSITORY}.wiki" /tmp/gh-aw/wiki
       echo "Wiki cloned to /tmp/gh-aw/wiki/"
       ls /tmp/gh-aw/wiki/
 safe-outputs:
