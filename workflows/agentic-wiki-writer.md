@@ -28,6 +28,9 @@ tools:
     - "find * -type f -not -path '*/node_modules/*' -not -path '*/.git/*'"
     - "tree *"
     - "wc *"
+    - "ls"
+    - "cat *"
+    - "head *"
   repo-memory:
     branch-name: memory/agentic-wiki
     description: "Source file mappings, content hashes, and file summaries for incremental wiki regeneration"
