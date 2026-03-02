@@ -17,6 +17,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 - [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
 - [😤 Grumpy Reviewer](docs/grumpy-reviewer.md) - On-demand opinionated code review by a grumpy but thorough senior developer
+- [🔍 PR Nitpick Reviewer](docs/pr-nitpick-reviewer.md) - On-demand fine-grained code review focusing on style, conventions, and subtle improvements
 
 ### Research, Status & Planning Workflows
 
