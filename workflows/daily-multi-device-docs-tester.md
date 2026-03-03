@@ -75,11 +75,11 @@ You are a documentation testing specialist. Your task is to build the project's 
 - **Repository**: ${{ github.repository }}
 - **Run ID**: ${{ github.run_id }}
 - **Triggered by**: @${{ github.actor }}
-- **Devices to test**: ${{ inputs.devices || 'mobile,tablet,desktop' }}
-- **Docs directory**: ${{ inputs.docs_dir || 'docs' }}
-- **Build command**: ${{ inputs.build_command || 'npm run build' }}
-- **Serve command**: ${{ inputs.serve_command || 'npm run preview' }}
-- **Server port**: ${{ inputs.server_port || '4321' }}
+- **Devices to test** (DEVICES): ${{ inputs.devices }} (default: 'mobile,tablet,desktop')
+- **Docs directory** (DOCS_DIR): ${{ inputs.docs_dir }} (default: 'docs' )
+- **Build command** (BUILD_COMMAND): ${{ inputs.build_command }} (default 'npm run build' )
+- **Serve command** (SERVE_COMMAND): ${{ inputs.serve_command }} (default 'npm run preview')
+- **Server port** (SERVER_PORT): ${{ inputs.server_port }} (default '4321')
 - **Working directory**: ${{ github.workspace }}
 
 ## Step 1: Verify the Documentation Site Exists
@@ -87,8 +87,8 @@ You are a documentation testing specialist. Your task is to build the project's 
 Check that the documentation directory exists and has a package.json:
 
 ```bash
-ls -la ${{ github.workspace }}/${{ inputs.docs_dir || 'docs' }}/
-cat ${{ github.workspace }}/${{ inputs.docs_dir || 'docs' }}/package.json 2>/dev/null | head -20 || echo "No package.json found"
+ls -la ${{ github.workspace }}/DOCS_DIR/
+cat ${{ github.workspace }}/DOCS_DIR/package.json 2>/dev/null | head -20 || echo "No package.json found"
 ```
 
 If the docs directory doesn't exist or has no package.json, call the `noop` safe output explaining that this repository doesn't have a buildable documentation site and stop.
@@ -98,9 +98,9 @@ If the docs directory doesn't exist or has no package.json, call the `noop` safe
 Navigate to the docs directory and build the site:
 
 ```bash
-cd ${{ github.workspace }}/${{ inputs.docs_dir || 'docs' }}
+cd ${{ github.workspace }}/DOCS_DIR
 npm install
-${{ inputs.build_command || 'npm run build' }}
+BUILD_COMMAND
 ```
 
 If the build fails, create a GitHub issue titled "📱 Multi-Device Docs Test Failed - Build Error" with the error details and stop.
@@ -110,8 +110,8 @@ If the build fails, create a GitHub issue titled "📱 Multi-Device Docs Test Fa
 Start the preview server in the background and wait for it to be ready:
 
 ```bash
-cd ${{ github.workspace }}/${{ inputs.docs_dir || 'docs' }}
-${{ inputs.serve_command || 'npm run preview' }} > /tmp/docs-preview.log 2>&1 &
+cd ${{ github.workspace }}/DOCS_DIR
+SERVE_COMMAND > /tmp/docs-preview.log 2>&1 &
 echo $! > /tmp/docs-server.pid
 echo "Server started with PID: $(cat /tmp/docs-server.pid)"
 ```
@@ -119,7 +119,7 @@ echo "Server started with PID: $(cat /tmp/docs-server.pid)"
 Wait for the server to be ready:
 
 ```bash
-PORT=${{ inputs.server_port || '4321' }}
+PORT=SERVER_PORT
 for i in {1..30}; do
   curl -s http://localhost:$PORT > /dev/null && echo "Server ready on port $PORT!" && break
   echo "Waiting for server... ($i/30)" && sleep 2
@@ -129,7 +129,7 @@ curl -s http://localhost:$PORT > /dev/null || echo "WARNING: Server may not have
 
 ## Step 4: Device Configuration
 
-Use these viewport sizes based on the `${{ inputs.devices || 'mobile,tablet,desktop' }}` input:
+Use these viewport sizes based on the `DEVICES` input:
 
 **Mobile devices** (test if "mobile" in input):
 - iPhone 12: 390×844
@@ -157,7 +157,7 @@ For **each device viewport** in the requested device types, perform the followin
 mcp__playwright__browser_run_code({
   code: `async (page) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('http://localhost:${{ inputs.server_port || '4321' }}/');
+    await page.goto('http://localhost:SERVER_PORT/');
     return { url: page.url(), title: await page.title() };
   }`
 })
