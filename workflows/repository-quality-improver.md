@@ -2,8 +2,7 @@
 name: Repository Quality Improver
 description: Daily analysis of repository quality focusing on a different software development lifecycle area each run
 on:
-  schedule:
-    - cron: "0 13 * * 1-5"  # Weekdays at 1 PM UTC
+  schedule: daily on weekdays
   workflow_dispatch:
 permissions:
   contents: read

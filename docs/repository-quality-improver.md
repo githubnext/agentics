@@ -78,7 +78,7 @@ The workflow uses these default settings:
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Schedule | Weekdays at 1 PM UTC | When to run the analysis |
+| Schedule | Daily on weekdays | When to run the analysis |
 | Issue labels | `quality`, `automated-analysis` | Labels applied to created issues |
 | Max issues per run | 1 | Prevents duplicate reports |
 | Issue expiry | 2 days | Older issues are closed when a new one is posted |
