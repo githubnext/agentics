@@ -7,6 +7,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ### Triage Workflows
 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
+- [🌳 Issue Arborist](docs/issue-arborist.md) - Automatically organize issues by linking related issues as parent-child sub-issues
 
 ### Fault Analysis Workflows
 
@@ -54,6 +55,8 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 
 - [📖 Regular Documentation Update](docs/update-docs.md) - Update documentation automatically
 - [📖 Daily Documentation Updater](docs/daily-doc-updater.md) - Automatically update documentation based on recent code changes and merged PRs
+- [📝 Agentic Wiki Writer](docs/agentic-wiki-writer.md) - Automatically generate and maintain GitHub wiki pages from source code
+- [🔧 Agentic Wiki Coder](docs/agentic-wiki-coder.md) - Implement code changes described in GitHub wiki edits
 - [📖 Glossary Maintainer](docs/glossary-maintainer.md) - Automatically maintain project glossary based on codebase changes
 - [🔗 Link Checker](docs/link-checker.md) - Daily automated link checker that finds and fixes broken links in documentation
 - [🗜️ Documentation Unbloat](docs/unbloat-docs.md) - Automatically simplify documentation by reducing verbosity while maintaining clarity
