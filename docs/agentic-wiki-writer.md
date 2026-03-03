@@ -57,6 +57,6 @@ After editing the workflow file, run `gh aw compile` to update the compiled work
 
 ## Learn More
 
-- [Agentic Wiki Writer source workflow](https://github.com/github/gh-aw/blob/main/.github/workflows/agentic-wiki-writer.md)
+- [Agentic Wiki Writer source workflow](https://github.com/githubnext/agentics/blob/main/workflows/agentic-wiki-writer.md)
 - [Agentic Wiki Coder](agentic-wiki-coder.md) — the paired reverse workflow
 - [GitHub Wikis documentation](https://docs.github.com/en/communities/documenting-your-project-with-wikis)
