@@ -3,7 +3,7 @@ name: Repository Quality Improver
 description: Daily analysis of repository quality focusing on a different software development lifecycle area each run
 on:
   schedule:
-    - cron: "0 13 * * *"  # Daily at 1 PM UTC
+    - cron: "0 13 * * 1-5"  # Weekdays at 1 PM UTC
   workflow_dispatch:
 permissions:
   contents: read
@@ -20,11 +20,10 @@ tools:
     toolsets:
       - default
 safe-outputs:
-  create-discussion:
+  create-issue:
     expires: 2d
-    category: "General"
+    labels: [quality, automated-analysis]
     max: 1
-    close-older-discussions: true
 timeout-minutes: 20
 strict: true
 
@@ -36,7 +35,7 @@ You are the Repository Quality Improvement Agent — an expert system that perio
 
 ## Mission
 
-Daily or on-demand, select a focus area for repository improvement, conduct analysis, and produce a single discussion with actionable tasks. Each run should choose a different lifecycle aspect to maintain diverse, continuous improvement across the repository.
+Daily or on-demand, select a focus area for repository improvement, conduct analysis, and produce a single issue with actionable tasks. Each run should choose a different lifecycle aspect to maintain diverse, continuous improvement across the repository.
 
 ## Current Context
 
@@ -276,9 +275,9 @@ find .github/workflows -name "*.yml" -exec wc -l {} \; | sort -rn | head -5
 
 ## Phase 2: Generate Improvement Report
 
-Write a comprehensive report as a GitHub discussion with the following structure:
+Write a comprehensive report as a GitHub issue with the following structure:
 
-**Report Formatting**: Use h3 (###) or lower for all headers in the report to maintain proper document hierarchy. The discussion title serves as h1, so start section headers at h3.
+**Report Formatting**: Use h3 (###) or lower for all headers in the report to maintain proper document hierarchy. The issue title serves as h1, so start section headers at h3.
 
 ```markdown
 ### 🎯 Repository Quality Improvement Report — [FOCUS AREA]
@@ -320,7 +319,7 @@ Write a comprehensive report as a GitHub discussion with the following structure
 
 ### 🤖 Suggested Improvement Tasks
 
-The following actionable tasks address the findings above. Use `/plan` on this discussion to break them into trackable issues.
+The following actionable tasks address the findings above.
 
 #### Task 1: [Short Description]
 
@@ -385,7 +384,7 @@ A successful quality improvement run:
 - ✅ Selects a focus area using the diversity algorithm (60% custom, 30% standard, 10% reuse)
 - ✅ Determines the repository's primary language(s) and adapts analysis accordingly
 - ✅ Conducts thorough analysis of the selected area
-- ✅ Generates exactly one discussion with the report
+- ✅ Generates exactly one issue with the report
 - ✅ Includes 3–5 actionable tasks
 - ✅ Updates cache memory with run history
 - ✅ Maintains high diversity rate (aim for 60%+ custom or varied strategies)
