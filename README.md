@@ -49,6 +49,7 @@ These workflows analyze the repository, code, and activity to produce reports, i
 You can use the "/plan" agent to turn the reports into actionable issues which can then be assigned to the appropriate team members or agents.
 
 - [🔍 Daily Accessibility Review](docs/daily-accessibility-review.md) - Review application accessibility by automatically running and using the application
+- [📱 Multi-Device Docs Tester](docs/daily-multi-device-docs-tester.md) - Test documentation sites across mobile, tablet, and desktop viewports for responsive layout and interaction issues
 - [🔎 Daily Adhoc QA](docs/daily-qa.md) - Perform adhoc explorative quality assurance tasks
 
 ### Code Improvement Workflows (by making changes, producing pull requests)
