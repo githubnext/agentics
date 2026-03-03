@@ -34,11 +34,7 @@ safe-outputs:
     run-failure: "⚠️ Task mining interrupted! [{workflow_name}]({run_url}) {status}. Please review the logs..."
 
 tools:
-  repo-memory:
-    branch-name: memory/discussion-task-miner
-    description: "Track processed discussions and extracted tasks"
-    file-glob: ["memory/discussion-task-miner/*.json", "memory/discussion-task-miner/*.md"]
-    max-file-size: 102400  # 100KB
+  cache-memory: true
   github:
     lockdown: true
     toolsets: [default, discussions]
@@ -49,9 +45,6 @@ tools:
 
 imports:
   - shared/reporting.md
-
-features:
-  copilot-requests: true
 ---
 
 # Discussion Task Miner
@@ -102,14 +95,24 @@ Focus on extracting tasks that meet **ALL** these criteria:
 
 ### Step 1: Load Memory
 
-Check repo-memory for previously processed discussions:
+Check cache-memory for previously processed discussions. The cache memory stores a JSON object with this structure:
 
-```bash
-# Load processed discussions log
-cat memory/discussion-task-miner/processed-discussions.json 2>/dev/null || echo "[]"
-
-# Load extracted tasks log
-cat memory/discussion-task-miner/extracted-tasks.json 2>/dev/null || echo "[]"
+```json
+{
+  "last_run": "2026-03-01",
+  "discussions_processed": [
+    {"id": 1234, "title": "...", "processed_at": "2026-03-01T10:00:00Z"}
+  ],
+  "extracted_tasks": [
+    {
+      "source_discussion": 1234,
+      "issue_number": 5678,
+      "title": "...",
+      "created_at": "2026-03-01T10:00:00Z",
+      "status": "created"
+    }
+  ]
+}
 ```
 
 This helps avoid re-processing the same discussions and creating duplicate issues.
@@ -178,46 +181,27 @@ For each selected task, use the `create-issue` safe output with a clear title an
 
 ### Step 6: Update Memory
 
-Save progress to repo-memory:
+Save progress to cache-memory using the JSON structure:
 
-```bash
-# Update processed discussions log
-cat > memory/discussion-task-miner/processed-discussions.json << 'EOF'
+```json
 {
-  "last_run": "$(date -I)",
+  "last_run": "<today's date>",
   "discussions_processed": [
-    {"id": 1234, "title": "...", "processed_at": "$(date -Iseconds)"}
-  ]
-}
-EOF
-
-# Update extracted tasks log
-cat > memory/discussion-task-miner/extracted-tasks.json << 'EOF'
-{
-  "last_run": "$(date -I)",
-  "tasks": [
+    {"id": 1234, "title": "...", "processed_at": "<timestamp>"}
+  ],
+  "extracted_tasks": [
     {
       "source_discussion": 1234,
       "issue_number": 5678,
       "title": "...",
-      "created_at": "$(date -Iseconds)",
+      "created_at": "<timestamp>",
       "status": "created"
     }
   ]
 }
-EOF
-
-# Create a summary report
-cat > memory/discussion-task-miner/latest-run.md << 'EOF'
-# Task Mining Run - $(date -I)
-
-## Summary
-- Discussions scanned: N
-- Tasks identified: M
-- Issues created: K
-- Duplicates avoided: L
-EOF
 ```
+
+Merge with the existing cache-memory data to preserve historical tracking of processed discussions and extracted tasks.
 
 ## Output Requirements
 
@@ -228,8 +212,8 @@ EOF
 - Issues include clear acceptance criteria
 
 ### Memory Tracking
-- Always update processed-discussions.json to avoid duplicates
-- Maintain extracted-tasks.json for historical tracking
+- Always update cache-memory after each run to avoid duplicates
+- Maintain extracted tasks in cache-memory for historical tracking
 
 ### Quality Standards
 - Only create issues for high-value, actionable tasks
