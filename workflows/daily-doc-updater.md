@@ -2,9 +2,7 @@
 name: Daily Documentation Updater
 description: Automatically reviews and updates documentation based on recent code changes
 on:
-  schedule:
-    # Every day at a random time
-    - cron: daily
+  schedule: daily
   workflow_dispatch:
 
 network:

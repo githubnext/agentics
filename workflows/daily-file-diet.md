@@ -3,8 +3,7 @@ name: Daily File Diet
 description: Analyzes source files daily to identify oversized files that exceed healthy size thresholds, creating actionable refactoring issues
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 13 * * 1-5"
+  schedule: daily on weekdays
   skip-if-match: 'is:issue is:open in:title "[file-diet]"'
 
 permissions:

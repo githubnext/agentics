@@ -7,9 +7,7 @@ description: |
   strategic decision-making.
 
 on:
-  schedule:
-    # Every week, Monday (fuzzy scheduling to distribute load)
-    - cron: "weekly on monday"
+  schedule: weekly on monday
   workflow_dispatch:
 
 permissions: read-all

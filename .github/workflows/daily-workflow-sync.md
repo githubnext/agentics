@@ -1,7 +1,6 @@
 ---
 on:
-  schedule:
-    - cron: "0 13 * * 1-5"  # Daily at 1 PM UTC, weekdays only
+  schedule: daily on weekdays
   workflow_dispatch:
 
 permissions: read-all
