@@ -4,8 +4,7 @@ description: Creates weekly summary of issue activity including trends, charts, 
 timeout-minutes: 20
 
 on:
-  schedule:
-    - cron: "0 15 * * 1"  # Weekly on Mondays at 3 PM UTC
+  schedule: weekly on monday
   workflow_dispatch:
 
 permissions:

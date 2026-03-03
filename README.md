@@ -7,6 +7,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 ### Triage Workflows
 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
+- [🌳 Issue Arborist](docs/issue-arborist.md) - Automatically organize issues by linking related issues as parent-child sub-issues
 
 ### Fault Analysis Workflows
 
@@ -17,6 +18,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 - [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
 - [😤 Grumpy Reviewer](docs/grumpy-reviewer.md) - On-demand opinionated code review by a grumpy but thorough senior developer
+- [🔍 PR Nitpick Reviewer](docs/pr-nitpick-reviewer.md) - On-demand fine-grained code review focusing on style, conventions, and subtle improvements
 
 ### Research, Status & Planning Workflows
 
@@ -25,6 +27,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
 - [👥 Daily Team Status](docs/daily-team-status.md) - Create upbeat daily team activity summaries with productivity insights
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
+- [🔍 Discussion Task Miner](docs/discussion-task-miner.md) - Extract actionable improvement tasks from GitHub Discussions and create tracked issues
 
 ### Dependency Management Workflows
 
@@ -52,6 +55,8 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 
 - [📖 Regular Documentation Update](docs/update-docs.md) - Update documentation automatically
 - [📖 Daily Documentation Updater](docs/daily-doc-updater.md) - Automatically update documentation based on recent code changes and merged PRs
+- [📝 Agentic Wiki Writer](docs/agentic-wiki-writer.md) - Automatically generate and maintain GitHub wiki pages from source code
+- [🔧 Agentic Wiki Coder](docs/agentic-wiki-coder.md) - Implement code changes described in GitHub wiki edits
 - [📖 Glossary Maintainer](docs/glossary-maintainer.md) - Automatically maintain project glossary based on codebase changes
 - [🔗 Link Checker](docs/link-checker.md) - Daily automated link checker that finds and fixes broken links in documentation
 - [🗜️ Documentation Unbloat](docs/unbloat-docs.md) - Automatically simplify documentation by reducing verbosity while maintaining clarity
@@ -60,6 +65,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🏋️ Daily File Diet](docs/daily-file-diet.md) - Monitor for oversized source files and create targeted refactoring issues
 - [🧪 Daily Test Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Perf Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
+- [📊 Repository Quality Improver](docs/repository-quality-improver.md) - Daily rotating analysis of repository quality across code, documentation, testing, security, and custom dimensions
 
 ## Security Workflows
 
@@ -70,10 +76,31 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
 - [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
 - [🤖 Repo Assist](docs/repo-assist.md) - Daily repository assistant that triages issues, fixes bugs, proposes improvements, and maintains activity summaries
+- [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all their sub-issues are complete
 
 ## Meta-Workflows
 
 - [🔧 Q - Workflow Optimizer](docs/q.md) - Expert system that analyzes and optimizes agentic workflows
+
+## 🧩 Shared Workflow Fragments
+
+Shared workflow fragments are reusable building blocks that can be imported into other workflows using `imports: [shared/name.md]`. They provide pre-configured tools, MCP servers, and setup steps.
+
+### MCP Servers
+
+- **[arXiv](workflows/shared/arxiv.md)** - Access arXiv research papers: search, get paper details, and retrieve PDFs
+- **[MarkItDown](workflows/shared/markitdown.md)** - Convert PDFs, Word documents, PowerPoints, HTML, and other formats to Markdown
+- **[Microsoft Docs](workflows/shared/mcp/microsoft-docs.md)** - Access Microsoft's documentation via `learn.microsoft.com`
+
+### Tools & Setup
+
+- **[FFmpeg](workflows/shared/ffmpeg.md)** - Install and use FFmpeg for video/audio processing (extract audio, frames, scene detection, etc.)
+- **[sq](workflows/shared/sq.md)** - Install and use `sq` for querying structured data (CSV, Excel, JSON, SQL databases) with jq-like syntax
+
+### Formatting & Reporting
+
+- **[Formatting](workflows/shared/formatting.md)** - Standard content structure with overview and collapsible details sections
+- **[Reporting](workflows/shared/reporting.md)** - Guidelines for reporting workflow run information with clickable run ID links
 
 ## 🔄 Updating Workflows
 

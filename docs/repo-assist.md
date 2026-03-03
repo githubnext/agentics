@@ -128,13 +128,18 @@ You can also trigger Repo Assist on-demand by commenting on any issue or PR:
 /repo-assist <instructions>
 ```
 
-When triggered this way, Repo Assist focuses exclusively on your instructions instead of running its normal scheduled tasks. For example:
+When triggered this way, Repo Assist starts a new coding agent session immediately and focuses exclusively on your instructions instead of running its normal scheduled tasks. For example:
 
 - `/repo-assist investigate this bug and suggest a fix`
 - `/repo-assist add documentation for the new API endpoints`
 - `/repo-assist review this PR and suggest improvements`
 
 All the same guidelines apply (AI disclosure, running formatters/linters/tests, being polite and constructive).
+
+> NOTE: There are a few glitches with "/repo-assist" direct commands (which are meant to start a contextualised agent coding run directly)
+> - It doesn't work from code review comments
+> - "/repo-assist" has to be first thing in comment
+> - No link to the run is given
 
 ### Triggering CI on Pull Requests
 
