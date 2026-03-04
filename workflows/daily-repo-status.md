@@ -29,6 +29,7 @@ safe-outputs:
   create-issue:
     title-prefix: "[repo-status] "
     labels: [report, daily-status]
+    close-older-issues: true
 ---
 
 # Daily Repo Status

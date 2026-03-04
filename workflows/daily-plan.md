@@ -20,6 +20,7 @@ safe-outputs:
   create-discussion: # needed to create the project plan discussion
     title-prefix: "${{ github.workflow }}"
     category: "announcements"
+    close-older-discussions: true
 
 tools:
   github:
