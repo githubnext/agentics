@@ -38,6 +38,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 These workflows are triggered by specific "/" commands in issue or pull request comments, allowing for on-demand agentic assistance. Only maintainers or those with write access can trigger these workflows by commenting with the appropriate command.
 
+- [📊 Archie](docs/archie.md) - Generate Mermaid diagrams to visualize issue and pull request relationships with /archie command
 - [📋 Plan Command](docs/plan.md) - Break down issues into actionable sub-tasks with /plan command
 - [🏥 PR Fix](docs/pr-fix.md) - Analyze failing CI checks and implement fixes for pull requests
 - [🔍 Repo Ask](docs/repo-ask.md) - Intelligent research assistant for repository questions and analysis
