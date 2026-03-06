@@ -26,6 +26,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [📊 Weekly Issue Summary](docs/weekly-issue-summary.md) - Weekly issue activity report with trend charts and recommendations
 - [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
 - [👥 Daily Team Status](docs/daily-team-status.md) - Create upbeat daily team activity summaries with productivity insights
+- [📰 Daily Repository Chronicle](docs/daily-repo-chronicle.md) - Transform daily repository activity into an engaging newspaper-style narrative with trend charts
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
 - [🔍 Discussion Task Miner](docs/discussion-task-miner.md) - Extract actionable improvement tasks from GitHub Discussions and create tracked issues
 
