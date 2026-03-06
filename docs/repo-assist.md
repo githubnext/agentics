@@ -4,7 +4,7 @@
 >
 > [Blog Post by @dsyme](https://dsyme.net/2026/02/25/repo-assist-a-repository-assistant/)
 
-The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs daily to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. It triages issues, comments helpfully, fixes bugs via pull requests, proposes improvements, maintains its own PRs, nudges stale PRs, manages labels, prepares releases, welcomes new contributors, and maintains a monthly activity summary for maintainer visibility.
+The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs daily to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. Each run it selects two tasks via a weighted random draw based on live repo data — heavily favouring issue labelling and triage when the backlog is large, then shifting to engineering, testing, and forward progress as the backlog clears. It maintains a monthly activity summary for maintainer visibility.
 
 ## Installation
 
@@ -22,65 +22,86 @@ This walks you through adding the workflow to your repository.
 
 ````mermaid
 graph LR
-    A[Read Memory] --> B[Triage Issues]
-    A --> C[Fix Bugs via PR]
-    A --> D[Propose Improvements]
-    A --> E[Update Own PRs]
-    A --> F[Nudge Stale PRs]
-    A --> G[Manage Labels]
-    A --> H[Prepare Releases]
-    A --> I[Welcome Contributors]
-    A --> J[Update Activity Summary]
-        B --> J
-        C --> J
-        D --> J
-        E --> J
-        F --> J
-        G --> J
-        H --> J
-        I --> J
-    J --> K[Save Memory]
+    P[Fetch repo data] --> W[Compute task weights]
+    W --> S[Select 2 tasks]
+    S --> A[Read Memory]
+    A --> T1[Task 1: Issue Labelling]
+    A --> T2[Task 2: Issue Investigation + Comment]
+    A --> T3[Task 3: Issue Investigation + Fix]
+    A --> T4[Task 4: Engineering Investments]
+    A --> T5[Task 5: Coding Improvements]
+    A --> T6[Task 6: Maintain Repo Assist PRs]
+    A --> T7[Task 7: Stale PR Nudges]
+    A --> T8[Task 8: Performance Improvements]
+    A --> T9[Task 9: Testing Improvements]
+    A --> T10[Task 10: Take Repo Forward]
+    T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 --> T11[Task 11: Monthly Activity Summary]
+    T11 --> M[Save Memory]
 ````
 
-The workflow operates through ten coordinated tasks each run:
+Each run a deterministic pre-step fetches live repo data (open issues, unlabelled issues, open PRs) and computes a **weighted probability** for each task. Two tasks are selected and printed in the workflow logs, then communicated to the agent via prompting. The weights adapt naturally: when unlabelled issues are high, labelling dominates; when there are many open issues, commenting and fixing dominate; as the backlog clears, engineering and forward-progress tasks draw more evenly.
 
-### Task 1: Triage and Comment on Open Issues
+### Task 1: Issue Labelling
 
-Repo Assist reviews open issues and comments **only when it has something genuinely valuable to add**. It identifies issue types (bug reports, feature requests, questions) and provides helpful responses while avoiding noise. It processes up to 30 issues per run and saves its position so each run continues from where the last one left off, systematically covering the entire backlog over time. It also re-engages with issues when new human comments have been added since its last response.
+Default weighting: dominates when the label backlog is large.
 
-### Task 2: Fix Issues via Pull Requests
+Applies appropriate labels to unlabelled issues and PRs based on content analysis. Removes misapplied labels. Conservative and confident — only applies labels it is sure about.
 
-When it finds a fixable bug, Repo Assist implements a minimal, surgical fix, runs build and tests, and creates a draft PR. All PRs include a Test Status section showing build/test results.
+### Task 2: Issue Investigation and Comment
 
-### Task 3: Study the Codebase and Propose Improvements
+Default weighting: scales with backlog size.
 
-Repo Assist identifies improvement opportunities like documentation gaps, test coverage, and code clarity. It proposes only clearly beneficial, low-risk changes.
+Repo Assist reviews open issues and comments **only when it has something genuinely valuable to add**. It processes issues oldest-first using a memory-backed cursor, prioritising issues that have never received a Repo Assist comment. It also re-engages when new human comments appear.
 
-### Task 4: Update Dependencies and Engineering
+### Task 3: Issue Investigation and Fix
 
-Periodically (at most weekly), Repo Assist checks for dependency updates and engineering improvements, creating PRs for beneficial changes. It also bundles multiple open Dependabot PRs into a single consolidated update PR that applies all compatible updates together.
+Default weighting: scales with backlog size.
 
-### Task 5: Maintain Repo Assist Pull Requests
+When it finds a fixable bug or clearly actionable issue, Repo Assist implements a minimal, surgical fix, runs build and tests, and creates a draft PR. Can work on issues it has previously commented on. All PRs include a Test Status section.
+
+### Task 4: Engineering Investments
+
+Default weighting: steady baseline with issue-count bias.
+
+Dependency updates, CI improvements, tooling upgrades, SDK version bumps, and build system improvements. Bundles multiple Dependabot PRs into a single consolidated update where possible.
+
+### Task 5: Coding Improvements
+
+Default weighting: steady baseline.
+
+Studies the codebase and proposes clearly beneficial, low-risk improvements: code clarity, dead code removal, API usability, documentation gaps, duplication reduction.
+
+### Task 6: Maintain Repo Assist PRs
+
+Default weighting: only meaningful when open PRs exist.
 
 Keeps its own PRs healthy by fixing CI failures and resolving merge conflicts. Uses `push_to_pull_request_branch` to update PR branches directly.
 
-### Task 6: Stale PR Nudges
+### Task 7: Stale PR Nudges
 
-Politely nudges PR authors when their PRs have been waiting 14+ days for response. Maximum 3 nudges per run, never nags the same PR twice.
+Default weighting: scales with non-Repo-Assist PR count.
 
-### Task 7: Manage Labels
+Politely nudges PR authors when their PRs have been waiting 14+ days for a response. Maximum 3 nudges per run, never nags the same PR twice.
 
-Applies appropriate labels (`bug`, `enhancement`, `help wanted`, `good first issue`) to unlabeled issues and PRs based on content analysis. Conservative and confident.
+### Task 8: Performance Improvements
 
-### Task 8: Release Preparation
+Default weighting: steady baseline.
 
-Weekly, checks for unreleased changes and proposes release PRs with updated changelogs. Follows SemVer  -  never proposes major bumps without approval.
+Identifies and implements meaningful performance improvements: algorithmic efficiency, unnecessary work, caching, memory usage, startup time.
 
-### Task 9: Welcome New Contributors
+### Task 9: Testing Improvements
 
-Greets first-time contributors with a warm welcome message, pointing them to README and CONTRIBUTING docs. Maximum 3 welcomes per run.
+Default weighting: steady baseline.
 
-### Task 10: Monthly Activity Summary
+Improves test quality and coverage: missing tests for existing functionality, flaky tests, slow tests, test infrastructure. Avoids low-value tests that just inflate coverage numbers.
+
+### Task 10: Take the Repository Forward
+
+Default weighting: steady baseline.
+
+Proactively moves the repository forward — considers the goals and aims of the repo, implements backlog features, investigates difficult bugs, drafts plans and proposals, or charts out future work. Work may span multiple runs; Repo Assist checks memory for anything in progress and continues before starting something new.
+
+### Task 11: Monthly Activity Summary
 
 Every run, Repo Assist updates a rolling monthly activity issue that gives maintainers a single place to see all activity and suggested actions.
 
@@ -95,6 +116,8 @@ Every run, Repo Assist updates a rolling monthly activity issue that gives maint
 - **AI transparency**: Every output includes robot emoji disclosure
 - **Anti-spam**: Never posts repeated or follow-up comments to itself; re-engages only when new human comments appear
 - **Build, format, lint, and test verification**: Runs any code formatting, linting, and testing checks configured in the repository before creating PRs; never creates PRs with failing builds or lint errors caused by its changes
+- **Release preparation**: Uses judgement each run to assess whether a release is warranted — no dedicated release task; proposes release PRs on its own initiative when appropriate
+- **Good contributor etiquette**: Warmly welcomes first-time contributors and points them to README and CONTRIBUTING as a normal part of good behaviour
 
 ## Usage
 
