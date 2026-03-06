@@ -26,7 +26,7 @@ safe-outputs:
   create-issue:
     title-prefix: "[team-status] "
     labels: [report, daily-status]
-    # close-older-issues: true TODO
+    close-older-issues: true
 ---
 
 # Daily Team Status
