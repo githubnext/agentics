@@ -73,6 +73,8 @@ tools:
 
 steps:
   - name: Fetch repo data for task weighting
+    env:
+      GH_TOKEN: ${{ github.token }}
     run: |
       mkdir -p /tmp/gh-aw
 
