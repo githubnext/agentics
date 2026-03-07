@@ -168,3 +168,4 @@ All the same guidelines apply (AI disclosure, running formatters/linters/tests, 
 
 To automatically trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
 
+Automatically triggering CI should not be used in public repositories, as it can lead to abuse.
