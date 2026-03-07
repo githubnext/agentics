@@ -70,6 +70,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🧪 Daily Test Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Perf Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 - [📊 Repository Quality Improver](docs/repository-quality-improver.md) - Daily rotating analysis of repository quality across code, documentation, testing, security, and custom dimensions
+- [📝 Markdown Linter](docs/markdown-linter.md) - Run Markdown quality checks on all documentation files and get a prioritized issue report of violations
 
 ## Security Workflows
 
