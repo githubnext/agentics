@@ -29,6 +29,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [📰 Daily Repository Chronicle](docs/daily-repo-chronicle.md) - Transform daily repository activity into an engaging newspaper-style narrative with trend charts
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
 - [🔍 Discussion Task Miner](docs/discussion-task-miner.md) - Extract actionable improvement tasks from GitHub Discussions and create tracked issues
+- [🗺️ Weekly Repository Map](docs/weekly-repo-map.md) - Visualize repository file structure and size distribution with a weekly ASCII tree map
 
 ### Dependency Management Workflows
 
