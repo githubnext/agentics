@@ -152,7 +152,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 3. Check for existing performance PRs (especially yours with "[Perf Improver]" prefix). Avoid duplicate work.
 4. For the selected goal:
 
-   a. Create a fresh branch off `main`: `perf-assist/<desc>`.
+   a. Determine the repository's default branch by running `gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'`. Create a fresh branch off it: `perf-assist/<desc>`.
    
    b. **Before implementing**: Establish baseline measurements using appropriate methods:
       - Synthetic benchmarks for algorithm changes

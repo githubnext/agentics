@@ -229,7 +229,7 @@ Update memory with labels applied and cursor position.
 1. Review issues labelled `bug`, `help wanted`, or `good first issue`, plus any identified as fixable during investigation.
 2. For each fixable issue:
    a. Check memory — skip if you've already tried and the attempt is still open. Never create duplicate PRs.
-   b. Create a fresh branch off `main`: `repo-assist/fix-issue-<N>-<desc>`.
+   b. Determine the repository's default branch by running `gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'`. Create a fresh branch off it: `repo-assist/fix-issue-<N>-<desc>`.
    c. Implement a minimal, surgical fix. Do not refactor unrelated code.
    d. **Build and test (required)**: do not create a PR if the build fails or tests fail due to your changes. If tests fail due to infrastructure, create the PR but document it.
    e. Add a test for the bug if feasible; re-run tests.
@@ -254,7 +254,7 @@ Study the codebase and make clearly beneficial, low-risk improvements. **Be high
 
 Good candidates: code clarity and readability, removing dead code, API usability, documentation gaps, reducing duplication.
 
-Check memory for already-submitted ideas; do not re-propose them. Create a fresh branch `repo-assist/improve-<desc>` off `main`, implement the improvement, build and test (same requirements as Task 3), then create a draft PR with AI disclosure, rationale, and Test Status section. If not ready to implement, file an issue instead. Update memory.
+Check memory for already-submitted ideas; do not re-propose them. Determine the repository's default branch by running `gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'`. Create a fresh branch `repo-assist/improve-<desc>` off it, implement the improvement, build and test (same requirements as Task 3), then create a draft PR with AI disclosure, rationale, and Test Status section. If not ready to implement, file an issue instead. Update memory.
 
 ### Task 6: Maintain Repo Assist PRs
 
