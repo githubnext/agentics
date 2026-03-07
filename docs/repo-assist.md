@@ -4,7 +4,7 @@
 >
 > [Blog Post by @dsyme](https://dsyme.net/2026/02/25/repo-assist-a-repository-assistant/)
 
-The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs daily to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. Each run it selects two tasks via a weighted random draw based on live repo data — heavily favouring issue labelling and triage when the backlog is large, then shifting to engineering, testing, and forward progress as the backlog clears. It maintains a monthly activity summary for maintainer visibility.
+The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs regularly (default four times a day) to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. Each run it selects two tasks via a weighted random draw based on live repo data — heavily favouring issue labelling, investigation and fixing when the backlog is large, then shifting to engineering, testing, and forward progress as the backlog clears. It maintains a monthly activity summary for maintainer visibility.
 
 ## Installation
 
@@ -121,7 +121,7 @@ Every run, Repo Assist updates a rolling monthly activity issue that gives maint
 
 ## Usage
 
-The main way to use Repo Assist is to let it run daily and perform its tasks autonomously. You will see its activity summarized in the monthly activity issue it maintains, and you can review its PRs and comments as they come in.
+The main way to use Repo Assist is to let it run regularly and perform its tasks autonomously. You will see its activity summarized in the monthly activity issue it maintains, and you can review its PRs and comments as they come in.
 
 ### Configuration
 
