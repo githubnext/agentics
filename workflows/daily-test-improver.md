@@ -156,11 +156,11 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 5. For the selected goal:
 
    a. Create a fresh branch off the default branch: `test-assist/<desc>`.
-   
+
    b. **Analyze complexity before testing**: Before writing any tests, thoroughly read and understand the implementation. Evaluate function complexity - is this trivial code or complex logic? See "What NOT to Test" in Guidelines. Exception: only test trivial code if the repo has an explicit policy requiring very high coverage.
-   
+
    c. **Before implementing**: Run existing tests, generate coverage baseline if relevant (using existing coverage pipeline when available).
-   
+
    d. Implement the testing improvement. Consider approaches like:
       - **New tests for complex untested code**: Focus on meaningful coverage for code with real logic
       - **Edge case tests**: Error conditions, boundary values, null/empty inputs
@@ -168,19 +168,19 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
       - **Integration tests**: Verify components work together
       - **Test refactoring**: Improve clarity, reduce brittleness, add helpers
       - **Flaky test fixes**: Stabilize unreliable tests
-   
+
    e. **Run all tests**: Ensure new tests pass and existing tests still pass.
-   
+
    f. **Measure impact**: Generate coverage report if relevant. Document before/after numbers.
-   
+
    g. **If tests fail**: See "Test Failures Mean Potential Bugs" in Guidelines. Never modify tests just to force them to pass - investigate and file bug issues when appropriate.
 
-5. **Finalize changes**:
+6. **Finalize changes**:
    - Apply any automatic code formatting used in the repo
    - Run linters and fix any new errors
    - Double-check no coverage reports or tool-generated files are staged
 
-6. **Create draft PR** with:
+7. **Create draft PR** with:
    - AI disclosure (🤖 Test Improver)
    - **Goal and rationale**: What was tested and why it matters
    - **Approach**: Testing strategy and implementation steps
@@ -189,7 +189,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
    - **Reproducibility**: Commands to run tests and generate coverage
    - **Test Status**: Build/test outcome
 
-7. Update memory with:
+8. Update memory with:
    - Work completed and PR created
    - Coverage changes (for future reference)
    - Testing notes/techniques learned (keep brief - just key insights)
