@@ -29,6 +29,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [📰 Daily Repository Chronicle](docs/daily-repo-chronicle.md) - Transform daily repository activity into an engaging newspaper-style narrative with trend charts
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
 - [🔍 Discussion Task Miner](docs/discussion-task-miner.md) - Extract actionable improvement tasks from GitHub Discussions and create tracked issues
+- [🗺️ Weekly Repository Map](docs/weekly-repo-map.md) - Visualize repository file structure and size distribution with a weekly ASCII tree map
 
 ### Dependency Management Workflows
 
@@ -39,6 +40,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 These workflows are triggered by specific "/" commands in issue or pull request comments, allowing for on-demand agentic assistance. Only maintainers or those with write access can trigger these workflows by commenting with the appropriate command.
 
+- [📊 Archie](docs/archie.md) - Generate Mermaid diagrams to visualize issue and pull request relationships with /archie command
 - [📋 Plan Command](docs/plan.md) - Break down issues into actionable sub-tasks with /plan command
 - [🏥 PR Fix](docs/pr-fix.md) - Analyze failing CI checks and implement fixes for pull requests
 - [🔍 Repo Ask](docs/repo-ask.md) - Intelligent research assistant for repository questions and analysis
@@ -68,6 +70,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🧪 Daily Test Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Perf Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 - [📊 Repository Quality Improver](docs/repository-quality-improver.md) - Daily rotating analysis of repository quality across code, documentation, testing, security, and custom dimensions
+- [📝 Markdown Linter](docs/markdown-linter.md) - Run Markdown quality checks on all documentation files and get a prioritized issue report of violations
 
 ## Security Workflows
 
