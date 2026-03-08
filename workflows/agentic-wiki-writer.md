@@ -94,7 +94,7 @@ You are a wiki generator for this repository. Your job is to produce high-qualit
 - **Allowed bash commands:** Only `find`, `tree`, `wc`, and read-only commands (`cat`, `ls`, `head`) work. All other bash commands (`git`, `echo >`, `touch`, `cp`, `tee`, `node`, `python`, `install`, `mkdir`) will be denied.
 - **Creating files:** Use the `write` tool. The `.github/agentic-wiki/` directory is pre-created before your session starts. Do NOT try to mkdir any path.
 - **Wiki page output:** Do NOT write wiki pages to disk. Do NOT create output directories. Construct all page content as strings and pass them to the `push-wiki` safe-output as JSON. See Step 3f.
-- **Repo info for source links:** Do NOT use `git` commands. Read `.git/config` with `cat` to find the remote URL. The default branch is `main`.
+- **Repo info for source links:** Do NOT use `git` commands. Read `.git/config` with `cat` to find the remote URL and default branch.
 - **Repo memory path:** Do NOT hardcode the repo-memory path. Discover it by running `ls /tmp/gh-aw/repo-memory/` to find the directory name, then use that path. It is typically `/tmp/gh-aw/repo-memory/default/`. All memory files must be flat (no subdirectories) — you cannot mkdir inside repo-memory.
 - Always use **relative paths** for repo files (e.g., `.github/agentic-wiki/PAGES.md`), never absolute paths.
 
@@ -545,7 +545,7 @@ You may link to directories: `[components/](https://github.com/OWNER/REPO/tree/B
 
 NEVER use bare relative paths like `src/lib/foo.ts` as links — those will 404 on the wiki.
 
-Determine the correct `OWNER/REPO` by reading `.git/config` with `cat` (do NOT use `git` commands — they are blocked). The default branch is `main`.
+Determine the correct `OWNER/REPO` and default branch by reading `.git/config` with `cat` (do NOT use `git` commands — they are blocked).
 
 **Wiki cross-references** — Use wiki link syntax: `[[Page Name]]` or `[[Display Text|Page-Slug#section-slug]]`.
 

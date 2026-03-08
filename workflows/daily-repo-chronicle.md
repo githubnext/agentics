@@ -73,7 +73,7 @@ Collect data for the past 30 days (or available data) using GitHub API:
    - Count of PRs closed per day
 
 3. **Commit Activity Data**:
-   - Count of commits per day on main branches
+   - Count of commits per day on the default branch
    - Number of contributors per day
 
 **Phase 2: Data Preparation**
@@ -211,7 +211,7 @@ Transform the last 24 hours of repository activity into a compelling narrative t
 1. Query GitHub for activity in the last 24 hours:
    - Pull requests (opened, merged, closed, updated)
    - Issues (opened, closed, comments)
-   - Commits to main branches
+   - Commits to the default branch
 
 2. **For bot activity, identify human actors:**
    - Check PR/issue assignees to find who initiated the work

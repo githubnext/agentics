@@ -112,9 +112,9 @@ steps:
       }
 
       weights = {
-          1:  1   + unlabelled,
+          1:  1   + 3 * unlabelled,
           2:  3   + 1 * open_issues,
-          3:  3   + 0.6 * open_issues,
+          3:  3   + 0.7 * open_issues,
           4:  5   + 0.2 * open_issues,
           5:  5   + 0.1 * open_issues,
           6:  float(repo_assist_prs),
