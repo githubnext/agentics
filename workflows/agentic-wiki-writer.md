@@ -46,6 +46,7 @@ safe-outputs:
   create-pull-request:
     title-prefix: "[agentic-wiki]"
     labels: [documentation, automated]
+    protected-files: fallback-to-issue
   jobs:
     push-wiki:
       description: >

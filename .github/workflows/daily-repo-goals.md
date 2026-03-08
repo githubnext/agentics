@@ -31,6 +31,7 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, hygiene, factory]
+    protected-files: fallback-to-issue
 ---
 
 # Daily Repo Goal Achiever

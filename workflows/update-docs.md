@@ -18,6 +18,7 @@ network: defaults
 safe-outputs:
   create-pull-request:
     draft: true
+    protected-files: fallback-to-issue
     labels: [automation, documentation]
 
 tools:

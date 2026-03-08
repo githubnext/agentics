@@ -36,6 +36,7 @@ safe-outputs:
   create-pull-request:
     title-prefix: "[wiki-to-code]"
     labels: [enhancement, automated, wiki-driven]
+    protected-files: fallback-to-issue
   noop: {}
 timeout-minutes: 120
 ---

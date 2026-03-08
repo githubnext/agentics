@@ -27,6 +27,7 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, qa]
+    protected-files: fallback-to-issue
 
 tools:
   github:

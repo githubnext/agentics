@@ -27,6 +27,7 @@ safe-outputs:
     title-prefix: "[code-simplifier] "
     labels: [refactoring, code-quality, automation]
     expires: 1d
+    protected-files: fallback-to-issue
 
 tools:
   github:

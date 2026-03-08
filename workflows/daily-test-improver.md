@@ -40,6 +40,7 @@ safe-outputs:
     title-prefix: "[Test Improver] "
     labels: [automation, testing]
     max: 4
+    protected-files: fallback-to-issue
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Test Improver] "

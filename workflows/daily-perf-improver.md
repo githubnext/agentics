@@ -40,6 +40,7 @@ safe-outputs:
     title-prefix: "[Perf Improver] "
     labels: [automation, performance]
     max: 4
+    protected-files: fallback-to-issue
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Perf Improver] "
