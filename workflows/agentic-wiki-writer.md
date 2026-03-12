@@ -493,6 +493,13 @@ Diagram type by use case: `flowchart LR` for architecture/data flow; `sequenceDi
 
 Syntax rules: Always specify direction (`LR` or `TD`). Wrap labels containing special characters in double quotes: `A["MyClass::method()"]`. One relationship per line. Use subgraphs sparingly (max one level deep). Add a brief sentence before the diagram explaining what it shows.
 
+**Critical mermaid restrictions** — GitHub's renderer is strict. Violating these causes "Unable to render rich display" errors:
+
+- **No backtick strings** — Do NOT use the backtick/markdown-string syntax inside node labels: `` A["`label`"] `` is invalid. Use plain text or double-quoted strings only: `A["label"]`.
+- **No `\n` in labels** — Do NOT use `\n` escape sequences inside node labels. They are not rendered as newlines and cause lexer errors. Keep labels to a single line. If a label is too long, shorten it or split the node into two nodes.
+- **No special characters unquoted** — Any label containing `@`, `(`, `)`, `:`, `/`, `<`, `>`, or other non-alphanumeric characters must be wrapped in double quotes.
+- **Test mentally before writing** — Before including a diagram, verify each node label is either plain alphanumeric text or a properly double-quoted string with no escape sequences.
+
 ```mermaid
 flowchart LR
   A[Input] --> B[Process] --> C[Output]
@@ -576,7 +583,13 @@ Before finalizing each page, check for these issues and fix them:
 
 5. **Accuracy** — Content matches what the source code actually does. No fabricated features or APIs.
 
-6. **Structural consistency** — Similar sections across pages use the same structure and formatting patterns.
+6. **Mermaid diagram syntax** — For every mermaid diagram, verify:
+   - No backtick/markdown-string notation inside labels (`` A["`text`"] `` → invalid)
+   - No `\n` escape sequences inside labels (`A["line1\nline2"]` → invalid; shorten the label instead)
+   - All labels with special characters (`@`, `(`, `)`, `:`, `/`) are wrapped in double quotes
+   - Fix any violation by simplifying the label to plain text or a valid double-quoted string
+
+7. **Structural consistency** — Similar sections across pages use the same structure and formatting patterns.
 
 ---
 
