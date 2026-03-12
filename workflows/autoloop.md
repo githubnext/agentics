@@ -72,11 +72,57 @@ steps:
 
       programs_dir = ".github/autoloop/programs"
       memory_dir = ".github/repo-memory/autoloop"
+      template_file = os.path.join(programs_dir, "example.md")
+
+      # Bootstrap: create programs directory and template if missing
+      if not os.path.isdir(programs_dir):
+          os.makedirs(programs_dir, exist_ok=True)
+          with open(template_file, "w") as f:
+              f.write("""\
+<!-- AUTOLOOP:UNCONFIGURED -->
+<!-- Remove the line above once you have filled in your program. -->
+<!-- Autoloop will NOT run until you do. -->
+
+# Autoloop Program
+
+<!-- Rename this file to something meaningful (e.g. training.md, coverage.md).
+     The filename (minus .md) becomes the program name used in issues, PRs,
+     and slash commands. Want multiple loops? Add more .md files here. -->
+
+## Goal
+
+<!-- Describe what you want to optimize. Be specific about what "better" means. -->
+
+REPLACE THIS with your optimization goal.
+
+## Target
+
+<!-- List files Autoloop may modify. Everything else is off-limits. -->
+
+Only modify these files:
+- `REPLACE_WITH_FILE` — (describe what this file does)
+
+Do NOT modify:
+- (list files that must not be touched)
+
+## Evaluation
+
+<!-- Provide a command and the metric to extract. -->
+
+```bash
+REPLACE_WITH_YOUR_EVALUATION_COMMAND
+```
+
+The metric is `REPLACE_WITH_METRIC_NAME`. **Lower/Higher is better.** (pick one)
+""")
+          # Commit the template so the user can see and edit it
+          os.system(f'git add "{template_file}"')
+          os.system('git commit -m "[Autoloop] Bootstrap: add program template for configuration"')
+          os.system('git push')
+          print(f"BOOTSTRAPPED: created {template_file} and pushed to repo")
 
       # Find all program files
-      program_files = []
-      if os.path.isdir(programs_dir):
-          program_files = sorted(glob.glob(os.path.join(programs_dir, "*.md")))
+      program_files = sorted(glob.glob(os.path.join(programs_dir, "*.md")))
       if not program_files:
           # Fallback to single-file locations
           for path in [".github/autoloop/program.md", "program.md"]:
@@ -86,10 +132,12 @@ steps:
 
       if not program_files:
           print("NO_PROGRAMS_FOUND")
+          os.makedirs("/tmp/gh-aw", exist_ok=True)
           with open("/tmp/gh-aw/autoloop.json", "w") as f:
               json.dump({"due": [], "skipped": [], "unconfigured": [], "no_programs": True}, f)
           sys.exit(0)
 
+      os.makedirs("/tmp/gh-aw", exist_ok=True)
       now = datetime.now(timezone.utc)
       due = []
       skipped = []
