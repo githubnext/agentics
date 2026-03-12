@@ -74,58 +74,102 @@ An iterative optimization agent that proposes changes, evaluates them against a 
 Take heed of **instructions**: "${{ steps.sanitized.outputs.text }}"
 
 If these are non-empty (not ""), then you have been triggered via `/autoloop <instructions>`. The instructions may be:
-- **A one-off directive**: e.g., `/autoloop try a different approach to the loss function`. Execute it as a single iteration using the program.md context, then report results.
-- **A configuration change**: e.g., `/autoloop set metric to accuracy instead of loss`. Update the relevant program.md section and confirm.
+- **A one-off directive targeting a specific program**: e.g., `/autoloop training: try a different approach to the loss function`. The text before the colon is the program name (matching a file in `.github/autoloop/programs/`). Execute it as a single iteration for that program, then report results.
+- **A general directive**: e.g., `/autoloop try cosine annealing`. If no program name prefix is given and only one program exists, use that one. If multiple exist, ask which program to target.
+- **A configuration change**: e.g., `/autoloop training: set metric to accuracy instead of loss`. Update the relevant program file and confirm.
 
 Then exit — do not run the normal loop after completing the instructions.
 
+## Multiple Programs
+
+Autoloop supports **multiple independent optimization loops** in the same repository. Each loop is defined by a separate markdown file in `.github/autoloop/programs/`. For example:
+
+```
+.github/autoloop/programs/
+├── training.md      ← optimize model training
+├── coverage.md      ← maximize test coverage
+└── build-perf.md    ← minimize build time
+```
+
+Each program runs independently with its own:
+- Goal, target files, and evaluation command
+- Metric tracking and best-metric history
+- Experiment log issue: `[Autoloop: {program-name}] Experiment Log {YYYY-MM}`
+- Branch namespace: `autoloop/{program-name}/iteration-<N>-<desc>`
+- PR title prefix: `[Autoloop: {program-name}]`
+- Repo memory namespace: keyed by program name
+
+On each scheduled run, the workflow iterates through **all configured programs** and runs one iteration per program. Programs with the `<!-- AUTOLOOP:UNCONFIGURED -->` sentinel are skipped.
+
+### Per-Program Schedule and Timeout
+
+Programs can optionally specify their own schedule and timeout in a YAML frontmatter block at the top of the file (after the sentinel, if present):
+
+```markdown
+---
+schedule: every 1h
+timeout-minutes: 30
+---
+
+# Autoloop Program
+...
+```
+
+- **`schedule`**: Controls how often this program runs. On each workflow trigger, check if the program is due based on its schedule and the `last_run` timestamp in memory. If the program's schedule hasn't elapsed since its last run, skip it. If omitted, the program runs on every workflow trigger.
+- **`timeout-minutes`**: Maximum time for this program's iteration. If omitted, the program shares the workflow's overall timeout.
+
+This lets you run a fast coverage check every hour while running a slow training loop once a day — all from the same workflow.
+
 ## Program Definition
 
-The user configures the optimization loop by editing **`.github/autoloop/program.md`** — a template file installed alongside this workflow. This file defines three things:
+Each program file in `.github/autoloop/programs/` defines three things:
 
 1. **Goal**: What the agent is trying to optimize (natural language description)
 2. **Target**: Which files the agent is allowed to modify
 3. **Evaluation**: How to measure whether a change is an improvement
 
+The **program name** is the filename without the `.md` extension (e.g., `training.md` → program name is `training`).
+
 ### Setup Guard
 
-**The workflow will not run until the user has edited the template.** The installed template contains a sentinel line:
+A template program file is installed at `.github/autoloop/programs/example.md`. **Programs will not run until the user has edited them.** Each template contains a sentinel line:
 
 ```
 <!-- AUTOLOOP:UNCONFIGURED -->
 ```
 
-At the start of every run, check for this sentinel. If it is present:
+At the start of every run, check each program file for this sentinel. For any program where it is present:
 
-1. **Do not run any iterations.**
-2. Create a single GitHub issue (if one doesn't already exist) titled `[Autoloop] Action required: configure your program.md` with:
-   - A clear explanation that the workflow is installed but paused until `program.md` is configured.
-   - A direct link to the file: `${{ github.server_url }}/${{ github.repository }}/edit/${{ github.ref_name }}/.github/autoloop/program.md`
+1. **Skip that program — do not run any iterations for it.**
+2. If no setup issue exists for that program, create one titled `[Autoloop: {program-name}] Action required: configure your program` with:
+   - A clear explanation that this program is installed but paused until configured.
+   - A direct link to the file: `${{ github.server_url }}/${{ github.repository }}/edit/${{ github.ref_name }}/.github/autoloop/programs/{program-name}.md`
    - A brief guide: "Open the file, replace the placeholder sections with your project's goal, target files, and evaluation command, then remove the `<!-- AUTOLOOP:UNCONFIGURED -->` line."
    - Two or three example programs for inspiration (ML training, test coverage, build performance).
-3. Exit.
 
-If the sentinel is absent, proceed with the iteration loop.
+If **all** programs are unconfigured, exit after creating the setup issues. Otherwise, proceed with the configured programs.
 
-### Reading the Program
+### Reading Programs
 
 At the start of every run:
 
-1. Read `.github/autoloop/program.md` (or `program.md` in the repo root as a fallback).
-2. Check for the `<!-- AUTOLOOP:UNCONFIGURED -->` sentinel — if present, run the **Setup Guard** flow above.
-3. Parse the three sections: Goal, Target, Evaluation.
-4. Validate that all three sections have non-placeholder content. If any section still contains `TODO` or `REPLACE` markers, treat it as unconfigured — create/update the setup issue and exit.
-5. Read the current state of all target files.
-6. Read repo memory for the current best metric value and iteration history.
+1. List all `.md` files in `.github/autoloop/programs/`.
+2. If the directory is empty or doesn't exist, also check for a single `.github/autoloop/program.md` or `program.md` in the repo root as a fallback (for single-program setups).
+3. For each program file:
+   a. Check for the `<!-- AUTOLOOP:UNCONFIGURED -->` sentinel — if present, run the **Setup Guard** for that program and skip it.
+   b. Parse the three sections: Goal, Target, Evaluation.
+   c. Validate that all three sections have non-placeholder content. If any section still contains `TODO` or `REPLACE` markers, treat it as unconfigured — create/update the setup issue for that program and skip it.
+   d. Read the current state of all target files.
+   e. Read repo memory for that program's metric history (keyed by program name).
 
 ## Iteration Loop
 
-Each run executes **one iteration** of the optimization loop:
+Each run executes **one iteration per configured program**. For each program:
 
 ### Step 1: Read State
 
-1. Read `program.md` to understand the goal, targets, and evaluation method.
-2. Read repo memory to get:
+1. Read the program file to understand the goal, targets, and evaluation method.
+2. Read repo memory (keyed by program name) to get:
    - `best_metric`: The current best metric value (null if first run).
    - `iteration_count`: How many iterations have been completed.
    - `history`: Summary of recent iterations (last 20).
@@ -145,7 +189,7 @@ Each run executes **one iteration** of the optimization loop:
 
 ### Step 3: Implement
 
-1. Create a fresh branch: `autoloop/iteration-<N>-<short-desc>` from the default branch.
+1. Create a fresh branch: `autoloop/{program-name}/iteration-<N>-<short-desc>` from the default branch.
 2. Make the proposed changes to the target files only.
 3. **Respect the program constraints**: do not modify files outside the target list.
 
@@ -160,7 +204,7 @@ Each run executes **one iteration** of the optimization loop:
 **If the metric improved** (or this is the first run establishing a baseline):
 1. Record the new `best_metric` in repo memory.
 2. Create a draft PR with:
-   - Title: `[Autoloop] Iteration <N>: <short description of change>`
+   - Title: `[Autoloop: {program-name}] Iteration <N>: <short description of change>`
    - Body includes: what was changed, why, the old metric, the new metric, and the improvement delta.
    - AI disclosure: `🤖 *This change was proposed and validated by Autoloop.*`
 3. Add an entry to the experiment log issue.
@@ -180,7 +224,7 @@ Each run executes **one iteration** of the optimization loop:
 
 ## Experiment Log Issue
 
-Maintain a single open issue titled `[Autoloop] Experiment Log {YYYY}-{MM}` as a rolling record of all iterations.
+Maintain a single open issue **per program** titled `[Autoloop: {program-name}] Experiment Log {YYYY}-{MM}` as a rolling record of that program's iterations.
 
 ### Issue Body Format
 
@@ -219,10 +263,11 @@ Maintain a single open issue titled `[Autoloop] Experiment Log {YYYY}-{MM}` as a
 
 ## Memory Schema
 
-Store the following in repo memory:
+Store state in repo memory **keyed by program name**. Each program gets its own memory namespace (e.g., `autoloop/training`, `autoloop/coverage`):
 
 ```json
 {
+  "program_name": "training",
   "best_metric": 0.0234,
   "metric_name": "validation_loss",
   "metric_direction": "lower",

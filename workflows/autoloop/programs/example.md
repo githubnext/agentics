@@ -2,6 +2,18 @@
 <!-- ⚠️  REMOVE the line above once you've filled in your program. -->
 <!-- Autoloop will NOT run until you do. -->
 
+<!--
+  Optional: control how often THIS program runs and its timeout.
+  Remove the comment markers to activate. If omitted, the program
+  runs on every workflow trigger with no per-program timeout.
+
+---
+schedule: every 6h
+timeout-minutes: 30
+---
+
+-->
+
 # Autoloop Program
 
 <!--
@@ -9,6 +21,11 @@
   measure success. Edit each section below, then remove the UNCONFIGURED
   sentinel at the top. Commit and push — the loop will start on the next
   scheduled run.
+
+  Rename this file to something meaningful — the filename (minus .md) becomes
+  the program name used in issues, PRs, and slash commands.
+
+  Want multiple loops? Just add more .md files to this directory.
 
   Need inspiration? See the examples at the bottom of this file.
 -->
