@@ -63,6 +63,131 @@ tools:
 imports:
   - shared/reporting.md
 
+steps:
+  - name: Check which programs are due
+    run: |
+      python3 - << 'PYEOF'
+      import os, json, re, glob, sys
+      from datetime import datetime, timezone, timedelta
+
+      programs_dir = ".github/autoloop/programs"
+      memory_dir = ".github/repo-memory/autoloop"
+
+      # Find all program files
+      program_files = []
+      if os.path.isdir(programs_dir):
+          program_files = sorted(glob.glob(os.path.join(programs_dir, "*.md")))
+      if not program_files:
+          # Fallback to single-file locations
+          for path in [".github/autoloop/program.md", "program.md"]:
+              if os.path.isfile(path):
+                  program_files = [path]
+                  break
+
+      if not program_files:
+          print("NO_PROGRAMS_FOUND")
+          with open("/tmp/gh-aw/autoloop.json", "w") as f:
+              json.dump({"due": [], "skipped": [], "unconfigured": [], "no_programs": True}, f)
+          sys.exit(0)
+
+      now = datetime.now(timezone.utc)
+      due = []
+      skipped = []
+      unconfigured = []
+
+      # Schedule string to timedelta
+      def parse_schedule(s):
+          s = s.strip().lower()
+          m = re.match(r"every\s+(\d+)\s*h", s)
+          if m:
+              return timedelta(hours=int(m.group(1)))
+          m = re.match(r"every\s+(\d+)\s*m", s)
+          if m:
+              return timedelta(minutes=int(m.group(1)))
+          if s == "daily":
+              return timedelta(hours=24)
+          if s == "weekly":
+              return timedelta(days=7)
+          return None  # No per-program schedule — always due
+
+      for pf in program_files:
+          name = os.path.splitext(os.path.basename(pf))[0]
+          with open(pf) as f:
+              content = f.read()
+
+          # Check sentinel
+          if "<!-- AUTOLOOP:UNCONFIGURED -->" in content:
+              unconfigured.append(name)
+              continue
+
+          # Check for TODO/REPLACE placeholders
+          if re.search(r'\bTODO\b|\bREPLACE', content):
+              unconfigured.append(name)
+              continue
+
+          # Parse optional YAML frontmatter for schedule
+          schedule_delta = None
+          fm_match = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
+          if fm_match:
+              for line in fm_match.group(1).split("\n"):
+                  if line.strip().startswith("schedule:"):
+                      schedule_str = line.split(":", 1)[1].strip()
+                      schedule_delta = parse_schedule(schedule_str)
+
+          # Check last_run from repo memory
+          mem_file = os.path.join(memory_dir, f"{name}.json")
+          last_run = None
+          if os.path.isfile(mem_file):
+              try:
+                  with open(mem_file) as f:
+                      mem = json.load(f)
+                  lr = mem.get("last_run")
+                  if lr:
+                      last_run = datetime.fromisoformat(lr.replace("Z", "+00:00"))
+              except (json.JSONDecodeError, ValueError):
+                  pass
+
+          # Check if paused (e.g., plateau or recurring errors)
+          if os.path.isfile(mem_file):
+              try:
+                  with open(mem_file) as f:
+                      mem = json.load(f)
+                  if mem.get("paused"):
+                      skipped.append({"name": name, "reason": f"paused: {mem.get('pause_reason', 'unknown')}"})
+                      continue
+                  # Auto-pause on plateau: 5+ consecutive rejections
+                  recent = mem.get("history", [])[-5:]
+                  if len(recent) >= 5 and all(h.get("status") == "rejected" for h in recent):
+                      skipped.append({"name": name, "reason": "plateau: 5 consecutive rejections"})
+                      continue
+              except (json.JSONDecodeError, ValueError):
+                  pass
+
+          # Check if due based on per-program schedule
+          if schedule_delta and last_run:
+              if now - last_run < schedule_delta:
+                  skipped.append({"name": name, "reason": "not due yet",
+                                  "next_due": (last_run + schedule_delta).isoformat()})
+                  continue
+
+          due.append(name)
+
+      result = {"due": due, "skipped": skipped, "unconfigured": unconfigured, "no_programs": False}
+
+      os.makedirs("/tmp/gh-aw", exist_ok=True)
+      with open("/tmp/gh-aw/autoloop.json", "w") as f:
+          json.dump(result, f, indent=2)
+
+      print("=== Autoloop Program Check ===")
+      print(f"Programs due:          {due or '(none)'}")
+      print(f"Programs skipped:      {[s['name'] for s in skipped] or '(none)'}")
+      print(f"Programs unconfigured: {unconfigured or '(none)'}")
+
+      if not due and not unconfigured:
+          print("\nNo programs due this run. Exiting early.")
+          sys.exit(1)  # Non-zero exit skips the agent step
+      PYEOF
+
 ---
 
 # Autoloop
@@ -99,7 +224,7 @@ Each program runs independently with its own:
 - PR title prefix: `[Autoloop: {program-name}]`
 - Repo memory namespace: keyed by program name
 
-On each scheduled run, the workflow iterates through **all configured programs** and runs one iteration per program. Programs with the `<!-- AUTOLOOP:UNCONFIGURED -->` sentinel are skipped.
+On each scheduled run, a lightweight pre-step checks which programs are due (based on per-program schedules and `last_run` timestamps). **If no programs are due, the workflow exits before the agent starts — zero agent cost.** Only due programs get iterated.
 
 ### Per-Program Schedule and Timeout
 
@@ -151,16 +276,18 @@ If **all** programs are unconfigured, exit after creating the setup issues. Othe
 
 ### Reading Programs
 
-At the start of every run:
+The pre-step has already determined which programs are due, unconfigured, or skipped. Read `/tmp/gh-aw/autoloop.json` at the start of your run to get:
 
-1. List all `.md` files in `.github/autoloop/programs/`.
-2. If the directory is empty or doesn't exist, also check for a single `.github/autoloop/program.md` or `program.md` in the repo root as a fallback (for single-program setups).
-3. For each program file:
-   a. Check for the `<!-- AUTOLOOP:UNCONFIGURED -->` sentinel — if present, run the **Setup Guard** for that program and skip it.
-   b. Parse the three sections: Goal, Target, Evaluation.
-   c. Validate that all three sections have non-placeholder content. If any section still contains `TODO` or `REPLACE` markers, treat it as unconfigured — create/update the setup issue for that program and skip it.
-   d. Read the current state of all target files.
-   e. Read repo memory for that program's metric history (keyed by program name).
+- **`due`**: List of program names to run iterations for this run.
+- **`unconfigured`**: Programs that still have the sentinel or placeholder content — run the **Setup Guard** for each of these (create setup issues).
+- **`skipped`**: Programs not due yet based on their per-program schedule — ignore these entirely.
+- **`no_programs`**: If `true`, no program files exist at all — create a single issue explaining how to add a program.
+
+For each program in `due`:
+1. Read the program file from `.github/autoloop/programs/{name}.md`.
+2. Parse the three sections: Goal, Target, Evaluation.
+3. Read the current state of all target files.
+4. Read repo memory for that program's metric history (keyed by program name).
 
 ## Iteration Loop
 
