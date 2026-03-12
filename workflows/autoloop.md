@@ -71,7 +71,7 @@ steps:
       from datetime import datetime, timezone, timedelta
 
       programs_dir = ".github/autoloop/programs"
-      memory_dir = ".github/repo-memory/autoloop"
+      state_file = ".github/autoloop/state.json"
       template_file = os.path.join(programs_dir, "example.md")
 
       # Bootstrap: create programs directory and template if missing
@@ -182,34 +182,35 @@ The metric is `REPLACE_WITH_METRIC_NAME`. **Lower/Higher is better.** (pick one)
                       schedule_str = line.split(":", 1)[1].strip()
                       schedule_delta = parse_schedule(schedule_str)
 
-          # Check last_run from repo memory
-          mem_file = os.path.join(memory_dir, f"{name}.json")
-          last_run = None
-          if os.path.isfile(mem_file):
+          # Read lightweight state file (committed to repo, not repo-memory)
+          # state.json tracks: last_run timestamps, pause flags, recent statuses
+          state = {}
+          if os.path.isfile(state_file):
               try:
-                  with open(mem_file) as f:
-                      mem = json.load(f)
-                  lr = mem.get("last_run")
-                  if lr:
-                      last_run = datetime.fromisoformat(lr.replace("Z", "+00:00"))
+                  with open(state_file) as f:
+                      all_state = json.load(f)
+                  state = all_state.get(name, {})
               except (json.JSONDecodeError, ValueError):
                   pass
 
-          # Check if paused (e.g., plateau or recurring errors)
-          if os.path.isfile(mem_file):
+          last_run = None
+          lr = state.get("last_run")
+          if lr:
               try:
-                  with open(mem_file) as f:
-                      mem = json.load(f)
-                  if mem.get("paused"):
-                      skipped.append({"name": name, "reason": f"paused: {mem.get('pause_reason', 'unknown')}"})
-                      continue
-                  # Auto-pause on plateau: 5+ consecutive rejections
-                  recent = mem.get("history", [])[-5:]
-                  if len(recent) >= 5 and all(h.get("status") == "rejected" for h in recent):
-                      skipped.append({"name": name, "reason": "plateau: 5 consecutive rejections"})
-                      continue
-              except (json.JSONDecodeError, ValueError):
+                  last_run = datetime.fromisoformat(lr.replace("Z", "+00:00"))
+              except ValueError:
                   pass
+
+          # Check if paused (e.g., plateau or recurring errors)
+          if state.get("paused"):
+              skipped.append({"name": name, "reason": f"paused: {state.get('pause_reason', 'unknown')}"})
+              continue
+
+          # Auto-pause on plateau: 5+ consecutive rejections
+          recent = state.get("recent_statuses", [])[-5:]
+          if len(recent) >= 5 and all(s == "rejected" for s in recent):
+              skipped.append({"name": name, "reason": "plateau: 5 consecutive rejections"})
+              continue
 
           # Check if due based on per-program schedule
           if schedule_delta and last_run:
@@ -344,12 +345,11 @@ Each run executes **one iteration per configured program**. For each program:
 ### Step 1: Read State
 
 1. Read the program file to understand the goal, targets, and evaluation method.
-2. Read repo memory (keyed by program name) to get:
-   - `best_metric`: The current best metric value (null if first run).
-   - `iteration_count`: How many iterations have been completed.
+2. Read `.github/autoloop/state.json` for this program's `best_metric` and `iteration_count`.
+3. Read repo memory (keyed by program name) for detailed history:
    - `history`: Summary of recent iterations (last 20).
-   - `current_branch`: Any in-progress branch from a previous run.
    - `rejected_approaches`: Approaches that were tried and failed (to avoid repeating).
+   - `consecutive_errors`: Count of consecutive evaluation failures.
 
 ### Step 2: Analyze and Propose
 
@@ -377,25 +377,26 @@ Each run executes **one iteration per configured program**. For each program:
 ### Step 5: Accept or Reject
 
 **If the metric improved** (or this is the first run establishing a baseline):
-1. Record the new `best_metric` in repo memory.
-2. Create a draft PR with:
+1. Create a draft PR with:
    - Title: `[Autoloop: {program-name}] Iteration <N>: <short description of change>`
    - Body includes: what was changed, why, the old metric, the new metric, and the improvement delta.
    - AI disclosure: `🤖 *This change was proposed and validated by Autoloop.*`
-3. Add an entry to the experiment log issue.
-4. Update memory: add to `history`, increment `iteration_count`, clear `current_branch`.
+2. Add an entry to the experiment log issue.
+3. Update repo memory: add to `history`, reset `consecutive_errors` to 0.
+4. Update `state.json`: set `best_metric`, increment `iteration_count`, set `last_run`, append `"accepted"` to `recent_statuses`. **Commit and push.**
 
 **If the metric did not improve** (or evaluation failed):
 1. Do NOT create a PR.
-2. Record the attempt in `rejected_approaches` in memory with: what was tried, the resulting metric, and why it likely didn't work.
+2. Update repo memory: add to `rejected_approaches` with what was tried, the resulting metric, and why it likely didn't work.
 3. Add a "rejected" entry to the experiment log issue.
-4. Update memory: increment `iteration_count`, clear `current_branch`.
+4. Update `state.json`: increment `iteration_count`, set `last_run`, append `"rejected"` to `recent_statuses`. **Commit and push.**
 
 **If evaluation could not run** (build failure, missing dependencies, etc.):
 1. Do NOT create a PR.
-2. Record the error in memory.
+2. Update repo memory: increment `consecutive_errors`.
 3. Add an "error" entry to the experiment log issue.
-4. If this is a recurring error (3+ times), create an issue describing the problem and pause further iterations until resolved.
+4. If `consecutive_errors` reaches 3+, set `paused: true` and `pause_reason` in `state.json`, and create an issue describing the problem.
+5. Update `state.json`: increment `iteration_count`, set `last_run`, append `"error"` to `recent_statuses`. **Commit and push.**
 
 ## Experiment Log Issue
 
@@ -436,19 +437,50 @@ Maintain a single open issue **per program** titled `[Autoloop: {program-name}] 
 - Close the previous month's issue and create a new one at month boundaries.
 - Maximum 50 iterations per issue; create a continuation issue if exceeded.
 
-## Memory Schema
+## State and Memory
 
-Store state in repo memory **keyed by program name**. Each program gets its own memory namespace (e.g., `autoloop/training`, `autoloop/coverage`):
+Autoloop uses **two persistence layers**:
+
+### 1. State file (`.github/autoloop/state.json`) — lightweight, committed to repo
+
+This file is read by the **pre-step** (before the agent starts) to decide which programs are due. The agent **must update this file and commit it** at the end of every iteration. This is the only way the pre-step can check schedules, plateaus, and pause flags on future runs.
+
+```json
+{
+  "training": {
+    "last_run": "2025-01-15T12:00:00Z",
+    "best_metric": 0.0234,
+    "iteration_count": 17,
+    "paused": false,
+    "pause_reason": null,
+    "recent_statuses": ["accepted", "rejected", "rejected", "accepted", "accepted"]
+  },
+  "coverage": {
+    "last_run": "2025-01-15T06:00:00Z",
+    "best_metric": 78.4,
+    "iteration_count": 5,
+    "paused": false,
+    "pause_reason": null,
+    "recent_statuses": ["accepted", "accepted", "rejected", "accepted", "accepted"]
+  }
+}
+```
+
+**After every iteration** (accepted, rejected, or error), update this program's entry in `state.json`:
+- Set `last_run` to the current UTC timestamp.
+- Update `best_metric` if the iteration was accepted.
+- Increment `iteration_count`.
+- Append the status (`"accepted"`, `"rejected"`, or `"error"`) to `recent_statuses` (keep last 10).
+- Set `paused`/`pause_reason` if needed.
+- **Commit and push** the updated `state.json` to the default branch.
+
+### 2. Repo memory — full history for the agent
+
+Use repo-memory (keyed by program name, e.g., `autoloop/training`) for detailed state the agent needs but the pre-step doesn't:
 
 ```json
 {
   "program_name": "training",
-  "best_metric": 0.0234,
-  "metric_name": "validation_loss",
-  "metric_direction": "lower",
-  "iteration_count": 17,
-  "current_branch": null,
-  "last_run": "2025-01-15T12:00:00Z",
   "history": [
     {
       "iteration": 17,
@@ -467,9 +499,7 @@ Store state in repo memory **keyed by program name**. Each program gets its own 
       "reason": "SGD converges slower within the 5-minute budget"
     }
   ],
-  "consecutive_errors": 0,
-  "paused": false,
-  "pause_reason": null
+  "consecutive_errors": 0
 }
 ```
 
