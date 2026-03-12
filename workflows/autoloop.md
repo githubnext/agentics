@@ -268,7 +268,7 @@ At the start of every run, check each program file for this sentinel. For any pr
 1. **Skip that program — do not run any iterations for it.**
 2. If no setup issue exists for that program, create one titled `[Autoloop: {program-name}] Action required: configure your program` with:
    - A clear explanation that this program is installed but paused until configured.
-   - A direct link to the file: `${{ github.server_url }}/${{ github.repository }}/edit/${{ github.ref_name }}/.github/autoloop/programs/{program-name}.md`
+   - A direct link to edit the file on GitHub (use the repository's default branch in the URL).
    - A brief guide: "Open the file, replace the placeholder sections with your project's goal, target files, and evaluation command, then remove the `<!-- AUTOLOOP:UNCONFIGURED -->` line."
    - Two or three example programs for inspiration (ML training, test coverage, build performance).
 
