@@ -10,7 +10,7 @@ on:
         description: "Regenerate PAGES.md from scratch (full regen)"
         type: boolean
         default: false
-  schedule: daily
+  schedule: daily around 4:22
 permissions:
   contents: read
   issues: read

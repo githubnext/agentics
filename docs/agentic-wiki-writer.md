@@ -54,9 +54,9 @@ Trigger the workflow manually with `regenerate-template: true` to create the ini
 
 ### Configuration
 
-The workflow runs once a day (at midnight UTC) and checks whether any pull requests were merged to the default branch in the last 24 hours. If no merges happened, it exits early with no work done. You can also trigger it manually from the Actions tab.
+The workflow runs once a day (around 4:22am UTC) and checks whether any pull requests were merged to the default branch in the last 24 hours. If no merges happened, it exits early with no work done. You can also trigger it manually from the Actions tab.
 
-You can adjust the cadence or event structure to suit your team's workflow. For example, to run on every push to the default branch instead of on a schedule, replace the `schedule: daily` trigger with:
+You can adjust the cadence or event structure to suit your team's workflow. For example, to run immediately on every merge to the default branch (instead of waiting for the daily schedule), replace the `schedule: daily around 4:22` trigger with a `push` trigger:
 
 ```yaml
 on:
@@ -66,12 +66,14 @@ on:
     ...
 ```
 
-Or to run twice a day, change the schedule to:
+When using a `push` trigger, the agent will always run on every merge — there is no need for the "any merges today?" check.
+
+Or to run at a different time or cadence, change the schedule. For example, to run at 9am UTC every weekday:
 
 ```yaml
 on:
   schedule:
-    - cron: "0 6,18 * * *"
+    - cron: "0 9 * * 1-5"
   workflow_dispatch:
     ...
 ```
