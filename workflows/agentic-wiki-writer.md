@@ -2,7 +2,7 @@
 name: Agentic Wiki Writer
 description: >
   Generates GitHub wiki pages from source code using a PAGES.md template.
-  Runs on PR merge or manual dispatch with agent-driven triage.
+  Runs once a day if any merges to the default branch have happened, or on manual dispatch.
 on:
   workflow_dispatch:
     inputs:
@@ -10,9 +10,7 @@ on:
         description: "Regenerate PAGES.md from scratch (full regen)"
         type: boolean
         default: false
-  pull_request:
-    types: [closed]
-    branches: [main]
+  schedule: daily
 permissions:
   contents: read
   issues: read
@@ -119,19 +117,22 @@ You have persistent storage that survives across runs. To find the path, run `ls
 2. **Read memory files** from that directory before starting work.
 3. **After finishing**, use the `write` tool to save updated memory files to the same directory.
 
-## Step 0: Triage (PR merge triggers only)
+## Step 0: Triage (scheduled triggers only)
 
 If this workflow was triggered by `workflow_dispatch`, **skip this step entirely** — always proceed to Step 1.
 
-If this workflow was triggered by a `pull_request` event, you must first check that the PR was actually merged (not just closed), then determine whether the changes are likely to affect wiki documentation.
+If this workflow was triggered by the `schedule` event, check whether any pull requests have been merged into the default branch in the last 24 hours. If none have been merged, there is nothing to document — call the `noop` safe-output with "No merges to the default branch in the last 24 hours" and **stop**.
 
-### 0a. Check if PR was merged
+### 0a. Check for recent merges
 
-Use the GitHub tools to inspect the pull request that triggered this run. If the PR was **closed without merging**, call the `noop` safe-output with "PR was closed without merging" and **stop**.
+Use the GitHub tools to list recently merged pull requests. Look for any PRs merged into the default branch within the past 24 hours.
+
+- If **no PRs were merged** in the last 24 hours → call the `noop` safe-output and **stop**.
+- If **one or more PRs were merged** → continue to step 0b.
 
 ### 0b. Identify what changed
 
-Look at the files changed in the merged PR. Use the GitHub tools to list the PR's changed files.
+Collect the files changed across all PRs merged into the default branch in the last 24 hours. Use the GitHub tools to list the changed files for each merged PR.
 
 ### 0c. Load source map from memory
 
@@ -151,7 +152,7 @@ Use your judgment. If you're unsure whether a change affects the wiki, err on th
 
 ### 0e. Decision
 
-- If **no wiki update needed** → call the `noop` safe-output with a message explaining why (e.g., "PR only modified test files — no wiki impact") and **stop**.
+- If **no wiki update needed** → call the `noop` safe-output with a message explaining why (e.g., "Merged PRs only modified test files — no wiki impact") and **stop**.
 - If **wiki update needed** → proceed to **Step 1**.
 
 ## Step 1: Check for PAGES.md
