@@ -4,7 +4,7 @@
 
 **Automatically generates and maintains GitHub wiki pages from your source code**
 
-The [Agentic Wiki Writer workflow](../workflows/agentic-wiki-writer.md?plain=1) keeps your project's GitHub wiki synchronized with the codebase. After each merged pull request (or on demand), it reads a `PAGES.md` template to understand what to document, then writes wiki pages directly from the source code.
+The [Agentic Wiki Writer workflow](../workflows/agentic-wiki-writer.md?plain=1) keeps your project's GitHub wiki synchronized with the codebase. Once a day (if any pull requests were merged to the default branch), it reads a `PAGES.md` template to understand what to document, then writes wiki pages directly from the source code. You can also trigger it manually on demand.
 
 > [!WARNING]
 > **The repository wiki must be initialized before running this workflow.** GitHub does not create the wiki git repository until at least one page exists. Go to your repository's **Wiki** tab and create a blank page (e.g. "Home") to initialize it. The workflow will fail with a git clone error if this step is skipped.
@@ -25,18 +25,20 @@ This walks you through adding the workflow to your repository.
 
 ```mermaid
 graph LR
-    A[PR merged / manual trigger] --> B{PAGES.md exists?}
-    B -->|No| C[Generate PAGES.md template]
-    B -->|Yes| D[Read PAGES.md template]
-    C --> E[Save template to .github/agentic-wiki/]
-    D --> F[Identify changed files from PR]
-    F --> G[Read relevant source files]
-    G --> H[Write wiki pages]
-    H --> I[Push wiki pages]
-    I --> J[Create PR if source changes needed]
+    A[Daily schedule / manual trigger] --> B{Any merges today?}
+    B -->|No| C[Skip - no wiki update needed]
+    B -->|Yes| D{PAGES.md exists?}
+    D -->|No| E[Generate PAGES.md template]
+    D -->|Yes| F[Read PAGES.md template]
+    E --> G[Save template to .github/agentic-wiki/]
+    F --> H[Identify changed files from recent merges]
+    H --> I[Read relevant source files]
+    I --> J[Write wiki pages]
+    J --> K[Push wiki pages]
+    K --> L[Create PR if source changes needed]
 ```
 
-On the first run (or when `regenerate-template` is enabled), the workflow generates a `PAGES.md` template describing the wiki structure it will maintain. On subsequent runs it follows the template — reading only the source files relevant to the merged PR, then writing updated wiki content.
+On the first run (or when `regenerate-template` is enabled), the workflow generates a `PAGES.md` template describing the wiki structure it will maintain. On subsequent runs it follows the template — reading only the source files relevant to the recently merged PRs, then writing updated wiki content.
 
 ### Key Features
 
@@ -52,11 +54,35 @@ Trigger the workflow manually with `regenerate-template: true` to create the ini
 
 ### Configuration
 
-The workflow triggers automatically on every merged PR to the default branch. You can also trigger it manually from the Actions tab:
+The workflow runs once a day (around 4:22am UTC) and checks whether any pull requests were merged to the default branch in the last 24 hours. If no merges happened, it exits early with no work done. You can also trigger it manually from the Actions tab.
 
-- **`regenerate-template`** (`boolean`, default `false`) — Set to `true` to rebuild the `PAGES.md` template from scratch.
+You can adjust the cadence or event structure to suit your team's workflow. For example, to run immediately on every merge to the default branch (instead of waiting for the daily schedule), replace the `schedule: daily around 4:22` trigger with a `push` trigger:
+
+```yaml
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    ...
+```
+
+When using a `push` trigger, the agent will always run on every merge — there is no need for the "any merges today?" check.
+
+Or to run at a different time or cadence, change the schedule. For example, to run at 9am UTC every weekday:
+
+```yaml
+on:
+  schedule:
+    - cron: "0 9 * * 1-5"
+  workflow_dispatch:
+    ...
+```
 
 After editing the workflow file, run `gh aw compile` to update the compiled workflow and commit all changes to the default branch.
+
+Available inputs for manual dispatch:
+
+- **`regenerate-template`** (`boolean`, default `false`) — Set to `true` to rebuild the `PAGES.md` template from scratch.
 
 ## PAGES.md Format
 
