@@ -7,7 +7,9 @@
 The [Agentic Wiki Writer workflow](../workflows/agentic-wiki-writer.md?plain=1) keeps your project's GitHub wiki synchronized with the codebase. Once a day (if any pull requests were merged to the default branch), it reads a `PAGES.md` template to understand what to document, then writes wiki pages directly from the source code. You can also trigger it manually on demand.
 
 > [!WARNING]
-> **The repository wiki must be initialized before running this workflow.** GitHub does not create the wiki git repository until at least one page exists. Go to your repository's **Wiki** tab and create a blank page (e.g. "Home") to initialize it. The workflow will fail with a git clone error if this step is skipped.
+> **The repository wiki must be enabled and initialized before running this workflow.**
+> 1. **Enable the wiki**: Go to your repository's **Settings** → **Features** and check the **Wikis** checkbox.
+> 2. **Initialize the wiki**: Go to the **Wiki** tab and create a blank page (e.g. "Home"). GitHub does not create the underlying wiki git repository until at least one page exists. The workflow will fail with a git clone error if this step is skipped.
 
 ## Installation
 
