@@ -67,11 +67,10 @@ safe-outputs:
             token: ${{ secrets.GITHUB_TOKEN }}
         - name: Write wiki pages
           run: |
-            FILES=$(jq -r '.items[] | select(.type == "push_wiki") | .files' "$GH_AW_AGENT_OUTPUT")
-            echo "$FILES" | jq -r 'to_entries[] | @base64' | while read entry; do
-              FILENAME=$(echo "$entry" | base64 -d | jq -r '.key')
-              CONTENT=$(echo "$entry" | base64 -d | jq -r '.value')
-              echo "$CONTENT" > "$FILENAME"
+            jq -r '.items[] | select(.type == "push_wiki") | .files | fromjson | to_entries[] | @base64' "$GH_AW_AGENT_OUTPUT" | while IFS= read -r entry; do
+              FILENAME=$(printf '%s' "$entry" | base64 -d | jq -r '.key')
+              CONTENT=$(printf '%s' "$entry" | base64 -d | jq -r '.value')
+              printf '%s' "$CONTENT" > "$FILENAME"
             done
         - name: Commit and push
           run: |
