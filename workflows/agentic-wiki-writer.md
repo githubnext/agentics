@@ -70,7 +70,7 @@ safe-outputs:
             jq -r '.items[] | select(.type == "push_wiki") | .files | fromjson | to_entries[] | @base64' "$GH_AW_AGENT_OUTPUT" | while IFS= read -r entry; do
               FILENAME=$(printf '%s' "$entry" | base64 -d | jq -r '.key')
               CONTENT=$(printf '%s' "$entry" | base64 -d | jq -r '.value')
-              printf '%s' "$CONTENT" > "$FILENAME"
+              printf '%s\n' "$CONTENT" > "$FILENAME"
             done
         - name: Commit and push
           run: |
