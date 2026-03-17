@@ -10,7 +10,7 @@ on:
         description: "Regenerate PAGES.md from scratch (full regen)"
         type: boolean
         default: false
-  schedule: daily around 4:22
+  schedule: daily
 permissions:
   contents: read
   issues: read
@@ -67,11 +67,10 @@ safe-outputs:
             token: ${{ secrets.GITHUB_TOKEN }}
         - name: Write wiki pages
           run: |
-            FILES=$(jq -r '.items[] | select(.type == "push_wiki") | .files' "$GH_AW_AGENT_OUTPUT")
-            echo "$FILES" | jq -r 'to_entries[] | @base64' | while read entry; do
-              FILENAME=$(echo "$entry" | base64 -d | jq -r '.key')
-              CONTENT=$(echo "$entry" | base64 -d | jq -r '.value')
-              echo "$CONTENT" > "$FILENAME"
+            jq -r '.items[] | select(.type == "push_wiki") | .files | fromjson | to_entries[] | @base64' "$GH_AW_AGENT_OUTPUT" | while IFS= read -r entry; do
+              FILENAME=$(printf '%s' "$entry" | base64 -d | jq -r '.key')
+              CONTENT=$(printf '%s' "$entry" | base64 -d | jq -r '.value')
+              printf '%s\n' "$CONTENT" > "$FILENAME"
             done
         - name: Commit and push
           run: |
@@ -239,12 +238,21 @@ If there is no `source-map.json` (first run), regenerate all pages.
 
 ### 3d. Build context and generate content
 
+**MANDATORY CONSTRAINTS — read carefully before generating any content:**
+
+- **Never generate more than 4 pages per `push-wiki` call.** If there are more than 4 pages to generate, process them in sequential batches of up to 4, calling `push-wiki` once per batch.
+- **Never spawn a sub-agent or background agent to generate pages.** Generate all pages directly in the main conversation loop.
+- **Each page must be kept under 3 KB of markdown.** Keep pages focused and concise.
+- **Each `push-wiki` JSON payload must stay under 30 KB total.** If a batch would exceed 30 KB (including the sidebar), split it into a smaller batch.
+- **If a `push-wiki` call fails with an API error**, it is likely a timeout caused by a large payload. Retry up to 2 times with progressively smaller batches (halving the batch size each retry, minimum 1 page per call). If a single-page call also fails, the error is unrecoverable — report it and stop.
+
 For each page that needs regeneration:
 
 1. Check MEMORY_DIR for cached summaries of the relevant source files (files named `summary--{path}.md`). If a file's hash matches (stored on the first line as `<!-- hash: ... -->`), use the cached summary to save context window space. If not, read the full file.
-2. For files you read in full, write a condensed summary to MEMORY_DIR as `summary--{path}.md` (replace `/` with `--`). The summary should capture: exports, key types/interfaces, function signatures, class structure, and important constants. Keep summaries under 2KB each. Include the file's content hash on the first line: `<!-- hash: abc123 -->`.
-3. Generate the content for each `*{ ... }*` instruction block, following the **Content Generation Guidelines** below.
-4. Assemble the page: combine static text with generated content, normalizing heading levels (H4→H2, H5→H3, H6→H4 in the output).
+2. **For source files longer than 500 lines**, do not read the entire file. Instead, use `head` to read the first 100 lines (for imports, exports, and top-level types), then use `grep` to find lines containing keywords from the page's instruction block (e.g., function names, class names, config keys), and use `head`/`tail` to read only those surrounding sections. For example: `grep -n "functionName\|ClassName" src/foo.ts | head -20` to locate relevant line numbers, then `head -n 150 src/foo.ts | tail -50` to extract that region.
+3. For files you read in full, write a condensed summary to MEMORY_DIR as `summary--{path}.md` (replace `/` with `--`). The summary should capture: exports, key types/interfaces, function signatures, class structure, and important constants. Keep summaries under 2KB each. Include the file's content hash on the first line: `<!-- hash: abc123 -->`.
+4. Generate the content for each `*{ ... }*` instruction block, following the **Content Generation Guidelines** below.
+5. Assemble the page: combine static text with generated content, normalizing heading levels (H4→H2, H5→H3, H6→H4 in the output).
 
 ### 3e. Self-review
 
@@ -254,22 +262,34 @@ Before finalizing each page, review your generated content against the **Self-Re
 
 **Do NOT write wiki page files to disk.** Do NOT create output directories. Do NOT use shell commands to write files.
 
-Instead, construct ALL wiki page content as strings and pass them directly to the `push-wiki` safe-output as a single JSON object.
+**Do NOT use sub-agents or background agents for page generation.** Generate all pages directly in the main conversation loop.
 
-1. Build a JSON object mapping filenames to markdown content for every page.
-2. Generate `_Sidebar.md` content following the **Sidebar Generation** rules below and include it in the same JSON object.
-3. Pass the complete JSON object to the `push-wiki` safe-output.
+Construct wiki page content as strings and pass them to the `push-wiki` safe-output as JSON objects. **Push in batches of at most 4 pages per call** to avoid API timeouts:
 
-The JSON object should look like:
+1. Divide the full list of pages into batches of up to 4 pages each.
+2. For each batch, build a JSON object mapping filenames to markdown content.
+3. Include `_Sidebar.md` (generated following the **Sidebar Generation** rules below) **only in the final batch**.
+4. Before calling `push-wiki`, estimate the total JSON payload size. **If the payload exceeds 30 KB, reduce the batch size** (use 2 pages per call or fewer) until it fits.
+5. Call `push-wiki` once per batch. Proceed to the next batch only after the current call succeeds.
+6. **If a `push-wiki` call fails with an API or timeout error**, halve the current batch size (minimum 1 page per call) and retry up to 2 times. API errors during generation are most often caused by large response payloads, not transient network issues. If a single-page call still fails, the error is unrecoverable — report it and stop.
+
+A single-batch JSON object looks like:
 ```json
 {
   "Home.md": "Welcome to the project...\n\n## Overview\n...",
-  "Architecture.md": "## System Design\n...",
+  "Architecture.md": "## System Design\n..."
+}
+```
+
+The final batch must add the sidebar:
+```json
+{
+  "Getting-Started.md": "## Prerequisites\n...",
   "_Sidebar.md": "- [[Home|Home]]\n- [[Architecture|Architecture]]\n..."
 }
 ```
 
-Every wiki page and the sidebar must be included in this single JSON object. Pages use the slug as their filename (e.g., `Getting-Started.md`).
+Pages use the slug as their filename (e.g., `Getting-Started.md`).
 
 ### 3g. Save memory
 
@@ -494,6 +514,13 @@ Diagram type by use case: `flowchart LR` for architecture/data flow; `sequenceDi
 
 Syntax rules: Always specify direction (`LR` or `TD`). Wrap labels containing special characters in double quotes: `A["MyClass::method()"]`. One relationship per line. Use subgraphs sparingly (max one level deep). Add a brief sentence before the diagram explaining what it shows.
 
+**Critical mermaid restrictions** — GitHub's renderer is strict. Violating these causes "Unable to render rich display" errors:
+
+- **No backtick strings** — Do NOT use the backtick/markdown-string syntax inside node labels: `` A["`label`"] `` is invalid. Use plain text or double-quoted strings only: `A["label"]`.
+- **No `\n` in labels** — Do NOT use `\n` escape sequences inside node labels. They are not rendered as newlines and cause lexer errors. Keep labels to a single line. If a label is too long, shorten it or split the node into two nodes.
+- **No special characters unquoted** — Any label containing `@`, `(`, `)`, `:`, `/`, `<`, `>`, or other non-alphanumeric characters must be wrapped in double quotes.
+- **Test mentally before writing** — Before including a diagram, verify each node label is either plain alphanumeric text or a properly double-quoted string with no escape sequences.
+
 ```mermaid
 flowchart LR
   A[Input] --> B[Process] --> C[Output]
@@ -577,7 +604,13 @@ Before finalizing each page, check for these issues and fix them:
 
 5. **Accuracy** — Content matches what the source code actually does. No fabricated features or APIs.
 
-6. **Structural consistency** — Similar sections across pages use the same structure and formatting patterns.
+6. **Mermaid diagram syntax** — For every mermaid diagram, verify:
+   - No backtick/markdown-string notation inside labels (`` A["`text`"] `` → invalid)
+   - No `\n` escape sequences inside labels (`A["line1\nline2"]` → invalid; shorten the label instead)
+   - All labels with special characters (`@`, `(`, `)`, `:`, `/`) are wrapped in double quotes
+   - Fix any violation by simplifying the label to plain text or a valid double-quoted string
+
+7. **Structural consistency** — Similar sections across pages use the same structure and formatting patterns.
 
 ---
 
