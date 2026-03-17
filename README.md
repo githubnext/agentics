@@ -76,6 +76,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 ## Security Workflows
 
 - [🔍 Daily Malicious Code Scan](docs/daily-malicious-code-scan.md) - Daily scan of recent code changes for suspicious patterns indicating malicious activity or supply chain attacks
+- [🔐 Code Scanning Fixer](docs/code-scanning-fixer.md) - Automatically fix GitHub code scanning security alerts by analyzing vulnerabilities and creating remediation pull requests
 
 ## Maintainer
 
