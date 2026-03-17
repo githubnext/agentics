@@ -55,7 +55,12 @@ It does **not** open a PR for typo fixes, formatting changes, or clarifications 
 
 ### Setup
 
-This workflow requires your repository to have a wiki enabled. It pairs naturally with [Agentic Wiki Writer](agentic-wiki-writer.md) to create a full bidirectional documentation loop.
+This workflow requires your repository to have a wiki enabled and initialized:
+
+1. **Enable the wiki**: Go to your repository's **Settings** → **Features** and check the **Wikis** checkbox.
+2. **Initialize the wiki**: Go to the **Wiki** tab and create a blank page (e.g. "Home"). GitHub does not create the underlying wiki git repository until at least one page exists.
+
+It pairs naturally with [Agentic Wiki Writer](agentic-wiki-writer.md) to create a full bidirectional documentation loop.
 
 After editing the workflow file, run `gh aw compile` to update the compiled workflow and commit all changes to the default branch.
 
