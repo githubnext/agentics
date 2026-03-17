@@ -47,7 +47,6 @@ safe-outputs:
     protected-files: fallback-to-issue
   jobs:
     push-wiki:
-      max: 10
       description: >
         Push generated wiki pages to the repository wiki.
         Pass a JSON object mapping filenames to markdown content.
