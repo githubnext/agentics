@@ -2,7 +2,7 @@
 name: Agentic Wiki Writer
 description: >
   Generates GitHub wiki pages from source code using a PAGES.md template.
-  Runs on PR merge or manual dispatch with agent-driven triage.
+  Runs once a day if any merges to the default branch have happened, or on manual dispatch.
 on:
   workflow_dispatch:
     inputs:
@@ -10,9 +10,7 @@ on:
         description: "Regenerate PAGES.md from scratch (full regen)"
         type: boolean
         default: false
-  pull_request:
-    types: [closed]
-    branches: [main]
+  schedule: daily
 permissions:
   contents: read
   issues: read
@@ -46,6 +44,7 @@ safe-outputs:
   create-pull-request:
     title-prefix: "[agentic-wiki]"
     labels: [documentation, automated]
+    protected-files: fallback-to-issue
   jobs:
     push-wiki:
       description: >
@@ -68,11 +67,10 @@ safe-outputs:
             token: ${{ secrets.GITHUB_TOKEN }}
         - name: Write wiki pages
           run: |
-            FILES=$(jq -r '.items[] | select(.type == "push_wiki") | .files' "$GH_AW_AGENT_OUTPUT")
-            echo "$FILES" | jq -r 'to_entries[] | @base64' | while read entry; do
-              FILENAME=$(echo "$entry" | base64 -d | jq -r '.key')
-              CONTENT=$(echo "$entry" | base64 -d | jq -r '.value')
-              echo "$CONTENT" > "$FILENAME"
+            jq -r '.items[] | select(.type == "push_wiki") | .files | fromjson | to_entries[] | @base64' "$GH_AW_AGENT_OUTPUT" | while IFS= read -r entry; do
+              FILENAME=$(printf '%s' "$entry" | base64 -d | jq -r '.key')
+              CONTENT=$(printf '%s' "$entry" | base64 -d | jq -r '.value')
+              printf '%s\n' "$CONTENT" > "$FILENAME"
             done
         - name: Commit and push
           run: |
@@ -94,7 +92,7 @@ You are a wiki generator for this repository. Your job is to produce high-qualit
 - **Allowed bash commands:** Only `find`, `tree`, `wc`, and read-only commands (`cat`, `ls`, `head`) work. All other bash commands (`git`, `echo >`, `touch`, `cp`, `tee`, `node`, `python`, `install`, `mkdir`) will be denied.
 - **Creating files:** Use the `write` tool. The `.github/agentic-wiki/` directory is pre-created before your session starts. Do NOT try to mkdir any path.
 - **Wiki page output:** Do NOT write wiki pages to disk. Do NOT create output directories. Construct all page content as strings and pass them to the `push-wiki` safe-output as JSON. See Step 3f.
-- **Repo info for source links:** Do NOT use `git` commands. Read `.git/config` with `cat` to find the remote URL. The default branch is `main`.
+- **Repo info for source links:** Do NOT use `git` commands. Read `.git/config` with `cat` to find the remote URL and default branch.
 - **Repo memory path:** Do NOT hardcode the repo-memory path. Discover it by running `ls /tmp/gh-aw/repo-memory/` to find the directory name, then use that path. It is typically `/tmp/gh-aw/repo-memory/default/`. All memory files must be flat (no subdirectories) — you cannot mkdir inside repo-memory.
 - Always use **relative paths** for repo files (e.g., `.github/agentic-wiki/PAGES.md`), never absolute paths.
 
@@ -118,19 +116,22 @@ You have persistent storage that survives across runs. To find the path, run `ls
 2. **Read memory files** from that directory before starting work.
 3. **After finishing**, use the `write` tool to save updated memory files to the same directory.
 
-## Step 0: Triage (PR merge triggers only)
+## Step 0: Triage (scheduled triggers only)
 
 If this workflow was triggered by `workflow_dispatch`, **skip this step entirely** — always proceed to Step 1.
 
-If this workflow was triggered by a `pull_request` event, you must first check that the PR was actually merged (not just closed), then determine whether the changes are likely to affect wiki documentation.
+If this workflow was triggered by the `schedule` event, check whether any pull requests have been merged into the default branch in the last 24 hours. If none have been merged, there is nothing to document — call the `noop` safe-output with "No merges to the default branch in the last 24 hours" and **stop**.
 
-### 0a. Check if PR was merged
+### 0a. Check for recent merges
 
-Use the GitHub tools to inspect the pull request that triggered this run. If the PR was **closed without merging**, call the `noop` safe-output with "PR was closed without merging" and **stop**.
+Use the GitHub tools to list recently merged pull requests. Look for any PRs merged into the default branch within the past 24 hours.
+
+- If **no PRs were merged** in the last 24 hours → call the `noop` safe-output and **stop**.
+- If **one or more PRs were merged** → continue to step 0b.
 
 ### 0b. Identify what changed
 
-Look at the files changed in the merged PR. Use the GitHub tools to list the PR's changed files.
+Collect the files changed across all PRs merged into the default branch in the last 24 hours. Use the GitHub tools to list the changed files for each merged PR.
 
 ### 0c. Load source map from memory
 
@@ -150,7 +151,7 @@ Use your judgment. If you're unsure whether a change affects the wiki, err on th
 
 ### 0e. Decision
 
-- If **no wiki update needed** → call the `noop` safe-output with a message explaining why (e.g., "PR only modified test files — no wiki impact") and **stop**.
+- If **no wiki update needed** → call the `noop` safe-output with a message explaining why (e.g., "Merged PRs only modified test files — no wiki impact") and **stop**.
 - If **wiki update needed** → proceed to **Step 1**.
 
 ## Step 1: Check for PAGES.md
@@ -492,6 +493,13 @@ Diagram type by use case: `flowchart LR` for architecture/data flow; `sequenceDi
 
 Syntax rules: Always specify direction (`LR` or `TD`). Wrap labels containing special characters in double quotes: `A["MyClass::method()"]`. One relationship per line. Use subgraphs sparingly (max one level deep). Add a brief sentence before the diagram explaining what it shows.
 
+**Critical mermaid restrictions** — GitHub's renderer is strict. Violating these causes "Unable to render rich display" errors:
+
+- **No backtick strings** — Do NOT use the backtick/markdown-string syntax inside node labels: `` A["`label`"] `` is invalid. Use plain text or double-quoted strings only: `A["label"]`.
+- **No `\n` in labels** — Do NOT use `\n` escape sequences inside node labels. They are not rendered as newlines and cause lexer errors. Keep labels to a single line. If a label is too long, shorten it or split the node into two nodes.
+- **No special characters unquoted** — Any label containing `@`, `(`, `)`, `:`, `/`, `<`, `>`, or other non-alphanumeric characters must be wrapped in double quotes.
+- **Test mentally before writing** — Before including a diagram, verify each node label is either plain alphanumeric text or a properly double-quoted string with no escape sequences.
+
 ```mermaid
 flowchart LR
   A[Input] --> B[Process] --> C[Output]
@@ -545,7 +553,7 @@ You may link to directories: `[components/](https://github.com/OWNER/REPO/tree/B
 
 NEVER use bare relative paths like `src/lib/foo.ts` as links — those will 404 on the wiki.
 
-Determine the correct `OWNER/REPO` by reading `.git/config` with `cat` (do NOT use `git` commands — they are blocked). The default branch is `main`.
+Determine the correct `OWNER/REPO` and default branch by reading `.git/config` with `cat` (do NOT use `git` commands — they are blocked).
 
 **Wiki cross-references** — Use wiki link syntax: `[[Page Name]]` or `[[Display Text|Page-Slug#section-slug]]`.
 
@@ -575,7 +583,13 @@ Before finalizing each page, check for these issues and fix them:
 
 5. **Accuracy** — Content matches what the source code actually does. No fabricated features or APIs.
 
-6. **Structural consistency** — Similar sections across pages use the same structure and formatting patterns.
+6. **Mermaid diagram syntax** — For every mermaid diagram, verify:
+   - No backtick/markdown-string notation inside labels (`` A["`text`"] `` → invalid)
+   - No `\n` escape sequences inside labels (`A["line1\nline2"]` → invalid; shorten the label instead)
+   - All labels with special characters (`@`, `(`, `)`, `:`, `/`) are wrapped in double quotes
+   - Fix any violation by simplifying the label to plain text or a valid double-quoted string
+
+7. **Structural consistency** — Similar sections across pages use the same structure and formatting patterns.
 
 ---
 

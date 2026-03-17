@@ -26,6 +26,7 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, import]
+    protected-files: fallback-to-issue
 
 tools:
   github:

@@ -1,10 +1,8 @@
 # 🌈 Repo Assist
+ 
+The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a [GitHub Agentic Workflow](https://github.blog/ai-and-ml/automate-repository-tasks-with-github-agentic-workflows/) for a friendly repository assistant that runs regularly to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. Each run it selects three tasks via a weighted random draw based - favouring issue labelling, investigation and fixing when the backlog is large, then shifting to engineering, testing, and forward progress as the backlog clears. It maintains a monthly activity summary for maintainer visibility.
 
-> For an overview of all available workflows, see the [main README](../README.md).
->
-> [Blog Post by @dsyme](https://dsyme.net/2026/02/25/repo-assist-a-repository-assistant/)
-
-The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a friendly repository assistant that runs regularly (default four times a day) to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. Each run it selects two tasks via a weighted random draw based on live repo data — heavily favouring issue labelling, investigation and fixing when the backlog is large, then shifting to engineering, testing, and forward progress as the backlog clears. It maintains a monthly activity summary for maintainer visibility.
+[Read more in this blog](https://dsyme.net/2026/02/25/repo-assist-a-repository-assistant/).
 
 ## Installation
 

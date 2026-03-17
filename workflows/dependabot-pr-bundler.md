@@ -17,6 +17,7 @@ safe-outputs:
   create-pull-request:
     draft: true
     labels: [automation, dependencies]
+    protected-files: fallback-to-issue
   create-discussion:
     title-prefix: "${{ github.workflow }}"
     category: "announcements"

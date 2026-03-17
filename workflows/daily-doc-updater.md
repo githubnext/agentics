@@ -33,6 +33,7 @@ safe-outputs:
     title-prefix: "[docs] "
     labels: [documentation, automation]
     draft: false
+    protected-files: fallback-to-issue
 
 ---
 

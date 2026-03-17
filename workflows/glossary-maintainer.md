@@ -23,6 +23,7 @@ safe-outputs:
     title-prefix: "[docs] "
     labels: [documentation, glossary]
     draft: false
+    protected-files: fallback-to-issue
   noop:
 
 tools:

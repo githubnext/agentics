@@ -40,6 +40,7 @@ safe-outputs:
     title-prefix: "[Perf Improver] "
     labels: [automation, performance]
     max: 4
+    protected-files: fallback-to-issue
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Perf Improver] "
@@ -152,7 +153,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 3. Check for existing performance PRs (especially yours with "[Perf Improver]" prefix). Avoid duplicate work.
 4. For the selected goal:
 
-   a. Create a fresh branch off `main`: `perf-assist/<desc>`.
+   a. Create a fresh branch off the default branch: `perf-assist/<desc>`.
    
    b. **Before implementing**: Establish baseline measurements using appropriate methods:
       - Synthetic benchmarks for algorithm changes

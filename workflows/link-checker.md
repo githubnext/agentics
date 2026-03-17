@@ -104,6 +104,7 @@ safe-outputs:
     title-prefix: "[link-checker] "
     labels: [documentation, automated]
     draft: false
+    protected-files: fallback-to-issue
     if-no-changes: "warn"
   noop:
 ---

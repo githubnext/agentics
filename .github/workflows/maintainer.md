@@ -10,6 +10,10 @@ network: defaults
 
 safe-outputs:
   create-pull-request:
+    title-prefix: "[agentic-workflow-maintainer] "
+    labels: [agentic-workflow-maintainer, automated]
+    protected-files: fallback-to-issue
+    if-no-changes: "warn"
   create-issue:
 
 tools:

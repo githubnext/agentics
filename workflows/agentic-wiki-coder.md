@@ -36,6 +36,7 @@ safe-outputs:
   create-pull-request:
     title-prefix: "[wiki-to-code]"
     labels: [enhancement, automated, wiki-driven]
+    protected-files: fallback-to-issue
   noop: {}
 timeout-minutes: 120
 ---
@@ -109,6 +110,22 @@ Parse the `pages` array from the JSON. Each entry contains:
 
 Also extract `sender.login` from the event payload for the feedback loop check in Step 0b.
 
+### 0a-ii. Construct wiki diff URLs
+
+For each page in the event, construct the diff URL using this pattern:
+
+```
+{html_url}/_compare/{sha}
+```
+
+For example, if `html_url` is `https://github.com/owner/repo/wiki/My-Page` and `sha` is `abc123`, the diff URL is:
+
+```
+https://github.com/owner/repo/wiki/My-Page/_compare/abc123
+```
+
+Save these diff URLs — you will need them for the PR/issue body in Step 7.
+
 ### 0b. Check for feedback loops
 
 Check the `sender.login` field from the event payload (extracted in Step 0a). If the sender login is `github-actions[bot]`, this edit was made by the `agentic-wiki-writer` workflow (which commits as `github-actions[bot]`). Call the `noop` safe-output with "Wiki edit was made by github-actions[bot] — skipping to prevent feedback loop with agentic-wiki-writer" and **stop**.
@@ -131,13 +148,29 @@ If this directory does not exist or is empty, run `echo "FATAL: wiki not pre-clo
 
 Do NOT attempt to clone the wiki yourself — `GITHUB_TOKEN` is not available in the sandbox.
 
-### 1b. Read changed pages
+### 1b. Get wiki diffs
+
+For each changed page, get the actual diff content from the wiki clone. Run `git log` and `git diff` in `/tmp/gh-aw/wiki/` to extract what changed:
+
+```bash
+cd /tmp/gh-aw/wiki && git show --format="%H %s" --stat {sha}
+```
+
+```bash
+cd /tmp/gh-aw/wiki && git diff {sha}~1 {sha} -- "*.md"
+```
+
+If the page was newly created (`action` is `"created"`), the parent commit may not contain the file, so use `git show {sha} -- {Page-Name}.md` instead.
+
+Save the diff output for each page — you will include it (or a summary of it) in the PR/issue body in Step 7.
+
+### 1c. Read changed pages
 
 Read **each changed wiki page** identified in the event payload (Step 0a) from `/tmp/gh-aw/wiki/`. The files are named `Page-Name.md` (title with spaces replaced by hyphens).
 
 **Focus on the specific pages from the event.** These are the pages that triggered this run. Read each one carefully — these are your primary input.
 
-### 1c. Read surrounding pages for context
+### 1d. Read surrounding pages for context
 
 Read other wiki pages that might provide context — especially the Home page and any pages that link to or from the changed pages. This helps you understand the broader documentation context.
 
@@ -258,13 +291,24 @@ Keep it under 70 characters. Examples:
 
 ### PR body
 
-Structure the body as follows:
+Structure the body as follows. The wiki change that triggered the work MUST be the most prominent part — a reviewer should immediately see what wiki edit inspired this code change.
 
 ```markdown
-## Wiki Changes
+## Wiki Change
 
-This PR implements code changes based on edits to the following wiki pages:
-- [Page Name](html_url) — <brief description of what changed>
+**[Page Name](html_url)** — [view diff](diff_url)
+
+<Include the wiki diff here. If the diff is small (under ~40 lines), show it in full inside a diff code block. If it is large, write a concise summary of the key changes (what was added, removed, or modified) and link to the full diff.>
+
+<details><summary>Wiki diff</summary>
+
+```diff
+<the actual diff output from git diff>
+```
+
+</details>
+
+<For multiple pages, repeat the above block for each page.>
 
 ## Implementation Summary
 
@@ -284,6 +328,12 @@ This PR implements code changes based on edits to the following wiki pages:
 - [ ] `bun test` passes
 - [ ] `bunx tsc --noEmit` passes
 ```
+
+**Small vs large diffs:**
+- **Small diffs (under ~40 lines):** Show the full diff directly in the body (not inside a `<details>` block) so reviewers see it immediately.
+- **Large diffs (40+ lines):** Write a 2-4 sentence summary of the functional changes above the fold, then put the full diff inside a `<details>` block.
+
+This same structure applies if the safe-output falls back to creating an issue instead of a PR (e.g., due to protected files). The issue body should use the identical format so the wiki diff is always front and center.
 
 ## Step 8: Update memory
 
