@@ -240,11 +240,11 @@ If there is no `source-map.json` (first run), regenerate all pages.
 
 **MANDATORY CONSTRAINTS — read carefully before generating any content:**
 
-- **Never generate more than 4 pages per `push-wiki` call.** If there are more than 4 pages to generate, process them in sequential batches of up to 4, calling `push-wiki` once per batch.
+- **Send all wiki pages in a single `push-wiki` call.** Do NOT batch across multiple calls — only one `push-wiki` output is allowed per run.
 - **Never spawn a sub-agent or background agent to generate pages.** Generate all pages directly in the main conversation loop.
 - **Each page must be kept under 3 KB of markdown.** Keep pages focused and concise.
-- **Each `push-wiki` JSON payload must stay under 30 KB total.** If a batch would exceed 30 KB (including the sidebar), split it into a smaller batch.
-- **If a `push-wiki` call fails with an API error**, it is likely a timeout caused by a large payload. Retry up to 2 times with progressively smaller batches (halving the batch size each retry, minimum 1 page per call). If a single-page call also fails, the error is unrecoverable — report it and stop.
+- **The total `push-wiki` JSON payload must stay under 90 KB.** If the payload would exceed this limit, reduce page content (shorten pages, remove examples) until it fits.
+- **If a `push-wiki` call fails with an API error**, it is likely a timeout caused by a large payload. Reduce page content (shorten the longest pages) and retry up to 2 times. If it still fails, the error is unrecoverable — report it and stop.
 
 For each page that needs regeneration:
 
@@ -264,26 +264,19 @@ Before finalizing each page, review your generated content against the **Self-Re
 
 **Do NOT use sub-agents or background agents for page generation.** Generate all pages directly in the main conversation loop.
 
-Construct wiki page content as strings and pass them to the `push-wiki` safe-output as JSON objects. **Push in batches of at most 4 pages per call** to avoid API timeouts:
+Construct wiki page content as strings and pass them to the `push-wiki` safe-output as a **single JSON call containing all pages** (including `_Sidebar.md`). Only one `push-wiki` output is allowed per run — do NOT call `push-wiki` more than once.
 
-1. Divide the full list of pages into batches of up to 4 pages each.
-2. For each batch, build a JSON object mapping filenames to markdown content.
-3. Include `_Sidebar.md` (generated following the **Sidebar Generation** rules below) **only in the final batch**.
-4. Before calling `push-wiki`, estimate the total JSON payload size. **If the payload exceeds 30 KB, reduce the batch size** (use 2 pages per call or fewer) until it fits.
-5. Call `push-wiki` once per batch. Proceed to the next batch only after the current call succeeds.
-6. **If a `push-wiki` call fails with an API or timeout error**, halve the current batch size (minimum 1 page per call) and retry up to 2 times. API errors during generation are most often caused by large response payloads, not transient network issues. If a single-page call still fails, the error is unrecoverable — report it and stop.
+1. Build a single JSON object mapping every filename to its markdown content.
+2. Include `_Sidebar.md` (generated following the **Sidebar Generation** rules below) in the same JSON object.
+3. Before calling `push-wiki`, estimate the total JSON payload size. **If the payload would exceed 90 KB**, shorten the longest pages (trim examples, reduce prose) until it fits.
+4. Call `push-wiki` exactly once with the complete JSON object.
+5. **If the `push-wiki` call fails with an API or timeout error**, reduce page content (shorten the longest pages) and retry up to 2 times. If it still fails, the error is unrecoverable — report it and stop.
 
-A single-batch JSON object looks like:
+The JSON object looks like:
 ```json
 {
   "Home.md": "Welcome to the project...\n\n## Overview\n...",
-  "Architecture.md": "## System Design\n..."
-}
-```
-
-The final batch must add the sidebar:
-```json
-{
+  "Architecture.md": "## System Design\n...",
   "Getting-Started.md": "## Prerequisites\n...",
   "_Sidebar.md": "- [[Home|Home]]\n- [[Architecture|Architecture]]\n..."
 }
@@ -578,6 +571,8 @@ Determine the correct `OWNER/REPO` and default branch by reading `.git/config` w
 
 **Wiki cross-references** — Use wiki link syntax: `[[Page Name]]` or `[[Display Text|Page-Slug#section-slug]]`.
 
+The `|` separator between display text and slug must be a bare pipe — do NOT backslash-escape it (`[[Control Plane\|Control-Plane]]` is wrong; `[[Control Plane|Control-Plane]]` is correct).
+
 Only link to pages and sections that exist in the PAGES.md template. Use plain text for anything else.
 
 NEVER use `[[display|https://...]]` — that is NOT valid wiki syntax. Use `[display](https://...)` for external URLs.
@@ -600,7 +595,7 @@ Before finalizing each page, check for these issues and fix them:
 
 3. **Heading levels** — No page should start with `#` (H1). Start with content or `##` (H2).
 
-4. **Link format** — Source code links use full GitHub URLs `[text](https://...)`. Wiki cross-references use `[[Page Name]]`. No bare relative paths. No `[[text|https://...]]` syntax.
+4. **Link format** — Source code links use full GitHub URLs `[text](https://...)`. Wiki cross-references use `[[Page Name]]` or `[[Display Text|Page-Slug]]` with a bare `|` (never backslash-escaped). No bare relative paths. No `[[text|https://...]]` syntax.
 
 5. **Accuracy** — Content matches what the source code actually does. No fabricated features or APIs.
 
