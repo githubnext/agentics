@@ -204,7 +204,21 @@ At the start of your run, read `/tmp/gh-aw/task_selection.json`. It contains:
 - `selected_tasks`: two tasks chosen by a phase-weighted random draw
 - `task_names`, `weights`: for context
 
-**Execute both selected tasks**, then always do the mandatory **Task 7: Update FV Status Issue**.
+**Before executing any task**, merge all open `[Lean Squad]` PRs into your working branch so each run is additive on all prior in-flight work:
+
+```bash
+git fetch --all
+for pr in $(gh pr list --state open --label lean-squad --json number --jq '.[].number'); do
+  head=$(gh pr view "$pr" --json headRefName --jq '.headRefName')
+  git merge --no-edit "origin/$head" \
+    && echo "Merged PR #$pr ($head)" \
+    || { echo "Conflict merging PR #$pr — skipping"; git merge --abort; }
+done
+```
+
+If a PR merges cleanly, treat its content as the baseline for your new work — do not recreate or duplicate it. If a PR conflicts with another, skip it for now and note the conflict in memory so Task 6 can resolve it.
+
+**Execute both selected tasks**, then always do the mandatory **Task 7: Update Lean Squad Status Issue**.
 
 Use your memory to refine task selection: if a selected task is not yet applicable (e.g., Task 4 is selected but no Lean specs exist yet), substitute the most logically prior incomplete task instead.
 
@@ -423,6 +437,7 @@ are in play, known limitations of the model.}
 
 ## Guidelines
 
+- **Always build on open PRs**: at the start of every run, merge all open `[Lean Squad]` PRs into your branch before doing any new work. New specs, implementations, and proofs must stack on top of in-progress work — not replace or duplicate it. If a PR merges cleanly, treat its contents as already done. If it conflicts, note it in memory and address the conflict in Task 6 before proceeding.
 - **One target per task per run**: go deep on one thing rather than skimming across many.
 - **Don't duplicate**: check memory and the repo before creating a new spec or Lean file — it may already exist from a prior merged PR.
 - **Read AGENTS.md first**: if the repository has an AGENTS.md, read it before opening any PR.
