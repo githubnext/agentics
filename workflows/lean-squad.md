@@ -52,7 +52,8 @@ tools:
   github:
     toolsets: [default]
   bash: true
-  repo-memory: true
+  repo-memory:
+    max-patch-size: 102400  # 100KB max (default 10KB)
 
 steps:
   - name: Assess FV state and compute task weights
