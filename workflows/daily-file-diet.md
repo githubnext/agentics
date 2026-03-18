@@ -25,19 +25,13 @@ tools:
   github:
     toolsets: [default]
   bash:
-    - "find . -type f -not -path '*/.git/*' -not -path '*/node_modules/*' -not -path '*/vendor/*' -not -path '*/dist/*' -not -path '*/build/*' -not -path '*/.next/*' -not -path '*/target/*' -not -path '*/__pycache__/*' -not -path '*/coverage/*' -not -path '*/venv/*' -not -path '*/.tox/*' -not -path '*/.mypy_cache/*' -name '*' -exec wc -l {} \\; 2>/dev/null"
+    - "git ls-tree -r --name-only HEAD"
+    - "git ls-tree -r -l --full-name HEAD"
+    - "git ls-tree -r --name-only HEAD | grep -E * | grep -vE * | xargs wc -l 2>/dev/null"
+    - "git ls-tree -r --name-only HEAD | grep -E * | xargs wc -l 2>/dev/null"
     - "wc -l *"
     - "head -n * *"
     - "grep -n * *"
-    - "find . -type f -name '*.go' -not -path '*_test.go' -not -path '*/vendor/*'"
-    - "find . -type f -name '*.py' -not -path '*/__pycache__/*' -not -path '*/venv/*'"
-    - "find . -type f -name '*.ts' -not -path '*/node_modules/*' -not -path '*/dist/*'"
-    - "find . -type f -name '*.js' -not -path '*/node_modules/*' -not -path '*/dist/*'"
-    - "find . -type f -name '*.rb' -not -path '*/vendor/*'"
-    - "find . -type f -name '*.java' -not -path '*/target/*'"
-    - "find . -type f -name '*.rs' -not -path '*/target/*'"
-    - "find . -type f -name '*.cs'"
-    - "find . -type f \\( -name '*.go' -o -name '*.py' -o -name '*.ts' -o -name '*.js' -o -name '*.rb' -o -name '*.java' -o -name '*.rs' -o -name '*.cs' -o -name '*.cpp' -o -name '*.c' \\) -not -path '*/node_modules/*' -not -path '*/vendor/*' -not -path '*/dist/*' -not -path '*/build/*' -not -path '*/target/*' -not -path '*/__pycache__/*' -exec wc -l {} \\; 2>/dev/null"
     - "sort *"
     - "cat *"
 
@@ -67,14 +61,12 @@ First, determine the primary programming language(s) used in this repository. Th
 
 **For polyglot or unknown repos:**
 ```bash
-find . -type f \( -name "*.go" -o -name "*.py" -o -name "*.ts" -o -name "*.js" -o -name "*.rb" -o -name "*.java" -o -name "*.rs" -o -name "*.cs" -o -name "*.cpp" -o -name "*.c" \) \
-  -not -path "*/node_modules/*" \
-  -not -path "*/vendor/*" \
-  -not -path "*/dist/*" \
-  -not -path "*/build/*" \
-  -not -path "*/target/*" \
-  -not -path "*/__pycache__/*" \
-  -exec wc -l {} \; 2>/dev/null | sort -rn | head -20
+git ls-tree -r --name-only HEAD \
+  | grep -E '\.(go|py|ts|tsx|js|jsx|rb|java|rs|cs|cpp|c|h|hpp)$' \
+  | grep -vE '(_test\.go|\.test\.(ts|js)|\.spec\.(ts|js)|test_[^/]*\.py|[^/]*_test\.py)$' \
+  | xargs wc -l 2>/dev/null \
+  | sort -rn \
+  | head -20
 ```
 
 Also skip test files (files ending in `_test.go`, `.test.ts`, `.spec.ts`, `.test.js`, `.spec.js`, `_test.py`, `test_*.py`, etc.) — focus on non-test production code.
