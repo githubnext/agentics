@@ -70,8 +70,8 @@ steps:
       import os, json, re, glob, sys
       from datetime import datetime, timezone, timedelta
 
-      programs_dir = ".github/autoloop/programs"
-      state_file = ".github/autoloop/state.json"
+      programs_dir = ".autoloop/programs"
+      state_file = ".autoloop/state.json"
       template_file = os.path.join(programs_dir, "example.md")
 
       # Bootstrap: create programs directory and template if missing
@@ -118,17 +118,14 @@ steps:
           ])
           with open(template_file, "w") as f:
               f.write(template)
-          # Commit the template so the user can see and edit it
-          os.system(f'git add "{template_file}"')
-          os.system('git commit -m "[Autoloop] Bootstrap: add program template for configuration"')
-          os.system('git push')
-          print(f"BOOTSTRAPPED: created {template_file} and pushed to repo")
+          # Leave the template unstaged — the agent will create a draft PR with it
+          print(f"BOOTSTRAPPED: created {template_file} locally (agent will create a draft PR)")
 
       # Find all program files
       program_files = sorted(glob.glob(os.path.join(programs_dir, "*.md")))
       if not program_files:
           # Fallback to single-file locations
-          for path in [".github/autoloop/program.md", "program.md"]:
+          for path in [".autoloop/program.md", "program.md"]:
               if os.path.isfile(path):
                   program_files = [path]
                   break
@@ -251,7 +248,7 @@ An iterative optimization agent that proposes changes, evaluates them against a 
 Take heed of **instructions**: "${{ steps.sanitized.outputs.text }}"
 
 If these are non-empty (not ""), then you have been triggered via `/autoloop <instructions>`. The instructions may be:
-- **A one-off directive targeting a specific program**: e.g., `/autoloop training: try a different approach to the loss function`. The text before the colon is the program name (matching a file in `.github/autoloop/programs/`). Execute it as a single iteration for that program, then report results.
+- **A one-off directive targeting a specific program**: e.g., `/autoloop training: try a different approach to the loss function`. The text before the colon is the program name (matching a file in `.autoloop/programs/`). Execute it as a single iteration for that program, then report results.
 - **A general directive**: e.g., `/autoloop try cosine annealing`. If no program name prefix is given and only one program exists, use that one. If multiple exist, ask which program to target.
 - **A configuration change**: e.g., `/autoloop training: set metric to accuracy instead of loss`. Update the relevant program file and confirm.
 
@@ -259,10 +256,10 @@ Then exit — do not run the normal loop after completing the instructions.
 
 ## Multiple Programs
 
-Autoloop supports **multiple independent optimization loops** in the same repository. Each loop is defined by a separate markdown file in `.github/autoloop/programs/`. For example:
+Autoloop supports **multiple independent optimization loops** in the same repository. Each loop is defined by a separate markdown file in `.autoloop/programs/`. For example:
 
 ```
-.github/autoloop/programs/
+.autoloop/programs/
 ├── training.md      ← optimize model training
 ├── coverage.md      ← maximize test coverage
 └── build-perf.md    ← minimize build time
@@ -299,7 +296,7 @@ This lets you run a fast coverage check every hour while running a slow training
 
 ## Program Definition
 
-Each program file in `.github/autoloop/programs/` defines three things:
+Each program file in `.autoloop/programs/` defines three things:
 
 1. **Goal**: What the agent is trying to optimize (natural language description)
 2. **Target**: Which files the agent is allowed to modify
@@ -309,7 +306,7 @@ The **program name** is the filename without the `.md` extension (e.g., `trainin
 
 ### Setup Guard
 
-A template program file is installed at `.github/autoloop/programs/example.md`. **Programs will not run until the user has edited them.** Each template contains a sentinel line:
+A template program file is installed at `.autoloop/programs/example.md`. **Programs will not run until the user has edited them.** Each template contains a sentinel line:
 
 ```
 <!-- AUTOLOOP:UNCONFIGURED -->
@@ -326,17 +323,22 @@ At the start of every run, check each program file for this sentinel. For any pr
 
 If **all** programs are unconfigured, exit after creating the setup issues. Otherwise, proceed with the configured programs.
 
+**Important**: When creating or modifying template/program files during setup, always do so via a draft PR — never commit directly to the default branch. Only iteration state files (`state.json`) should be committed directly.
+
 ### Reading Programs
 
 The pre-step has already determined which programs are due, unconfigured, or skipped. Read `/tmp/gh-aw/autoloop.json` at the start of your run to get:
 
 - **`due`**: List of program names to run iterations for this run.
-- **`unconfigured`**: Programs that still have the sentinel or placeholder content — run the **Setup Guard** for each of these (create setup issues).
+- **`unconfigured`**: Programs that still have the sentinel or placeholder content. For each unconfigured program:
+  1. Check whether the program file actually exists on the default branch (use `git show HEAD:.autoloop/programs/{name}.md`). If it does NOT exist on the default branch, **you must create a draft PR** (branch: `autoloop/setup-template`) that adds the template file. The pre-step may have created the file locally in the working directory, so it will be available to commit — just create a branch, commit it, and open the PR.
+  2. If no setup issue exists for this program, create one (see Setup Guard above).
+  3. If the file already exists on the default branch and a setup issue already exists, then no action is needed for this program.
 - **`skipped`**: Programs not due yet based on their per-program schedule — ignore these entirely.
-- **`no_programs`**: If `true`, no program files exist at all — create a single issue explaining how to add a program.
+- **`no_programs`**: If `true`, no program files exist at all. The pre-step should have bootstrapped a template locally. Follow the same steps as `unconfigured` above — create a draft PR with the template and a setup issue.
 
 For each program in `due`:
-1. Read the program file from `.github/autoloop/programs/{name}.md`.
+1. Read the program file from `.autoloop/programs/{name}.md`.
 2. Parse the three sections: Goal, Target, Evaluation.
 3. Read the current state of all target files.
 4. Read repo memory for that program's metric history (keyed by program name).
@@ -348,7 +350,7 @@ Each run executes **one iteration per configured program**. For each program:
 ### Step 1: Read State
 
 1. Read the program file to understand the goal, targets, and evaluation method.
-2. Read `.github/autoloop/state.json` for this program's `best_metric` and `iteration_count`.
+2. Read `.autoloop/state.json` for this program's `best_metric` and `iteration_count`.
 3. Read repo memory (keyed by program name) for detailed history:
    - `history`: Summary of recent iterations (last 20).
    - `rejected_approaches`: Approaches that were tried and failed (to avoid repeating).
@@ -444,7 +446,7 @@ Maintain a single open issue **per program** titled `[Autoloop: {program-name}] 
 
 Autoloop uses **two persistence layers**:
 
-### 1. State file (`.github/autoloop/state.json`) — lightweight, committed to repo
+### 1. State file (`.autoloop/state.json`) — lightweight, committed to repo
 
 This file is read by the **pre-step** (before the agent starts) to decide which programs are due. The agent **must update this file and commit it** at the end of every iteration. This is the only way the pre-step can check schedules, plateaus, and pause flags on future runs.
 
