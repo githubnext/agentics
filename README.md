@@ -14,6 +14,14 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🚀 CI Coach](docs/ci-coach.md) - Optimize CI workflows for speed and cost efficiency
 
+## Maintainer
+
+- [🤖 Repo Assist](docs/repo-assist.md) - Daily repository assistant that triages issues, fixes bugs, proposes improvements, and maintains activity summaries
+- [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
+- [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
+- [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all their sub-issues are complete
+- [📰 Tech Content Editorial Board](docs/tech-content-editorial-board.md) - Daily tech content editorial-board review of technical rigor, wording, structure, and editorial quality
+
 ### Code Review Workflows
 
 - [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
@@ -80,15 +88,6 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 ## Security Workflows
 
 - [🔍 Daily Malicious Code Scan](docs/daily-malicious-code-scan.md) - Daily scan of recent code changes for suspicious patterns indicating malicious activity or supply chain attacks
-
-## Maintainer
-
-- [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
-- [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
-- [🤖 Repo Assist](docs/repo-assist.md) - Daily repository assistant that triages issues, fixes bugs, proposes improvements, and maintains activity summaries
-- [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all their sub-issues are complete
-- [📰 Tech Content Editorial Board](docs/tech-content-editorial-board.md) - Daily tech content editorial-board review of technical rigor, wording, structure, and editorial quality
-
 
 ## Meta-Workflows
 
