@@ -118,11 +118,8 @@ steps:
           ])
           with open(template_file, "w") as f:
               f.write(template)
-          # Commit the template so the user can see and edit it
-          os.system(f'git add "{template_file}"')
-          os.system('git commit -m "[Autoloop] Bootstrap: add program template for configuration"')
-          os.system('git push')
-          print(f"BOOTSTRAPPED: created {template_file} and pushed to repo")
+          # Leave the template unstaged — the agent will create a draft PR with it
+          print(f"BOOTSTRAPPED: created {template_file} locally (agent will create a draft PR)")
 
       # Find all program files
       program_files = sorted(glob.glob(os.path.join(programs_dir, "*.md")))
@@ -326,14 +323,19 @@ At the start of every run, check each program file for this sentinel. For any pr
 
 If **all** programs are unconfigured, exit after creating the setup issues. Otherwise, proceed with the configured programs.
 
+**Important**: When creating or modifying template/program files during setup, always do so via a draft PR — never commit directly to the default branch. Only iteration state files (`state.json`) should be committed directly.
+
 ### Reading Programs
 
 The pre-step has already determined which programs are due, unconfigured, or skipped. Read `/tmp/gh-aw/autoloop.json` at the start of your run to get:
 
 - **`due`**: List of program names to run iterations for this run.
-- **`unconfigured`**: Programs that still have the sentinel or placeholder content — run the **Setup Guard** for each of these (create setup issues).
+- **`unconfigured`**: Programs that still have the sentinel or placeholder content. For each unconfigured program:
+  1. Check whether the program file actually exists on the default branch (use `git show HEAD:.github/autoloop/programs/{name}.md`). If it does NOT exist on the default branch, **you must create a draft PR** (branch: `autoloop/setup-template`) that adds the template file. The pre-step may have created the file locally in the working directory, so it will be available to commit — just create a branch, commit it, and open the PR.
+  2. If no setup issue exists for this program, create one (see Setup Guard above).
+  3. If the file already exists on the default branch and a setup issue already exists, then no action is needed for this program.
 - **`skipped`**: Programs not due yet based on their per-program schedule — ignore these entirely.
-- **`no_programs`**: If `true`, no program files exist at all — create a single issue explaining how to add a program.
+- **`no_programs`**: If `true`, no program files exist at all. The pre-step should have bootstrapped a template locally. Follow the same steps as `unconfigured` above — create a draft PR with the template and a setup issue.
 
 For each program in `due`:
 1. Read the program file from `.github/autoloop/programs/{name}.md`.
