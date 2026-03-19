@@ -1,17 +1,21 @@
 ---
 description: Performs critical code review with a focus on edge cases, potential bugs, and code quality issues
+
 on:
   slash_command:
     name: grumpy
     events: [pull_request_comment, pull_request_review_comment]
+
 permissions:
   contents: read
   pull-requests: read
+
 tools:
   cache-memory: true
   github:
     lockdown: true
     toolsets: [pull_requests, repos]
+
 safe-outputs:
   create-pull-request-review-comment:
     max: 5
@@ -23,6 +27,7 @@ safe-outputs:
     run-started: "😤 *sigh* [{workflow_name}]({run_url}) is begrudgingly looking at this {event_type}... This better be worth my time."
     run-success: "😤 Fine. [{workflow_name}]({run_url}) finished the review. It wasn't completely terrible. I guess. 🙄"
     run-failure: "😤 Great. [{workflow_name}]({run_url}) {status}. As if my day couldn't get any worse..."
+
 timeout-minutes: 10
 ---
 

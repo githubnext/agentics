@@ -19,8 +19,6 @@ permissions:
   pull-requests: read
   issues: read
 
-strict: true
-
 # Network access for documentation research
 network:
   allowed:

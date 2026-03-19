@@ -29,7 +29,9 @@ safe-outputs:
 tools:
   agentic-workflows:
   bash: true
-  edit:
+  github:
+    min-integrity: none # This workflow is allowed to examine any PR because it's invoked by a repo maintainer
+    repos: all
 
 timeout-minutes: 15
 ---

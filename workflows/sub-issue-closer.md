@@ -7,14 +7,16 @@ on:
 permissions:
   contents: read
   issues: read
-strict: true
+
 network:
   allowed:
     - defaults
+
 tools:
   github:
     toolsets:
       - issues
+
 safe-outputs:
   update-issue:
     status:

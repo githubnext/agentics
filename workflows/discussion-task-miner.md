@@ -13,8 +13,6 @@ permissions:
 
 tracker-id: discussion-task-miner
 timeout-minutes: 20
-engine: copilot
-strict: true
 
 network:
   allowed:

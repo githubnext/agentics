@@ -42,7 +42,7 @@ tools:
     - "cat *"
 
 timeout-minutes: 20
-strict: true
+
 ---
 
 # Daily File Diet Agent 🏋️

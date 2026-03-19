@@ -33,6 +33,15 @@ network:
   - rust
   - java
 
+tools:
+  web-fetch:
+  github:
+    toolsets: [all]
+    min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
+    repos: all
+  bash: true
+  repo-memory: true
+
 safe-outputs:
   add-comment:
     max: 10
@@ -64,13 +73,6 @@ safe-outputs:
     allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
     max: 5
     target: "*" 
-
-tools:
-  web-fetch:
-  github:
-    toolsets: [all]
-  bash: true
-  repo-memory: true
 
 steps:
   - name: Fetch repo data for task weighting

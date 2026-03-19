@@ -1,22 +1,24 @@
 ---
 name: Archie
 description: Generates Mermaid diagrams to visualize issue and pull request relationships when invoked with the /archie command
+
 on:
   slash_command:
     name: archie
     events: [issues, issue_comment, pull_request, pull_request_comment]
   reaction: eyes
+
 permissions:
   contents: read
   issues: read
   pull-requests: read
   actions: read
-engine: copilot
-strict: true
+
 tools:
   github:
     toolsets:
       - default
+
 safe-outputs:
   add-comment:
     max: 1

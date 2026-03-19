@@ -4,22 +4,26 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 14 * * 1-5" # 2 PM UTC, weekdays only
+
 permissions:
   contents: read
   actions: read
   issues: read
   pull-requests: read
+
 safe-outputs:
   create-issue:
     expires: 2d
     title-prefix: "[linter] "
     labels: [automation, code-quality]
   noop:
-engine: copilot
+
 name: Markdown Linter
 timeout-minutes: 15
+
 imports:
   - shared/reporting.md
+
 jobs:
   super_linter:
     runs-on: ubuntu-latest

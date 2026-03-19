@@ -1,13 +1,16 @@
 ---
 name: Duplicate Code Detector
 description: Identifies duplicate code patterns across the codebase and suggests refactoring opportunities
+
 on:
   workflow_dispatch:
   schedule: daily
+
 permissions:
   contents: read
   issues: read
   pull-requests: read
+
 safe-outputs:
   create-issue:
     expires: 2d
@@ -16,8 +19,8 @@ safe-outputs:
     assignees: copilot
     group: true
     max: 3
+
 timeout-minutes: 15
-strict: true
 ---
 
 # Duplicate Code Detection

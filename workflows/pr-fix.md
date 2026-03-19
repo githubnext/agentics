@@ -15,16 +15,19 @@ permissions: read-all
 
 network: defaults
 
+tools:
+  web-fetch:
+  bash: true
+  github:
+    min-integrity: none # This workflow is allowed to examine any PR because it's invoked by a repo maintainer
+    repos: all
+
 safe-outputs:
   push-to-pull-request-branch:
   create-issue:
     title-prefix: "${{ github.workflow }}"
     labels: [automation, pr-fix]
   add-comment:
-
-tools:
-  web-fetch:
-  bash: true
 
 timeout-minutes: 20
 

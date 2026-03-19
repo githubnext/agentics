@@ -29,6 +29,8 @@ tools:
     # reading issues, pull requests and comments from 3rd-parties
     # If in a private repo this has no particular effect.
     lockdown: false
+    min-integrity: none # This workflow is allowed to examine and comment on any issues
+    repos: all
   web-fetch:
 
 timeout-minutes: 15

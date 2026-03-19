@@ -1,19 +1,21 @@
 ---
 description: Provides detailed nitpicky code review focusing on style, best practices, and minor improvements when invoked with the /nit command
+
 on:
-  roles:
-    - admin
-    - maintainer
   slash_command: "nit"
+
 permissions:
   contents: read
   pull-requests: read
   actions: read
-engine: copilot
+
 tools:
   cache-memory: true
   github:
     toolsets: [pull_requests, repos]
+    min-integrity: none # This workflow is allowed to examine any PR because it's invoked by a repo maintainer
+    repos: all
+
 safe-outputs:
   create-pull-request-review-comment:
     max: 10

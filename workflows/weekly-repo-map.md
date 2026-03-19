@@ -1,17 +1,20 @@
 ---
 description: Generates a weekly ASCII tree map visualization of repository file structure and size distribution
+
 on:
   schedule: weekly on monday around 15:00
   workflow_dispatch:
+
 permissions:
   contents: read
   issues: read
   pull-requests: read
-engine: copilot
+
 tools:
   edit:
   bash:
     - "*"
+
 safe-outputs:
   create-issue:
     expires: 7d
@@ -20,8 +23,8 @@ safe-outputs:
     max: 1
     close-older-issues: true
   noop:
+
 timeout-minutes: 10
-strict: true
 ---
 
 # Repository Tree Map Generator

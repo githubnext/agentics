@@ -19,6 +19,8 @@ network: defaults
 
 tools:
   github:
+    min-integrity: none # This workflow is allowed to examine and comment on any issues
+    repos: all
 
 safe-outputs:
   mentions: false

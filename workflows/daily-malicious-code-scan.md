@@ -1,23 +1,27 @@
 ---
 description: Daily security scan that reviews code changes from the last 3 days for suspicious patterns indicating malicious or agentic threats
+
 on:
   schedule: daily
   workflow_dispatch:
+
 permissions:
   contents: read
   actions: read
   security-events: read
+
 tracker-id: malicious-code-scan
+
 tools:
   github:
     toolsets: [repos, code_security]
   bash: true
+
 safe-outputs:
   create-code-scanning-alert:
     driver: "Malicious Code Scanner"
   threat-detection: false
-timeout-minutes: 15
-strict: true
+
 ---
 
 # Daily Malicious Code Scan Agent

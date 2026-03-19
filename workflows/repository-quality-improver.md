@@ -9,7 +9,7 @@ permissions:
   actions: read
   issues: read
   pull-requests: read
-engine: copilot
+
 tools:
   bash: ["*"]
   cache-memory:
@@ -18,14 +18,14 @@ tools:
   github:
     toolsets:
       - default
+
 safe-outputs:
   create-issue:
     expires: 2d
     labels: [quality, automated-analysis]
     max: 1
-timeout-minutes: 20
-strict: true
 
+timeout-minutes: 20
 ---
 
 # Repository Quality Improvement Agent

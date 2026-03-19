@@ -4,23 +4,27 @@ name: Issue Arborist
 on:
   schedule: daily
   workflow_dispatch:
+
 permissions:
   contents: read
   issues: read
-engine: copilot
-strict: true
+
 network:
   allowed:
     - defaults
     - github
+
 tools:
   github:
     lockdown: true
     toolsets:
       - issues
+    min-integrity: none # This workflow is allowed to examine and comment on any issues
+    repos: all
   bash:
     - "cat *"
     - "jq *"
+
 steps:
   - name: Fetch issues data
     env:

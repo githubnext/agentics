@@ -9,8 +9,8 @@ permissions:
   issues: read
   pull-requests: read
   discussions: read
+
 tracker-id: daily-repo-chronicle
-engine: copilot
 
 timeout-minutes: 45
 
@@ -28,6 +28,9 @@ tools:
     toolsets:
       - default
       - discussions
+    min-integrity: none # This workflow is allowed to examine and comment on any issues
+    repos: all
+
 safe-outputs:
   upload-asset:
   create-discussion:

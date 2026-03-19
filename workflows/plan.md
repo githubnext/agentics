@@ -16,14 +16,8 @@ permissions:
 tools:
   github:
     toolsets: [default, discussions]
-    # If in a public repo, setting `lockdown: false` allows
-    # reading issues, pull requests and comments from 3rd-parties
-    # If in a private repo this has no particular effect.
-    #
-    # This allows the maintainer to use /plan in discussions and issues created
-    # by 3rd parties, and to read the content of those discussions and issues
-    # turning the content into actionable tasks.
-    lockdown: false
+    min-integrity: none # This workflow is allowed to examine and comment on any issues
+    repos: all
 
 safe-outputs:
   create-issue:

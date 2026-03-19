@@ -1,5 +1,6 @@
 ---
 timeout-minutes: 5
+
 on:
   roles: all
   issues:
@@ -13,17 +14,23 @@ on:
     forks: "*"
   skip-roles: [admin, maintainer, write, triage]
   skip-bots: [github-actions, copilot]
+
 rate-limit:
   max: 5
   window: 60
+
 concurrency:
   group: "gh-aw-${{ github.workflow }}-${{ github.event.issue.number || github.event.pull_request.number }}"
   cancel-in-progress: false
+
 tools:
   github:
     mode: local
     read-only: true
+    min-integrity: none # This workflow is allowed to examine and comment on any issues
+    repos: all
     toolsets: [default]
+
 permissions:
   contents: read
   issues: read
