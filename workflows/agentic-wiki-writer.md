@@ -578,6 +578,8 @@ Determine the correct `OWNER/REPO` and default branch by reading `.git/config` w
 
 **Wiki cross-references** — Use wiki link syntax: `[[Page Name]]` or `[[Display Text|Page-Slug#section-slug]]`.
 
+The `|` separator between display text and slug must be a bare pipe — do NOT backslash-escape it (`[[Control Plane\|Control-Plane]]` is wrong; `[[Control Plane|Control-Plane]]` is correct).
+
 Only link to pages and sections that exist in the PAGES.md template. Use plain text for anything else.
 
 NEVER use `[[display|https://...]]` — that is NOT valid wiki syntax. Use `[display](https://...)` for external URLs.
@@ -600,7 +602,7 @@ Before finalizing each page, check for these issues and fix them:
 
 3. **Heading levels** — No page should start with `#` (H1). Start with content or `##` (H2).
 
-4. **Link format** — Source code links use full GitHub URLs `[text](https://...)`. Wiki cross-references use `[[Page Name]]`. No bare relative paths. No `[[text|https://...]]` syntax.
+4. **Link format** — Source code links use full GitHub URLs `[text](https://...)`. Wiki cross-references use `[[Page Name]]` or `[[Display Text|Page-Slug]]` with a bare `|` (never backslash-escaped). No bare relative paths. No `[[text|https://...]]` syntax.
 
 5. **Accuracy** — Content matches what the source code actually does. No fabricated features or APIs.
 
