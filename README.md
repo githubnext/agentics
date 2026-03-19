@@ -4,29 +4,27 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 ## 📂 Available Workflows
 
-### Triage Workflows
+### Maintainer Workflows
 
-- [🏷️ Issue Triage](docs/issue-triage.md) - Triage issues and pull requests
-- [🌳 Issue Arborist](docs/issue-arborist.md) - Automatically organize issues by linking related issues as parent-child sub-issues
+Make software maintenance enjoyable! From basic issue triage to Repo Assist - a powerful triage multi-task backlog burner, issue labeller, bug fixer and general repository assistant. Other workflows help gate your repository.
+
+- [🏷️ Issue Triage](docs/issue-triage.md) - Triage labelling of issues and pull requests and not much more
+- [🤖 Repo Assist](docs/repo-assist.md) - A regular, pervasive all-tools repository assistant that triages issues, investigates issues, replies with comments, fixes bugs, proposes engineering improvements, and maintains activity summaries
+- [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
 
 ### Fault Analysis Workflows
+
+Investigate faults proactively and improve CI.
 
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🚀 CI Coach](docs/ci-coach.md) - Optimize CI workflows for speed and cost efficiency
 
-## Maintainer
-
-- [🤖 Repo Assist](docs/repo-assist.md) - Daily repository assistant that triages issues, fixes bugs, proposes improvements, and maintains activity summaries
-- [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
-- [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
-- [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all their sub-issues are complete
-- [📰 Tech Content Editorial Board](docs/tech-content-editorial-board.md) - Daily tech content editorial-board review of technical rigor, wording, structure, and editorial quality
-
 ### Code Review Workflows
 
-- [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
 - [😤 Grumpy Reviewer](docs/grumpy-reviewer.md) - On-demand opinionated code review by a grumpy but thorough senior developer
 - [🔍 PR Nitpick Reviewer](docs/pr-nitpick-reviewer.md) - On-demand fine-grained code review focusing on style, conventions, and subtle improvements
+- [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
+- [✅ Contribution Guidelines Checker](docs/contribution-guidelines-checker.md) - Review pull requests for compliance with contribution guidelines
 
 ### Research, Status & Planning Workflows
 
@@ -39,6 +37,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 - [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
 - [🔍 Discussion Task Miner](docs/discussion-task-miner.md) - Extract actionable improvement tasks from GitHub Discussions and create tracked issues
 - [🗺️ Weekly Repository Map](docs/weekly-repo-map.md) - Visualize repository file structure and size distribution with a weekly ASCII tree map
+- [📰 Tech Content Editorial Board](docs/tech-content-editorial-board.md) - Daily tech content editorial-board review of technical rigor, wording, structure, and editorial quality
 
 ### Dependency Management Workflows
 
@@ -49,6 +48,8 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 These workflows are triggered by specific "/" commands in issue or pull request comments, allowing for on-demand agentic assistance. Only maintainers or those with write access can trigger these workflows by commenting with the appropriate command.
 
+You can use the "/plan" agent to turn the reports into actionable issues which can then be assigned to the appropriate team members or agents.
+
 - [📊 Archie](docs/archie.md) - Generate Mermaid diagrams to visualize issue and pull request relationships with /archie command
 - [📋 Plan Command](docs/plan.md) - Break down issues into actionable sub-tasks with /plan command
 - [🏥 PR Fix](docs/pr-fix.md) - Analyze failing CI checks and implement fixes for pull requests
@@ -57,8 +58,6 @@ These workflows are triggered by specific "/" commands in issue or pull request 
 ### Code Improvement Workflows (by analysis, producing report)
 
 These workflows analyze the repository, code, and activity to produce reports, insights, and recommendations for improvements. They do not make any changes to the codebase directly but can be used as input for maintainers to take action.
-
-You can use the "/plan" agent to turn the reports into actionable issues which can then be assigned to the appropriate team members or agents.
 
 - [🔍 Daily Accessibility Review](docs/daily-accessibility-review.md) - Review application accessibility by automatically running and using the application
 - [📱 Multi-Device Docs Tester](docs/daily-multi-device-docs-tester.md) - Test documentation sites across mobile, tablet, and desktop viewports for responsive layout and interaction issues
@@ -92,6 +91,11 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 ## Meta-Workflows
 
 - [🔧 Q - Workflow Optimizer](docs/q.md) - Expert system that analyzes and optimizes agentic workflows
+
+### Issue Farming Workflows
+
+- [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all their sub-issues are complete
+- [🌳 Issue Arborist](docs/issue-arborist.md) - Automatically organize issues by linking related issues as parent-child sub-issues
 
 ## 🧩 Shared Workflow Fragments
 
