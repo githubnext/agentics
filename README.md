@@ -22,6 +22,7 @@ A sample family of reusable [GitHub Agentic Workflows](https://github.github.com
 
 ### Research, Status & Planning Workflows
 
+- [🔄 Autoloop](docs/autoloop.md) - Iterative optimization agent that proposes changes, evaluates against a metric, and keeps only improvements
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
 - [📊 Weekly Issue Summary](docs/weekly-issue-summary.md) - Weekly issue activity report with trend charts and recommendations
 - [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
@@ -71,6 +72,10 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [⚡ Daily Perf Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
 - [📊 Repository Quality Improver](docs/repository-quality-improver.md) - Daily rotating analysis of repository quality across code, documentation, testing, security, and custom dimensions
 - [📝 Markdown Linter](docs/markdown-linter.md) - Run Markdown quality checks on all documentation files and get a prioritized issue report of violations
+
+## Formal Verification Workflows
+
+- [🔬 Lean Squad](docs/lean-squad.md) - Progressively apply Lean 4 formal verification to your codebase: research targets, extract specs, write Lean propositions, translate implementations, and attempt proofs — finding bugs or issuing stamps of confidence
 
 ## Security Workflows
 
