@@ -72,6 +72,50 @@ safe-outputs:
               CONTENT=$(printf '%s' "$entry" | base64 -d | jq -r '.value')
               printf '%s\n' "$CONTENT" > "$FILENAME"
             done
+        - name: Sanitize Mermaid diagrams
+          run: |
+            python3 - <<'EOF'
+            import re, glob
+
+            def fix_mermaid_block(block):
+                # Remove backtick markdown-string syntax from node labels.
+                # GitHub's wiki renderer does not support mermaid markdown strings
+                # (e.g. A["`text`"]), causing "Unable to render rich display" errors.
+                # Pattern: "` inside_bt ` after_bt " -> " inside_bt after_bt "
+                def fix_backtick_label(m):
+                    inside_bt = m.group(1)
+                    after_bt = m.group(2)
+                    combined = re.sub(
+                        r'\s+', ' ',
+                        (inside_bt + ' ' + after_bt).replace('\\n', ' ')
+                    ).strip()
+                    return '"' + combined + '"'
+
+                fixed = re.sub(r'"`([^`]*)`([^"]*)"', fix_backtick_label, block)
+                # Fix any remaining \n escape sequences in labels (replace with space)
+                fixed = re.sub(r'\\n', ' ', fixed)
+                return fixed
+
+            def fix_file(path):
+                with open(path, encoding='utf-8') as f:
+                    content = f.read()
+                parts = re.split(r'(```mermaid[^\n]*\n.*?```)', content, flags=re.DOTALL)
+                fixed = ''.join(
+                    fix_mermaid_block(p) if p.startswith('```mermaid') else p
+                    for p in parts
+                )
+                if fixed != content:
+                    with open(path, 'w', encoding='utf-8') as f:
+                        f.write(fixed)
+                    return True
+                return False
+
+            changed = [f for f in glob.glob('*.md') if fix_file(f)]
+            if changed:
+                print(f'Fixed Mermaid syntax in: {", ".join(changed)}')
+            else:
+                print('No Mermaid syntax issues found')
+            EOF
         - name: Commit and push
           run: |
             git config user.name "github-actions[bot]"
@@ -578,6 +622,8 @@ Determine the correct `OWNER/REPO` and default branch by reading `.git/config` w
 
 **Wiki cross-references** — Use wiki link syntax: `[[Page Name]]` or `[[Display Text|Page-Slug#section-slug]]`.
 
+The `|` separator between display text and slug must be a bare pipe — do NOT backslash-escape it (`[[Control Plane\|Control-Plane]]` is wrong; `[[Control Plane|Control-Plane]]` is correct).
+
 Only link to pages and sections that exist in the PAGES.md template. Use plain text for anything else.
 
 NEVER use `[[display|https://...]]` — that is NOT valid wiki syntax. Use `[display](https://...)` for external URLs.
@@ -600,7 +646,7 @@ Before finalizing each page, check for these issues and fix them:
 
 3. **Heading levels** — No page should start with `#` (H1). Start with content or `##` (H2).
 
-4. **Link format** — Source code links use full GitHub URLs `[text](https://...)`. Wiki cross-references use `[[Page Name]]`. No bare relative paths. No `[[text|https://...]]` syntax.
+4. **Link format** — Source code links use full GitHub URLs `[text](https://...)`. Wiki cross-references use `[[Page Name]]` or `[[Display Text|Page-Slug]]` with a bare `|` (never backslash-escaped). No bare relative paths. No `[[text|https://...]]` syntax.
 
 5. **Accuracy** — Content matches what the source code actually does. No fabricated features or APIs.
 

@@ -22,7 +22,7 @@ gh aw compile
 
 The Daily File Diet workflow runs on weekdays and:
 
-1. **Scans Source Files** - Finds all non-test source files in your repository, excluding generated directories like `node_modules`, `vendor`, `dist`, and `target`
+1. **Scans Source Files** - Finds all tracked non-test source files in your repository using `git ls-tree`, which automatically respects `.gitignore` and avoids scanning generated directories like `node_modules`, `vendor`, `dist`, and `target`
 2. **Identifies Oversized Files** - Detects files exceeding 500 lines (the healthy size threshold)
 3. **Analyzes Structure** - Examines what the file contains: functions, classes, modules, and their relationships
 4. **Creates Refactoring Issues** - Proposes concrete split strategies with specific file names, responsibilities, and implementation guidance
@@ -80,7 +80,7 @@ gh aw edit daily-file-diet
 
 Common customizations:
 - **Adjust the threshold** - Change the 500-line limit to suit your team's preferences
-- **Focus on specific languages** - Restrict `find` commands to your repository's primary language
+- **Focus on specific languages** - Restrict the `grep` pattern in the `git ls-tree` pipeline to your repository's primary language
 - **Add labels** - Apply team-specific labels to generated issues
 - **Change the schedule** - Run less frequently if your codebase changes slowly
 
