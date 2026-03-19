@@ -87,6 +87,8 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🔍 Contribution Check](docs/contribution-check.md) - Regularly review batches of open PRs against contribution guidelines and create prioritized reports
 - [🤖 Repo Assist](docs/repo-assist.md) - Daily repository assistant that triages issues, fixes bugs, proposes improvements, and maintains activity summaries
 - [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all their sub-issues are complete
+- [📰 Tech Content Editorial Board](docs/tech-content-editorial-board.md) - Daily tech content editorial-board review of technical rigor, wording, structure, and editorial quality
+
 
 ## Meta-Workflows
 
