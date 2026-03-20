@@ -87,6 +87,7 @@ These workflows analyze the repository, code, and activity to produce reports, i
 ## Security Workflows
 
 - [🔍 Daily Malicious Code Scan](docs/daily-malicious-code-scan.md) - Daily scan of recent code changes for suspicious patterns indicating malicious activity or supply chain attacks
+- [🔒 VEX Generator](docs/vex-generator.md) - Auto-generate OpenVEX statements for dismissed Dependabot alerts, capturing security assessments in a machine-readable format
 
 ## Meta-Workflows
 
