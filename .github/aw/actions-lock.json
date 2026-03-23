@@ -10,19 +10,19 @@
       "version": "v6.0.2",
       "sha": "de0fac2e4500dabe0009e67214ff5f5447ce83dd"
     },
-    "actions/download-artifact@v8": {
+    "actions/download-artifact@v8.0.1": {
       "repo": "actions/download-artifact",
-      "version": "v8",
-      "sha": "70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3"
+      "version": "v8.0.1",
+      "sha": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c"
     },
     "actions/github-script@v8": {
       "repo": "actions/github-script",
       "version": "v8",
       "sha": "ed597411d8f924073f98dfc5c65a23a2325f34cd"
     },
-    "actions/upload-artifact@v7": {
+    "actions/upload-artifact@v7.0.0": {
       "repo": "actions/upload-artifact",
-      "version": "v7",
+      "version": "v7.0.0",
       "sha": "bbbca2ddaa5d8feaa63e36b76fdaad77386f024f"
     },
     "github/gh-aw-actions/setup@v0.61.1": {
@@ -30,30 +30,15 @@
       "version": "v0.61.1",
       "sha": "be0029bbbaeef8c6bea6825f31d9593219b2dc28"
     },
-    "github/gh-aw/actions/setup@v0.52.1": {
-      "repo": "github/gh-aw/actions/setup",
-      "version": "v0.52.1",
-      "sha": "a86e657586e4ac5f549a790628971ec02f6a4a8f"
+    "github/gh-aw-actions/setup@v0.62.5": {
+      "repo": "github/gh-aw-actions/setup",
+      "version": "v0.62.5",
+      "sha": "dc50be57c94373431b49d3d0927f318ac2bb5c4c"
     },
-    "github/gh-aw/actions/setup@v0.53.6": {
+    "github/gh-aw/actions/setup@v0.62.5": {
       "repo": "github/gh-aw/actions/setup",
-      "version": "v0.53.6",
-      "sha": "956f874e40e831c08a8b01ec76f5d49ae3fe8387"
-    },
-    "github/gh-aw/actions/setup@v0.55.0": {
-      "repo": "github/gh-aw/actions/setup",
-      "version": "v0.55.0",
-      "sha": "e211c855a20aa6cf9297b411466e1c382a8686db"
-    },
-    "github/gh-aw/actions/setup@v0.56.2": {
-      "repo": "github/gh-aw/actions/setup",
-      "version": "v0.56.2",
-      "sha": "f1073c5498ee46fec1530555a7c953445417c69b"
-    },
-    "github/gh-aw/actions/setup@v0.58.3": {
-      "repo": "github/gh-aw/actions/setup",
-      "version": "v0.58.3",
-      "sha": "08a903b1fb2e493a84a57577778fe5dd711f9468"
+      "version": "v0.62.5",
+      "sha": "48d8fdfddc8cad854ac0c70ceb573f09fb8f9c9b"
     },
     "super-linter/super-linter@v8.5.0": {
       "repo": "super-linter/super-linter",

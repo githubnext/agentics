@@ -63,7 +63,14 @@ Use the cache memory at `/tmp/gh-aw/cache-memory/` to:
 - Review user instructions from `/tmp/gh-aw/cache-memory/user-preferences.json`
 - Note team coding conventions from `/tmp/gh-aw/cache-memory/conventions.json`
 
-### Step 2: Fetch Pull Request Details
+### Step 2: Deduplication Check
+
+Before fetching PR details, guard against duplicate runs:
+
+1. **Check recent reviews**: Use the GitHub tools to list existing reviews on PR #${{ github.event.pull_request.number }}. If a review submitted by this workflow (look for the `🔍 *Meticulously inspected by` footer) already exists and was posted within the last 10 minutes, **stop immediately** — this is a duplicate invocation.
+2. **Update cache**: Record the current run in `/tmp/gh-aw/cache-memory/nitpick-runs.json` with the PR number, run ID, and timestamp, then continue.
+
+### Step 3: Fetch Pull Request Details
 
 Use the GitHub tools to get complete PR information:
 
@@ -72,7 +79,7 @@ Use the GitHub tools to get complete PR information:
 3. **Get PR diff** to see exact line-by-line changes
 4. **Review PR comments** to avoid duplicating existing feedback
 
-### Step 3: Analyze Code for Nitpicks
+### Step 4: Analyze Code for Nitpicks
 
 Look for **non-linter** issues such as:
 
@@ -114,7 +121,7 @@ Look for **non-linter** issues such as:
 - **Visibility modifiers** - Public/private inconsistencies
 - **Code grouping** - Related functions not grouped together
 
-### Step 4: Submit Review Feedback
+### Step 5: Submit Review Feedback
 
 For each nitpick found, post inline review comments using `create-pull-request-review-comment`:
 
@@ -138,7 +145,7 @@ Then submit an overall review using `submit-pull-request-review` with:
 - **Body**: A markdown summary using the imported `reporting.md` format, listing the key themes, any positive highlights, and overall assessment
 - **Event**: `COMMENT` (this is a nitpick review, not a blocking change request)
 
-### Step 5: Update Memory Cache
+### Step 6: Update Memory Cache
 
 After completing the review, update cache memory files:
 

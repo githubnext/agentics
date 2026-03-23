@@ -29,7 +29,7 @@ safe-outputs:
     expires: 2d
     protected-files: fallback-to-issue
     title-prefix: "[ci-coach] "
-    github-token-for-extra-empty-commit: ${{ secrets.GH_AW_CI_TRIGGER_TOKEN }}
+
 timeout-minutes: 30
 ---
 
@@ -117,7 +117,9 @@ If you identify valuable improvements:
 
 2. **Document the changes** thoroughly in the PR description
 
-3. **Create a pull request** with clear rationale
+3. **Deduplication check**: Before creating a new PR, search for existing open PRs with the `[ci-coach]` title prefix. If one already exists, update that PR with your new findings rather than creating a new one. This prevents duplicate PR spam when multiple workflow runs overlap or trigger in quick succession.
+
+4. **Create a pull request** with clear rationale (only if no existing open `[ci-coach]` PR was found)
 
 ### Phase 5: No Changes Path (2 minutes)
 
@@ -230,7 +232,8 @@ When creating a PR, use this structure:
 ✅ Analyzed all GitHub Actions workflows
 ✅ Collected metrics from recent runs
 ✅ Identified optimization opportunities OR confirmed workflows are well-optimized
-✅ If changes proposed: Created PR with clear rationale and expected impact
+✅ If changes proposed: Checked for existing open `[ci-coach]` PRs before creating a new one
+✅ If changes proposed: Created or updated PR with clear rationale and expected impact
 ✅ If no changes: Used noop tool to report analysis complete
 ✅ Completed analysis in under 30 minutes
 
