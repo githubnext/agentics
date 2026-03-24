@@ -107,6 +107,10 @@ For each eligible dismissal, the workflow creates a pull request adding a `.vex/
 }
 ```
 
+### Configuration
+
+After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
+
 ### Human in the Loop
 
 - Review the generated VEX statement PR before merging
