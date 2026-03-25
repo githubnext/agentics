@@ -20,7 +20,6 @@ tools:
     toolsets:
       - issues
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-    repos: all
   bash:
     - "cat *"
     - "jq *"

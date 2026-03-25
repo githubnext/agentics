@@ -20,7 +20,6 @@ tools:
   bash: true
   github:
     min-integrity: none # This workflow is allowed to examine any PR because it's invoked by a repo maintainer
-    repos: all
 
 safe-outputs:
   push-to-pull-request-branch:

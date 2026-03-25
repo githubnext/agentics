@@ -28,7 +28,6 @@ tools:
     mode: local
     read-only: true
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-    repos: all
     toolsets: [default]
 
 permissions:

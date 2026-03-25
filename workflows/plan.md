@@ -17,7 +17,6 @@ tools:
   github:
     toolsets: [default, discussions]
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-    repos: all
 
 safe-outputs:
   create-issue:

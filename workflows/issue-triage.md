@@ -25,7 +25,6 @@ tools:
   github:
     toolsets: [issues]
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-    repos: all
 
 timeout-minutes: 10
 ---

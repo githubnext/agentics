@@ -29,7 +29,6 @@ tools:
       - default
       - discussions
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-    repos: all
 
 safe-outputs:
   upload-asset:

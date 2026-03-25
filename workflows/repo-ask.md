@@ -24,7 +24,6 @@ tools:
   github:
     toolsets: [default, discussions]
     min-integrity: none # This workflow is allowed to examine any issues and pull requests because it's invoked by a repo maintainer
-    repos: all
 
 timeout-minutes: 20
 

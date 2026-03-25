@@ -23,7 +23,6 @@ tools:
     # If in a private repo this has no particular effect.
     lockdown: false
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-    repos: all
 
 safe-outputs:
   mentions: false

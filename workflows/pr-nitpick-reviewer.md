@@ -14,7 +14,6 @@ tools:
   github:
     toolsets: [pull_requests, repos]
     min-integrity: none # This workflow is allowed to examine any PR because it's invoked by a repo maintainer
-    repos: all
 
 safe-outputs:
   create-pull-request-review-comment:

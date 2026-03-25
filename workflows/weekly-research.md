@@ -23,7 +23,6 @@ tools:
   github:
     toolsets: [all]
     min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
-    repos: all
   web-fetch:
 
 timeout-minutes: 15
