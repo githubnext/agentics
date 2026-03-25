@@ -1,4 +1,9 @@
 ---
+description: >
+  Auto-generates an OpenVEX statement for a dismissed Dependabot alert.
+  Provide the alert details as inputs — the agent generates a standards-compliant
+  OpenVEX document and opens a PR.
+
 on:
   workflow_dispatch:
     inputs:
@@ -39,11 +44,6 @@ on:
           - inaccurate
           - tolerable_risk
           - no_bandwidth
-
-description: >
-  Auto-generates an OpenVEX statement for a dismissed Dependabot alert.
-  Provide the alert details as inputs — the agent generates a standards-compliant
-  OpenVEX document and opens a PR.
 
 permissions:
   contents: read
