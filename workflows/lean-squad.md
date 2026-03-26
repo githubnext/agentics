@@ -37,6 +37,7 @@ network:
     - "leanprover-community.github.io"
     - "release.leanlang.org"
     - "release.lean-lang.org"
+    - "releases.lean-lang.org"
     - ocaml
     - "releaseassets.githubusercontent.com"
     - "raw.githubusercontent.com"  # required: elan installer bootstrap script
@@ -68,6 +69,7 @@ safe-outputs:
     labels: [automation, lean-squad]
     max: 2
     protected-files: fallback-to-issue
+    draft: false
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Lean Squad] "
@@ -95,6 +97,10 @@ steps:
       [ -f ".github/workflows/lean-ci.yml" ] && echo 1 > /tmp/gh-aw/has_lean_ci.txt || echo 0 > /tmp/gh-aw/has_lean_ci.txt
       [ -f ".github/workflows/aeneas-generate.yml" ] && echo 1 > /tmp/gh-aw/has_aeneas_ci.txt || echo 0 > /tmp/gh-aw/has_aeneas_ci.txt
 
+      # Detect CORRESPONDENCE.md and CRITIQUE.md
+      [ -f "formal-verification/CORRESPONDENCE.md" ] && echo 1 > /tmp/gh-aw/has_correspondence.txt || echo 0 > /tmp/gh-aw/has_correspondence.txt
+      [ -f "formal-verification/CRITIQUE.md" ] && echo 1 > /tmp/gh-aw/has_critique.txt || echo 0 > /tmp/gh-aw/has_critique.txt
+
       # Detect formal-verification directory
       [ -d "formal-verification" ] && echo 1 > /tmp/gh-aw/fv_dir.txt || echo 0 > /tmp/gh-aw/fv_dir.txt
 
@@ -121,6 +127,8 @@ steps:
       rust_count   = int(open('/tmp/gh-aw/rust_count.txt').read().strip() or 0)
       has_lean_ci  = int(open('/tmp/gh-aw/has_lean_ci.txt').read().strip() or 0)
       has_aeneas_ci = int(open('/tmp/gh-aw/has_aeneas_ci.txt').read().strip() or 0)
+      has_correspondence = int(open('/tmp/gh-aw/has_correspondence.txt').read().strip() or 0)
+      has_critique = int(open('/tmp/gh-aw/has_critique.txt').read().strip() or 0)
       fv_dir       = int(open('/tmp/gh-aw/fv_dir.txt').read().strip() or 0)
       fv_docs    = int(open('/tmp/gh-aw/fv_docs.txt').read().strip() or 0)
       fv_issues  = json.load(open('/tmp/gh-aw/fv_issues.json'))
@@ -157,8 +165,8 @@ steps:
           3: (8.0  if not has_lean_specs else 2.0) if has_inf_specs   else 0.3,
           4: (6.0  if not has_impl       else 2.0) if has_lean_specs  else 0.2,
           5: (6.0  if not has_proofs     else 2.0) if has_impl        else 0.1,
-          6: 3.0 if has_impl else 0.5,   # correspondence review: useful once impl exists
-          7: 3.0 if has_proofs else 0.0, # critique: only meaningful once proofs exist
+          6: (10.0 if not has_correspondence else 3.0) if has_impl else 0.5,  # correspondence: critical when impl exists but no doc
+          7: (10.0 if not has_critique else 3.0) if has_proofs else 0.0,      # critique: critical when proofs exist but no doc
           8: (3.0 if has_lean_specs else 1.0) if (has_rust and has_research) else 0.0,  # aeneas: only for Rust codebases with research done
           9: 12.0 if (has_lean_specs and not has_ci) else 2.0,  # CI: critical when lean files exist but no CI; regular check otherwise
       }
@@ -186,7 +194,8 @@ steps:
       print(f'Open FV PRs   : {n_prs}')
       print(f'Phase flags   : research={has_research}, inf_specs={has_inf_specs}, '
             f'lean_specs={has_lean_specs}, impl={has_impl}, proofs={has_proofs}, '
-            f'rust={has_rust}, ci={has_ci}')
+            f'rust={has_rust}, ci={has_ci}, '
+            f'correspondence={bool(has_correspondence)}, critique={bool(has_critique)}')
       print()
       print('Task weights:')
       for t, w in weights.items():
@@ -207,6 +216,8 @@ steps:
               'has_proofs':     has_proofs,
               'has_rust':       has_rust,
               'has_ci':         has_ci,
+              'has_correspondence': bool(has_correspondence),
+              'has_critique':  bool(has_critique),
           },
           'task_names': task_names,
           'weights': {str(k): round(v, 2) for k, v in weights.items()},
@@ -531,6 +542,12 @@ This task is important because the value of any proof depends entirely on how fa
    - For each modelled function or type, include a markdown table or enumerated list with: Lean name, Rust name, file + line reference, correspondence level, and a brief justification.
    - Include links to the Rust source lines (use relative paths, e.g. `src/raft_log.rs#L42`).
    - Summarise any known gaps or mismatches that should be resolved before trusting associated proofs.
+   - **Always** include a `## Last Updated` section at the top with the current UTC date/time and the HEAD commit SHA:
+     ```
+     ## Last Updated
+     - **Date**: YYYY-MM-DD HH:MM UTC
+     - **Commit**: `<SHA>`
+     ```
 4. If any **mismatches** are found (Lean model is incorrect relative to the Rust): flag them prominently in CORRESPONDENCE.md under a `## Known Mismatches` heading. Open a GitHub issue for each mismatch that invalidates a proved theorem.
 5. Create a PR with the updated CORRESPONDENCE.md.
 6. Update memory: note the correspondence status for each modelled target, flag any mismatches found.
@@ -552,6 +569,12 @@ This is a reflective task. The goal is not to prove more things, but to evaluate
 3. For unproved / `sorry`-guarded theorems, assess whether they are worth proving or should be revised.
 4. Identify the **highest-value gaps**: which properties, if proved, would give the most confidence in the codebase? Are there important invariants or safety properties that have not yet been attempted?
 5. Write or update `formal-verification/CRITIQUE.md`:
+   - **Always** include a `## Last Updated` section at the top with the current UTC date/time and the HEAD commit SHA:
+     ```
+     ## Last Updated
+     - **Date**: YYYY-MM-DD HH:MM UTC
+     - **Commit**: `<SHA>`
+     ```
    - **Overall assessment**: 2–4 sentences on the current state of formal verification and its utility.
    - **Proved theorems** table: theorem name, file, level (low/mid/high), bug-catching potential (low/medium/high), notes.
    - **Gaps and recommendations**: what should be proved next and why — prioritised by impact.
