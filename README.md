@@ -112,6 +112,7 @@ Shared workflow fragments are reusable building blocks that can be imported into
 
 - **[FFmpeg](workflows/shared/ffmpeg.md)** - Install and use FFmpeg for video/audio processing (extract audio, frames, scene detection, etc.)
 - **[sq](workflows/shared/sq.md)** - Install and use `sq` for querying structured data (CSV, Excel, JSON, SQL databases) with jq-like syntax
+- **[QMD](workflows/shared/qmd.md)** - Local on-device vector search over documentation, files, and GitHub issues/code using natural language queries
 
 ### Formatting & Reporting
 
