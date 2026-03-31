@@ -107,6 +107,8 @@ Shared workflow fragments are reusable building blocks that can be imported into
 - **[arXiv](workflows/shared/arxiv.md)** - Access arXiv research papers: search, get paper details, and retrieve PDFs
 - **[MarkItDown](workflows/shared/markitdown.md)** - Convert PDFs, Word documents, PowerPoints, HTML, and other formats to Markdown
 - **[Microsoft Docs](workflows/shared/mcp/microsoft-docs.md)** - Access Microsoft's documentation via `learn.microsoft.com`
+- **[Serena](workflows/shared/mcp/serena.md)** - Semantic code analysis and editing via Language Server Protocol (LSP) for 30+ languages
+- **[Serena Go](workflows/shared/mcp/serena-go.md)** - Convenience wrapper for Go-only Serena LSP analysis
 
 ### Tools & Setup
 
