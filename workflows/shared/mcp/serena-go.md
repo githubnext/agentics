@@ -34,9 +34,7 @@ Tool: activate_project
 Args: { "path": "${{ github.workspace }}" }
 ```
 
-### Analysis Constraints
+### Analysis Guidelines
 
-1. **Only analyze `.go` files** — Ignore all other file types
-2. **Skip test files** — Never analyze files ending in `_test.go`
-3. **Focus on `pkg/` directory** — Primary analysis area
-4. **Use Serena for semantic analysis** — Leverage LSP capabilities for deeper insights
+1. **Only analyze `.go` files** — Ignore unrelated file types
+2. **Use Serena for semantic analysis** — Leverage LSP capabilities for deeper insights than text-based search
