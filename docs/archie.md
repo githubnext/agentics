@@ -22,12 +22,12 @@ This walks you through adding the workflow to your repository.
 
 ```mermaid
 graph LR
-    A[/archie command] --> B[Fetch issue or PR details]
-    B --> C[Extract relationships and concepts]
-    C --> D[Select diagram types]
-    D --> E[Generate 1-3 Mermaid diagrams]
-    E --> F[Validate syntax]
-    F --> G[Post comment with diagrams]
+    A["/archie command"] --> B["Fetch issue or PR details"]
+    B --> C["Extract relationships and concepts"]
+    C --> D["Select diagram types"]
+    D --> E["Generate 1-3 Mermaid diagrams"]
+    E --> F["Validate syntax"]
+    F --> G["Post comment with diagrams"]
 ```
 
 Archie fetches the full content of the triggering issue or PR, identifies key entities and relationships, picks the most appropriate Mermaid diagram type (flowchart, sequence, class diagram, gantt, etc.), and posts a well-formatted comment with between 1 and 3 diagrams.
