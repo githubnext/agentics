@@ -65,6 +65,7 @@ safe-outputs:
     target: "*"
     title-prefix: "[Repo Assist] "
     max: 4
+    protected-files: fallback-to-issue
   create-issue:
     title-prefix: "[Repo Assist] "
     labels: [automation, repo-assist]
