@@ -42,6 +42,10 @@ network:
     - "releaseassets.githubusercontent.com"
     - "raw.githubusercontent.com"  # required: elan installer bootstrap script
 
+checkout:
+  fetch: ["*"]      # fetch all remote branches
+  fetch-depth: 0   # fetch full history
+
 tools:
   web-fetch:
   github:
