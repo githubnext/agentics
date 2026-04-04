@@ -35,13 +35,12 @@ network:
     - github
     - "arxiv.org"
     - "leanprover-community.github.io"
-    - "release.leanlang.org"
-    - "release.lean-lang.org"
-    - "releases.lean-lang.org"
+    - "leanlang.org"
+    - "lean-lang.org
     - ocaml
     - "releaseassets.githubusercontent.com"
     - "raw.githubusercontent.com"  # required: elan installer bootstrap script
-
+  
 checkout:
   fetch: ["*"]      # fetch all remote branches
   fetch-depth: 0   # fetch full history
