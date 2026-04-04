@@ -35,6 +35,11 @@
       "version": "v0.66.1",
       "sha": "d688a4a5fa8aa96ad18fa13f0b187c38548a275c"
     },
+    "super-linter/super-linter@v8.5.0": {
+      "repo": "super-linter/super-linter",
+      "version": "v8.5.0",
+      "sha": "61abc07d755095a68f4987d1c2c3d1d64408f1f9"
+    },
     "super-linter/super-linter@v8.6.0": {
       "repo": "super-linter/super-linter",
       "version": "v8.6.0",
