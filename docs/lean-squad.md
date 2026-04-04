@@ -25,7 +25,8 @@ graph LR
     A --> T4[Task 4: Implementation Extraction]
     A --> T5[Task 5: Proof Assistance]
     A --> T6[Task 6: Maintain Open Lean Squad PRs]
-    T1 & T2 & T3 & T4 & T5 & T6 --> T7[Task 7: Update FV Status Issue]
+    A --> T10[Task 10: Project Report]
+    T1 & T2 & T3 & T4 & T5 & T6 & T10 --> T7[Task 7: Update FV Status Issue]
     T7 --> M[Save repo-memory]
 ````
 
@@ -37,7 +38,7 @@ The weighting scheme adapts automatically: when no FV work exists Task 1 dominat
 
 Default weighting: dominates when no FV work exists yet.
 
-Surveys the codebase to identify 3–5 functions, data structures, or algorithms that are strong formal verification candidates. For each target documents: expected benefit, rough specification size, proof tractability (`decide` / routine tactics / deep proof engineering), approximations needed, and recommended approach (model checking, inductive invariant, equational proof). Consults Lean 4 / Mathlib documentation and FV literature. Produces `formal-verification/RESEARCH.md` and `formal-verification/TARGETS.md` as a PR, and optionally a tracking issue inviting maintainer input on priorities.
+Surveys the codebase to identify 3–5 functions, data structures, or algorithms that are strong formal verification candidates. If prior FV work exists, reads the latest `formal-verification/CRITIQUE.md` to incorporate feedback — adjusting target priorities, revising approaches, and addressing high-value gaps flagged by the critique. For each target documents: expected benefit, rough specification size, proof tractability (`decide` / routine tactics / deep proof engineering), approximations needed, and recommended approach (model checking, inductive invariant, equational proof). Consults Lean 4 / Mathlib documentation and FV literature. Produces `formal-verification/RESEARCH.md` and `formal-verification/TARGETS.md` as a PR, and optionally a tracking issue inviting maintainer input on priorities.
 
 ### Task 2: Informal Spec Extraction
 
@@ -73,6 +74,12 @@ Reviews open `[Lean Squad]` PRs, fixes CI failures (Lean syntax errors, `lake bu
 
 Maintains a single `[Lean Squad] Formal Verification Status` issue as a continuously-updated dashboard with an at-a-glance table (one row per target, showing current phase and status), summary narrative, findings section (bugs found, counterexamples), approach notes, and a prepended run history entry for every run.
 
+### Task 10: Project Report
+
+Default weighting: important once proofs exist; available once Lean specs exist.
+
+Creates and incrementally maintains `formal-verification/REPORT.md` — a comprehensive, reader-friendly project report summarising the entire FV effort. Uses mermaid diagrams extensively to visualise proof architecture, dependency layers, modelling choices, the main proof chain, and project timeline. Includes a mandatory Findings section documenting any bugs found (with counterexamples and issue links), formulation issues caught during development, and interesting structural discoveries. The report is updated incrementally each run rather than rewritten from scratch.
+
 ## What Gets Created
 
 | Artifact | Location | Description |
@@ -81,6 +88,7 @@ Maintains a single `[Lean Squad] Formal Verification Status` issue as a continuo
 | Target list | `formal-verification/TARGETS.md` | Prioritised targets with phase status |
 | Informal specs | `formal-verification/specs/<name>_informal.md` | Per-target: contracts, examples, intent |
 | Lean specs | `formal-verification/lean/FVSquad/<Name>.lean` | Lean 4 types, propositions, proofs |
+| Project report | `formal-verification/REPORT.md` | Comprehensive FV report with mermaid diagrams |
 | Status issue | GitHub issue `[FV Squad] Formal Verification Status` | Rolling dashboard |
 | Bug reports | GitHub issues `[FV Squad] ...` | Properties violated, with counterexample |
 

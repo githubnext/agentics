@@ -14,6 +14,7 @@ description: |
   7. Proof Utility Critique — assess the value and coverage of what has been proven so far
   8. Aeneas Extraction (optional, Rust only) — use Charon+Aeneas to auto-generate Lean from Rust
   9. CI Automation — set up and maintain CI workflows that verify proofs on every PR
+  10. Project Report — create and incrementally maintain REPORT.md with mermaid diagrams
 
   Phases are sequentially weighted: Task 1 dominates until research is done,
   then Task 2 rises, and so on up to proofs. Each run builds on prior runs
@@ -100,9 +101,10 @@ steps:
       [ -f ".github/workflows/lean-ci.yml" ] && echo 1 > /tmp/gh-aw/has_lean_ci.txt || echo 0 > /tmp/gh-aw/has_lean_ci.txt
       [ -f ".github/workflows/aeneas-generate.yml" ] && echo 1 > /tmp/gh-aw/has_aeneas_ci.txt || echo 0 > /tmp/gh-aw/has_aeneas_ci.txt
 
-      # Detect CORRESPONDENCE.md and CRITIQUE.md
+      # Detect CORRESPONDENCE.md, CRITIQUE.md, and REPORT.md
       [ -f "formal-verification/CORRESPONDENCE.md" ] && echo 1 > /tmp/gh-aw/has_correspondence.txt || echo 0 > /tmp/gh-aw/has_correspondence.txt
       [ -f "formal-verification/CRITIQUE.md" ] && echo 1 > /tmp/gh-aw/has_critique.txt || echo 0 > /tmp/gh-aw/has_critique.txt
+      [ -f "formal-verification/REPORT.md" ] && echo 1 > /tmp/gh-aw/has_report.txt || echo 0 > /tmp/gh-aw/has_report.txt
 
       # Detect formal-verification directory
       [ -d "formal-verification" ] && echo 1 > /tmp/gh-aw/fv_dir.txt || echo 0 > /tmp/gh-aw/fv_dir.txt
@@ -132,6 +134,7 @@ steps:
       has_aeneas_ci = int(open('/tmp/gh-aw/has_aeneas_ci.txt').read().strip() or 0)
       has_correspondence = int(open('/tmp/gh-aw/has_correspondence.txt').read().strip() or 0)
       has_critique = int(open('/tmp/gh-aw/has_critique.txt').read().strip() or 0)
+      has_report   = int(open('/tmp/gh-aw/has_report.txt').read().strip() or 0)
       fv_dir       = int(open('/tmp/gh-aw/fv_dir.txt').read().strip() or 0)
       fv_docs    = int(open('/tmp/gh-aw/fv_docs.txt').read().strip() or 0)
       fv_issues  = json.load(open('/tmp/gh-aw/fv_issues.json'))
@@ -150,6 +153,7 @@ steps:
           7: 'Proof Utility Critique',
           8: 'Aeneas Extraction (Rust only)',
           9: 'CI Automation',
+          10: 'Project Report',
       }
 
       # Phase progress heuristics derived from repo state
@@ -172,6 +176,7 @@ steps:
           7: (10.0 if not has_critique else 3.0) if has_proofs else 0.0,      # critique: critical when proofs exist but no doc
           8: (3.0 if has_lean_specs else 1.0) if (has_rust and has_research) else 0.0,  # aeneas: only for Rust codebases with research done
           9: 12.0 if (has_lean_specs and not has_ci) else 2.0,  # CI: critical when lean files exist but no CI; regular check otherwise
+          10: (8.0 if not has_report else 3.0) if has_proofs else (2.0 if has_lean_specs else 0.0),  # report: important when proofs exist but no report; available once lean specs exist
       }
 
       run_id = int(os.environ.get('GITHUB_RUN_ID', '0'))
@@ -198,7 +203,8 @@ steps:
       print(f'Phase flags   : research={has_research}, inf_specs={has_inf_specs}, '
             f'lean_specs={has_lean_specs}, impl={has_impl}, proofs={has_proofs}, '
             f'rust={has_rust}, ci={has_ci}, '
-            f'correspondence={bool(has_correspondence)}, critique={bool(has_critique)}')
+            f'correspondence={bool(has_correspondence)}, critique={bool(has_critique)}, '
+            f'report={bool(has_report)}')
       print()
       print('Task weights:')
       for t, w in weights.items():
@@ -221,6 +227,7 @@ steps:
               'has_ci':         has_ci,
               'has_correspondence': bool(has_correspondence),
               'has_critique':  bool(has_critique),
+              'has_report':    bool(has_report),
           },
           'task_names': task_names,
           'weights': {str(k): round(v, 2) for k, v in weights.items()},
@@ -408,6 +415,7 @@ formal-verification/
   TARGETS.md               # Prioritised target list with current phase per target
   CORRESPONDENCE.md        # How each Lean implementation model maps to the Rust source
   CRITIQUE.md              # Ongoing assessment of proof utility and coverage
+  REPORT.md                # Ongoing latest project report
   specs/
     <name>_informal.md     # Informal specification per target
   lean/
@@ -421,26 +429,28 @@ formal-verification/
 
 ### Task 1: Research & Target Identification
 
-**Goal**: Survey the codebase and identify 3–5 functions, data structures, or algorithms that are strong candidates for formal verification. Document the approach, expected benefits, likely spec sizes, and proof tractability.
+**Goal**: Survey the codebase and identify 3–5 functions, data structures, or algorithms that are strong candidates for formal verification. Document the approach, expected benefits, likely spec sizes, and proof tractability. If prior FV work exists, incorporate feedback from the latest critique to adjust priorities and approach.
 
 1. Read the repository: explore the structure, primary language(s), key modules. Read README, CONTRIBUTING, and any architecture docs.
-2. Identify **FV-amenable targets** — look for:
+2. **Read the latest critique** (if `formal-verification/CRITIQUE.md` exists): review its assessments of proof utility, identified gaps, concerns about vacuous proofs, and recommended next targets. Use these findings to adjust which targets to prioritise, which approaches to revise, and which high-value gaps to address. If the critique flags theorems as weak or models as mismatched, factor that into the research plan — either by re-prioritising targets, recommending spec revisions, or noting that certain areas need deeper modelling before further proof work.
+3. Identify **FV-amenable targets** — look for:
    - Pure or nearly-pure functions with clear inputs/outputs
    - Data structure invariants (e.g., sorted lists, balanced trees, valid state machines)
    - Algorithms with textbook correctness criteria (sorting, searching, parsing, hashing)
    - Security-sensitive logic (authentication, authorisation, cryptographic primitives)
    - Protocol or state machine logic with finite state spaces
    - Existing tests that implicitly document specification — these are specification hints
-3. For each candidate, document:
+   - **Gaps identified by the critique**: targets or properties that the critique flagged as high-value but not yet attempted
+4. For each candidate, document:
    - **Benefit**: what property would we verify? What bugs could this catch?
    - **Specification size**: roughly how many Lean lines to state the key properties?
    - **Proof tractability**: likely `decide` / routine `simp`+`omega`, or requires substantial proof engineering?
    - **Approximations needed**: what aspects of the original code can't be directly modelled in Lean (e.g., I/O, side effects, memory layout)? Document these clearly.
    - **Approach**: enumeration/`decide`, inductive invariant, equational proof, model checking via bounded `decide`?
-4. Search the web (`web-fetch`) for Lean 4 FV patterns relevant to the language/domain. Check Mathlib for relevant existing lemmas and automation.
-5. Create or update `formal-verification/RESEARCH.md` and `formal-verification/TARGETS.md`. Create a PR.
-6. Optionally, open an issue summarising the survey and inviting maintainer input on priorities.
-7. Update memory with identified targets, approach choices, and rationale.
+5. Search the web (`web-fetch`) for Lean 4 FV patterns relevant to the language/domain. Check Mathlib for relevant existing lemmas and automation.
+6. Create or update `formal-verification/RESEARCH.md` and `formal-verification/TARGETS.md`. If updating, include a section noting how critique feedback was incorporated (e.g., re-prioritised targets, revised approaches, new targets added from gap analysis). Create a PR.
+7. Optionally, open an issue summarising the survey and inviting maintainer input on priorities.
+8. Update memory with identified targets, approach choices, rationale, and any critique-driven adjustments.
 
 ---
 
@@ -875,6 +885,194 @@ Record in memory:
 - Whether `lean-ci.yml` and `aeneas-generate.yml` exist and are passing
 - Last known CI status and any persistent failures
 - Any fixes applied this run
+
+---
+
+### Task 10: Project Report
+
+**Goal**: Create and incrementally maintain `formal-verification/REPORT.md` — a comprehensive, reader-friendly project report that summarises the entire formal verification effort, including proof architecture, what was verified, findings (including bugs), modelling choices, and project timeline. The report uses mermaid diagrams extensively to visualise proof architecture, dependency layers, modelling choices, and timeline.
+
+This task produces a living document. Each run updates the report to reflect the current state of the project rather than rewriting it from scratch.
+
+1. Read all existing FV artifacts: Lean files, informal specs, CORRESPONDENCE.md, CRITIQUE.md, TARGETS.md, RESEARCH.md, memory, open issues, and merged PRs.
+2. **Create or update** `formal-verification/REPORT.md` with the following structure:
+
+#### Report Structure
+
+```markdown
+> 🔬 *Lean Squad — automated formal verification for `<owner>/<repo>`.*
+
+**Status**: <emoji> <STATUS> — <N> theorems, <M> Lean files, <S> `sorry`, <tool version>.
+
+---
+
+## Executive Summary
+
+{3–5 sentences: what the project has achieved so far, key numbers (theorems proved,
+files, sorry count), headline results (bugs found, key properties verified),
+and current direction.}
+
+---
+
+## Proof Architecture
+
+{Describe how the proof is organised — e.g. layers or modules. Include a mermaid
+diagram showing the dependency structure between proof files/layers.}
+
+```mermaid
+graph TD
+    A["Layer 1: ..."]
+    B["Layer 2: ..."]
+    A --> B
+```
+
+---
+
+## What Was Verified
+
+{For each layer or group of proof files, describe what was verified and highlight
+key results. Include a mermaid diagram per layer showing the files and their
+theorem counts.}
+
+### Layer N — <Name> (<M> files, ~<T> theorems)
+
+{Description of this layer.}
+
+```mermaid
+graph LR
+    F1["File1.lean<br/>N theorems<br/>Key property"]
+    F2["File2.lean<br/>M theorems<br/>Key property"]
+```
+
+**Key results**:
+- `theorem_name`: description of what it proves
+
+---
+
+## File Inventory
+
+| File | Theorems | Phase | Key result |
+|------|----------|-------|------------|
+| `Name.lean` | N | Phase ✅/🔄 | Description |
+| **Total** | **N** | — | **S sorry** |
+
+---
+
+## The Main Proof Chain
+
+{If there is a top-level or headline theorem, show the chain of lemmas
+leading to it as a mermaid diagram.}
+
+```mermaid
+graph LR
+    A["lemma1"] --> B["lemma2"] --> C["main_theorem ✅"]
+```
+
+{State the top-level theorem in Lean syntax if applicable.}
+
+---
+
+## Modelling Choices and Known Limitations
+
+{Describe what is modelled, what is abstracted, and what is omitted.
+Include a mermaid diagram showing the relationship between the real
+implementation, the Lean model, and the proofs.}
+
+```mermaid
+graph TD
+    REAL["Real Implementation"]
+    MODEL["Lean 4 Model"]
+    PROOF["Lean Proofs"]
+    REAL -->|"Modelled as"| MODEL
+    MODEL -->|"Proved in"| PROOF
+    NOTE1["✅ Included: ..."]
+    NOTE2["⚠️ Abstracted: ..."]
+    NOTE3["❌ Omitted: ..."]
+    MODEL --- NOTE1
+    MODEL --- NOTE2
+    MODEL --- NOTE3
+```
+
+| Category | What's covered | What's abstracted/omitted |
+|----------|---------------|--------------------------|
+| ... | ... | ... |
+
+---
+
+## Findings
+
+### Bugs Found
+
+{List any implementation bugs discovered through formal verification.
+For each bug, include: the property that was expected to hold, the
+counterexample or proof failure, severity, and link to the filed issue.
+
+If no bugs found, state this explicitly — it is itself a positive finding.}
+
+### Formulation Issues
+
+{Any spec or proof formulation bugs caught during development (e.g.
+over-general propositions that turned out to be false).}
+
+### Interesting Structural Discoveries
+
+{Properties that turned out to be stronger or weaker than expected,
+surprising equivalences, or non-obvious invariants.}
+
+---
+
+## Project Timeline
+
+{Use a mermaid timeline diagram to show the progression of the project.}
+
+```mermaid
+timeline
+    title FV Project Development
+    section Phase 1
+        Target A : N theorems
+    section Phase 2
+        Target B : M theorems
+```
+
+---
+
+## Toolchain
+
+- **Prover**: Lean 4 (version X.Y.Z)
+- **Libraries**: Mathlib / stdlib only
+- **CI**: description of CI setup
+- **Build system**: Lake
+
+{Include tactic inventory table if proofs exist.}
+
+| Tactic | Usage |
+|--------|-------|
+| `omega` | Integer/natural-number arithmetic |
+| ... | ... |
+```
+
+3. **Mermaid diagrams are mandatory** for:
+   - Proof architecture / dependency layers
+   - Each verification layer's file structure
+   - The main proof chain (if a headline theorem exists)
+   - Modelling choices (real code → model → proofs)
+   - Project timeline
+4. **Findings section is mandatory**: always include a Findings section, even when no bugs have been found. If no bugs were found, state this explicitly as a positive finding. If bugs were found, include for each:
+   - The property that was expected to hold
+   - The counterexample or proof failure that refuted it
+   - The affected function/file and impact
+   - Link to the GitHub issue filed (from Task 5)
+5. The report should be **incremental**: read the existing REPORT.md (if any), update sections that have changed, add new layers/files/theorems, and update the timeline. Do not delete prior content unless it has become incorrect.
+6. **Always** include a `## Last Updated` section near the top with the current UTC date/time and the HEAD commit SHA:
+   ```
+   ## Last Updated
+   - **Date**: YYYY-MM-DD HH:MM UTC
+   - **Commit**: `<SHA>`
+   ```
+7. Count theorems, `sorry`s, and files by inspecting the actual Lean sources — do not guess from memory alone.
+8. Cross-reference CORRESPONDENCE.md and CRITIQUE.md when describing modelling choices, proof utility, and known limitations.
+9. Create a PR with the updated REPORT.md.
+10. Update memory: note that the report exists and what state it covers.
 
 ---
 
