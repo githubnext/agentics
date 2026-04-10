@@ -28,7 +28,7 @@ Investigate faults proactively and improve CI.
 
 ### Research, Status & Planning Workflows
 
-- [🔄 Autoloop]([docs/autoloop.md](https://github.com/githubnext/autoloop)) - Loop anything in your repo to continuously research, develop and maintain
+- [🔄 Autoloop](docs/autoloop.md) - Loop anything in your repo to continuously research, develop and maintain
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
 - [📊 Weekly Issue Summary](docs/weekly-issue-summary.md) - Weekly issue activity report with trend charts and recommendations
 - [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
