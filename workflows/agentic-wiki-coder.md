@@ -1,11 +1,15 @@
 ---
 name: Agentic Wiki Coder
+
 description: >
   Analyzes wiki edits for new or changed functionality, implements code changes,
   runs tests, and creates a PR. The reverse of agentic-wiki-writer.
+
 on: gollum
+
 permissions:
   contents: read
+
 tools:
   bash: true
   edit:
@@ -17,6 +21,7 @@ tools:
     allowed-extensions: [".json", ".md"]
     max-file-size: 1048576
     max-file-count: 50
+
 steps:
   - name: Pre-stage event payload for sandbox
     run: |
@@ -31,12 +36,14 @@ steps:
       gh repo clone "${GITHUB_REPOSITORY}.wiki" /tmp/gh-aw/wiki
       echo "Wiki cloned to /tmp/gh-aw/wiki/"
       ls /tmp/gh-aw/wiki/
+
 safe-outputs:
   create-pull-request:
     title-prefix: "[wiki-to-code]"
     labels: [enhancement, automated, wiki-driven]
     protected-files: fallback-to-issue
   noop: {}
+
 timeout-minutes: 120
 ---
 
