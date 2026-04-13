@@ -9,7 +9,6 @@ permissions:
 tools:
   bash: true
   edit:
-  write: true
   github:
     toolsets: [repos]
   repo-memory:

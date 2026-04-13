@@ -39,7 +39,6 @@ tools:
     max-file-count: 50
   github:
     toolsets: [default]
-  write: {}
 safe-outputs:
   create-pull-request:
     title-prefix: "[agentic-wiki]"
