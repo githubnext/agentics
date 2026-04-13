@@ -77,6 +77,7 @@ These workflows analyze the repository, code, and activity to produce reports, i
 - [🏋️ Daily File Diet](docs/daily-file-diet.md) - Monitor for oversized source files and create targeted refactoring issues
 - [🧪 Daily Test Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
 - [⚡ Daily Perf Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
+- [🌱 Daily Efficiency Improver](docs/daily-efficiency-improver.md) - Improve energy efficiency and computational footprint across code, data, network, and UI
 - [📊 Repository Quality Improver](docs/repository-quality-improver.md) - Daily rotating analysis of repository quality across code, documentation, testing, security, and custom dimensions
 - [📝 Markdown Linter](docs/markdown-linter.md) - Run Markdown quality checks on all documentation files and get a prioritized issue report of violations
 
