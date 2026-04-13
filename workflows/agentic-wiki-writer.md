@@ -3,6 +3,7 @@ name: Agentic Wiki Writer
 description: >
   Generates GitHub wiki pages from source code using a PAGES.md template.
   Runs once a day if any merges to the default branch have happened, or on manual dispatch.
+
 on:
   workflow_dispatch:
     inputs:
@@ -11,10 +12,12 @@ on:
         type: boolean
         default: false
   schedule: daily
+
 permissions:
   contents: read
   issues: read
   pull-requests: read
+
 steps:
   - name: Pre-stage event payload for sandbox
     run: |
@@ -23,6 +26,7 @@ steps:
       cat /tmp/gh-aw/event.json
   - name: Create agentic-wiki directory
     run: mkdir -p .github/agentic-wiki
+
 tools:
   bash:
     - "find * -type f -not -path '*/node_modules/*' -not -path '*/.git/*'"
@@ -31,6 +35,7 @@ tools:
     - "ls"
     - "cat *"
     - "head *"
+  edit:
   repo-memory:
     branch-name: memory/agentic-wiki
     description: "Source file mappings, content hashes, and file summaries for incremental wiki regeneration"
@@ -39,7 +44,7 @@ tools:
     max-file-count: 50
   github:
     toolsets: [default]
-  write: {}
+
 safe-outputs:
   create-pull-request:
     title-prefix: "[agentic-wiki]"
