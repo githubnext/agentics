@@ -15,6 +15,7 @@ description: |
   8. Aeneas Extraction (optional, Rust only) — use Charon+Aeneas to auto-generate Lean from Rust
   9. CI Automation — set up and maintain CI workflows that verify proofs on every PR
   10. Project Report — create and incrementally maintain REPORT.md with mermaid diagrams
+  11. Conference Paper — write and maintain an IEEE conference submission (11-page limit) on the formal verification work
 
   Phases are sequentially weighted: Task 1 dominates until research is done,
   then Task 2 rises, and so on up to proofs. Each run builds on prior runs
@@ -101,10 +102,11 @@ steps:
       [ -f ".github/workflows/lean-ci.yml" ] && echo 1 > /tmp/gh-aw/has_lean_ci.txt || echo 0 > /tmp/gh-aw/has_lean_ci.txt
       [ -f ".github/workflows/aeneas-generate.yml" ] && echo 1 > /tmp/gh-aw/has_aeneas_ci.txt || echo 0 > /tmp/gh-aw/has_aeneas_ci.txt
 
-      # Detect CORRESPONDENCE.md, CRITIQUE.md, and REPORT.md
+      # Detect CORRESPONDENCE.md, CRITIQUE.md, REPORT.md, and PAPER.md
       [ -f "formal-verification/CORRESPONDENCE.md" ] && echo 1 > /tmp/gh-aw/has_correspondence.txt || echo 0 > /tmp/gh-aw/has_correspondence.txt
       [ -f "formal-verification/CRITIQUE.md" ] && echo 1 > /tmp/gh-aw/has_critique.txt || echo 0 > /tmp/gh-aw/has_critique.txt
       [ -f "formal-verification/REPORT.md" ] && echo 1 > /tmp/gh-aw/has_report.txt || echo 0 > /tmp/gh-aw/has_report.txt
+      [ -f "formal-verification/PAPER.md" ] && echo 1 > /tmp/gh-aw/has_paper.txt || echo 0 > /tmp/gh-aw/has_paper.txt
 
       # Detect formal-verification directory
       [ -d "formal-verification" ] && echo 1 > /tmp/gh-aw/fv_dir.txt || echo 0 > /tmp/gh-aw/fv_dir.txt
@@ -135,6 +137,7 @@ steps:
       has_correspondence = int(open('/tmp/gh-aw/has_correspondence.txt').read().strip() or 0)
       has_critique = int(open('/tmp/gh-aw/has_critique.txt').read().strip() or 0)
       has_report   = int(open('/tmp/gh-aw/has_report.txt').read().strip() or 0)
+      has_paper    = int(open('/tmp/gh-aw/has_paper.txt').read().strip() or 0)
       fv_dir       = int(open('/tmp/gh-aw/fv_dir.txt').read().strip() or 0)
       fv_docs    = int(open('/tmp/gh-aw/fv_docs.txt').read().strip() or 0)
       fv_issues  = json.load(open('/tmp/gh-aw/fv_issues.json'))
@@ -154,6 +157,7 @@ steps:
           8: 'Aeneas Extraction (Rust only)',
           9: 'CI Automation',
           10: 'Project Report',
+          11: 'Conference Paper',
       }
 
       # Phase progress heuristics derived from repo state
@@ -177,6 +181,7 @@ steps:
           8: (3.0 if has_lean_specs else 1.0) if (has_rust and has_research) else 0.0,  # aeneas: only for Rust codebases with research done
           9: 12.0 if (has_lean_specs and not has_ci) else 2.0,  # CI: critical when lean files exist but no CI; regular check otherwise
           10: (8.0 if not has_report else 3.0) if has_proofs else (2.0 if has_lean_specs else 0.0),  # report: important when proofs exist but no report; available once lean specs exist
+          11: (8.0 if not has_paper else 3.0) if has_proofs else 0.0,  # paper: important when proofs exist but no paper; only available once proofs exist
       }
 
       run_id = int(os.environ.get('GITHUB_RUN_ID', '0'))
@@ -204,7 +209,7 @@ steps:
             f'lean_specs={has_lean_specs}, impl={has_impl}, proofs={has_proofs}, '
             f'rust={has_rust}, ci={has_ci}, '
             f'correspondence={bool(has_correspondence)}, critique={bool(has_critique)}, '
-            f'report={bool(has_report)}')
+            f'report={bool(has_report)}, paper={bool(has_paper)}')
       print()
       print('Task weights:')
       for t, w in weights.items():
@@ -228,6 +233,7 @@ steps:
               'has_correspondence': bool(has_correspondence),
               'has_critique':  bool(has_critique),
               'has_report':    bool(has_report),
+              'has_paper':     bool(has_paper),
           },
           'task_names': task_names,
           'weights': {str(k): round(v, 2) for k, v in weights.items()},
@@ -581,7 +587,14 @@ This is a reflective task. The goal is not to prove more things, but to evaluate
    - **Strength**: is the property tight (captures exactly the right behaviour) or weak (too easy to satisfy, even by incorrect implementations)?
 3. For unproved / `sorry`-guarded theorems, assess whether they are worth proving or should be revised.
 4. Identify the **highest-value gaps**: which properties, if proved, would give the most confidence in the codebase? Are there important invariants or safety properties that have not yet been attempted?
-5. Write or update `formal-verification/CRITIQUE.md`:
+5. **(Optional) Review the conference paper**: if `formal-verification/PAPER.md` exists, read it and assess it as a critical reviewer would:
+   - **Accuracy**: are all claims in the paper supported by the actual Lean proofs and FV artifacts? Are results overstated or understated?
+   - **Completeness**: does the paper cover all significant findings, including negative results and limitations?
+   - **Intellectual honesty**: are modelling approximations and their impact on proof validity clearly disclosed?
+   - **Clarity**: is the methodology well-explained? Would a reader unfamiliar with the codebase understand the contribution?
+   - **Missing content**: are there important results, findings, or limitations not yet reflected in the paper?
+   Include a `## Paper Review` section in CRITIQUE.md with specific, actionable feedback for improving the paper. Note any claims that need revision based on the current state of the proofs.
+6. Write or update `formal-verification/CRITIQUE.md`:
    - **Always** include a `## Last Updated` section at the top with the current UTC date/time and the HEAD commit SHA:
      ```
      ## Last Updated
@@ -593,8 +606,9 @@ This is a reflective task. The goal is not to prove more things, but to evaluate
    - **Gaps and recommendations**: what should be proved next and why — prioritised by impact.
    - **Concerns**: any theorems that look proved but may be vacuous due to model approximations (cross-reference CORRESPONDENCE.md).
    - **Positive findings**: highlight any case where FV revealed or confirmed something non-obvious.
-6. Create a PR with the updated CRITIQUE.md.
-7. Update memory: record the critique findings, flag high-priority gaps for future runs.
+   - **Paper review** (if PAPER.md was reviewed in step 5): specific, actionable feedback on the conference paper — claims to revise, missing content, clarity issues.
+7. Create a PR with the updated CRITIQUE.md.
+8. Update memory: record the critique findings, flag high-priority gaps for future runs.
 
 ---
 
@@ -1073,6 +1087,170 @@ timeline
 8. Cross-reference CORRESPONDENCE.md and CRITIQUE.md when describing modelling choices, proof utility, and known limitations.
 9. Create a PR with the updated REPORT.md.
 10. Update memory: note that the report exists and what state it covers.
+
+---
+
+### Task 11: Conference Paper
+
+**Goal**: Write and maintain `formal-verification/PAPER.md` — an IEEE conference submission (11-page limit) on formal verification of the codebase, suitable for a conference on formal verification or software engineering. The paper covers the methodology, findings, proof architecture, modelling choices, and lessons learned.
+
+This task produces a living document. Each run updates the paper to reflect the current state of the project rather than rewriting it from scratch.
+
+> **Applicability gate**: This task only applies when meaningful proof work exists (proofs attempted or completed). If no Lean proofs exist yet, skip this task and substitute the most logically prior incomplete task.
+
+1. Read all existing FV artifacts: Lean files, informal specs, CORRESPONDENCE.md, CRITIQUE.md, REPORT.md, TARGETS.md, RESEARCH.md, memory, open issues, and merged PRs. Read the existing PAPER.md if it exists.
+2. **Create or update** `formal-verification/PAPER.md` following standard IEEE conference paper structure. The document must fit within an **11-page limit** when rendered (use judgment to keep content appropriately scoped and concise).
+
+#### Paper Structure
+
+```markdown
+# <Title>: Formal Verification of <Repository/Component> with Lean 4
+
+> 🔬 *Lean Squad — automated formal verification for `<owner>/<repo>`.*
+
+## Abstract
+
+{150–250 words. Summarise the contribution: what was verified, the approach taken
+(Lean 4, Mathlib, the modelling strategy), key results (theorems proved, bugs found,
+coverage achieved), and conclusions. State the headline numbers: N theorems, M files,
+S sorry remaining.}
+
+## 1. Introduction
+
+{Motivate the work: why formal verification of this codebase matters, what properties
+are safety-critical or high-value, and what prior assurance existed (tests, code review).
+State the research questions or goals. Outline the paper structure.}
+
+## 2. Background
+
+### 2.1 The Target Codebase
+
+{Describe the repository: purpose, language(s), architecture, size, key modules.
+Focus on the aspects relevant to formal verification.}
+
+### 2.2 Lean 4 and Mathlib
+
+{Brief introduction to Lean 4 as a proof assistant and programming language.
+Describe relevant Mathlib libraries used. Cite appropriately.}
+
+### 2.3 Related Work
+
+{Survey related formal verification efforts in the same domain or using similar
+tools. Compare approaches: what has been verified formally in similar systems?
+What tools were used? How does this work differ?}
+
+## 3. Methodology
+
+### 3.1 Target Selection
+
+{Describe how FV-amenable targets were identified: criteria used, prioritisation
+approach, how the codebase was surveyed. Reference RESEARCH.md and TARGETS.md.}
+
+### 3.2 Specification Strategy
+
+{Describe the two-phase specification approach: informal specs extracted from code
+and documentation, then formalised into Lean 4. Discuss how ambiguities were
+resolved and what design choices were made.}
+
+### 3.3 Modelling Choices
+
+{Describe how implementation code was translated into Lean 4 functional models.
+Be explicit about what is modelled faithfully, what is abstracted, and what is
+omitted (I/O, error handling, memory layout, concurrency, etc.). This is the
+most important section for intellectual honesty — the value of proofs depends
+on model fidelity. Cross-reference CORRESPONDENCE.md.}
+
+### 3.4 Proof Approach
+
+{Describe the proof strategies used: decidable propositions, tactic-based proofs,
+automation (simp, omega, decide, aesop), structural induction, etc. Discuss what
+worked well and what required significant manual effort.}
+
+### 3.5 Aeneas Extraction (if applicable)
+
+{If Aeneas was used, describe the extraction pipeline: Charon → LLBC → Aeneas → Lean.
+Discuss what extracted successfully, what failed, and any bugs encountered in the
+toolchain. Describe bridging theorems between generated and hand-written models.}
+
+## 4. Results
+
+### 4.1 Proof Inventory
+
+{Enumerate what was proved: list key theorems with brief descriptions of what each
+establishes. Include a summary table:}
+
+| Theorem | File | Property | Status | Tactics |
+|---------|------|----------|--------|---------|
+| `name` | `File.lean` | Description | ✅ Proved / 🔄 sorry | Key tactics used |
+
+### 4.2 Bugs and Findings
+
+{Detail any bugs discovered through formal verification — these are the most
+compelling results. For each: the property expected to hold, the counterexample
+or proof failure, root cause, severity, and resolution. If no bugs were found,
+discuss what this means (implementation is correct w.r.t. verified properties,
+or the model was too abstract to catch bugs).}
+
+### 4.3 Coverage Assessment
+
+{Assess what fraction of the codebase's correctness-critical behaviour is covered
+by the current proofs. What remains unverified? What are the highest-value gaps?
+Cross-reference CRITIQUE.md.}
+
+## 5. Discussion
+
+### 5.1 Proof Utility
+
+{Critically assess: are the proved properties meaningful? Would real bugs cause
+theorem failures? Or are the models too abstract to catch practical issues?
+Discuss the tension between model fidelity and proof tractability.}
+
+### 5.2 Automation and Effort
+
+{Discuss the level of automation achieved. How much was automatic (decide, simp)
+vs. manual proof engineering? What was the approximate effort per theorem?
+Discuss implications for scaling formal verification.}
+
+### 5.3 Limitations
+
+{Be explicit about limitations: model approximations, unverified assumptions,
+properties not yet attempted, toolchain limitations. This section strengthens
+the paper by demonstrating intellectual honesty.}
+
+### 5.4 Lessons Learned
+
+{Practical lessons from the verification effort: what worked, what didn't,
+what would you do differently, advice for others attempting similar work.}
+
+## 6. Conclusion
+
+{Summarise contributions, key findings, and future work directions.
+Restate headline numbers and most important results.}
+
+## References
+
+{Include references to: Lean 4, Mathlib, Aeneas/Charon (if used), related
+formal verification work, the target codebase documentation, any textbook
+algorithms or protocols that were verified against.}
+```
+
+3. **Content quality requirements**:
+   - Write in formal academic style appropriate for an IEEE conference submission.
+   - All claims must be supported by evidence from the actual Lean proofs and FV artifacts.
+   - Be intellectually honest: clearly distinguish between what is proved and what is assumed, between exact models and approximations.
+   - Include concrete examples: show key theorem statements in Lean syntax, show counterexamples for bugs found, show representative proof fragments for interesting cases.
+   - The paper should be self-contained: a reader unfamiliar with the repository should understand the contribution.
+   - Respect the **11-page limit**: be concise. Prioritise depth on methodology, results, and discussion over exhaustive listing. Move detailed inventories to an appendix or reference REPORT.md.
+4. **Incremental updates**: read the existing PAPER.md (if any), update sections that have changed (new theorems, new findings, revised assessments), and maintain consistency throughout. Do not delete prior content unless it has become incorrect.
+5. **Always** include a `## Last Updated` section near the top with the current UTC date/time and the HEAD commit SHA:
+   ```
+   ## Last Updated
+   - **Date**: YYYY-MM-DD HH:MM UTC
+   - **Commit**: `<SHA>`
+   ```
+6. Cross-reference CORRESPONDENCE.md, CRITIQUE.md, and REPORT.md for modelling choices, proof utility assessments, and detailed inventories.
+7. Create a PR with the updated PAPER.md.
+8. Update memory: note that the paper exists and what state it covers.
 
 ---
 
