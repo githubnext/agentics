@@ -28,6 +28,7 @@ safe-outputs:
     target: "*"
     hide-older-comments: true
   create-pull-request:
+    max: 3
     draft: true
     title-prefix: "[Efficiency Improver] "
     labels: [automation, efficiency, green-software]

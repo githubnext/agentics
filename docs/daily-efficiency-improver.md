@@ -1,4 +1,4 @@
-# ♻️ Daily Efficiency Improver
+# 🌱 Daily Efficiency Improver
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
