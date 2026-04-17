@@ -1,6 +1,6 @@
 # 🔬 Lean Squad
 
-The [Lean Squad workflow](../workflows/lean-squad.md?plain=1) is a [GitHub Agentic Workflow](https://github.blog/ai-and-ml/automate-repository-tasks-with-github-agentic-workflows/) that applies Lean 4 formal verification to your codebase progressively and optimistically — without requiring any prior FV expertise. Each run it selects tasks weighted to the current phase of FV progress, from initial research all the way through to completed proofs. Maybe it finds a bug; maybe it proves something; either way, it makes forward progress.
+The [Lean Squad workflow](../workflows/lean-squad.md?plain=1) is a [GitHub Agentic Workflow](https://github.blog/ai-and-ml/automate-repository-tasks-with-github-agentic-workflows/) that applies Lean 4 formal verification to your codebase progressively and optimistically — without requiring any prior FV expertise. Each run it selects tasks weighted to the current phase of FV progress, from initial research all the way through to completed proofs, correspondence reviews, project reports, and even a LaTeX conference paper. Maybe it finds a bug; maybe it proves something; either way, it makes forward progress.
 
 ## Installation
 
@@ -24,13 +24,17 @@ graph LR
     A --> T3[Task 3: Formal Spec Writing]
     A --> T4[Task 4: Implementation Extraction]
     A --> T5[Task 5: Proof Assistance]
-    A --> T6[Task 6: Maintain Open Lean Squad PRs]
+    A --> T6[Task 6: Correspondence Review]
+    A --> T7[Task 7: Proof Utility Critique]
+    A --> T8[Task 8: Aeneas Extraction]
+    A --> T9[Task 9: CI Automation]
     A --> T10[Task 10: Project Report]
-    T1 & T2 & T3 & T4 & T5 & T6 & T10 --> T7[Task 7: Update FV Status Issue]
-    T7 --> M[Save repo-memory]
+    A --> T11[Task 11: Conference Paper]
+    T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 & T9 & T10 & T11 --> TF[Task Final: Update FV Status Issue]
+    TF --> M[Save repo-memory]
 ````
 
-A deterministic pre-step counts FV artifacts in the repository (Lean files, spec docs, open issues and PRs) and computes a **phase-weighted probability** for each task. Two tasks are drawn and communicated to the agent; the agent confirms them against its memory and executes them. Task 7 (status update) always runs. All notes, targets, choices, and progress live in persistent **repo-memory** so each run builds on the last.
+A deterministic pre-step counts FV artifacts in the repository (Lean files, spec docs, open issues and PRs) and computes a **phase-weighted probability** for each task. Two tasks are drawn and communicated to the agent; the agent confirms them against its memory and executes them. Task Final (status update) always runs. All notes, targets, choices, and progress live in persistent **repo-memory** so each run builds on the last.
 
 The weighting scheme adapts automatically: when no FV work exists Task 1 dominates; once research is done Task 2 rises; as informal specs accumulate Task 3 gains weight; and so on up to proofs.
 
@@ -64,21 +68,45 @@ Default weighting: rises once Lean implementations exist.
 
 Attempts to prove the stated propositions using Lean 4 tactics (`decide`, `omega`, `simp`, `linarith`, `ring`, `induction`, etc.). When a proof obligation cannot be closed, investigates whether the spec or the implementation is wrong. If a **counterexample** is found refuting a property, files a bug issue with the failing case, the expected property, and the impact. Proved theorems have their `sorry` removed; hard ones get a comment explaining the obstacle. Produces a PR with real progress.
 
-### Task 6: Maintain Open Lean Squad PRs
+### Task 6: Correspondence Review
 
-Weight proportional to the number of open Lean Squad PRs.
+Default weighting: critical when implementations exist but no correspondence doc.
 
-Reviews open `[Lean Squad]` PRs, fixes CI failures (Lean syntax errors, `lake build` failures), and resolves merge conflicts. Stale or stuck PRs get a comment explaining the blocker.
+For each Lean file containing an implementation model, reviews how faithfully the model corresponds to the actual source code. Assesses each definition's correspondence level (*exact*, *abstraction*, *approximation*, or *mismatch*), documents all known divergences with file/line references, and evaluates the impact on proof validity. Produces or updates `formal-verification/CORRESPONDENCE.md` as a PR. Flags any mismatches that invalidate proved theorems and opens issues for them.
 
-### Task 7: Update Lean Squad Status Issue *(always)*
+### Task 7: Proof Utility Critique
 
-Maintains a single `[Lean Squad] Formal Verification Status` issue as a continuously-updated dashboard with an at-a-glance table (one row per target, showing current phase and status), summary narrative, findings section (bugs found, counterexamples), approach notes, and a prepended run history entry for every run.
+Default weighting: critical when proofs exist but no critique doc.
+
+Steps back to honestly assess whether the FV work is actually useful — are the proved properties meaningful, at the right level of abstraction, and likely to catch real bugs? Evaluates each theorem's level, bug-catching potential, coverage, and strength. Identifies the highest-value gaps and recommends what to prove next. Optionally reviews the conference paper (`paper.tex`) as a critical reviewer and includes actionable feedback. Produces or updates `formal-verification/CRITIQUE.md` as a PR.
+
+### Task 8: Aeneas Extraction *(Rust codebases only)*
+
+Default weighting: available for Rust codebases once research is done.
+
+Uses the Charon + Aeneas toolchain to automatically generate Lean 4 code from Rust source, providing a mechanically-derived functional model. Works incrementally on one small module at a time. Reports toolchain bugs encountered. The most valuable use is writing bridging theorems between Aeneas-generated models and hand-written specs, closing the correspondence gap.
+
+### Task 9: CI Automation
+
+Default weighting: critical when Lean files exist but no CI; regular check otherwise.
+
+Sets up and maintains `.github/workflows/lean-ci.yml` (and optionally `aeneas-generate.yml` for Rust) to automatically verify Lean proofs on every PR and push. Audits CI health, checks for persistent failures, verifies cache effectiveness, and fixes broken workflows.
 
 ### Task 10: Project Report
 
 Default weighting: important once proofs exist; available once Lean specs exist.
 
 Creates and incrementally maintains `formal-verification/REPORT.md` — a comprehensive, reader-friendly project report summarising the entire FV effort. Uses mermaid diagrams extensively to visualise proof architecture, dependency layers, modelling choices, the main proof chain, and project timeline. Includes a mandatory Findings section documenting any bugs found (with counterexamples and issue links), formulation issues caught during development, and interesting structural discoveries. The report is updated incrementally each run rather than rewritten from scratch.
+
+### Task 11: Conference Paper
+
+Default weighting: important once proofs exist; only available once proofs exist.
+
+Writes and maintains a LaTeX conference paper under `formal-verification/paper/` using a standard ACM (`acmart`) or IEEE (`IEEEtran`) template, targeting an 11-page limit. The paper covers methodology, findings, proof architecture, modelling choices, and lessons learned. Includes a Lean 4 listing style for code examples. The compiled PDF (`paper.pdf`) is committed to the repository and kept up to date. Each run updates the paper incrementally — adding new theorems, findings, and revised assessments. Requires `texlive` for compilation (installed automatically). Produces `paper.tex`, `paper.bib`, and `paper.pdf` as a PR.
+
+### Task Final: Update Lean Squad Status Issue *(always)*
+
+Maintains a single `[Lean Squad] Formal Verification Status` issue as a continuously-updated dashboard with an at-a-glance table (one row per target, showing current phase and status), summary narrative, findings section (bugs found, counterexamples), approach notes, and a prepended run history entry for every run.
 
 ## What Gets Created
 
@@ -88,9 +116,13 @@ Creates and incrementally maintains `formal-verification/REPORT.md` — a compre
 | Target list | `formal-verification/TARGETS.md` | Prioritised targets with phase status |
 | Informal specs | `formal-verification/specs/<name>_informal.md` | Per-target: contracts, examples, intent |
 | Lean specs | `formal-verification/lean/FVSquad/<Name>.lean` | Lean 4 types, propositions, proofs |
+| Correspondence | `formal-verification/CORRESPONDENCE.md` | How each Lean model maps to the source |
+| Critique | `formal-verification/CRITIQUE.md` | Assessment of proof utility and coverage |
 | Project report | `formal-verification/REPORT.md` | Comprehensive FV report with mermaid diagrams |
-| Status issue | GitHub issue `[FV Squad] Formal Verification Status` | Rolling dashboard |
-| Bug reports | GitHub issues `[FV Squad] ...` | Properties violated, with counterexample |
+| Conference paper | `formal-verification/paper/paper.tex` | LaTeX source (ACM/IEEE template) |
+| Compiled PDF | `formal-verification/paper/paper.pdf` | Compiled conference paper |
+| Status issue | GitHub issue `[Lean Squad] Formal Verification Status` | Rolling dashboard |
+| Bug reports | GitHub issues `[Lean Squad] ...` | Properties violated, with counterexample |
 
 ## Design Principles
 
