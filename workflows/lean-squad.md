@@ -913,7 +913,7 @@ This task produces a living document. Each run updates the report to reflect the
 
 #### Report Structure
 
-```markdown
+````markdown
 > 🔬 *Lean Squad — automated formal verification for `<owner>/<repo>`.*
 
 **Status**: <emoji> <STATUS> — <N> theorems, <M> Lean files, <S> `sorry`, <tool version>.
@@ -1063,7 +1063,7 @@ timeline
 |--------|-------|
 | `omega` | Integer/natural-number arithmetic |
 | ... | ... |
-```
+````
 
 3. **Mermaid diagrams are mandatory** for:
    - Proof architecture / dependency layers
