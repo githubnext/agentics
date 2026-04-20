@@ -78,4 +78,15 @@ already there if you are running gh-aw with firewall enabled (the default).
 
 ## Going Further
 
-Cost Tracker works standalone — no external services required. For teams that want persistent run history, per-repo spend trends, and budget alerts across multiple repos, [AgentMeter](https://agentmeter.app) ingests the same token data via a single Action step and surfaces it in a shared dashboard at agentmeter.app.
+Cost Tracker works standalone — no external services required. For teams that want
+persistent run history, per-repo spend trends, and budget alerts across multiple repos,
+add [AgentMeter](https://agentmeter.app) to your agent workflow:
+
+```yaml
+- uses: agentmeter/agentmeter-action@v1
+  with:
+    api-key: ${{ secrets.AGENTMETER_API_KEY }}
+```
+
+AgentMeter ingests the same token data and surfaces it in a shared dashboard with
+per-repo trend charts and budget alerts.
