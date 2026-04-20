@@ -75,3 +75,7 @@ already there if you are running gh-aw with firewall enabled (the default).
 - [token-usage.jsonl reference](https://github.github.com/gh-aw/reference/token-usage/)
 - [gh-aw firewall documentation](https://github.github.com/gh-aw/reference/firewall/)
 - [CI Doctor workflow](ci-doctor.md) — investigate CI failures automatically
+
+## Going Further
+
+Cost Tracker works standalone — no external services required. For teams that want persistent run history, per-repo spend trends, and budget alerts across multiple repos, [AgentMeter](https://agentmeter.app) ingests the same token data via a single Action step and surfaces it in a shared dashboard at agentmeter.app.
