@@ -581,6 +581,7 @@ This task is important because the value of any proof depends entirely on how fa
    - One section per Lean file / target.
    - For each modelled function or type, include a markdown table or enumerated list with: Lean name, Rust name, file + line reference, correspondence level, and a brief justification.
    - Include links to the Rust source lines (use relative paths, e.g. `src/raft_log.rs#L42`).
+   - For each target, include a **Validation evidence** entry linking to whichever Task 8 artifact demonstrates correspondence: the Aeneas-generated Lean file (e.g. `formal-verification/lean/FVSquad/Aeneas/Generated/<Name>.lean`) if Route A was used, or the runnable test harness (e.g. `formal-verification/tests/<name>/`) if Route B was used. If neither exists yet, note that correspondence has not yet been independently validated.
    - Summarise any known gaps or mismatches that should be resolved before trusting associated proofs.
    - **Always** include a `## Last Updated` section at the top with the current UTC date/time and the HEAD commit SHA:
      ```
