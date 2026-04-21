@@ -76,11 +76,12 @@ safe-outputs:
     title-prefix: "[Lean Squad] "
     labels: [automation, lean-squad]
     max: 2
-    protected-files: fallback-to-issue
+    protected-files: allowed
     draft: false
   push-to-pull-request-branch:
     target: "*"
     title-prefix: "[Lean Squad] "
+    protected-files: allowed
     max: 4
   add-comment:
     max: 3
