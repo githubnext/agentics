@@ -35,6 +35,7 @@ network:
   allowed:
     - defaults
     - github
+    - rust
     - "arxiv.org"
     - "leanprover-community.github.io"
     - "leanlang.org"
