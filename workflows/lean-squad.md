@@ -12,7 +12,7 @@ description: |
   5. Proof Assistance — attempt proofs, find counterexamples, report bugs
   6. Correspondence Review — document how the Lean implementation model corresponds to the Rust source
   7. Proof Utility Critique — assess the value and coverage of what has been proven so far
-  8. Aeneas Extraction (optional, Rust only) — use Charon+Aeneas to auto-generate Lean from Rust
+  8. Implementation Correspondence Validation — either use Charon+Aeneas to auto-generate Lean from Rust, or write and run executable correspondence tests against the source
   9. CI Automation — set up and maintain CI workflows that verify proofs on every PR
   10. Project Report — create and incrementally maintain REPORT.md with mermaid diagrams
   11. Conference Paper — write and maintain a LaTeX conference paper (ACM/IEEE template, 11-page limit) with compiled PDF on the formal verification work
@@ -104,6 +104,10 @@ steps:
       [ -f ".github/workflows/lean-ci.yml" ] && echo 1 > /tmp/gh-aw/has_lean_ci.txt || echo 0 > /tmp/gh-aw/has_lean_ci.txt
       [ -f ".github/workflows/aeneas-generate.yml" ] && echo 1 > /tmp/gh-aw/has_aeneas_ci.txt || echo 0 > /tmp/gh-aw/has_aeneas_ci.txt
 
+      # Count runnable correspondence-test artifacts for Task 8
+      find . \( -path "./formal-verification/tests/*" -o -path "./formal-verification/correspondence-tests/*" \) -type f 2>/dev/null \
+        | wc -l > /tmp/gh-aw/correspondence_test_count.txt || echo 0 > /tmp/gh-aw/correspondence_test_count.txt
+
       # Detect CORRESPONDENCE.md, CRITIQUE.md, REPORT.md, and paper/paper.tex
       [ -f "formal-verification/CORRESPONDENCE.md" ] && echo 1 > /tmp/gh-aw/has_correspondence.txt || echo 0 > /tmp/gh-aw/has_correspondence.txt
       [ -f "formal-verification/CRITIQUE.md" ] && echo 1 > /tmp/gh-aw/has_critique.txt || echo 0 > /tmp/gh-aw/has_critique.txt
@@ -136,6 +140,7 @@ steps:
       rust_count   = int(open('/tmp/gh-aw/rust_count.txt').read().strip() or 0)
       has_lean_ci  = int(open('/tmp/gh-aw/has_lean_ci.txt').read().strip() or 0)
       has_aeneas_ci = int(open('/tmp/gh-aw/has_aeneas_ci.txt').read().strip() or 0)
+      correspondence_test_count = int(open('/tmp/gh-aw/correspondence_test_count.txt').read().strip() or 0)
       has_correspondence = int(open('/tmp/gh-aw/has_correspondence.txt').read().strip() or 0)
       has_critique = int(open('/tmp/gh-aw/has_critique.txt').read().strip() or 0)
       has_report   = int(open('/tmp/gh-aw/has_report.txt').read().strip() or 0)
@@ -156,7 +161,7 @@ steps:
           5: 'Proof Assistance',
           6: 'Correspondence Review',
           7: 'Proof Utility Critique',
-          8: 'Aeneas Extraction (Rust only)',
+          8: 'Implementation Correspondence Validation (Aeneas or Tests)',
           9: 'CI Automation',
           10: 'Project Report',
           11: 'Conference Paper',
@@ -171,6 +176,7 @@ steps:
       has_proofs     = lean_count >= 6
       has_rust       = rust_count >= 1
       has_ci         = bool(has_lean_ci)
+      has_correspondence_tests = correspondence_test_count >= 1
 
       weights = {
           1: 10.0  if not has_research  else 2.0,
@@ -180,7 +186,7 @@ steps:
           5: (6.0  if not has_proofs     else 2.0) if has_impl        else 0.1,
           6: (10.0 if not has_correspondence else 3.0) if has_impl else 0.5,  # correspondence: critical when impl exists but no doc
           7: (10.0 if not has_critique else 3.0) if has_proofs else 0.0,      # critique: critical when proofs exist but no doc
-          8: (3.0 if has_lean_specs else 1.0) if (has_rust and has_research) else 0.0,  # aeneas: only for Rust codebases with research done
+          8: (12.0 if not has_correspondence_tests else (5.0 if has_rust else 3.0)) if has_impl else 0.2,  # correspondence validation: critical once an implementation model exists, especially before runnable tests exist
           9: 12.0 if (has_lean_specs and not has_ci) else 2.0,  # CI: critical when lean files exist but no CI; regular check otherwise
           10: (8.0 if not has_report else 3.0) if has_proofs else (2.0 if has_lean_specs else 0.0),  # report: important when proofs exist but no report; available once lean specs exist
           11: (8.0 if not has_paper else 3.0) if has_proofs else 0.0,  # paper: important when proofs exist but no paper; only available once proofs exist
@@ -203,6 +209,7 @@ steps:
       print('=== Lean Squad Task Selection ===')
       print(f'Lean files    : {lean_count}')
       print(f'Rust files    : {rust_count}')
+      print(f'Corr. tests   : {correspondence_test_count}')
       print(f'FV dir        : {bool(fv_dir)}')
       print(f'FV docs       : {fv_docs}')
       print(f'Open issues   : {n_issues}')
@@ -210,6 +217,7 @@ steps:
       print(f'Phase flags   : research={has_research}, inf_specs={has_inf_specs}, '
             f'lean_specs={has_lean_specs}, impl={has_impl}, proofs={has_proofs}, '
             f'rust={has_rust}, ci={has_ci}, '
+            f'correspondence_tests={has_correspondence_tests}, '
             f'correspondence={bool(has_correspondence)}, critique={bool(has_critique)}, '
             f'report={bool(has_report)}, paper={bool(has_paper)}')
       print()
@@ -222,7 +230,8 @@ steps:
 
       result = {
           'lean_count': lean_count, 'rust_count': rust_count,
-          'fv_dir': bool(fv_dir), 'fv_docs': fv_docs,
+            'fv_dir': bool(fv_dir), 'fv_docs': fv_docs,
+            'correspondence_test_count': correspondence_test_count,
           'n_issues': n_issues, 'n_prs': n_prs,
           'phase_flags': {
               'has_research':   has_research,
@@ -232,6 +241,7 @@ steps:
               'has_proofs':     has_proofs,
               'has_rust':       has_rust,
               'has_ci':         has_ci,
+              'has_correspondence_tests': has_correspondence_tests,
               'has_correspondence': bool(has_correspondence),
               'has_critique':  bool(has_critique),
               'has_report':    bool(has_report),
@@ -303,7 +313,7 @@ for pr in $(gh pr list --state open --label lean-squad --json number --jq '.[].n
 done
 ```
 
-If a PR merges cleanly, treat its content as the baseline for your new work — do not recreate or duplicate it. If a PR conflicts with another, skip it for now and note the conflict in memory so Task 8 can resolve it.
+If a PR merges cleanly, treat its content as the baseline for your new work — do not recreate or duplicate it. If a PR conflicts with another, skip it for now and note the conflict in memory for a later reconciliation run.
 
 **Execute both selected tasks**, then always do the mandatory **Task Final: Update Lean Squad Status Issue**.
 
@@ -315,6 +325,7 @@ The weighting scheme adapts automatically:
 - Once research is done, Task 2 (Informal Spec Extraction) rises
 - As informal specs accumulate, Task 3 (Formal Spec Writing) rises
 - As Lean specs grow, Tasks 4 and 5 (Implementation and Proofs) gain weight
+- Once implementation models exist, Task 8 (Correspondence Validation) rises sharply, especially when no runnable correspondence tests exist yet
 
 Investigate all existing issues to see what work remains to be done and maintainer priorities, and help use that to guide your task execution and memory updates.
 
@@ -436,6 +447,8 @@ formal-verification/
     lake-manifest.json     # Resolved dependencies
     FVSquad/
       <Name>.lean          # Lean 4 spec, implementation model, and proofs per target
+  tests/
+    <name>/               # Runnable correspondence-test harnesses, fixtures, and notes
 ```
 
 ---
@@ -619,15 +632,25 @@ This is a reflective task. The goal is not to prove more things, but to evaluate
 
 ---
 
-### Task 8: Aeneas Extraction *(optional — Rust codebases only)*
+### Task 8: Implementation Correspondence Validation *(Aeneas extraction or runnable tests)*
 
-**Goal**: Use the [Charon](https://github.com/AeneasVerif/charon) + [Aeneas](https://github.com/AeneasVerif/aeneas) toolchain to automatically generate Lean 4 code from Rust source, providing a mechanically-derived functional model whose correspondence to the Rust is guaranteed by construction.
+**Goal**: Increase confidence that a hand-written Lean implementation model matches the source code by taking one of two routes:
 
-> **Applicability gate**: This task is only applicable when the codebase contains Rust source files (`has_rust` is true in `task_selection.json`). If the codebase is not Rust, skip this task entirely and substitute the most logically prior incomplete task.
+- **Route A — Aeneas extraction**: use [Charon](https://github.com/AeneasVerif/charon) + [Aeneas](https://github.com/AeneasVerif/aeneas) to derive a machine-generated Lean model from Rust and compare it to the hand-written model.
+- **Route B — Executable correspondence tests**: write and run tests that execute the source implementation and the Lean implementation model on the same cases, then compare the results.
 
-> **Reliability warning**: The Aeneas toolchain is experimental and has bugs. Extraction frequently fails on complex Rust patterns (trait objects, async, complex lifetime bounds, certain macros). This is expected. Work incrementally — target **one small module or function at a time**, not the whole crate.
+**Applicability gate**: This task becomes applicable once a target has a hand-written Lean implementation model (`has_impl` is true in `task_selection.json`). It is weighted highly when no runnable correspondence tests exist yet. If the repository is Rust, the target is Aeneas-friendly, and no prior decision has been made to avoid Aeneas for this target or repository, Route A is preferred; otherwise use Route B.
 
-#### 8.1 Install the Charon + Aeneas toolchain
+**One validated target per run**: pick a single target and go deep. Either produce an Aeneas-derived bridge, or produce and run executable tests that demonstrate behavioural correspondence. If both are small and tractable, doing both is allowed.
+
+#### 8.1 Choose the validation route
+
+1. Pick a target with a Lean implementation model.
+1. Read the Lean file, the source implementation, existing `formal-verification/CORRESPONDENCE.md`, and any existing runnable test harnesses under `formal-verification/tests/`.
+1. Select the route. Use **Route A** when the repository is Rust and the target looks small enough for Charon+Aeneas to handle. Use **Route B** when the codebase is not Rust, when Aeneas is not applicable, when a prior decision has already been made not to use Aeneas for this target or repository, when extraction is likely to fail, or when the highest-value next step is executable evidence rather than a generated model.
+1. Document in memory why the route was chosen, what is being validated, and what counts as success.
+
+#### 8.2 Route A: install the Charon + Aeneas toolchain
 
 ```bash
 # --- OCaml + opam (required for Aeneas) ---
@@ -675,15 +698,15 @@ else
 fi
 ```
 
-If `AENEAS_AVAILABLE=false`, skip the rest of this task. Document the failure in the status issue and memory.
+If `AENEAS_AVAILABLE=false`, fall back to Route B unless the repository has no meaningful executable surface for correspondence testing. Document the failure and fallback decision in the status issue and memory.
 
-#### 8.2 Extract LLBC and generate Lean — incrementally
+#### 8.3 Route A: extract LLBC and generate Lean — incrementally
 
 Work on **one small target at a time** (a single module, file, or function). Do not attempt to extract the entire crate at once — Aeneas will likely fail on parts of it, and a single failure blocks the whole run.
 
 1. Choose a target from TARGETS.md or memory — preferably one that already has an informal spec or hand-written Lean spec, so you can compare.
-2. If a `Charon.toml` exists in the repo root, read it — it may contain configuration hints or feature flags needed for extraction.
-3. Run Charon to produce an LLBC file, scoping to the target where possible:
+1. If a `Charon.toml` exists in the repo root, read it — it may contain configuration hints or feature flags needed for extraction.
+1. Run Charon to produce an LLBC file, scoping to the target where possible:
 
 ```bash
 # Determine the Charon-required Rust toolchain
@@ -695,21 +718,21 @@ PATH="/tmp/charon/bin:$PATH" RUSTUP_TOOLCHAIN="$CHARON_TOOLCHAIN" \
     -- --no-default-features --features <relevant-features>
 ```
 
-4. Run Aeneas to generate Lean from the LLBC:
+1. Run Aeneas to generate Lean from the LLBC:
 
 ```bash
 /tmp/aeneas/bin/aeneas -backend lean -split-files <crate>.llbc \
   -dest formal-verification/lean/FVSquad/Aeneas/Generated
 ```
 
-5. If extraction **succeeds**:
+1. If extraction **succeeds**:
    - Review the generated Lean files. They will be verbose and mechanical — this is expected.
    - Check that they compile: run `lake build` on the generated output.
    - If `lake build` fails on generated code, this is likely an Aeneas bug — see §8.3.
    - Place generated files under `formal-verification/lean/FVSquad/Aeneas/Generated/` (keep them separate from hand-written specs and proofs).
    - Create a PR with the generated files. Note which Rust modules were extracted and any Aeneas warnings.
 
-6. If extraction **fails** (Charon or Aeneas errors out):
+1. If extraction **fails** (Charon or Aeneas errors out):
    - Read the error output carefully. Common failure modes:
      - Unsupported Rust features (trait objects, `dyn`, async, complex generics)
      - Missing or incompatible crate features
@@ -717,7 +740,7 @@ PATH="/tmp/charon/bin:$PATH" RUSTUP_TOOLCHAIN="$CHARON_TOOLCHAIN" \
    - Try narrowing the scope: extract a smaller module or add exclusions in `Charon.toml`.
    - Document the failure in memory. If the error looks like a toolchain bug, see §8.3.
 
-#### 8.3 Investigate and report Aeneas/Charon bugs
+#### 8.4 Route A: investigate and report Aeneas/Charon bugs
 
 When Charon or Aeneas produces an error that appears to be a toolchain bug (panic, ICE, incorrect output, unsound generated code):
 
@@ -736,7 +759,7 @@ When Charon or Aeneas produces an error that appears to be a toolchain bug (pani
      - Link to any related upstream issue if one exists
 4. Record the bug in memory so future runs can avoid the same extraction target until it is fixed.
 
-#### 8.4 Using generated code alongside hand-written specs
+#### 8.5 Route A: use generated code alongside hand-written specs
 
 Aeneas-generated Lean and hand-written Lean specs serve different purposes and should coexist:
 
@@ -744,25 +767,42 @@ Aeneas-generated Lean and hand-written Lean specs serve different purposes and s
 - **Hand-written specs** (`FVSquad/<Name>.lean`): provide clean, readable specifications and proofs at the right level of abstraction.
 
 The most valuable use of Aeneas output is to **bridge** between them:
+
 - Write theorems proving that the hand-written Lean model is equivalent to (or a sound abstraction of) the Aeneas-generated model.
 - This closes the correspondence gap: hand-written spec ↔ generated model ↔ Rust source.
 - Even partial equivalence results (on specific operations or specific inputs) are valuable.
 
 Update `formal-verification/CORRESPONDENCE.md` to note which targets have Aeneas-generated models and whether bridging theorems exist.
 
-#### 8.5 Update memory
+#### 8.6 Route B: write and run executable correspondence tests
+
+Use this route to obtain direct behavioural evidence that the Lean implementation model agrees with the source code on representative inputs.
+
+1. Pick one target with a Lean implementation model and identify the smallest executable surface that captures its semantics.
+1. Create or update a runnable harness under `formal-verification/tests/<name>/`. The harness can be a native-language test target, a small standalone project copied from the source code when the original build is too large or entangled, or a fixture-driven comparator that runs both the source implementation and the Lean model on the same inputs.
+1. If copying source code into an isolated harness is necessary, copy only the minimal code required to preserve the semantics under test, record exactly which files or functions were copied and from which commit, and keep the copied code clearly separated under `formal-verification/tests/<name>/` so maintainers can audit drift.
+1. Build shared test cases that exercise normal behaviour, edge cases, and prior regressions. Prefer a machine-readable fixture format such as JSON, CSV, or line-based text when both sides can consume it.
+1. Run the source implementation and the Lean model against the same cases. Do not infer correspondence from inspection alone — actually execute both sides.
+1. Record the exact commands run, the number of cases, and the observed outcome in `formal-verification/tests/<name>/README.md` or equivalent notes next to the harness.
+1. If the results disagree, reduce to a minimal counterexample, decide whether the mismatch is in the Lean model, the source code, or the test harness, and update `formal-verification/CORRESPONDENCE.md` while opening an issue when the mismatch invalidates a claimed proof or correspondence claim.
+1. If the results agree, update `formal-verification/CORRESPONDENCE.md` with the harness location, the commands used, the case set size, and what the tests do and do not cover.
+1. Create a PR with the runnable tests or harness updates.
+
+#### 8.7 Update memory
 
 Record in memory:
-- Which modules/functions were successfully extracted
-- Which failed, with the error class (so future runs don't retry the same failures)
-- Any Aeneas bugs filed
-- Whether bridging theorems between generated and hand-written models exist
+- Which target was validated and which route was used
+- Which modules/functions were successfully extracted, if Route A was used
+- Which Aeneas attempts failed, with the error class, if Route A was used
+- Which runnable test harnesses exist, how they are invoked, and how many cases they cover, if Route B was used
+- Any Aeneas bugs or correspondence mismatches filed
+- Whether bridging theorems or runnable cross-checks now exist for the target
 
 ---
 
 ### Task 9: CI Automation
 
-**Goal**: Set up, maintain, and verify that CI workflows exist to automatically check Lean proofs and (for Rust codebases) Aeneas extraction on every PR and push. This task is **critical** when no CI exists yet and **ongoing** to ensure CI stays healthy.
+**Goal**: Set up, maintain, and verify that CI workflows exist to automatically check Lean proofs and, when present, Task 8 validation artifacts such as Aeneas extraction or runnable correspondence tests on every PR and push. This task is **critical** when no CI exists yet and **ongoing** to ensure CI stays healthy.
 
 > **Priority**: This task receives very high weight when Lean files exist but no `lean-ci.yml` is present. Once CI is established, it still runs periodically to audit CI health and apply fixes.
 
@@ -852,15 +892,17 @@ fi
 
 Include the new `lean-ci.yml` in a PR (can be combined with the first PR that adds `.lean` files). Ensure `formal-verification/lean/lean-toolchain` also exists so CI knows which Lean version to install.
 
-#### 9.2 Set up Aeneas CI (if applicable and missing)
+#### 9.2 Set up Task 8 CI (if applicable and missing)
 
-For Rust codebases that use Aeneas extraction (Task 8), check whether `.github/workflows/aeneas-generate.yml` exists. If not, and if Aeneas-generated files already exist under `formal-verification/lean/FVSquad/Aeneas/Generated/`, create an Aeneas regeneration workflow. Use the existing `aeneas-generate.yml` in the repository as a template if present, or create one following the Charon + Aeneas build steps from Task 8.
+For Rust codebases that use Route A of Task 8, check whether `.github/workflows/aeneas-generate.yml` exists. If not, and if Aeneas-generated files already exist under `formal-verification/lean/FVSquad/Aeneas/Generated/`, create an Aeneas regeneration workflow. Use the existing `aeneas-generate.yml` in the repository as a template if present, or create one following the Charon + Aeneas build steps from Task 8.
 
 The Aeneas CI workflow should:
 - Trigger on pushes to `main` that modify `src/**` (Rust source)
 - Install OCaml/opam, build Charon and Aeneas from pinned commits
 - Run Charon to extract LLBC, then Aeneas to generate Lean
 - Open a PR if the generated Lean files changed
+
+If Task 8 uses Route B and runnable harnesses exist under `formal-verification/tests/`, ensure CI runs them. Reuse the repository's native test tooling where possible; otherwise add a dedicated workflow that executes the documented harness commands and fails on any behavioural mismatch.
 
 #### 9.3 Audit CI health
 
@@ -903,7 +945,7 @@ If CI is broken or misconfigured:
 #### 9.5 Update memory
 
 Record in memory:
-- Whether `lean-ci.yml` and `aeneas-generate.yml` exist and are passing
+- Whether `lean-ci.yml`, `aeneas-generate.yml`, and any correspondence-test workflows exist and are passing
 - Last known CI status and any persistent failures
 - Any fixes applied this run
 
@@ -1231,9 +1273,10 @@ If unsure, default to **ACM sigconf** format. Obtain the template class file fro
 \subsection{Proof Approach}
 % Proof strategies: decidable propositions, tactic-based proofs, automation.
 
-\subsection{Aeneas Extraction}
-% If applicable: Charon -> LLBC -> Aeneas -> Lean pipeline.
-% Omit this subsection if Aeneas was not used.
+\subsection{Model Validation}
+% If applicable: Charon -> LLBC -> Aeneas -> Lean pipeline, and/or executable correspondence tests
+% that compare the source implementation against the Lean model on shared fixtures.
+% Omit the irrelevant route if it was not used.
 
 \section{Results}
 
@@ -1398,7 +1441,7 @@ are in play, known limitations of the model.}
 
 ## Guidelines
 
-- **Always build on open PRs**: at the start of every run, merge all open `[Lean Squad]` PRs into your branch before doing any new work. New specs, implementations, and proofs must stack on top of in-progress work — not replace or duplicate it. If a PR merges cleanly, treat its contents as already done. If it conflicts, note it in memory and address the conflict in Task 8 before proceeding.
+- **Always build on open PRs**: at the start of every run, merge all open `[Lean Squad]` PRs into your branch before doing any new work. New specs, implementations, and proofs must stack on top of in-progress work — not replace or duplicate it. If a PR merges cleanly, treat its contents as already done. If it conflicts, note it in memory and address the conflict in a later focused run.
 - **One target per task per run**: go deep on one thing rather than skimming across many.
 - **Don't duplicate**: check memory and the repo before creating a new spec or Lean file — it may already exist from a prior merged PR.
 - **Read AGENTS.md first**: if the repository has an AGENTS.md, read it before opening any PR.
