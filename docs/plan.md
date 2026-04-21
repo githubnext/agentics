@@ -22,11 +22,11 @@ This walks you through adding the workflow to your repository.
 
 ```mermaid
 graph LR
-    A[/plan Command] --> B[Analyze Issue/Discussion]
-    B --> C[Break Down Work]
-    C --> D[Create Sub-Issues]
-    D --> E[Link to Parent]
-    E --> F[Assign to Copilot]
+    A["/plan Command"] --> B["Analyze Issue/Discussion"]
+    B --> C["Break Down Work"]
+    C --> D["Create Sub-Issues"]
+    D --> E["Link to Parent"]
+    E --> F["Assign to Copilot"]
 ```
 
 Each sub-issue includes a clear title, objective, context, approach, specific files to modify, and acceptance criteria.
