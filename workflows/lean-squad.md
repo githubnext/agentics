@@ -136,7 +136,8 @@ steps:
         > /tmp/gh-aw/fv_prs.json || echo "[]" > /tmp/gh-aw/fv_prs.json
 
       python3 - << 'EOF'
-      import json, os, random
+      import json, os, random, re
+      from pathlib import Path
 
       lean_count   = int(open('/tmp/gh-aw/lean_count.txt').read().strip() or 0)
       rust_count   = int(open('/tmp/gh-aw/rust_count.txt').read().strip() or 0)
@@ -154,6 +155,130 @@ steps:
 
       n_issues = len(fv_issues)
       n_prs    = len(fv_prs)
+
+      # Inspect handwritten Lean artifacts to estimate proof maturity.
+      fvsquad_dir = Path('formal-verification/lean/FVSquad')
+      handwritten_lean_files = []
+      if fvsquad_dir.exists():
+          handwritten_lean_files = [
+              p for p in fvsquad_dir.rglob('*.lean')
+              if 'Aeneas/Generated' not in p.as_posix() and '/.lake/' not in p.as_posix()
+          ]
+
+      spec_dir = Path('formal-verification/specs')
+      informal_spec_count = len(list(spec_dir.glob('*_informal.md'))) if spec_dir.exists() else 0
+
+      theorem_decl_re = re.compile(r'^\s*(theorem|lemma)\s+\w+', re.M)
+      sorry_re = re.compile(r'\bsorry\b')
+      import_re = re.compile(r'^\s*import\s+FVSquad\.(\w+)', re.M)
+      composition_theorem_re = re.compile(
+          r'^\s*(theorem|lemma)\s+\w*(compose|composition|equiv|correspond|refine|sound|complete|end_to_end|e2e|bridge|commute|simulation)\w*',
+          re.M,
+      )
+
+      theorem_count = 0
+      files_with_sorry = 0
+      files_without_theorems = 0
+      cross_file_theorem_files = 0
+      composition_theorem_count = 0
+      target_names_from_lean = set()
+
+      for lean_file in handwritten_lean_files:
+          try:
+              text = lean_file.read_text(encoding='utf-8', errors='ignore')
+          except Exception:
+              continue
+
+          target_names_from_lean.add(lean_file.stem.lower())
+          local_theorems = len(theorem_decl_re.findall(text))
+          theorem_count += local_theorems
+          if local_theorems == 0:
+              files_without_theorems += 1
+          if sorry_re.search(text):
+              files_with_sorry += 1
+
+          if local_theorems > 0 and import_re.search(text):
+              cross_file_theorem_files += 1
+          composition_theorem_count += len(composition_theorem_re.findall(text))
+
+      handwritten_lean_file_count = len(handwritten_lean_files)
+
+      # Parse target coverage from TARGETS.md so proof maturity tracks declared scope,
+      # not just local theorem/sorry counts.
+      targets_file = Path('formal-verification/TARGETS.md')
+      targets_declared_count = 0
+      targets_phase4plus_count = 0
+      target_names_from_targets = set()
+      if targets_file.exists():
+          try:
+              targets_text = targets_file.read_text(encoding='utf-8', errors='ignore')
+          except Exception:
+              targets_text = ''
+
+          target_line_re = re.compile(r'^\s*(?:[-*]\s+)?(?:\d+[.)]\s+)?(?:\*\*)?([A-Za-z0-9_./:-][A-Za-z0-9_ ./:-]{1,100}?)(?:\*\*)?\s*(?:\||$)', re.M)
+          phase_re = re.compile(r'phase\s*[:=\-]?\s*(\d+)', re.I)
+
+          for line in targets_text.splitlines():
+              line_l = line.lower()
+              if not line_l.strip():
+                  continue
+              if any(skip in line_l for skip in ['target', 'phase', 'status', 'priority', 'owner', 'notes']) and '|' in line_l:
+                  continue
+
+              m = target_line_re.match(line)
+              if not m:
+                  continue
+              name = m.group(1).strip(' -:').lower()
+              if len(name) < 2:
+                  continue
+              if any(name.startswith(prefix) for prefix in ['http', 'todo', 'note', 'summary']):
+                  continue
+              target_names_from_targets.add(name)
+
+              pm = phase_re.search(line)
+              if pm and int(pm.group(1)) >= 4:
+                  targets_phase4plus_count += 1
+
+      targets_declared_count = len(target_names_from_targets)
+
+      # Infer target names from informal specs as another signal of intended coverage.
+      target_names_from_specs = set()
+      if spec_dir.exists():
+          for spec_file in spec_dir.glob('*_informal.md'):
+              target_names_from_specs.add(spec_file.stem.replace('_informal', '').lower())
+
+      inferred_target_count = max(
+          targets_declared_count,
+          len(target_names_from_specs),
+          handwritten_lean_file_count,
+      )
+
+      proved_like_target_count = 0
+      for lean_file in handwritten_lean_files:
+          try:
+              text = lean_file.read_text(encoding='utf-8', errors='ignore')
+          except Exception:
+              continue
+          local_theorems = len(theorem_decl_re.findall(text))
+          local_sorry = bool(sorry_re.search(text))
+          if local_theorems > 0 and not local_sorry:
+              proved_like_target_count += 1
+
+      # Coverage floor: we want broad target coverage and not just isolated local wins.
+      target_proof_coverage = (
+          proved_like_target_count / inferred_target_count
+          if inferred_target_count > 0 else 0.0
+      )
+      target_coverage_incomplete = inferred_target_count >= 2 and target_proof_coverage < 0.6
+
+      # Composition floor: if we have multiple Lean targets, require some cross-file proof signal.
+      composition_incomplete = handwritten_lean_file_count >= 2 and (
+          cross_file_theorem_files == 0 and composition_theorem_count == 0
+      )
+
+      # Heuristic target: each started target/spec should usually have multiple theorems,
+      # and each handwritten Lean file should contribute proof obligations.
+      expected_theorem_floor = max(3, informal_spec_count * 2, handwritten_lean_file_count * 2)
 
       task_names = {
           1: 'Research & Target Identification',
@@ -175,23 +300,34 @@ steps:
       has_inf_specs  = fv_docs >= 2 or lean_count >= 1
       has_lean_specs = lean_count >= 1
       has_impl       = lean_count >= 3
-      has_proofs     = lean_count >= 6
+      has_proofs     = theorem_count >= 1
       has_rust       = rust_count >= 1
       has_ci         = bool(has_lean_ci)
       has_correspondence_tests = correspondence_test_count >= 1
+
+      proof_incomplete = has_impl and (
+          files_with_sorry > 0
+          or files_without_theorems > 0
+          or theorem_count < expected_theorem_floor
+          or target_coverage_incomplete
+          or composition_incomplete
+      )
+      proof_mature = has_impl and not proof_incomplete
 
       weights = {
           1: 10.0  if not has_research  else 2.0,
           2: (8.0  if not has_inf_specs  else 2.0) if has_research   else 0.5,
           3: (8.0  if not has_lean_specs else 2.0) if has_inf_specs   else 0.3,
           4: (6.0  if not has_impl       else 2.0) if has_lean_specs  else 0.2,
-          5: (6.0  if not has_proofs     else 2.0) if has_impl        else 0.1,
+          # Keep proof work highly weighted until we have stronger evidence of maturity.
+          # This avoids prematurely deprioritizing proofs just because Lean files exist.
+          5: (12.0 if proof_incomplete else 3.0) if has_impl else 0.1,
           6: (10.0 if not has_correspondence else 3.0) if has_impl else 0.5,  # correspondence: critical when impl exists but no doc
-          7: (10.0 if not has_critique else 3.0) if has_proofs else 0.0,      # critique: critical when proofs exist but no doc
+          7: (4.0 if not has_critique else 2.0) if proof_incomplete else ((10.0 if not has_critique else 3.0) if has_proofs else 0.0),  # while proofs are incomplete, critique is useful but secondary
           8: (12.0 if not has_correspondence_tests else (5.0 if has_rust else 3.0)) if has_impl else 0.2,  # correspondence validation: critical once an implementation model exists, especially before runnable tests exist
           9: 12.0 if (has_lean_specs and not has_ci) else 2.0,  # CI: critical when lean files exist but no CI; regular check otherwise
-          10: (8.0 if not has_report else 3.0) if has_proofs else (2.0 if has_lean_specs else 0.0),  # report: important when proofs exist but no report; available once lean specs exist
-          11: (8.0 if not has_paper else 3.0) if has_proofs else 0.0,  # paper: important when proofs exist but no paper; only available once proofs exist
+          10: (3.0 if not has_report else 2.0) if proof_incomplete else ((8.0 if not has_report else 3.0) if has_proofs else (2.0 if has_lean_specs else 0.0)),  # defer heavy reporting until proof maturity improves
+          11: (2.0 if not has_paper else 1.0) if proof_incomplete else ((8.0 if not has_paper else 3.0) if has_proofs else 0.0),  # defer paper emphasis while proofs are still incomplete
       }
 
       run_id = int(os.environ.get('GITHUB_RUN_ID', '0'))
@@ -214,13 +350,28 @@ steps:
       print(f'Corr. tests   : {correspondence_test_count}')
       print(f'FV dir        : {bool(fv_dir)}')
       print(f'FV docs       : {fv_docs}')
+      print(f'Informal specs: {informal_spec_count}')
+      print(f'Handwritten Lean files: {handwritten_lean_file_count}')
+      print(f'Theorem/lemma declarations: {theorem_count}')
+      print(f'Files with sorry: {files_with_sorry}')
+      print(f'Files without theorem/lemma: {files_without_theorems}')
+      print(f'Cross-file theorem files: {cross_file_theorem_files}')
+      print(f'Composition theorem count: {composition_theorem_count}')
+      print(f'Expected theorem floor: {expected_theorem_floor}')
+      print(f'Declared targets (TARGETS.md): {targets_declared_count}')
+      print(f'Inferred targets (overall): {inferred_target_count}')
+      print(f'Proved-like targets: {proved_like_target_count}')
+      print(f'Target proof coverage: {target_proof_coverage:.2f}')
       print(f'Open issues   : {n_issues}')
       print(f'Open FV PRs   : {n_prs}')
       print(f'Phase flags   : research={has_research}, inf_specs={has_inf_specs}, '
             f'lean_specs={has_lean_specs}, impl={has_impl}, proofs={has_proofs}, '
             f'rust={has_rust}, ci={has_ci}, '
             f'correspondence_tests={has_correspondence_tests}, '
-            f'correspondence={bool(has_correspondence)}, critique={bool(has_critique)}, '
+          f'correspondence={bool(has_correspondence)}, critique={bool(has_critique)}, '
+        f'proof_incomplete={proof_incomplete}, proof_mature={proof_mature}, '
+        f'target_coverage_incomplete={target_coverage_incomplete}, '
+        f'composition_incomplete={composition_incomplete}, '
             f'report={bool(has_report)}, paper={bool(has_paper)}')
       print()
       print('Task weights:')
@@ -234,6 +385,19 @@ steps:
           'lean_count': lean_count, 'rust_count': rust_count,
             'fv_dir': bool(fv_dir), 'fv_docs': fv_docs,
             'correspondence_test_count': correspondence_test_count,
+          'informal_spec_count': informal_spec_count,
+          'handwritten_lean_file_count': handwritten_lean_file_count,
+          'theorem_count': theorem_count,
+          'files_with_sorry': files_with_sorry,
+          'files_without_theorems': files_without_theorems,
+          'cross_file_theorem_files': cross_file_theorem_files,
+          'composition_theorem_count': composition_theorem_count,
+          'expected_theorem_floor': expected_theorem_floor,
+          'targets_declared_count': targets_declared_count,
+          'targets_phase4plus_count': targets_phase4plus_count,
+          'inferred_target_count': inferred_target_count,
+          'proved_like_target_count': proved_like_target_count,
+          'target_proof_coverage': round(target_proof_coverage, 3),
           'n_issues': n_issues, 'n_prs': n_prs,
           'phase_flags': {
               'has_research':   has_research,
@@ -241,6 +405,10 @@ steps:
               'has_lean_specs': has_lean_specs,
               'has_impl':       has_impl,
               'has_proofs':     has_proofs,
+              'proof_incomplete': proof_incomplete,
+              'proof_mature':  proof_mature,
+              'target_coverage_incomplete': target_coverage_incomplete,
+              'composition_incomplete': composition_incomplete,
               'has_rust':       has_rust,
               'has_ci':         has_ci,
               'has_correspondence_tests': has_correspondence_tests,
