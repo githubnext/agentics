@@ -43,6 +43,10 @@ network:
     - "leanlang.org"
     - ocaml
   
+engine:
+  id: copilot
+  model: claude-opus-4.6
+
 checkout:
   fetch: ["*"]      # fetch all remote branches
   fetch-depth: 0   # fetch full history
@@ -635,8 +639,15 @@ formal-verification/
    - Protocol or state machine logic with finite state spaces
    - Existing tests that implicitly document specification — these are specification hints
    - **Gaps identified by the critique**: targets or properties that the critique flagged as high-value but not yet attempted
+
+   **Prioritise targets where the specification is simpler than the implementation.** Formal verification delivers the most value when a concise, high-level property (the spec) constrains a complex, detail-laden implementation. The wider the gap between spec simplicity and implementation complexity, the more confidence the proof provides and the more likely it is to catch bugs. During the survey, actively reason about this for each candidate:
+   - Can the full correctness of this component be stated in a short, clean spec that is obviously correct on inspection — even though the implementation is non-trivial? (e.g., "sort returns a permutation that is sorted" for a 200-line quicksort)
+   - Alternatively, can useful *partial correctness* properties be stated simply even if full correctness is hard? (e.g., "the output length equals the input length", "the function is idempotent", "the state machine never re-enters a terminal state")
+   - Conversely, if the spec would be roughly as complex as the implementation (e.g., a bespoke business-rule engine whose spec is just a restatement of the code), that target is low-value for FV — deprioritise it.
+   - Look for components where the implementation complexity arises from performance optimisation, error handling, concurrency, or platform concerns, while the *intended behaviour* remains simple to state.
 4. For each candidate, document:
    - **Benefit**: what property would we verify? What bugs could this catch?
+   - **Spec-to-implementation complexity ratio**: estimate the relative complexity of the specification versus the implementation. A high ratio (simple spec, complex implementation) is the sweet spot for FV — state why. A low ratio (spec nearly as complex as the code) signals lower FV value. Use a qualitative rating (high / medium / low) and briefly justify it (e.g., "High — correctness is captured by three algebraic laws, but the implementation is 300 lines of optimised bit manipulation").
    - **Specification size**: roughly how many Lean lines to state the key properties?
    - **Proof tractability**: likely `decide` / routine `simp`+`omega`, or requires substantial proof engineering?
    - **Approximations needed**: what aspects of the original code can't be directly modelled in Lean (e.g., I/O, side effects, memory layout)? Document these clearly.
@@ -774,6 +785,7 @@ This is a reflective task. The goal is not to prove more things, but to evaluate
    - **Bug-catching potential**: would a real implementation bug cause this theorem to fail? Or is it so abstract/simplified that bugs in the Rust would not be visible?
    - **Coverage**: what aspects of the original code's correctness are *not* captured by any current theorem?
    - **Strength**: is the property tight (captures exactly the right behaviour) or weak (too easy to satisfy, even by incorrect implementations)?
+   - **Spec-to-implementation complexity ratio**: is the proved property genuinely simpler than the implementation it constrains? A theorem whose statement is nearly as complex as the code it verifies provides little added confidence — it may just be restating the implementation in Lean. Assess whether the spec is a clean, high-level characterisation (high ratio — good) or a line-by-line mirror of the code (low ratio — low value). Note the ratio qualitatively (high / medium / low) and flag any theorems where the spec complexity approaches the implementation complexity.
 3. For unproved / `sorry`-guarded theorems, assess whether they are worth proving or should be revised.
 4. Identify the **highest-value gaps**: which properties, if proved, would give the most confidence in the codebase? Are there important invariants or safety properties that have not yet been attempted?
 5. **(Optional) Review the conference paper**: if `formal-verification/paper/paper.tex` exists, read it and assess it as a critical reviewer would:
@@ -791,9 +803,10 @@ This is a reflective task. The goal is not to prove more things, but to evaluate
      - **Commit**: `<SHA>`
      ```
    - **Overall assessment**: 2–4 sentences on the current state of formal verification and its utility. Include links to proofs and code where relevant.
-   - **Proved theorems** table: theorem name (with link), file, level (low/mid/high), bug-catching potential (low/medium/high), code link, notes. Link each theorem to the corresponding Lean proofs and Rust code it relates to.
-   - **Gaps and recommendations**: what should be proved next and why — prioritised by impact.
-   - **Concerns**: any theorems that look proved but may be vacuous due to model approximations (cross-reference CORRESPONDENCE.md).
+   - **Proved theorems** table: theorem name (with link), file, level (low/mid/high), bug-catching potential (low/medium/high), spec-to-impl ratio (high/medium/low), code link, notes. Link each theorem to the corresponding Lean proofs and Rust code it relates to.
+   - **Spec-to-implementation complexity assessment**: a dedicated section assessing, for each verified target, how the complexity of the formal specification compares to the implementation it constrains. Include both qualitative assessment and, where feasible, quantitative indicators (e.g., lines of Lean spec vs. lines of source implementation, number of theorem statements vs. number of implementation branches). Highlight targets where the ratio is favourable (simple spec, complex code — high FV value) and flag any where the spec is nearly as complex as the implementation (low FV value — consider whether the proof is actually adding confidence or merely restating the code).
+   - **Gaps and recommendations**: what should be proved next and why — prioritised by impact. Favour targets with high spec-to-implementation complexity ratios.
+   - **Concerns**: any theorems that look proved but may be vacuous due to model approximations (cross-reference CORRESPONDENCE.md). Include concerns about low spec-to-implementation ratios where the proof may not be adding meaningful assurance.
    - **Positive findings**: highlight any case where FV revealed or confirmed something non-obvious.
    - **Paper review** (if `paper.tex` was reviewed in step 5): specific, actionable feedback on the conference paper — claims to revise, missing content, clarity issues.
 7. Create a PR with the updated CRITIQUE.md.
@@ -1228,6 +1241,27 @@ graph TD
 | Category | What's covered | What's abstracted/omitted |
 |----------|---------------|--------------------------|
 | ... | ... | ... |
+
+---
+
+## Spec-to-Implementation Complexity
+
+{Assess the ratio between specification complexity and implementation complexity
+for each verified target. This is a key indicator of FV value: formal verification
+is most effective when a concise spec constrains a complex implementation.
+
+For each target, report:
+- Qualitative rating: high (simple spec, complex impl — high FV value),
+  medium, or low (spec nearly as complex as impl — limited FV value)
+- Quantitative indicators where available: lines of Lean spec (theorem
+  statements + type definitions) vs. lines of source implementation,
+  number of properties stated vs. number of implementation branches/cases
+- Commentary on whether the spec captures the *essence* of correctness at
+  a higher level of abstraction, or merely restates the implementation}
+
+| Target | Spec lines | Impl lines | Ratio | Assessment |
+|--------|-----------|------------|-------|------------|
+| `<Name>` | N | M | high/med/low | Brief justification |
 
 ---
 
