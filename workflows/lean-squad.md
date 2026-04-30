@@ -41,6 +41,8 @@ network:
     - "arxiv.org"
     - "leanprover-community.github.io"
     - "leanlang.org"
+    - "lakecache.blob.core.windows.net"
+    - "reservoir.leancache.cloud"
     - ocaml
   
 checkout:
