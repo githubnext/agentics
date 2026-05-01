@@ -26,7 +26,7 @@ graph LR
     A --> T5[Task 5: Proof Assistance]
     A --> T6[Task 6: Correspondence Review]
     A --> T7[Task 7: Proof Utility Critique]
-    A --> T8[Task 8: Aeneas Extraction]
+    A --> T8[Task 8: Correspondence Validation]
     A --> T9[Task 9: CI Automation]
     A --> T10[Task 10: Project Report]
     A --> T11[Task 11: Conference Paper]
@@ -36,7 +36,7 @@ graph LR
 
 A deterministic pre-step counts FV artifacts in the repository (Lean files, spec docs, open issues and PRs) and computes a **phase-weighted probability** for each task. Two tasks are drawn and communicated to the agent; the agent confirms them against its memory and executes them. Task Final (status update) always runs. All notes, targets, choices, and progress live in persistent **repo-memory** so each run builds on the last.
 
-The weighting scheme adapts automatically: when no FV work exists Task 1 dominates; once research is done Task 2 rises; as informal specs accumulate Task 3 gains weight; and so on up to proofs.
+The weighting scheme adapts automatically: when no FV work exists Task 1 dominates; once research is done Task 2 rises; as informal specs accumulate Task 3 gains weight; and so on up to proofs. Once implementation models exist, Task 8 becomes available and is weighted heavily when no runnable correspondence tests exist yet.
 
 ### Task 1: Research & Target Identification
 
@@ -80,17 +80,17 @@ Default weighting: critical when proofs exist but no critique doc.
 
 Steps back to honestly assess whether the FV work is actually useful — are the proved properties meaningful, at the right level of abstraction, and likely to catch real bugs? Evaluates each theorem's level, bug-catching potential, coverage, and strength. Identifies the highest-value gaps and recommends what to prove next. Optionally reviews the conference paper (`paper.tex`) as a critical reviewer and includes actionable feedback. Produces or updates `formal-verification/CRITIQUE.md` as a PR.
 
-### Task 8: Aeneas Extraction *(Rust codebases only)*
+### Task 8: Implementation Correspondence Validation *(Aeneas extraction or runnable tests)*
 
-Default weighting: available for Rust codebases once research is done.
+Default weighting: available once implementation models exist; weighted highly when no runnable correspondence tests exist.
 
-Uses the Charon + Aeneas toolchain to automatically generate Lean 4 code from Rust source, providing a mechanically-derived functional model. Works incrementally on one small module at a time. Reports toolchain bugs encountered. The most valuable use is writing bridging theorems between Aeneas-generated models and hand-written specs, closing the correspondence gap.
+Validates that the Lean implementation model corresponds to the source code using one of two routes. Route A uses the Charon + Aeneas toolchain to automatically generate Lean 4 code from Rust source, producing a mechanically-derived model that can be bridged to the hand-written one. Route B writes and runs executable correspondence tests that exercise the source implementation and the Lean model on the same fixtures, which may require building a small standalone harness or copied test project under `formal-verification/tests/`. The task always prefers concrete, executed evidence over hand-wavy similarity claims.
 
 ### Task 9: CI Automation
 
 Default weighting: critical when Lean files exist but no CI; regular check otherwise.
 
-Sets up and maintains `.github/workflows/lean-ci.yml` (and optionally `aeneas-generate.yml` for Rust) to automatically verify Lean proofs on every PR and push. Audits CI health, checks for persistent failures, verifies cache effectiveness, and fixes broken workflows.
+Sets up and maintains `.github/workflows/lean-ci.yml` and, when applicable, CI for Task 8 artifacts such as `aeneas-generate.yml` or runnable correspondence-test workflows. Audits CI health, checks for persistent failures, verifies cache effectiveness, and fixes broken workflows.
 
 ### Task 10: Project Report
 
@@ -116,6 +116,7 @@ Maintains a single `[Lean Squad] Formal Verification Status` issue as a continuo
 | Target list | `formal-verification/TARGETS.md` | Prioritised targets with phase status |
 | Informal specs | `formal-verification/specs/<name>_informal.md` | Per-target: contracts, examples, intent |
 | Lean specs | `formal-verification/lean/FVSquad/<Name>.lean` | Lean 4 types, propositions, proofs |
+| Correspondence tests | `formal-verification/tests/<name>/` | Runnable harnesses, fixtures, copied test projects, execution notes |
 | Correspondence | `formal-verification/CORRESPONDENCE.md` | How each Lean model maps to the source |
 | Critique | `formal-verification/CRITIQUE.md` | Assessment of proof utility and coverage |
 | Project report | `formal-verification/REPORT.md` | Comprehensive FV report with mermaid diagrams |

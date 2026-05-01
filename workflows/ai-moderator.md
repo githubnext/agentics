@@ -13,7 +13,7 @@ on:
     types: [opened]
     forks: "*"
   skip-roles: [admin, maintainer, write, triage]
-  skip-bots: [github-actions, copilot]
+  skip-bots: [github-actions, copilot, dependabot]
 
 rate-limit:
   max: 5
