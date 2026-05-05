@@ -33,6 +33,53 @@ safe-outputs:
     auto-merge: true
 
 timeout-minutes: 10
+
+steps:
+  - name: Compute NLP word-frequency histogram
+    run: |
+      python3 - <<'EOF'
+      import re
+      from pathlib import Path
+      from collections import Counter
+
+      # Common documentation locations to scan
+      doc_roots = [
+          "docs/src/content/docs",
+          "docs",
+          "documentation",
+          "doc",
+          "wiki",
+          "pages",
+          "content",
+          "site",
+      ]
+
+      tokens = Counter()
+      scanned = 0
+
+      for root in doc_roots:
+          p = Path(root)
+          if p.is_dir():
+              for md_file in p.rglob("*.md"):
+                  text = md_file.read_text(errors="replace")
+                  # Collect backtick-quoted technical tokens
+                  tokens.update(re.findall(r'`([^`\n]+)`', text))
+                  # Also collect hyphenated/dotted/underscored identifiers
+                  tokens.update(re.findall(r'\b([\w][\w\-\.]{2,}[\w])\b', text))
+                  scanned += 1
+
+      # Also scan root-level markdown files (README, CONTRIBUTING, etc.)
+      for md_file in Path(".").glob("*.md"):
+          text = md_file.read_text(errors="replace")
+          tokens.update(re.findall(r'`([^`\n]+)`', text))
+          tokens.update(re.findall(r'\b([\w][\w\-\.]{2,}[\w])\b', text))
+          scanned += 1
+
+      print(f"Scanned {scanned} files. Frequency histogram — top 500 project tokens:")
+      for tok, n in tokens.most_common(500):
+          if len(tok) > 2:
+              print(f"  {n:5d}  {tok}")
+      EOF
 ---
 
 # Dictation Prompt Generator
@@ -50,32 +97,9 @@ Create a concise dictation instruction file at `DICTATION.md` that:
 
 ## Task Steps
 
-### 1. Run NLP Word-Frequency Histogram
+### 1. Review NLP Word-Frequency Histogram
 
-Run the following Python script to compute a word-frequency histogram of code-formatted tokens across all documentation files. Use the output as the **primary source** for selecting the 256 glossary terms — prefer tokens with high frequency that are project-specific (not generic English words).
-
-```bash
-python3 - <<'EOF'
-import re
-from pathlib import Path
-from collections import Counter
-
-docs = Path("docs/src/content/docs")
-tokens = Counter()
-
-for md_file in docs.rglob("*.md"):
-    text = md_file.read_text(errors="replace")
-    # Collect backtick-quoted technical tokens
-    tokens.update(re.findall(r'`([^`\n]+)`', text))
-    # Also collect hyphenated/dotted/underscored identifiers
-    tokens.update(re.findall(r'\b([\w][\w\-\.]{2,}[\w])\b', text))
-
-print("Frequency histogram — top 500 project tokens:")
-for tok, n in tokens.most_common(500):
-    if len(tok) > 2:
-        print(f"  {n:5d}  {tok}")
-EOF
-```
+The setup step has already run a word-frequency histogram across all documentation files and printed the results to the log. Review that output as the **primary source** for selecting the 256 glossary terms — prefer tokens with high frequency that are project-specific (not generic English words).
 
 ### 2. Scan Documentation for Project-Specific Glossary
 
@@ -86,7 +110,7 @@ Use `search` to efficiently discover documentation covering different areas of t
 - `search("compilation CLI commands audit logs")` — CLI and developer tools
 - `search("network sandbox runtime activation triggers")` — advanced features
 
-Read each returned file path for its content, then also scan any remaining documentation files in `docs/src/content/docs/` to ensure broad coverage.
+Read each returned file path for its content, then also scan any remaining documentation files in common locations (`docs/`, `documentation/`, `doc/`, `wiki/`, `pages/`, `content/`, `site/`) to ensure broad coverage.
 
 **Focus areas for extraction:**
 - Configuration: safe-outputs, permissions, tools, cache-memory, toolset, frontmatter
@@ -130,7 +154,7 @@ Use the create-pull-request tool to submit your changes with:
 
 ## Guidelines
 
-- Scan only `docs/src/content/docs/**/*.md` files
+- Scan documentation files across common locations (`docs/`, `documentation/`, `doc/`, `wiki/`, `pages/`, `content/`, `site/`, and root-level `.md` files)
 - Extract 256 terms (240-270 acceptable)
 - Exclude tooling-specific terms (makefile, Astro, starlight)
 - Prioritize frequently used project-specific terms (use NLP histogram from Step 1)
