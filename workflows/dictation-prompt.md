@@ -3,8 +3,7 @@ name: Dictation Prompt Generator
 description: Generates optimized prompts for voice dictation and speech-to-text workflows
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "weekly on sunday around 6:00"
+  schedule: weekly on sunday around 6:00
 
 permissions:
   contents: read
