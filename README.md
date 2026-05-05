@@ -71,6 +71,7 @@ These workflows analyze the repository, code, and activity to produce reports, i
 - [📝 Agentic Wiki Writer](docs/agentic-wiki-writer.md) - Automatically generate and maintain GitHub wiki pages from source code
 - [🔧 Agentic Wiki Coder](docs/agentic-wiki-coder.md) - Implement code changes described in GitHub wiki edits
 - [📖 Glossary Maintainer](docs/glossary-maintainer.md) - Automatically maintain project glossary based on codebase changes
+- [🎙️ Dictation Prompt Generator](docs/dictation-prompt.md) - Generate and maintain a project-specific `DICTATION.md` file with speech-to-text vocabulary and error-correction guidance
 - [🔗 Link Checker](docs/link-checker.md) - Daily automated link checker that finds and fixes broken links in documentation
 - [🗜️ Documentation Unbloat](docs/unbloat-docs.md) - Automatically simplify documentation by reducing verbosity while maintaining clarity
 - [✨ Code Simplifier](docs/code-simplifier.md) - Automatically simplify recently modified code for improved clarity and maintainability
