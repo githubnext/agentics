@@ -5,6 +5,9 @@ on:
 
 permissions: read-all
 
+engine:
+  max-effective-tokens: 10000000
+
 timeout-minutes: 30
 
 network:

@@ -22,6 +22,9 @@ tools:
   bash:
     - "*"
 
+engine:
+  max-effective-tokens: 10000000
+
 timeout-minutes: 30
 
 steps:

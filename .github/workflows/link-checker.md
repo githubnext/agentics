@@ -3,6 +3,9 @@ description: Daily automated link checker that finds and fixes broken links in d
 on:
   schedule: daily on weekdays
 permissions: read-all
+engine:
+  max-effective-tokens: 10000000
+
 timeout-minutes: 60
 network:
   allowed:

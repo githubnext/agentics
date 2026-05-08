@@ -34,6 +34,9 @@ tools:
   bash: true
   edit:
 
+engine:
+  max-effective-tokens: 10000000
+
 timeout-minutes: 20
 ---
 
