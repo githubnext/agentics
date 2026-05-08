@@ -11,6 +11,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# # This workflow runs often, so you can use a small model to keep costs down.
+# engine:
+#   model: small
+
 permissions: read-all
 
 network: defaults

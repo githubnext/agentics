@@ -1004,11 +1004,6 @@ on:
   pull_request:
     paths:
       - 'formal-verification/lean/**'
-  push:
-    branches:
-      - main
-    paths:
-      - 'formal-verification/lean/**'
   workflow_dispatch:
 
 jobs:

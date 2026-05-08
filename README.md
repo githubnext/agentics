@@ -47,7 +47,7 @@ Investigate faults proactively and improve CI.
 
 ### Documentation Workflows
 
-- [📖 Documentation Update on Push to Main](docs/update-docs.md) - Update documentation automatically
+- [📖 Documentation Update on Push to Main](docs/update-docs.md) - Update documentation automatically on every push to main
 - [📖 Daily Documentation Updater](docs/doc-updater.md) - Automatically update documentation based on recent code changes and merged PRs
 - [📝 Agentic Wiki Writer](docs/agentic-wiki-writer.md) - Automatically generate and maintain GitHub wiki pages from source code
 - [🔧 Agentic Wiki Coder](docs/agentic-wiki-coder.md) - Implement code changes described in GitHub wiki edits

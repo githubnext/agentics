@@ -14,9 +14,9 @@ permissions: read-all
 
 network: defaults
 
-# This workflow runs often, so we use a small model to keep costs down.
-engine:
-  model: small
+# # This workflow runs often, so you can use a small model to keep costs down.
+# engine:
+#   model: small
 
 safe-outputs:
   add-labels:
