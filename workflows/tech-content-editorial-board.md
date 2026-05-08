@@ -4,13 +4,26 @@ description: Daily editorial-board review of the repository's technical rigor, w
 on:
   schedule: daily on weekdays
   workflow_dispatch:
+  permissions:
+    pull-requests: read
+  steps:
+    - id: check
+      run: |
+        MAX_OPEN_PRS=8
+        if [[ "${{ github.event_name }}" != "schedule" ]]; then exit 0; fi
+        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[editorial-improvements]"' --json number --jq 'length')
+        [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
+      # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
+
+if: needs.pre_activation.outputs.check_result == 'success'
+
 permissions: read-all
 engine: copilot
 tools:
   bash: ["*"]
   cache-memory:
     - id: focus-areas
-      key: quality-focus-${{ github.workflow }}
+      key: quality-focus-tech-content-editorial-board
   github:
     toolsets:
       - default

@@ -4,7 +4,7 @@
 
 **Automatically extract actionable tasks from GitHub Discussions and create trackable issues**
 
-The [Discussion Task Miner workflow](../workflows/discussion-task-miner.md?plain=1) runs daily to scan recent GitHub Discussions for actionable improvement opportunities. It identifies concrete, well-scoped tasks and converts them into GitHub issues (up to 5 per run), bridging the gap between discussion insights and tracked work items.
+The [Discussion Task Miner workflow](../workflows/discussion-task-miner.md?plain=1) runs regularly (daily by default) to scan recent GitHub Discussions for actionable improvement opportunities. It identifies concrete, well-scoped tasks and converts them into GitHub issues (up to 5 per run), bridging the gap between discussion insights and tracked work items.
 
 ## Installation
 

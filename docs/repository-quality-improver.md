@@ -108,6 +108,6 @@ This workflow is adapted from [Peli's Agent Factory](https://github.github.io/gh
 
 ## Related Workflows
 
-- [Daily File Diet](daily-file-diet.md) — Targeted refactoring for oversized files
+- [Large File Simplifier](large-file-simplifier.md) — Identify oversized source files and create detailed refactoring plans
 - [Code Simplifier](code-simplifier.md) — Simplify recently modified code
 - [Duplicate Code Detector](duplicate-code-detector.md) — Find and remove code duplication

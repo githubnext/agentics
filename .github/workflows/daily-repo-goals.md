@@ -102,7 +102,6 @@ The workflows in the blog series are:
 * "copilot-session-insights.md",
 * "daily-compiler-quality.md",
 * "daily-doc-updater.md",
-* "daily-file-diet.md",
 * "daily-malicious-code-scan.md",
 * "daily-multi-device-docs-tester.md",
 * "daily-news.md",

@@ -28,7 +28,7 @@ tools:
 safe-outputs:
   upload-asset:
   create-discussion:
-    title-prefix: "[Weekly Summary] "
+    title-prefix: "[weekly-issue-activity] "
     category: "audits"
     close-older-discussions: true
 

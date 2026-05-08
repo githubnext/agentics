@@ -20,7 +20,7 @@ tools:
 
 safe-outputs:
   create-issue:
-    title-prefix: "[Contribution Check Report]"
+    title-prefix: "[contribution-check]"
     labels:
       - contribution-report
     close-older-issues: true

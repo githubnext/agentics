@@ -37,7 +37,7 @@ graph LR
     T11 --> M[Save Memory]
 ````
 
-Each run a deterministic pre-step fetches live repo data (open issues, unlabelled issues, open PRs) and computes a **weighted probability** for each task. Two tasks are selected and printed in the workflow logs, then communicated to the agent via prompting. The weights adapt naturally: when unlabelled issues are high, labelling dominates; when there are many open issues, commenting and fixing dominate; as the backlog clears, engineering and forward-progress tasks draw more evenly.
+Each run a deterministic pre-step fetches live repo data (open issues, unlabelled issues, open PRs) and computes a **weighted probability** for each task. Three tasks are selected and printed in the workflow logs, then communicated to the agent via prompting. The weights adapt naturally: when unlabelled issues are high, labelling dominates; when there are many open issues, commenting and fixing dominate; as the backlog clears, engineering and forward-progress tasks draw more evenly.
 
 ### Task 1: Issue Labelling
 
@@ -116,6 +116,8 @@ Every run, Repo Assist updates a rolling monthly activity issue that gives maint
 - **Build, format, lint, and test verification**: Runs any code formatting, linting, and testing checks configured in the repository before creating PRs; never creates PRs with failing builds or lint errors caused by its changes
 - **Release preparation**: Uses judgement each run to assess whether a release is warranted — no dedicated release task; proposes release PRs on its own initiative when appropriate
 - **Good contributor etiquette**: Warmly welcomes first-time contributors and points them to README and CONTRIBUTING as a normal part of good behaviour
+
+For scheduled runs, the workflow is skipped if there are already 8 or more open PRs with its title prefix, to avoid overwhelming maintainers.
 
 ## Usage
 

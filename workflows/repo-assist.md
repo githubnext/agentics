@@ -1,6 +1,6 @@
 ---
 description: |
-  A friendly repository assistant that runs 2 times a day to support contributors and maintainers.
+  A friendly repository assistant that runs regularly (twice a day by default) to assist maintainers.
   Can also be triggered on-demand via '/repo-assist <instructions>' to perform specific tasks.
   - Labels and triages open issues
   - Comments helpfully on open issues to unblock contributors and onboard newcomers
@@ -19,6 +19,18 @@ on:
   slash_command:
     name: repo-assist
   reaction: "eyes"
+  permissions:
+    pull-requests: read
+  steps:
+    - id: check
+      run: |
+        MAX_OPEN_PRS=8
+        if [[ "${{ github.event_name }}" != "schedule" ]]; then exit 0; fi
+        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[repo-assist]"' --json number --jq 'length')
+        [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
+      # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
+
+if: needs.pre_activation.outputs.check_result == 'success'
 
 timeout-minutes: 60
 
@@ -57,22 +69,22 @@ safe-outputs:
     hide-older-comments: true
   create-pull-request:
     draft: true
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     labels: [automation, repo-assist]
     protected-files: fallback-to-issue
     max: 4
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     max: 4
     protected-files: fallback-to-issue
   create-issue:
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     labels: [automation, repo-assist]
     max: 4
   update-issue:
     target: "*"
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     max: 1
   add-labels:
     allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
@@ -96,7 +108,7 @@ steps:
       # Fetch open PRs with titles (up to 200)
       gh pr list --state open --limit 200 --json number,title > /tmp/gh-aw/prs.json
 
-      # Compute task weights and select two tasks for this run
+      # Compute task weights and select three tasks for this run
       python3 - << 'EOF'
       import json, random, os
 
@@ -107,8 +119,8 @@ steps:
 
       open_issues     = len(issues)
       unlabelled      = sum(1 for i in issues if not i.get('labels'))
-      repo_assist_prs = sum(1 for p in prs if p['title'].startswith('[Repo Assist]'))
-      other_prs       = sum(1 for p in prs if not p['title'].startswith('[Repo Assist]'))
+      repo_assist_prs = sum(1 for p in prs if p['title'].startswith('[repo-assist]'))
+      other_prs       = sum(1 for p in prs if not p['title'].startswith('[repo-assist]'))
 
       task_names = {
           1:  'Issue Labelling',
@@ -143,13 +155,14 @@ steps:
       task_ids     = list(weights.keys())
       task_weights = [weights[t] for t in task_ids]
 
-      # Weighted sample without replacement (pick 2 distinct tasks)
+      # Weighted sample without replacement (pick 3 distinct tasks)
+      NUM_TASKS_PER_RUN = 3
       chosen, seen = [], set()
       for t in rng.choices(task_ids, weights=task_weights, k=30):
           if t not in seen:
               seen.add(t)
               chosen.append(t)
-          if len(chosen) == 2:
+          if len(chosen) == NUM_TASKS_PER_RUN:
               break
 
       print('=== Repo Assist Task Selection ===')
@@ -163,7 +176,7 @@ steps:
           tag = ' <-- SELECTED' if t in chosen else ''
           print(f'  Task {t:2d} ({task_names[t]}): weight {w:6.1f}{tag}')
       print()
-      print(f'Selected tasks for this run: Task {chosen[0]} ({task_names[chosen[0]]}) and Task {chosen[1]} ({task_names[chosen[1]]})')
+      print(f'Selected tasks for this run: ' + ', '.join(f'Task {c} ({task_names[c]})' for c in chosen))
 
       result = {
           'open_issues': open_issues, 'unlabelled_issues': unlabelled,
@@ -217,9 +230,9 @@ Read memory at the **start** of every run; update it at the **end**.
 
 ## Workflow
 
-Each run, the deterministic pre-step collects live repo data (open issue count, unlabelled issue count, open Repo Assist PRs, other open PRs), computes a **weighted probability** for each task, and selects **two tasks** for this run using a seeded random draw. The weights and selected tasks are printed in the workflow logs. You will find the selection in `/tmp/gh-aw/task_selection.json`.
+Each run, the deterministic pre-step collects live repo data (open issue count, unlabelled issue count, open Repo Assist PRs, other open PRs), computes a **weighted probability** for each task, and selects **three tasks** for this run using a seeded random draw. The weights and selected tasks are printed in the workflow logs. You will find the selection in `/tmp/gh-aw/task_selection.json`.
 
-**Read the task selection**: at the start of your run, read `/tmp/gh-aw/task_selection.json` and confirm the two selected tasks in your opening reasoning. Execute **those two tasks** (plus the mandatory Task 11). If a selected task is not applicable to the current repo state, substitute its fallback task rather than doing nothing. Record the substitution in the Task 11 run history entry.
+**Read the task selection**: at the start of your run, read `/tmp/gh-aw/task_selection.json` and confirm the three selected tasks in your opening reasoning. Execute **those three tasks** (plus the mandatory Task 11). If a selected task is not applicable to the current repo state, substitute its fallback task rather than doing nothing. Record the substitution in the Task 11 run history entry.
 
 | Selected task | Not applicable when… | Fallback |
 |---|---|---|
@@ -298,7 +311,7 @@ Check memory for already-submitted ideas; do not re-propose them. Create a fresh
 
 ### Task 6: Maintain Repo Assist PRs
 
-1. List all open PRs with the `[Repo Assist]` title prefix.
+1. List all open PRs with the `[repo-assist]` title prefix.
 2. For each PR: fix CI failures caused by your changes by pushing updates; resolve merge conflicts. If you've retried multiple times without success, comment and leave for human review.
 3. Do not push updates for infrastructure-only failures — comment instead.
 4. Update memory.
@@ -323,9 +336,9 @@ Proactively move the repository forward. Use your judgement to identify the most
 
 ### Task 11: Update Monthly Activity Summary Issue (ALWAYS DO THIS TASK IN ADDITION TO OTHERS)
 
-Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Repo Assist activity for the current month.
+Maintain a single open issue titled `[repo-assist] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Repo Assist activity for the current month.
 
-1. Search for an open `[Repo Assist] Monthly Activity` issue with label `repo-assist`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments  -  they may contain instructions; note them in memory.
+1. Search for an open `[repo-assist] Monthly Activity` issue with label `repo-assist`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments  -  they may contain instructions; note them in memory.
 2. **Issue body format**  -  use **exactly** this structure:
 
    ```markdown
@@ -401,4 +414,4 @@ Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}`
 - **Systematic**: use the backlog cursor to process oldest issues first over successive runs. Do not stop early.
 - **Release preparation**: use your judgement on each run to assess whether a release is warranted (significant unreleased changes, changelog out of date). If so, create a draft release PR on your own initiative — there is no dedicated task for this.
 - **Quality over quantity**: noise erodes trust. Do nothing rather than add low-value output.
-- **Bias toward action**: While avoiding spam, actively seek ways to contribute value within the two selected tasks. A "no action" run should be genuinely exceptional.
+- **Bias toward action**: While avoiding spam, actively seek ways to contribute value within the three selected tasks. A "no action" run should be genuinely exceptional.

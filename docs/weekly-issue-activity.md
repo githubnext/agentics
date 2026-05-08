@@ -1,10 +1,10 @@
-# 📊 Weekly Issue Summary
+# 📊 Weekly Issue Activity
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
 **Generate comprehensive weekly reports on issue activity with trend charts and recommendations**
 
-The [Weekly Issue Summary workflow](../workflows/weekly-issue-summary.md?plain=1) runs every Monday at 3 PM UTC to collect issue data, generate trend charts, and create a detailed discussion with statistics and actionable recommendations.
+The [Weekly Issue Activity workflow](../workflows/weekly-issue-activity.md?plain=1) runs every Monday at 3 PM UTC to collect issue data, generate trend charts, and create a detailed discussion with statistics and actionable recommendations.
 
 ## Installation
 
@@ -13,7 +13,7 @@ The [Weekly Issue Summary workflow](../workflows/weekly-issue-summary.md?plain=1
 gh extension install github/gh-aw
 
 # Add the workflow to your repository
-gh aw add-wizard githubnext/agentics/weekly-issue-summary
+gh aw add-wizard githubnext/agentics/weekly-issue-activity
 ```
 
 This walks you through adding the workflow to your repository.

@@ -22,7 +22,7 @@ network: defaults
 
 safe-outputs:
   create-issue:
-    title-prefix: "${{ github.workflow }}"
+    title-prefix: "[ci-doctor] "
     labels: [automation, ci]
   add-comment:
 

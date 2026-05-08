@@ -14,7 +14,7 @@ tools:
   bash: ["*"]
   cache-memory:
     - id: focus-areas
-      key: quality-focus-${{ github.workflow }}
+      key: quality-focus-repository-quality-improver
   github:
     toolsets:
       - default

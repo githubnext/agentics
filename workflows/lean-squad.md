@@ -65,22 +65,22 @@ safe-outputs:
     run-success: "✓ {workflow_name} completed successfully, see [workflow run]({run_url})."
     run-failure: "✗ {workflow_name} encountered {status}, see [workflow run]({run_url})."
   create-issue:
-    title-prefix: "[Lean Squad] "
+    title-prefix: "[lean-squad] "
     labels: [automation, lean-squad, aeneas-bug]
     max: 4
   update-issue:
     target: "*"
-    title-prefix: "[Lean Squad] "
+    title-prefix: "[lean-squad] "
     max: 1
   create-pull-request:
-    title-prefix: "[Lean Squad] "
+    title-prefix: "[lean-squad] "
     labels: [automation, lean-squad]
     max: 2
     protected-files: allowed
     draft: false
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[Lean Squad] "
+    title-prefix: "[lean-squad] "
     protected-files: allowed
     max: 4
   add-comment:
@@ -132,7 +132,7 @@ steps:
         | python3 -c "
       import json, sys
       d = json.load(sys.stdin)
-      print(json.dumps([x for x in d if x['title'].startswith('[Lean Squad]')]))" \
+      print(json.dumps([x for x in d if x['title'].startswith('[lean-squad]')]))" \
         > /tmp/gh-aw/fv_prs.json || echo "[]" > /tmp/gh-aw/fv_prs.json
 
       python3 - << 'EOF'
@@ -471,7 +471,7 @@ At the start of your run, read `/tmp/gh-aw/task_selection.json`. It contains:
 - `selected_tasks`: two tasks chosen by a phase-weighted random draw
 - `task_names`, `weights`: for context
 
-**Before executing any task**, merge all open `[Lean Squad]` PRs into your working branch so each run is additive on all prior in-flight work:
+**Before executing any task**, merge all open `[lean-squad]` PRs into your working branch so each run is additive on all prior in-flight work:
 
 ```bash
 git fetch --all
@@ -542,7 +542,7 @@ else
 fi
 ```
 
-**If `LEAN_AVAILABLE=false`**: stop immediately. Do NOT write or submit any `.lean` files this run. Update the `[Lean Squad] Formal Verification Status` issue with a note that the toolchain is unavailable, and record the failure in memory. Proceed only with non-Lean tasks (Tasks 1 and 2).
+**If `LEAN_AVAILABLE=false`**: stop immediately. Do NOT write or submit any `.lean` files this run. Update the `[lean-squad] Formal Verification Status` issue with a note that the toolchain is unavailable, and record the failure in memory. Proceed only with non-Lean tasks (Tasks 1 and 2).
 
 Manage Lean projects with `lake`. If no `lakefile.toml` exists under `formal-verification/lean/`:
 
@@ -931,7 +931,7 @@ When Charon or Aeneas produces an error that appears to be a toolchain bug (pani
 1. **Minimise**: try to isolate the smallest Rust input that triggers the bug.
 2. **Investigate**: check the Aeneas and Charon issue trackers for known issues. Search for the error message.
 3. **Document**: Open a GitHub issue **in this repository** (not upstream) with:
-   - Title: `[Lean Squad] Aeneas/Charon bug: <short description>`
+   - Title: `[lean-squad] Aeneas/Charon bug: <short description>`
    - Labels: `automation`, `lean-squad`, `aeneas-bug`
    - Body:
      - The Rust code that triggers the failure (minimised where possible)
@@ -1002,11 +1002,6 @@ name: Lean CI
 
 on:
   pull_request:
-    paths:
-      - 'formal-verification/lean/**'
-  push:
-    branches:
-      - main
     paths:
       - 'formal-verification/lean/**'
   workflow_dispatch:
@@ -1577,7 +1572,7 @@ If compilation fails, fix the LaTeX errors before creating the PR. If errors can
 
 ### Task Final: Update Lean Squad Status Issue *(ALWAYS DO THIS EVERY RUN)*
 
-Maintain a single open issue titled `[Lean Squad] Formal Verification Status` as a continuously-updated dashboard for maintainers.
+Maintain a single open issue titled `[lean-squad] Formal Verification Status` as a continuously-updated dashboard for maintainers.
 
 1. Search for an existing open issue with that exact title. If it exists, update it. If not, create it.
 2. **Issue body format** — use exactly this structure:
@@ -1625,7 +1620,7 @@ are in play, known limitations of the model.}
 
 ## Guidelines
 
-- **Always build on open PRs**: at the start of every run, merge all open `[Lean Squad]` PRs into your branch before doing any new work. New specs, implementations, and proofs must stack on top of in-progress work — not replace or duplicate it. If a PR merges cleanly, treat its contents as already done. If it conflicts, note it in memory and address the conflict in a later focused run.
+- **Always build on open PRs**: at the start of every run, merge all open `[lean-squad]` PRs into your branch before doing any new work. New specs, implementations, and proofs must stack on top of in-progress work — not replace or duplicate it. If a PR merges cleanly, treat its contents as already done. If it conflicts, note it in memory and address the conflict in a later focused run.
 - **One target per task per run**: go deep on one thing rather than skimming across many.
 - **Don't duplicate**: check memory and the repo before creating a new spec or Lean file — it may already exist from a prior merged PR.
 - **Read AGENTS.md first**: if the repository has an AGENTS.md, read it before opening any PR.

@@ -44,6 +44,8 @@ Each run starts by inspecting the repository, recent work, and open issues or pu
 
 When a low-risk, article-level improvement is available, the workflow should prefer making that edit and opening a focused pull request. Any broader or remaining backlog is then summarized in at most one tracking issue.
 
+For scheduled runs, the workflow is skipped if there are already 8 or more open PRs with its title prefix, to avoid overwhelming maintainers.
+
 ## Simulated Board Personas
 
 The workflow simulates a board-style review using named personas with distinct areas of expertise:
@@ -65,7 +67,7 @@ In addition to those board voices, the workflow uses an **Orchestrator** role du
 
 ## Usage
 
-This workflow runs daily on weekdays and can also be started manually.
+This workflow runs regularly (daily by default) on weekdays and can also be started manually.
 
 ```bash
 gh aw run tech-content-editorial-board

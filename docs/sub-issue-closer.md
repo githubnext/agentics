@@ -24,7 +24,7 @@ gh aw run sub-issue-closer
 
 ## What It Does
 
-The Sub-Issue Closer workflow runs daily and:
+The Sub-Issue Closer workflow runs regularly (daily by default) and:
 
 1. **Scans Open Parent Issues** - Finds all open issues that have sub-issues (tracked issues)
 2. **Checks Completion** - Verifies whether all sub-issues are in a closed state

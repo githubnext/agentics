@@ -95,5 +95,5 @@ Common customizations:
 ## Related Workflows
 
 - [Repository Quality Improver](repository-quality-improver.md) — Daily analysis of quality dimensions across your repository
-- [Daily File Diet](daily-file-diet.md) — Monitor for oversized source files and create targeted refactoring issues
-- [Weekly Issue Summary](weekly-issue-summary.md) — Weekly issue activity report with trend charts
+- [Large File Simplifier](large-file-simplifier.md) — Identify oversized source files and create detailed refactoring plans
+- [Weekly Issue Activity](weekly-issue-activity.md) — Weekly issue activity report with trend charts

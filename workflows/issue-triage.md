@@ -15,6 +15,10 @@ permissions: read-all
 
 network: defaults
 
+# # This workflow runs often, so you can use a small model to keep costs down.
+# engine:
+#   model: small
+
 safe-outputs:
   add-labels:
     max: 5
@@ -73,7 +77,7 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - DO NOT communicate directly with users
    - If no labels are clearly applicable, do not apply any labels
 
-8. Add an issue comment to the issue with your analysis:
+8. If very confident, add an issue comment to the issue with your analysis:
    - Start with "🎯 Agentic Issue Triage"
    - Provide a brief summary of the issue
    - Mention any relevant details that might help the team understand the issue better
@@ -84,5 +88,3 @@ You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ 
    - If you have any debugging strategies, include them in the comment
    - If appropriate break the issue down to sub-tasks and write a checklist of things to do.
    - Use collapsed-by-default sections in the GitHub markdown to keep the comment tidy. Collapse all sections except the short main summary at the top.
-
-

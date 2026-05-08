@@ -66,7 +66,7 @@ tools:
 
 safe-outputs:
   create-pull-request:
-    title-prefix: "[VEX] "
+    title-prefix: "[vex] "
     labels: [vex, automated]
     draft: false
 

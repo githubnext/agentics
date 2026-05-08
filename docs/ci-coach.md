@@ -4,7 +4,7 @@
 
 **Automated CI/CD optimization expert that analyzes your GitHub Actions workflows and proposes efficiency improvements**
 
-The [CI Coach workflow](../workflows/ci-coach.md?plain=1) is your personal CI/CD optimization consultant. It runs daily to analyze workflows, collect performance metrics, identify optimization opportunities, and propose concrete improvements through pull requests.
+The [CI Coach workflow](../workflows/ci-coach.md?plain=1) is your personal CI/CD optimization consultant. It runs regularly (daily by default) to analyze workflows, collect performance metrics, identify optimization opportunities, and propose concrete improvements through pull requests.
 
 ## Installation
 
@@ -38,6 +38,8 @@ The workflow analyzes job parallelization, caching strategy, test distribution, 
 - ✅ Clear documentation
 - ❌ Never breaks test integrity
 - ❌ Never sacrifices correctness for speed
+
+For scheduled runs, the workflow is skipped if there are already 8 or more open PRs with its title prefix, to avoid overwhelming maintainers.
 
 ## Examples
 

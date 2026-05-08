@@ -32,11 +32,11 @@ Investigate faults proactively and improve CI.
 
 - [🔄 Autoloop](https://github.com/githubnext/autoloop) - Loop anything in your repo to continuously research, develop and maintain
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
-- [📊 Weekly Issue Summary](docs/weekly-issue-summary.md) - Weekly issue activity report with trend charts and recommendations
-- [👥 Daily Repo Status](docs/daily-repo-status.md) - Assess repository activity and create status reports
-- [👥 Daily Team Status](docs/daily-team-status.md) - Create upbeat daily team activity summaries with productivity insights
-- [📰 Daily Repository Chronicle](docs/daily-repo-chronicle.md) - Transform daily repository activity into an engaging newspaper-style narrative with trend charts
-- [📋 Daily Plan](docs/daily-plan.md) - Update planning issues for team coordination
+- [📊 Weekly Issue Activity](docs/weekly-issue-activity.md) - Weekly issue activity report with trend charts and recommendations
+- [👥 Daily Repo Status](docs/repo-status.md) - Assess repository activity and create status reports
+- [👥 Daily Team Status](docs/team-status.md) - Create upbeat team activity summaries with productivity insights
+- [📰 Daily Repository Chronicle](docs/repo-chronicle.md) - Transform repository activity into an engaging newspaper-style narrative with trend charts
+- [📋 Daily Plan](docs/plan.md) - Update planning issues for team coordination
 - [🔍 Discussion Task Miner](docs/discussion-task-miner.md) - Extract actionable improvement tasks from GitHub Discussions and create tracked issues
 - [🗺️ Weekly Repository Map](docs/weekly-repo-map.md) - Visualize repository file structure and size distribution with a weekly ASCII tree map
 - [📰 Tech Content Editorial Board](docs/tech-content-editorial-board.md) - Daily tech content editorial-board review of technical rigor, wording, structure, and editorial quality
@@ -45,6 +45,36 @@ Investigate faults proactively and improve CI.
 
 - [📦 Dependabot PR Bundler](docs/dependabot-pr-bundler.md) - Create pull requests to bundle together as many dependabot updates as possible
 - [📦 Dependabot Issue Bundler](docs/dependabot-issue-bundler.md) - Create issues that group together dependabot updates related to the same ecosystem
+
+### Documentation Workflows
+
+- [📖 Documentation Update on Push to Main](docs/update-docs.md) - Update documentation automatically on every push to main
+- [📖 Daily Documentation Updater](docs/doc-updater.md) - Automatically update documentation based on recent code changes and merged PRs
+- [📝 Agentic Wiki Writer](docs/agentic-wiki-writer.md) - Automatically generate and maintain GitHub wiki pages from source code
+- [🔧 Agentic Wiki Coder](docs/agentic-wiki-coder.md) - Implement code changes described in GitHub wiki edits
+- [📖 Glossary Maintainer](docs/glossary-maintainer.md) - Automatically maintain project glossary based on codebase changes
+- [🎙️ Dictation Prompt Generator](docs/dictation-prompt.md) - Generate and maintain a project-specific `DICTATION.md` file with speech-to-text vocabulary and error-correction guidance
+- [🔗 Link Checker](docs/link-checker.md) - Daily automated link checker that finds and fixes broken links in documentation
+- [🗜️ Documentation Unbloat](docs/unbloat-docs.md) - Automatically simplify documentation by reducing verbosity while maintaining clarity
+- [📝 Markdown Linter](docs/markdown-linter.md) - Run Markdown quality checks on all documentation files and get a prioritized issue report of violations
+- [📱 Daily Multi-Device Docs Tester](docs/multi-device-docs-tester.md) - Test documentation sites across mobile, tablet, and desktop viewports for responsive layout and interaction issues
+
+### Code Improvement Workflows (by analysis, producing report)
+
+These workflows analyze the repository, code, and activity to produce reports, insights, and recommendations for improvements. They do not make any changes to the codebase directly but can be used as input for maintainers to take action.
+
+- [🔍 Daily Accessibility Review](docs/accessibility-review.md) - Review application accessibility by automatically running and using the application
+- [🔎 Daily Adhoc QA](docs/adhoc-qa.md) - Perform adhoc explorative quality assurance tasks
+- [🗂️ Large File Simplifier](docs/large-file-simplifier.md) - Identify the largest source file and create a detailed refactoring plan as an issue
+
+### Code Improvement Workflows (by making changes, producing pull requests)
+
+- [✨ Code Simplifier](docs/code-simplifier.md) - Automatically simplify recently modified code for improved clarity and maintainability
+- [🔍 Duplicate Code Detector](docs/duplicate-code-detector.md) - Identify duplicate code patterns and suggest refactoring opportunities
+- [🧪 Daily Test Improver](docs/test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
+- [⚡ Daily Perf Improver](docs/perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
+- [🌱 Daily Efficiency Improver](docs/efficiency-improver.md) - Improve energy efficiency and computational footprint across code, data, network, and UI
+- [📊 Repository Quality Improver](docs/repository-quality-improver.md) - Daily rotating analysis of repository quality across code, documentation, testing, security, and custom dimensions
 
 ### Command-Triggered Agentic Workflows
 
@@ -57,42 +87,14 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 - [🏥 PR Fix](docs/pr-fix.md) - Analyze failing CI checks and implement fixes for pull requests
 - [🔍 Repo Ask](docs/repo-ask.md) - Intelligent research assistant for repository questions and analysis
 
-### Code Improvement Workflows (by analysis, producing report)
+## Security Workflows
 
-These workflows analyze the repository, code, and activity to produce reports, insights, and recommendations for improvements. They do not make any changes to the codebase directly but can be used as input for maintainers to take action.
-
-- [🔍 Daily Accessibility Review](docs/daily-accessibility-review.md) - Review application accessibility by automatically running and using the application
-- [📱 Multi-Device Docs Tester](docs/daily-multi-device-docs-tester.md) - Test documentation sites across mobile, tablet, and desktop viewports for responsive layout and interaction issues
-- [🔎 Daily Adhoc QA](docs/daily-qa.md) - Perform adhoc explorative quality assurance tasks
-- [🗂️ Large File Simplifier](docs/large-file-simplifier.md) - Identify the largest source file and create a detailed refactoring plan as an issue
-
-### Code Improvement Workflows (by making changes, producing pull requests)
-
-- [📖 Regular Documentation Update](docs/update-docs.md) - Update documentation automatically
-- [📖 Daily Documentation Updater](docs/daily-doc-updater.md) - Automatically update documentation based on recent code changes and merged PRs
-- [📝 Agentic Wiki Writer](docs/agentic-wiki-writer.md) - Automatically generate and maintain GitHub wiki pages from source code
-- [🔧 Agentic Wiki Coder](docs/agentic-wiki-coder.md) - Implement code changes described in GitHub wiki edits
-- [📖 Glossary Maintainer](docs/glossary-maintainer.md) - Automatically maintain project glossary based on codebase changes
-- [🎙️ Dictation Prompt Generator](docs/dictation-prompt.md) - Generate and maintain a project-specific `DICTATION.md` file with speech-to-text vocabulary and error-correction guidance
-- [🔗 Link Checker](docs/link-checker.md) - Daily automated link checker that finds and fixes broken links in documentation
-- [🗜️ Documentation Unbloat](docs/unbloat-docs.md) - Automatically simplify documentation by reducing verbosity while maintaining clarity
-- [✨ Code Simplifier](docs/code-simplifier.md) - Automatically simplify recently modified code for improved clarity and maintainability
-- [🔍 Duplicate Code Detector](docs/duplicate-code-detector.md) - Identify duplicate code patterns and suggest refactoring opportunities
-- [🏋️ Daily File Diet](docs/daily-file-diet.md) - Monitor for oversized source files and create targeted refactoring issues
-- [🧪 Daily Test Improver](docs/daily-test-improver.md) - Improve test coverage by adding meaningful tests to under-tested areas
-- [⚡ Daily Perf Improver](docs/daily-perf-improver.md) - Analyze and improve code performance through benchmarking and optimization
-- [🌱 Daily Efficiency Improver](docs/daily-efficiency-improver.md) - Improve energy efficiency and computational footprint across code, data, network, and UI
-- [📊 Repository Quality Improver](docs/repository-quality-improver.md) - Daily rotating analysis of repository quality across code, documentation, testing, security, and custom dimensions
-- [📝 Markdown Linter](docs/markdown-linter.md) - Run Markdown quality checks on all documentation files and get a prioritized issue report of violations
+- [🔍 Daily Malicious Code Scan](docs/malicious-code-scan.md) - Scan recent code changes for suspicious patterns indicating malicious activity or supply chain attacks
+- [🔒 VEX Generator](docs/vex-generator.md) - Auto-generate OpenVEX statements for dismissed Dependabot alerts, capturing security assessments in a machine-readable format
 
 ## Formal Verification Workflows
 
 - [🔬 Lean Squad](docs/lean-squad.md) - Progressively apply Lean 4 formal verification to your codebase: research targets, extract specs, write Lean propositions, translate implementations, and attempt proofs — finding bugs or issuing stamps of confidence
-
-## Security Workflows
-
-- [🔍 Daily Malicious Code Scan](docs/daily-malicious-code-scan.md) - Daily scan of recent code changes for suspicious patterns indicating malicious activity or supply chain attacks
-- [🔒 VEX Generator](docs/vex-generator.md) - Auto-generate OpenVEX statements for dismissed Dependabot alerts, capturing security assessments in a machine-readable format
 
 ## Meta-Workflows
 

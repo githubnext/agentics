@@ -85,6 +85,23 @@ Common customizations:
 
 After editing, run `gh aw compile` to update the workflow and commit to the default branch.
 
+## Why File Size Matters
+
+Large files are a universal code smell that affects every programming language:
+
+- **Hard to navigate**: Scrolling through 1000+ line files wastes developer time
+- **Increases merge conflicts**: Multiple developers frequently change the same large file
+- **Harder to test**: Large files tend to mix concerns, making isolated unit testing difficult
+- **Obscures ownership**: It's unclear who is responsible for what in a large catch-all file
+
+The 500-line threshold is a practical guideline. Files near the threshold may be fine; files well over it are worth examining.
+
+## Example Issues
+
+From the original gh-aw repository (79% merge rate):
+- Targeting `add_interactive.go` (large file) → [PR refactored it into 6 domain-focused modules](https://github.com/github/gh-aw/pull/12545)
+- Targeting `permissions.go` → [PR splitting into focused modules](https://github.com/github/gh-aw/pull/12363) (928 → 133 lines)
+
 ## Tips for Success
 
 1. **Work the backlog gradually** — The workflow creates one issue at a time to keep things manageable
@@ -92,8 +109,11 @@ After editing, run `gh aw compile` to update the workflow and commit to the defa
 3. **Update imports throughout** — After splitting a file, search the codebase for import paths that need updating
 4. **Trust the threshold** — Files just above 500 lines may not need splitting; focus on files well over it
 
+## Source
+
+This workflow is adapted from [Peli's Agent Factory](https://github.github.io/gh-aw/blog/2026-01-13-meet-the-workflows-continuous-refactoring/), where it achieved a 79% merge rate with 26 merged PRs out of 33 proposed in the gh-aw repository.
+
 ## Related Workflows
 
-- [Daily File Diet](daily-file-diet.md) — Similar workflow that also creates refactoring issues for oversized files
 - [Code Simplifier](code-simplifier.md) — Simplifies recently modified code for clarity
 - [Duplicate Code Detector](duplicate-code-detector.md) — Finds and removes code duplication

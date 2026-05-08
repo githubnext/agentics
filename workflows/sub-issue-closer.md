@@ -135,7 +135,7 @@ During processing, maintain clear logging:
 
 ## Important Notes
 
-- This is a scheduled workflow that runs daily
+- This is a scheduled workflow that runs regularly (daily by default)
 - It complements event-triggered auto-close workflows by catching cases that were missed
 - Use the GitHub MCP server tools to query issues and their relationships
 - Be careful with recursive processing to avoid infinite loops

@@ -4,7 +4,7 @@
 
 **Review and simplify documentation by removing verbosity while maintaining clarity**
 
-The [Documentation Unbloat workflow](../workflows/unbloat-docs.md?plain=1) runs daily to remove duplicate content, excessive bullet points, redundant examples, and verbose descriptions - while preserving all essential information, links, and technical details.
+The [Documentation Unbloat workflow](../workflows/unbloat-docs.md?plain=1) runs regularly (daily by default) to remove duplicate content, excessive bullet points, redundant examples, and verbose descriptions - while preserving all essential information, links, and technical details.
 
 ## Installation
 
@@ -32,6 +32,8 @@ graph LR
 
 The workflow improves exactly **one file per run** for easy review. Files with `disable-agentic-editing: true` in frontmatter are skipped. Uses cache memory to track previously cleaned files.
 
+For scheduled runs, the workflow is skipped if there are already 8 or more open PRs with its title prefix, to avoid overwhelming maintainers.
+
 ## Usage
 
 ### Commands
@@ -52,7 +54,7 @@ Trigger in a PR comment:
 
 ### Configuration
 
-The workflow runs daily. You can customize directories to scan, success criteria, and exclusion patterns.
+The workflow runs regularly (daily by default). You can customize directories to scan, success criteria, and exclusion patterns.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 

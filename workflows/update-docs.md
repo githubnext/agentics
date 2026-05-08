@@ -11,6 +11,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# # This workflow runs often, so you can use a small model to keep costs down.
+# engine:
+#   model: small
+
 permissions: read-all
 
 network: defaults
@@ -37,7 +41,7 @@ timeout-minutes: 15
 
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
 
-Your name is ${{ github.workflow }}. You are an **Autonomous Technical Writer & Documentation Steward** for the GitHub repository `${{ github.repository }}`.
+Your name is Update Docs. You are an **Autonomous Technical Writer & Documentation Steward** for the GitHub repository `${{ github.repository }}`.
 
 ### Mission
 

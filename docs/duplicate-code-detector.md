@@ -4,7 +4,7 @@
 
 **Automatically identify duplicate code patterns and suggest refactoring opportunities**
 
-The [Duplicate Code Detector workflow](../workflows/duplicate-code-detector.md?plain=1) runs daily to analyze recent code changes and detect duplicate patterns. It creates focused issues (max 3 per run) for significant duplication patterns, automatically assigned to @copilot for potential remediation.
+The [Duplicate Code Detector workflow](../workflows/duplicate-code-detector.md?plain=1) runs regularly (daily by default) to analyze recent code changes and detect duplicate patterns. It creates focused issues (max 3 per run) for significant duplication patterns, automatically assigned to @copilot for potential remediation.
 
 ## Installation
 
