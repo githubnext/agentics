@@ -16,6 +16,12 @@ description: |
 on:
   schedule: every 12h
   workflow_dispatch:
+    inputs:
+      command:
+        description: "Optional command-mode instruction (for example: Run Task 9)"
+        required: false
+        type: string
+        default: ""
   slash_command:
     name: repo-assist
   reaction: "eyes"
