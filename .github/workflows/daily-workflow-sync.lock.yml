@@ -762,7 +762,7 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          if grep -Eiq '(max[ -]?effective[ -]?tokens|effective token[s]?.*(limit|exceed|rate)|rate limit.*effective token)' /tmp/gh-aw/agent-stdio.log; then
+          if grep -Eiq '(max[ -]?effective[ -]?tokens|effective token[s]?[[:space:]]{0,10}(limit|exceed|rate)|rate limit.*effective token)' /tmp/gh-aw/agent-stdio.log; then
             echo "effective_tokens_rate_limit_error=true" >> "$GITHUB_OUTPUT"
           else
             echo "effective_tokens_rate_limit_error=false" >> "$GITHUB_OUTPUT"
@@ -1028,7 +1028,7 @@ jobs:
           script: |
             const maxEffectiveTokens = Number(process.env.GH_AW_MAX_EFFECTIVE_TOKENS || '0');
             const effectiveTokens = Number(process.env.GH_AW_EFFECTIVE_TOKENS || '0');
-            const rateLimitDetected = (process.env.GH_AW_EFFECTIVE_TOKENS_RATE_LIMIT_ERROR || '').toLowerCase() === 'true' || (maxEffectiveTokens > 0 && effectiveTokens >= maxEffectiveTokens);
+            const rateLimitDetected = (process.env.GH_AW_EFFECTIVE_TOKENS_RATE_LIMIT_ERROR || '').toLowerCase() === 'true' || (effectiveTokens > 0 && maxEffectiveTokens > 0 && effectiveTokens > maxEffectiveTokens);
             if (!rateLimitDetected) {
               return;
             }
