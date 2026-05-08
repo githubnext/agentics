@@ -49,7 +49,9 @@ safe-outputs:
   create-pull-request:
     title-prefix: "[agentic-wiki]"
     labels: [documentation, automated]
-    protected-files: fallback-to-issue
+    allowed-files:
+      - ".github/agentic-wiki/**"
+    protected-files: allowed
   jobs:
     push-wiki:
       description: >
