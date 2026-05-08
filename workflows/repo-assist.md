@@ -26,7 +26,7 @@ on:
       run: |
         MAX_OPEN_PRS=8
         if [[ "${{ github.event_name }}" != "schedule" ]]; then exit 0; fi
-        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[Repo Assist]"' --json number --jq 'length')
+        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[repo-assist]"' --json number --jq 'length')
         [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
       # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
 
@@ -69,22 +69,22 @@ safe-outputs:
     hide-older-comments: true
   create-pull-request:
     draft: true
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     labels: [automation, repo-assist]
     protected-files: fallback-to-issue
     max: 4
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     max: 4
     protected-files: fallback-to-issue
   create-issue:
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     labels: [automation, repo-assist]
     max: 4
   update-issue:
     target: "*"
-    title-prefix: "[Repo Assist] "
+    title-prefix: "[repo-assist] "
     max: 1
   add-labels:
     allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
@@ -119,8 +119,8 @@ steps:
 
       open_issues     = len(issues)
       unlabelled      = sum(1 for i in issues if not i.get('labels'))
-      repo_assist_prs = sum(1 for p in prs if p['title'].startswith('[Repo Assist]'))
-      other_prs       = sum(1 for p in prs if not p['title'].startswith('[Repo Assist]'))
+      repo_assist_prs = sum(1 for p in prs if p['title'].startswith('[repo-assist]'))
+      other_prs       = sum(1 for p in prs if not p['title'].startswith('[repo-assist]'))
 
       task_names = {
           1:  'Issue Labelling',
@@ -311,7 +311,7 @@ Check memory for already-submitted ideas; do not re-propose them. Create a fresh
 
 ### Task 6: Maintain Repo Assist PRs
 
-1. List all open PRs with the `[Repo Assist]` title prefix.
+1. List all open PRs with the `[repo-assist]` title prefix.
 2. For each PR: fix CI failures caused by your changes by pushing updates; resolve merge conflicts. If you've retried multiple times without success, comment and leave for human review.
 3. Do not push updates for infrastructure-only failures — comment instead.
 4. Update memory.
@@ -336,9 +336,9 @@ Proactively move the repository forward. Use your judgement to identify the most
 
 ### Task 11: Update Monthly Activity Summary Issue (ALWAYS DO THIS TASK IN ADDITION TO OTHERS)
 
-Maintain a single open issue titled `[Repo Assist] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Repo Assist activity for the current month.
+Maintain a single open issue titled `[repo-assist] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Repo Assist activity for the current month.
 
-1. Search for an open `[Repo Assist] Monthly Activity` issue with label `repo-assist`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments  -  they may contain instructions; note them in memory.
+1. Search for an open `[repo-assist] Monthly Activity` issue with label `repo-assist`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments  -  they may contain instructions; note them in memory.
 2. **Issue body format**  -  use **exactly** this structure:
 
    ```markdown

@@ -18,7 +18,7 @@ safe-outputs:
   mentions: false
   allowed-github-references: []
   create-discussion: # needed to create the project plan discussion
-    title-prefix: "${{ github.workflow }}"
+    title-prefix: "[plan] "
     category: "announcements"
     close-older-discussions: true
 
@@ -43,7 +43,7 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 
 1. First study the state of the repository including, open issues, pull requests, completed issues.
 
-   1a. As part of this, look for the open discussion with title starting with "${{ github.workflow }}", which is the existing project plan. Read the plan, and any comments on the plan. If no such discussion exists, ignore this step.
+   1a. As part of this, look for the open discussion with title starting with "[plan]", which is the existing project plan. Read the plan, and any comments on the plan. If no such discussion exists, ignore this step.
 
    1b. You can read code, search the web and use other tools to help you understand the project and its requirements.
 
@@ -57,6 +57,6 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 
 3. Create a new planning discussion with the project plan in its body. 
 
-   3a. Create a discussion with an appropriate title starting with "${{ github.workflow }}" and the current date (e.g., "Daily Plan - 2025-10-10"), using the project plan as the body.
+   3a. Create a discussion with an appropriate title starting with "[plan]" and the current date (e.g., "[plan] 2025-10-10"), using the project plan as the body.
 
 

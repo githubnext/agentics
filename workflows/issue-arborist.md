@@ -48,7 +48,7 @@ steps:
 safe-outputs:
   create-issue:
     expires: 2d
-    title-prefix: "[Parent] "
+    title-prefix: "[parent] "
     max: 5
     group: true
   link-sub-issue:
@@ -94,7 +94,7 @@ jq '[.[] | select(.labels | any(.name == "bug"))]' /tmp/gh-aw/issues-data/issues
 Examine the issues to identify potential parent-child relationships. Look for:
 
 1. **Feature with Tasks**: A high-level feature request (parent) with specific implementation tasks (sub-issues)
-2. **Epic Patterns**: Issues with "[Epic]", "[Parent]" or similar prefixes that encompass smaller work items
+2. **Epic Patterns**: Issues with "[Epic]", "[parent]" or similar prefixes that encompass smaller work items
 3. **Bug with Root Cause**: A symptom bug (sub-issue) that relates to a root cause issue (parent)
 4. **Tracking Issues**: Issues that track multiple related work items
 5. **Semantic Similarity**: Issues with highly related titles, labels, or content that suggest hierarchy
@@ -110,7 +110,7 @@ For each potential relationship, evaluate:
 
 **Creating Parent Issues for Orphan Clusters:**
 - If you identify a cluster of **5 or more related issues** that lack a parent issue, you may create a new parent issue
-- The parent issue should have a clear, descriptive title starting with "[Parent] " that captures the common theme
+- The parent issue should have a clear, descriptive title starting with "[parent] " that captures the common theme
 - Include a body that explains the cluster and references all related issues
 - Use temporary IDs (format: `aw_` + 3-8 alphanumeric characters) for newly created parent issues
 - After creating the parent, link all related issues as sub-issues using the temporary ID
@@ -127,7 +127,7 @@ For each potential relationship, evaluate:
 
 **For orphan clusters (5+ related issues without a parent):**
 1. Create a parent issue using the `create_issue` tool with a temporary ID:
-   - Format: `{"type": "create_issue", "temporary_id": "aw_XXXXXXXX", "title": "[Parent] Theme Description", "body": "Description with references to related issues"}`
+   - Format: `{"type": "create_issue", "temporary_id": "aw_XXXXXXXX", "title": "[parent] Theme Description", "body": "Description with references to related issues"}`
    - Temporary ID must be `aw_` followed by 3-8 alphanumeric characters (e.g., `aw_abc123`, `aw_Test123`)
 2. Link each related issue to the parent using `link_sub_issue` tool with the temporary ID:
    - Format: `{"type": "link_sub_issue", "parent_issue_number": "aw_XXXXXXXX", "sub_issue_number": 123}`

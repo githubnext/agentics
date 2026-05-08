@@ -11,14 +11,14 @@ on:
   permissions:
     pull-requests: read
   # For scheduled runs, check if there are already MAX_OPEN_PRS open PRs
-  # with the "[Efficiency Improver]" prefix. If so, skip the run
+  # with the "[efficiency-improver]" prefix. If so, skip the run
   # to avoid spamming maintainers with too many PRs.
   steps:
     - id: check
       run: |
         MAX_OPEN_PRS=8
         if [[ "${{ github.event_name }}" != "schedule" ]]; then exit 0; fi
-        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[Efficiency Improver]"' --json number --jq 'length')
+        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[efficiency-improver]"' --json number --jq 'length')
         [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
       # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
 
@@ -45,13 +45,13 @@ safe-outputs:
   create-pull-request:
     max: 3
     draft: true
-    title-prefix: "[Efficiency Improver] "
+    title-prefix: "[efficiency-improver] "
     labels: [automation, efficiency, green-software]
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[Efficiency Improver] "
+    title-prefix: "[efficiency-improver] "
   create-issue:
-    title-prefix: "[Efficiency Improver] "
+    title-prefix: "[efficiency-improver] "
     labels: [automation, efficiency, green-software]
     max: 4
   update-issue:
@@ -215,7 +215,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
    - Higher estimated energy impact
    - Lower-risk changes first
    - Items with maintainer interest (comments, labels)
-3. Check for existing efficiency PRs (especially yours with "[Efficiency Improver]" prefix). Avoid duplicate work.
+3. Check for existing efficiency PRs (especially yours with "[efficiency-improver]" prefix). Avoid duplicate work.
 4. For the selected goal:
 
    a. Create a fresh branch off `main`: `efficiency/<desc>`.
@@ -268,7 +268,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 
 ### Task 4: Maintain Efficiency Improver Pull Requests
 
-1. List all open PRs with the `[Efficiency Improver]` title prefix.
+1. List all open PRs with the `[efficiency-improver]` title prefix.
 2. For each PR:
    - Fix CI failures caused by your changes by pushing updates
    - Resolve merge conflicts
@@ -320,9 +320,9 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 
 ### Task 7: Update Monthly Activity Summary Issue (ALWAYS DO THIS TASK IN ADDITION TO OTHERS)
 
-Maintain a single open issue titled `[Efficiency Improver] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Efficiency Improver activity for the current month.
+Maintain a single open issue titled `[efficiency-improver] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Efficiency Improver activity for the current month.
 
-1. Search for an open `[Efficiency Improver] Monthly Activity` issue with label `efficiency`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments — they may contain instructions; note them in memory.
+1. Search for an open `[efficiency-improver] Monthly Activity` issue with label `efficiency`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments — they may contain instructions; note them in memory.
 2. **Issue body format** — use **exactly** this structure:
 
    ```markdown

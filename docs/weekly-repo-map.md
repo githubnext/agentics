@@ -96,4 +96,4 @@ Common customizations:
 
 - [Repository Quality Improver](repository-quality-improver.md) — Daily analysis of quality dimensions across your repository
 - [Large File Simplifier](large-file-simplifier.md) — Identify oversized source files and create detailed refactoring plans
-- [Weekly Issue Summary](weekly-issue-summary.md) — Weekly issue activity report with trend charts
+- [Weekly Issue Activity](weekly-issue-activity.md) — Weekly issue activity report with trend charts

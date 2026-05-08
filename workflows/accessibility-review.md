@@ -18,7 +18,7 @@ safe-outputs:
   mentions: false
   allowed-github-references: []
   create-discussion:
-    title-prefix: "${{ github.workflow }}"
+    title-prefix: "[accessibility-review] "
     category: "q-a"
     max: 5
   add-comment:
@@ -48,7 +48,7 @@ steps:
 
 # Accessibility Review
 
-Your name is ${{ github.workflow }}.  Your job is to review a website for accessibility best
+Your name is Accessibility Review.  Your job is to review a website for accessibility best
 practices.  If you discover any accessibility problems, you should file GitHub issue(s) 
 with details.
 

@@ -23,7 +23,7 @@ on:
       run: |
         MAX_OPEN_PRS=8
         if [[ "${{ github.event_name }}" != "schedule" ]]; then exit 0; fi
-        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[Test Improver]"' --json number --jq 'length')
+        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[test-improver]"' --json number --jq 'length')
         [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
       # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
 
@@ -49,21 +49,21 @@ safe-outputs:
     hide-older-comments: true
   create-pull-request:
     draft: true
-    title-prefix: "[Test Improver] "
+    title-prefix: "[test-improver] "
     labels: [automation, testing]
     max: 4
     protected-files: fallback-to-issue
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[Test Improver] "
+    title-prefix: "[test-improver] "
     max: 4
   create-issue:
-    title-prefix: "[Test Improver] "
+    title-prefix: "[test-improver] "
     labels: [automation, testing]
     max: 4
   update-issue:
     target: "*"
-    title-prefix: "[Test Improver] "
+    title-prefix: "[test-improver] "
     max: 1
 
 tools:
@@ -164,7 +164,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
    - Items aligned with maintainer priorities
    - Tests for critical or bug-prone code paths
    - Lower-risk, higher-confidence improvements
-3. Check for existing testing PRs (especially yours with "[Test Improver]" prefix). Avoid duplicate work.
+3. Check for existing testing PRs (especially yours with "[test-improver]" prefix). Avoid duplicate work.
 4. **Check for existing coverage pipeline**: Before generating coverage reports yourself, check if the repository has an existing coverage pipeline (CI jobs, coverage services like Codecov/Coveralls, or documented coverage commands). Use the existing pipeline when available - maintainers may rely on it for consistency.
 5. For the selected goal:
 
@@ -209,7 +209,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 
 ### Task 4: Maintain Test Improver Pull Requests
 
-1. List all open PRs with the `[Test Improver]` title prefix.
+1. List all open PRs with the `[test-improver]` title prefix.
 2. For each PR:
    - Fix CI failures caused by your changes by pushing updates
    - Resolve merge conflicts
@@ -261,9 +261,9 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 
 ### Task 7: Update Monthly Activity Summary Issue (ALWAYS DO THIS TASK IN ADDITION TO OTHERS)
 
-Maintain a single open issue titled `[Test Improver] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Test Improver activity for the current month.
+Maintain a single open issue titled `[test-improver] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Test Improver activity for the current month.
 
-1. Search for an open `[Test Improver] Monthly Activity` issue with label `testing`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments - they may contain instructions or priorities; note them in memory.
+1. Search for an open `[test-improver] Monthly Activity` issue with label `testing`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments - they may contain instructions or priorities; note them in memory.
 2. **Issue body format** - use **exactly** this structure:
 
    ```markdown

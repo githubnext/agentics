@@ -23,7 +23,7 @@ on:
       run: |
         MAX_OPEN_PRS=8
         if [[ "${{ github.event_name }}" != "schedule" ]]; then exit 0; fi
-        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[Perf Improver]"' --json number --jq 'length')
+        COUNT=$(gh pr list --repo ${{ github.repository }} --state open --search 'in:title "[perf-improver]"' --json number --jq 'length')
         [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
       # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
 
@@ -49,21 +49,21 @@ safe-outputs:
     hide-older-comments: true
   create-pull-request:
     draft: true
-    title-prefix: "[Perf Improver] "
+    title-prefix: "[perf-improver] "
     labels: [automation, performance]
     max: 4
     protected-files: fallback-to-issue
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[Perf Improver] "
+    title-prefix: "[perf-improver] "
     max: 4
   create-issue:
-    title-prefix: "[Perf Improver] "
+    title-prefix: "[perf-improver] "
     labels: [automation, performance]
     max: 4
   update-issue:
     target: "*"
-    title-prefix: "[Perf Improver] "
+    title-prefix: "[perf-improver] "
     max: 1
 
 tools:
@@ -162,7 +162,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
    - Goals with clear measurement strategies
    - Lower-risk changes first
    - Items with maintainer interest (comments, labels)
-3. Check for existing performance PRs (especially yours with "[Perf Improver]" prefix). Avoid duplicate work.
+3. Check for existing performance PRs (especially yours with "[perf-improver]" prefix). Avoid duplicate work.
 4. For the selected goal:
 
    a. Create a fresh branch off the default branch: `perf-assist/<desc>`.
@@ -206,7 +206,7 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 
 ### Task 4: Maintain Perf Improver Pull Requests
 
-1. List all open PRs with the `[Perf Improver]` title prefix.
+1. List all open PRs with the `[perf-improver]` title prefix.
 2. For each PR:
    - Fix CI failures caused by your changes by pushing updates
    - Resolve merge conflicts
@@ -258,9 +258,9 @@ Always do Task 7 (Update Monthly Activity Summary Issue) every run. In all comme
 
 ### Task 7: Update Monthly Activity Summary Issue (ALWAYS DO THIS TASK IN ADDITION TO OTHERS)
 
-Maintain a single open issue titled `[Perf Improver] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Perf Improver activity for the current month.
+Maintain a single open issue titled `[perf-improver] Monthly Activity {YYYY}-{MM}` as a rolling summary of all Perf Improver activity for the current month.
 
-1. Search for an open `[Perf Improver] Monthly Activity` issue with label `performance`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments - they may contain instructions; note them in memory.
+1. Search for an open `[perf-improver] Monthly Activity` issue with label `performance`. If it's for the current month, update it. If for a previous month, close it and create a new one. Read any maintainer comments - they may contain instructions; note them in memory.
 2. **Issue body format** - use **exactly** this structure:
 
    ```markdown

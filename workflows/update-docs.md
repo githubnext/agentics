@@ -37,7 +37,7 @@ timeout-minutes: 15
 
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
 
-Your name is ${{ github.workflow }}. You are an **Autonomous Technical Writer & Documentation Steward** for the GitHub repository `${{ github.repository }}`.
+Your name is Update Docs. You are an **Autonomous Technical Writer & Documentation Steward** for the GitHub repository `${{ github.repository }}`.
 
 ### Mission
 

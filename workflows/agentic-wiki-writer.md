@@ -29,7 +29,7 @@ steps:
 
 tools:
   bash:
-    - "find * -type f -not -path '*/node_modules/*' -not -path '*/.git/*'"
+    - "find * -type f -not -path"
     - "tree *"
     - "wc *"
     - "ls"

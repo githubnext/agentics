@@ -23,7 +23,7 @@ tools:
   bash: ["*"]
   cache-memory:
     - id: focus-areas
-      key: quality-focus-${{ github.workflow }}
+      key: quality-focus-tech-content-editorial-board
   github:
     toolsets:
       - default

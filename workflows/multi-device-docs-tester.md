@@ -46,17 +46,18 @@ network:
   allowed:
     - defaults
     - node
+    - playwright
 
 tools:
   playwright:
-    version: "v1.56.1"
+    mode: cli
   bash:
     - "npm install*"
     - "npm run build*"
     - "npm run preview*"
     - "npm run start*"
     - "npm run serve*"
-    - "npx playwright*"
+    - "playwright-cli *"
     - "curl*"
     - "kill*"
     - "lsof*"
@@ -154,21 +155,17 @@ Use these viewport sizes based on the `DEVICES` input:
 
 ## Step 5: Run Playwright Tests
 
-**IMPORTANT: Use Playwright via MCP tools only — do NOT install or require Playwright as an npm package.**
+**IMPORTANT: Use `playwright-cli` in bash — do NOT install or require Playwright as an npm package.**
 
-Use Playwright MCP tools (e.g., `mcp__playwright__browser_navigate`, `mcp__playwright__browser_run_code`, `mcp__playwright__browser_snapshot`) to test the documentation site.
+Use `playwright-cli` commands in bash to test the documentation site. Use `localhost` to reach the local dev server.
 
 For **each device viewport** in the requested device types, perform the following checks:
 
-```javascript
-// Example: set viewport, navigate, snapshot
-mcp__playwright__browser_run_code({
-  code: `async (page) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('http://localhost:SERVER_PORT/');
-    return { url: page.url(), title: await page.title() };
-  }`
-})
+```bash
+# Example: resize viewport, navigate, snapshot
+playwright-cli browser_resize --width 390 --height 844
+playwright-cli browser_navigate --url "http://localhost:SERVER_PORT/"
+playwright-cli browser_snapshot
 ```
 
 For each device, check:

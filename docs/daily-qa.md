@@ -1,2 +1,2 @@
 ---
-This workflow has been renamed. See [qa](qa.md).
+This workflow has been renamed. See [adhoc-qa](adhoc-qa.md).

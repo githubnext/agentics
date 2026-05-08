@@ -4,7 +4,7 @@
 
 **Perform ad hoc quality assurance by following README instructions, tutorials, and walkthroughs**
 
-The [Daily Ad hoc QA workflow](../workflows/qa.md?plain=1) reads your documentation, follows instructions, tests build and run processes, and creates issues for problems found.
+The [Daily Ad hoc QA workflow](../workflows/adhoc-qa.md?plain=1) reads your documentation, follows instructions, tests build and run processes, and creates issues for problems found.
 
 ## Installation
 
@@ -13,7 +13,7 @@ The [Daily Ad hoc QA workflow](../workflows/qa.md?plain=1) reads your documentat
 gh extension install github/gh-aw
 
 # Add the workflow to your repository
-gh aw add-wizard githubnext/agentics/qa
+gh aw add-wizard githubnext/agentics/adhoc-qa
 ```
 
 This walks you through adding the workflow to your repository.
