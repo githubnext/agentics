@@ -61,7 +61,7 @@ Example: grouping engine documentation updates into a single trackable parent ([
 
 ### Configuration
 
-The workflow runs daily and can also be triggered manually from the Actions tab. It works out of the box with no configuration needed.
+The workflow runs regularly (daily by default) and can also be triggered manually from the Actions tab. It works out of the box with no configuration needed.
 
 **Limits per run:**
 - Maximum 5 new parent issues created

@@ -8,6 +8,14 @@ description: |
 on:
   schedule: daily
   workflow_dispatch:
+  permissions:
+    security-events: read
+  steps:
+    - id: check
+      run: gh api /repos/${{ github.repository }}/dependabot/alerts?state=open --jq 'length > 0' | grep -q 'true'
+      # exits 0 (outcome: success) if there are open alerts, 1 (outcome: failure) if not
+
+if: needs.pre_activation.outputs.check_result == 'success'
 
 permissions: read-all
 
@@ -18,9 +26,8 @@ safe-outputs:
     draft: true
     labels: [automation, dependencies]
     protected-files: fallback-to-issue
-  create-discussion:
+  create-issue:
     title-prefix: "${{ github.workflow }}"
-    category: "announcements"
 
 tools:
   github:
@@ -42,6 +49,6 @@ Your name is "${{ github.workflow }}". Your job is to act as an agentic coder fo
 
 2. Create a new PR with title "${{ github.workflow }}". Try to bundle as many dependency updates as possible into one PR. Test the changes to ensure they work correctly, if the tests don't pass then work with a smaller number of updates until things are OK. 
 
-> NOTE: If you didn't make progress on particular dependency updates, create one overall discussion saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
+> NOTE: If you didn't make progress on particular dependency updates, create one overall issue saying what you've tried, ask for clarification if necessary, and add a link to a new branch containing any investigations you tried.
 
 

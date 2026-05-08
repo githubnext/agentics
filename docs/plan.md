@@ -1,10 +1,10 @@
-# 📋 Plan Command
+# 📋 Daily Plan
 
 > For an overview of all available workflows, see the [main README](../README.md).
 
-**Break down complex issues or discussions into manageable, actionable sub-tasks**
+**Run daily to update a planning issue for the team with current priorities**
 
-The [Plan workflow](../workflows/plan.md?plain=1) analyzes issue or discussion content and creates well-structured sub-issues that can be completed independently by GitHub Copilot agents.
+The [Daily Plan workflow](../workflows/plan.md?plain=1) reads repository contents and pull request metadata, assesses priorities, and creates or updates planning issues that other workflows can reference for team priorities.
 
 ## Installation
 
@@ -22,33 +22,25 @@ This walks you through adding the workflow to your repository.
 
 ```mermaid
 graph LR
-    A["/plan Command"] --> B["Analyze Issue/Discussion"]
-    B --> C["Break Down Work"]
-    C --> D["Create Sub-Issues"]
-    D --> E["Link to Parent"]
-    E --> F["Assign to Copilot"]
+    A[Read Repository] --> B[Analyze PRs & Issues]
+    B --> C[Assess Priorities]
+    C --> D{Plan Exists?}
+    D -->|No| E[Create Planning Issue]
+    D -->|Yes| F[Update Planning Issue]
 ```
-
-Each sub-issue includes a clear title, objective, context, approach, specific files to modify, and acceptance criteria.
 
 ## Usage
 
-Trigger on an issue or discussion:
-
-```
-/plan
-```
-
-- **In an Issue**: Breaks down the issue into sub-tasks
-- **In a Discussion (Ideas category)**: Converts the discussion into actionable issues and closes it
-
 ### Configuration
 
-The workflow is configured with max 5 sub-issues, 10-minute timeout, and automatically applies `task` and `ai-generated` labels.
+This workflow requires no configuration and works out of the box. You can customize the planning and report format.
 
 After editing run `gh aw compile` to update the workflow and commit all changes to the default branch.
 
-## Learn More
+### Commands
 
-- [Issue Triage](issue-triage.md) - For triaging incoming issues
-- [Daily Plan](daily-plan.md) - For strategic project planning
+You can start a run of this workflow immediately by running:
+
+```bash
+gh aw run plan
+```

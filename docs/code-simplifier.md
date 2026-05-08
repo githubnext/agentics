@@ -4,7 +4,7 @@
 
 **Automatically analyze recently modified code and create pull requests with simplifications that improve clarity and maintainability**
 
-The [Code Simplifier workflow](../workflows/code-simplifier.md?plain=1) runs daily to review code modified in the last 24 hours and apply targeted improvements that enhance clarity, reduce complexity, and follow project conventions—all while preserving functionality.
+The [Code Simplifier workflow](../workflows/code-simplifier.md?plain=1) runs regularly (daily by default) to review code modified in the last 24 hours and apply targeted improvements that enhance clarity, reduce complexity, and follow project conventions—all while preserving functionality.
 
 ## Installation
 

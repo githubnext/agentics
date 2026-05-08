@@ -35,6 +35,8 @@ graph LR
 
 The workflow locates your glossary file automatically (common paths: `docs/glossary.md`, `GLOSSARY.md`) and follows your existing structure and style.
 
+For scheduled runs, the workflow is skipped if there are already 8 or more open PRs with its title prefix, to avoid overwhelming maintainers.
+
 ## Usage
 
 ### Configuration
