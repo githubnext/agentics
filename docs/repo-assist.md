@@ -143,6 +143,12 @@ You can run Repo Assist in "blast mode" by repeatedly triggering:
 gh aw run repo-assist --repeat 30
 ```
 
+You can also invoke a predefined instruction directly from the command line:
+
+```bash
+gh aw run repo-assist --repo <owner>/<repo> -F command="Run Task 9"
+```
+
 ### Usage as a General-Purpose Assistant
 
 You can also trigger Repo Assist on-demand by commenting on any issue or PR:

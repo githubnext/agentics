@@ -16,6 +16,12 @@ description: |
 on:
   schedule: every 12h
   workflow_dispatch:
+    inputs:
+      command:
+        description: "Optional command-mode instruction (for example: Run Task 9)"
+        required: false
+        type: string
+        default: ""
   slash_command:
     name: repo-assist
   reaction: "eyes"
@@ -195,9 +201,9 @@ steps:
 
 ## Command Mode
 
-Take heed of **instructions**: "${{ steps.sanitized.outputs.text }}"
+Take heed of **instructions**: "${{ steps.sanitized.outputs.text || inputs.command }}"
 
-If these are non-empty (not ""), then you have been triggered via `/repo-assist <instructions>`. Follow the user's instructions instead of the normal scheduled workflow. Focus exclusively on those instructions. Apply all the same guidelines (read AGENTS.md, run formatters/linters/tests, be polite, use AI disclosure). Skip the weighted task selection and Task 11 reporting, and instead directly do what the user requested. If no specific instructions were provided (empty or blank), proceed with the normal scheduled workflow below.
+If these are non-empty (not ""), then you have been triggered via `/repo-assist <instructions>` (or by the user setting `inputs.command` in a manual `workflow_dispatch`). Follow the user's instructions instead of the normal scheduled workflow. Focus exclusively on those instructions. Apply all the same guidelines (read AGENTS.md, run formatters/linters/tests, be polite, use AI disclosure). Skip the weighted task selection and Task 11 reporting, and instead directly do what the user requested. If no specific instructions were provided (empty or blank), proceed with the normal scheduled workflow below.
 
 Then exit  -  do not run the normal workflow after completing the instructions.
 
