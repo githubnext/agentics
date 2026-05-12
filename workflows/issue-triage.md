@@ -57,10 +57,9 @@ Do not make assumptions beyond what the issue content supports. Do not invent mi
 ## Step 2: Spam and quality check
 
 **Spam and invalid issues:** If the issue is obviously spam, bot-generated, gibberish, or a test issue:
-- Add a one-sentence comment explaining why.
 - Apply the `invalid` or `spam` label if one exists in the repository.
-- Close the issue as "not planned."
-- Do not apply any other metadata. Exit the workflow.
+- Close the issue as "not planned" with a one-sentence reason (e.g., "Closing as spam."). No triage report, no assessment table.
+- Do not apply any other metadata. **Stop here; do not continue to Steps 3 or 4.**
 
 **Incomplete issues:** If the issue lacks enough detail for meaningful triage, add a comment that politely asks the author to provide the missing information:
 - For bugs: steps to reproduce, expected vs actual behavior, logs/errors, environment details.
