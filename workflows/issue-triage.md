@@ -25,8 +25,6 @@ safe-outputs:
   add-comment:
   set-issue-type:
     max: 1
-  set-issue-field:
-    max: 5
 
 tools:
   web-fetch:
