@@ -4,7 +4,7 @@
 
 **Automatically triage issues when they are created or reopened**
 
-The [Issue Triage workflow](../workflows/issue-triage.md?plain=1) runs when issues are created or reopened to analyze content, check related items, set issue type and fields, add labels, detect duplicates, and post structured triage reports.
+The [Issue Triage workflow](../workflows/issue-triage.md?plain=1) runs when issues are created or reopened to analyze content, check related items, set issue type, add labels, detect duplicates, and post structured triage reports.
 
 ## Installation
 
@@ -24,7 +24,7 @@ This walks you through adding the workflow to your repository.
 graph LR
     A[Issue Created/Reopened] --> B[Gather Context]
     B --> C[Spam & Quality Check]
-    C --> D[Triage: Type, Labels, Fields]
+    C --> D[Triage: Type, Labels]
     D --> E[Detect Duplicates]
     E --> F[Post Triage Report]
 ```

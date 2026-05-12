@@ -2,7 +2,7 @@
 description: |
   Intelligent issue triage assistant that processes new and reopened issues.
   Analyzes issue content, detects spam and incomplete reports, selects appropriate
-  labels, sets issue type and fields, detects duplicates, and provides structured
+  labels, sets issue type, detects duplicates, and provides structured
   triage reports with debugging strategies and resource links. Helps maintainers
   quickly understand and prioritize incoming issues.
 
@@ -89,13 +89,7 @@ If the issue has sufficient detail, proceed to Step 3.
 - If no labels are clearly applicable, do not apply any.
 - It is better to under-label than to speculatively add labels.
 
-### 3c: Set issue fields
-
-- If the issue already has a value set for a field, do not overwrite it.
-- Only set fields when you can confidently determine the value from the issue content.
-- Do not make up field values.
-
-### 3d: Detect duplicates and related issues
+### 3c: Detect duplicates and related issues
 
 - Review the similar issues found in Step 1.
 - Classify matches as:
