@@ -92,6 +92,7 @@ If the issue has sufficient detail, proceed to Step 3.
 - Classify matches as:
   - **Duplicate** (high confidence): the issue describes the same problem as an existing open issue. Include up to 3.
   - **Related**: similar domain or adjacent problem, but not a duplicate. Include up to 3.
+- If a high-confidence duplicate is found and the repository has a `duplicate` label, apply it.
 - If no similar issues are found, state that explicitly in your report.
 
 ### 3e: Additional analysis
@@ -106,7 +107,6 @@ If the issue has sufficient detail, proceed to Step 3.
 Apply all triage results:
 - Use `set_issue_type` to set the issue type (if determined).
 - Use `update_issue` to apply labels.
-- Use `set_issue_field` to set any issue fields (if determined).
 - Add an issue comment with your triage report using the format below.
 
 ## Comment format
