@@ -51,7 +51,7 @@ Do not make assumptions beyond what the issue content supports. Do not invent mi
 
 1. Retrieve the issue content using the `get_issue` tool.
 2. Fetch any comments on the issue using the `get_issue_comments` tool.
-3. Fetch the list of labels available in this repository using the `list_labels` tool.
+3. Fetch the list of labels available in this repository using the `list_label` tool.
 4. Search for similar issues using the `search_issues` tool.
 
 ## Step 2: Spam and quality check
