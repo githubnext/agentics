@@ -135,7 +135,6 @@ Use this structure for the triage comment. Use collapsed sections to keep it tid
 |---|---|---|
 | **Type** | [value or "unchanged"] | [brief] |
 | **Labels** | [values or "none"] | [brief] |
-| **[Field name]** | [value] | [brief] |
 | **Coding agent** | [Suitable / Needs more info / Not suitable] | [brief] |
 
 ### 🔗 Similar issues
