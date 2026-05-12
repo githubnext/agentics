@@ -18,17 +18,17 @@ network: defaults
 safe-outputs:
   add-labels:
     target: "*"
-    max: 25
+    max: 500
   add-comment:
     target: "*"
-    max: 10
+    max: 100
   set-issue-type:
     target: "*"
-    max: 10
+    max: 100
   close-issue:
     target: "*"
     state-reason: "not_planned"
-    max: 5
+    max: 50
 
 tools:
   web-fetch:
@@ -36,7 +36,7 @@ tools:
     toolsets: [issues, labels]
     min-integrity: none
 
-timeout-minutes: 20
+timeout-minutes: 60
 ---
 
 # Daily Issue Triage
@@ -49,15 +49,19 @@ Do not make assumptions beyond what the issue content supports. Do not invent mi
 
 ## Step 1: Find untriaged issues
 
-Use the `search_issues` tool to find open issues that need triage. An issue is considered untriaged if it has **no issue type set AND no labels applied**. Search for recently created issues (last 7 days) that match this criteria.
+Use the `search_issues` tool to find open issues that need triage. An issue is considered untriaged if it has **no issue type set AND no labels applied**. Search for open issues that match this criteria.
 
-Query: `repo:${{ github.repository }} is:issue is:open no:label created:>={{date '-7d' 'YYYY-MM-DD'}}`
+Query: `repo:${{ github.repository }} is:issue is:open no:label`
+
+Paginate through all results to find up to 100 untriaged issues. Do not stop at the first page.
 
 From the results, filter out:
-- Issues that already have a triage comment (look for "🎯 Triage report" in comments).
+- Issues that already have a triage comment (look for "🎯 Triage report" in comments). **Never retriage an issue that has already been triaged.**
 - Issues created by bots (unless they look like real user issues).
+- Issues that have any labels already applied (even if they weren't applied by this workflow).
+- Issues that already have an issue type set.
 
-Process up to **10 issues** per run. If there are more than 10, prioritize the oldest untriaged issues first.
+Process up to **100 issues** per run. If there are more than 100, prioritize the oldest untriaged issues first.
 
 ## Step 2: Triage each issue
 
