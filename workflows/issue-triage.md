@@ -25,11 +25,15 @@ safe-outputs:
   add-comment:
   set-issue-type:
     max: 1
+  close-issue:
+    target: "triggering"
+    state-reason: "not_planned"
+    max: 1
 
 tools:
   web-fetch:
   github:
-    toolsets: [issues]
+    toolsets: [issues, labels]
     min-integrity: none # This workflow is allowed to examine and comment on any issues
 
 timeout-minutes: 10
@@ -47,18 +51,23 @@ Do not make assumptions beyond what the issue content supports. Do not invent mi
 
 1. Retrieve the issue content using the `get_issue` tool.
 2. Fetch any comments on the issue using the `get_issue_comments` tool.
-3. Fetch the list of labels available in this repository using `gh label list`.
+3. Fetch the list of labels available in this repository using the `list_labels` tool.
 4. Search for similar issues using the `search_issues` tool.
 
 ## Step 2: Spam and quality check
 
-**Spam and invalid issues:** If the issue is obviously spam, bot-generated, gibberish, or a test issue, add a one-sentence comment explaining why and exit the workflow. Do not apply metadata to these issues.
+**Spam and invalid issues:** If the issue is obviously spam, bot-generated, gibberish, or a test issue:
+- Add a one-sentence comment explaining why.
+- Apply the `invalid` or `spam` label if one exists in the repository.
+- Close the issue as "not planned."
+- Do not apply any other metadata. Exit the workflow.
 
 **Incomplete issues:** If the issue lacks enough detail for meaningful triage, add a comment that politely asks the author to provide the missing information:
 - For bugs: steps to reproduce, expected vs actual behavior, logs/errors, environment details.
 - For other issue types: equivalent details that would make the report actionable.
+- Apply a `needs-info` or `question` label if one exists in the repository.
 
-Be specific about what is missing and why it is needed. Do not attempt to apply labels, type, or fields to incomplete issues.
+Be specific about what is missing and why it is needed. Do not attempt to apply type or other labels to incomplete issues.
 
 If the issue has sufficient detail, proceed to Step 3.
 
@@ -95,7 +104,14 @@ If the issue has sufficient detail, proceed to Step 3.
 - If a high-confidence duplicate is found and the repository has a `duplicate` label, apply it.
 - If no similar issues are found, state that explicitly in your report.
 
-### 3e: Additional analysis
+### 3e: Assess coding agent suitability
+
+Assess whether the issue is suitable for automated coding agent assignment:
+- **Suitable**: clear requirements, sufficient context, well-defined success criteria, self-contained scope.
+- **Needs more info**: potentially suitable but missing details needed to start.
+- **Not suitable**: requires investigation, design decisions, extensive coordination, or policy/architectural choices.
+
+### 3f: Additional analysis
 
 - Write notes, debugging strategies, and/or reproduction steps relevant to the issue.
 - Search the web for relevant documentation, error messages, or known solutions if applicable.
@@ -107,6 +123,7 @@ If the issue has sufficient detail, proceed to Step 3.
 Apply all triage results:
 - Use `set_issue_type` to set the issue type (if determined).
 - Use `update_issue` to apply labels.
+- Use `close_issue` to close the issue if it is spam (state reason: "not planned").
 - Add an issue comment with your triage report using the format below.
 
 ## Comment format
@@ -125,6 +142,7 @@ Use this structure for the triage comment. Use collapsed sections to keep it tid
 | **Type** | [value or "unchanged"] | [brief] |
 | **Labels** | [values or "none"] | [brief] |
 | **[Field name]** | [value] | [brief] |
+| **Coding agent** | [Suitable / Needs more info / Not suitable] | [brief] |
 
 ### 🔗 Similar issues
 
