@@ -19,6 +19,7 @@ Investigate faults proactively and improve CI.
 - [🏥 CI Doctor](docs/ci-doctor.md) - Monitor CI workflows and investigate failures automatically
 - [🚀 CI Coach](docs/ci-coach.md) - Optimize CI workflows for speed and cost efficiency
 - [💰 Cost Tracker](docs/cost-tracker.md) - Post per-run agent spend summaries on pull requests using token-usage.jsonl from gh-aw's firewall
+- [🔍 Log Watcher](docs/log-watcher.md) - Scan run logs and token data for errors, retry loops, and anomalies after every agent workflow run
 
 ### Code Review Workflows
 
