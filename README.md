@@ -30,6 +30,7 @@ Investigate faults proactively and improve CI.
 ### Research, Status & Planning Workflows
 
 - [🔄 Autoloop](https://github.com/githubnext/autoloop) - Loop anything in your repo to continuously research, develop and maintain
+- [🧠 Repo Mind Light](docs/repo-mind-light-aw.md) - External shared workflow that gives gh-aw agents holistic repository context
 - [📚 Weekly Research](docs/weekly-research.md) - Collect research updates and industry trends
 - [📊 Weekly Issue Activity](docs/weekly-issue-activity.md) - Weekly issue activity report with trend charts and recommendations
 - [👥 Daily Repo Status](docs/repo-status.md) - Assess repository activity and create status reports
@@ -123,6 +124,19 @@ Shared workflow fragments are reusable building blocks that can be imported into
 
 - **[Formatting](workflows/shared/formatting.md)** - Standard content structure with overview and collapsible details sections
 - **[Reporting](workflows/shared/reporting.md)** - Guidelines for reporting workflow run information with clickable run ID links
+
+## 🚀 Non-Coding Use Cases
+
+While The Agentics focuses on engineering workflows, agentic workflows are equally powerful for product, operations, compliance, and leadership teams. [**Agentics Beyond Code**](https://github.com/chrizbo/agentics-beyond-code) is a companion collection built for non-engineering roles — no coding required. A few highlights:
+
+- **[Launch Readiness Checker](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/launch-readiness.md)** — Monday morning readiness report across all launches: completeness, risk, blockers, and sign-offs
+- **[Compliance Review](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/compliance-review.md)** — automated evaluation against Security, Privacy, Accessibility, and Responsible AI rubrics, with per-team status reports
+- **[Weekly Status](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/weekly-status.md)** — Friday rollup of What Shipped, What We Learned, FYIs, and SOSes across all initiatives, ready for leadership
+- **[Leadership Briefs](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/leadership-brief.md)** — personalized Monday briefings per leader, with Give Kudos, Give Feedback, and Get Involved sections tailored to each person's domain and management style
+- **[Process Analyzer](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/process-analyzer.md)** — weekly retro that detects process drift between transcripts and how-we-work docs, surfaces automation gaps, and proposes update PRs
+- **[Adversarial PM](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/adversarial-pm.md)** — weekly grumpy challenge of the team's most consequential decisions, arguing against them using pre-mortem, reversibility, and opportunity cost lenses
+- **[Decision Log](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/decision-log.md)** — scans issue comments and meeting transcripts to create structured decision records
+- **[GTM Content](https://github.com/chrizbo/agentics-beyond-code/blob/main/.github/workflows/gtm-content.md)** — generate and refresh changelog drafts and public roadmap items following org voice & tone guidelines
 
 ## 🔄 Updating Workflows
 
