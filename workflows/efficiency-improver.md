@@ -49,7 +49,7 @@ safe-outputs:
     labels: [automation, efficiency, green-software]
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[efficiency-improver] "
+    required-title-prefix: "[efficiency-improver] "
   create-issue:
     title-prefix: "[efficiency-improver] "
     labels: [automation, efficiency, green-software]

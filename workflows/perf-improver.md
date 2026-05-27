@@ -55,7 +55,7 @@ safe-outputs:
     protected-files: fallback-to-issue
   push-to-pull-request-branch:
     target: "*"
-    title-prefix: "[perf-improver] "
+    required-title-prefix: "[perf-improver] "
     max: 4
   create-issue:
     title-prefix: "[perf-improver] "
@@ -63,7 +63,7 @@ safe-outputs:
     max: 4
   update-issue:
     target: "*"
-    title-prefix: "[perf-improver] "
+    required-title-prefix: "[perf-improver] "
     max: 1
 
 tools:

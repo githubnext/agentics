@@ -43,7 +43,7 @@ safe-outputs:
     if-no-changes: "warn"
     protected-files: fallback-to-issue
   push-to-pull-request-branch:
-    title-prefix: "[auto-update]"
+    required-title-prefix: "[auto-update]"
     if-no-changes: "warn"
   add-comment:
     max: 1
