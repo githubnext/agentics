@@ -15,10 +15,6 @@ on:
   skip-roles: [admin, maintainer, write, triage]
   skip-bots: [github-actions, copilot, dependabot]
 
-rate-limit:
-  max: 5
-  window: 60
-
 # # This workflow runs often, so you can use a small model to keep costs down.
 # engine:
 #   model: small

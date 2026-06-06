@@ -94,38 +94,38 @@ steps:
     env:
       GH_TOKEN: ${{ github.token }}
     run: |
-      mkdir -p /tmp/gh-aw
+      mkdir -p /tmp/gh-aw/agent
 
       # Count Lean files, excluding the .lake build cache
-      find . -name "*.lean" 2>/dev/null | grep -cv "\.lake/" > /tmp/gh-aw/lean_count.txt || echo 0 > /tmp/gh-aw/lean_count.txt
+      find . -name "*.lean" 2>/dev/null | grep -cv "\.lake/" > /tmp/gh-aw/agent/lean_count.txt || echo 0 > /tmp/gh-aw/agent/lean_count.txt
 
       # Count Rust source files (for Aeneas eligibility)
-      find . -name "*.rs" -not -path "./target/*" 2>/dev/null | wc -l > /tmp/gh-aw/rust_count.txt || echo 0 > /tmp/gh-aw/rust_count.txt
+      find . -name "*.rs" -not -path "./target/*" 2>/dev/null | wc -l > /tmp/gh-aw/agent/rust_count.txt || echo 0 > /tmp/gh-aw/agent/rust_count.txt
 
       # Detect CI workflows for FV
-      [ -f ".github/workflows/lean-ci.yml" ] && echo 1 > /tmp/gh-aw/has_lean_ci.txt || echo 0 > /tmp/gh-aw/has_lean_ci.txt
-      [ -f ".github/workflows/aeneas-generate.yml" ] && echo 1 > /tmp/gh-aw/has_aeneas_ci.txt || echo 0 > /tmp/gh-aw/has_aeneas_ci.txt
+      [ -f ".github/workflows/lean-ci.yml" ] && echo 1 > /tmp/gh-aw/agent/has_lean_ci.txt || echo 0 > /tmp/gh-aw/agent/has_lean_ci.txt
+      [ -f ".github/workflows/aeneas-generate.yml" ] && echo 1 > /tmp/gh-aw/agent/has_aeneas_ci.txt || echo 0 > /tmp/gh-aw/agent/has_aeneas_ci.txt
 
       # Count runnable correspondence-test artifacts for Task 8
       find . \( -path "./formal-verification/tests/*" -o -path "./formal-verification/correspondence-tests/*" \) -type f 2>/dev/null \
-        | wc -l > /tmp/gh-aw/correspondence_test_count.txt || echo 0 > /tmp/gh-aw/correspondence_test_count.txt
+        | wc -l > /tmp/gh-aw/agent/correspondence_test_count.txt || echo 0 > /tmp/gh-aw/agent/correspondence_test_count.txt
 
       # Detect CORRESPONDENCE.md, CRITIQUE.md, REPORT.md, and paper/paper.tex
-      [ -f "formal-verification/CORRESPONDENCE.md" ] && echo 1 > /tmp/gh-aw/has_correspondence.txt || echo 0 > /tmp/gh-aw/has_correspondence.txt
-      [ -f "formal-verification/CRITIQUE.md" ] && echo 1 > /tmp/gh-aw/has_critique.txt || echo 0 > /tmp/gh-aw/has_critique.txt
-      [ -f "formal-verification/REPORT.md" ] && echo 1 > /tmp/gh-aw/has_report.txt || echo 0 > /tmp/gh-aw/has_report.txt
-      [ -f "formal-verification/paper/paper.tex" ] && echo 1 > /tmp/gh-aw/has_paper.txt || echo 0 > /tmp/gh-aw/has_paper.txt
+      [ -f "formal-verification/CORRESPONDENCE.md" ] && echo 1 > /tmp/gh-aw/agent/has_correspondence.txt || echo 0 > /tmp/gh-aw/agent/has_correspondence.txt
+      [ -f "formal-verification/CRITIQUE.md" ] && echo 1 > /tmp/gh-aw/agent/has_critique.txt || echo 0 > /tmp/gh-aw/agent/has_critique.txt
+      [ -f "formal-verification/REPORT.md" ] && echo 1 > /tmp/gh-aw/agent/has_report.txt || echo 0 > /tmp/gh-aw/agent/has_report.txt
+      [ -f "formal-verification/paper/paper.tex" ] && echo 1 > /tmp/gh-aw/agent/has_paper.txt || echo 0 > /tmp/gh-aw/agent/has_paper.txt
 
       # Detect formal-verification directory
-      [ -d "formal-verification" ] && echo 1 > /tmp/gh-aw/fv_dir.txt || echo 0 > /tmp/gh-aw/fv_dir.txt
+      [ -d "formal-verification" ] && echo 1 > /tmp/gh-aw/agent/fv_dir.txt || echo 0 > /tmp/gh-aw/agent/fv_dir.txt
 
       # Count markdown docs inside formal-verification/
       find . \( -path "*/formal-verification/*.md" -o -path "*/formal-verification/specs/*.md" \) 2>/dev/null \
-        | wc -l > /tmp/gh-aw/fv_docs.txt || echo 0 > /tmp/gh-aw/fv_docs.txt
+        | wc -l > /tmp/gh-aw/agent/fv_docs.txt || echo 0 > /tmp/gh-aw/agent/fv_docs.txt
 
       # Fetch open FV Squad issues
       gh issue list --state open --label lean-squad --json number 2>/dev/null \
-        > /tmp/gh-aw/fv_issues.json || echo "[]" > /tmp/gh-aw/fv_issues.json
+        > /tmp/gh-aw/agent/fv_issues.json || echo "[]" > /tmp/gh-aw/agent/fv_issues.json
 
       # Fetch open FV Squad PRs
       gh pr list --state open --limit 50 --json number,title 2>/dev/null \
@@ -133,25 +133,25 @@ steps:
       import json, sys
       d = json.load(sys.stdin)
       print(json.dumps([x for x in d if x['title'].startswith('[lean-squad]')]))" \
-        > /tmp/gh-aw/fv_prs.json || echo "[]" > /tmp/gh-aw/fv_prs.json
+        > /tmp/gh-aw/agent/fv_prs.json || echo "[]" > /tmp/gh-aw/agent/fv_prs.json
 
       python3 - << 'EOF'
       import json, os, random, re
       from pathlib import Path
 
-      lean_count   = int(open('/tmp/gh-aw/lean_count.txt').read().strip() or 0)
-      rust_count   = int(open('/tmp/gh-aw/rust_count.txt').read().strip() or 0)
-      has_lean_ci  = int(open('/tmp/gh-aw/has_lean_ci.txt').read().strip() or 0)
-      has_aeneas_ci = int(open('/tmp/gh-aw/has_aeneas_ci.txt').read().strip() or 0)
-      correspondence_test_count = int(open('/tmp/gh-aw/correspondence_test_count.txt').read().strip() or 0)
-      has_correspondence = int(open('/tmp/gh-aw/has_correspondence.txt').read().strip() or 0)
-      has_critique = int(open('/tmp/gh-aw/has_critique.txt').read().strip() or 0)
-      has_report   = int(open('/tmp/gh-aw/has_report.txt').read().strip() or 0)
-      has_paper    = int(open('/tmp/gh-aw/has_paper.txt').read().strip() or 0)
-      fv_dir       = int(open('/tmp/gh-aw/fv_dir.txt').read().strip() or 0)
-      fv_docs    = int(open('/tmp/gh-aw/fv_docs.txt').read().strip() or 0)
-      fv_issues  = json.load(open('/tmp/gh-aw/fv_issues.json'))
-      fv_prs     = json.load(open('/tmp/gh-aw/fv_prs.json'))
+      lean_count   = int(open('/tmp/gh-aw/agent/lean_count.txt').read().strip() or 0)
+      rust_count   = int(open('/tmp/gh-aw/agent/rust_count.txt').read().strip() or 0)
+      has_lean_ci  = int(open('/tmp/gh-aw/agent/has_lean_ci.txt').read().strip() or 0)
+      has_aeneas_ci = int(open('/tmp/gh-aw/agent/has_aeneas_ci.txt').read().strip() or 0)
+      correspondence_test_count = int(open('/tmp/gh-aw/agent/correspondence_test_count.txt').read().strip() or 0)
+      has_correspondence = int(open('/tmp/gh-aw/agent/has_correspondence.txt').read().strip() or 0)
+      has_critique = int(open('/tmp/gh-aw/agent/has_critique.txt').read().strip() or 0)
+      has_report   = int(open('/tmp/gh-aw/agent/has_report.txt').read().strip() or 0)
+      has_paper    = int(open('/tmp/gh-aw/agent/has_paper.txt').read().strip() or 0)
+      fv_dir       = int(open('/tmp/gh-aw/agent/fv_dir.txt').read().strip() or 0)
+      fv_docs    = int(open('/tmp/gh-aw/agent/fv_docs.txt').read().strip() or 0)
+      fv_issues  = json.load(open('/tmp/gh-aw/agent/fv_issues.json'))
+      fv_prs     = json.load(open('/tmp/gh-aw/agent/fv_prs.json'))
 
       n_issues = len(fv_issues)
       n_prs    = len(fv_prs)
@@ -421,7 +421,7 @@ steps:
           'weights': {str(k): round(v, 2) for k, v in weights.items()},
           'selected_tasks': chosen,
       }
-      with open('/tmp/gh-aw/task_selection.json', 'w') as f:
+      with open('/tmp/gh-aw/agent/task_selection.json', 'w') as f:
           json.dump(result, f, indent=2)
       EOF
 
@@ -465,7 +465,7 @@ Read memory at the **start** of every run. Update and save it at the **end** of 
 
 ## Workflow
 
-At the start of your run, read `/tmp/gh-aw/task_selection.json`. It contains:
+At the start of your run, read `/tmp/gh-aw/agent/task_selection.json`. It contains:
 
 - `phase_flags`: coarse heuristics derived from repository state about which phases are underway
 - `selected_tasks`: two tasks chosen by a phase-weighted random draw
@@ -534,11 +534,13 @@ fi
 # --- Record lean availability ---
 if command -v lean &>/dev/null; then
   lean --version
-  echo "LEAN_AVAILABLE=true"  > /tmp/lean_status.txt
-  lean --version            >> /tmp/lean_status.txt
+  mkdir -p /tmp/gh-aw/agent
+  echo "LEAN_AVAILABLE=true"  > /tmp/gh-aw/agent/lean_status.txt
+  lean --version            >> /tmp/gh-aw/agent/lean_status.txt
 else
   echo "=== Lean Squad: lean not available — proofs will be UNVERIFIED ==="
-  echo "LEAN_AVAILABLE=false" > /tmp/lean_status.txt
+  mkdir -p /tmp/gh-aw/agent
+  echo "LEAN_AVAILABLE=false" > /tmp/gh-aw/agent/lean_status.txt
 fi
 ```
 
@@ -559,22 +561,22 @@ After writing or modifying `.lean` files, **always** attempt `lake build` and ca
 cd formal-verification/lean
 if lean --version &>/dev/null 2>&1; then
   echo "=== Lean Squad: running lake build ==="
-  if lake build 2>&1 | tee /tmp/lake_build.log; then
-    echo "=== Lean Squad: lake build PASSED — $(grep -c 'sorry' /tmp/lake_build.log || echo 0) sorry(s) remain ==="
-    echo "LAKE_BUILD=passed" >> /tmp/lean_status.txt
+  if lake build 2>&1 | tee /tmp/gh-aw/agent/lake_build.log; then
+    echo "=== Lean Squad: lake build PASSED — $(grep -c 'sorry' /tmp/gh-aw/agent/lake_build.log || echo 0) sorry(s) remain ==="
+    echo "LAKE_BUILD=passed" >> /tmp/gh-aw/agent/lean_status.txt
   else
     echo "=== Lean Squad: lake build FAILED ==="
-    echo "LAKE_BUILD=failed" >> /tmp/lean_status.txt
-    tail -40 /tmp/lake_build.log
+    echo "LAKE_BUILD=failed" >> /tmp/gh-aw/agent/lean_status.txt
+    tail -40 /tmp/gh-aw/agent/lake_build.log
   fi
 else
   echo "=== Lean Squad: skipping lake build — lean not installed ==="
-  echo "LAKE_BUILD=skipped" >> /tmp/lean_status.txt
+  echo "LAKE_BUILD=skipped" >> /tmp/gh-aw/agent/lean_status.txt
 fi
 ```
 
 **Every PR that includes `.lean` files MUST include a verification status block** (copy
-the relevant lines from `/tmp/lean_status.txt`). Use one of these templates:
+the relevant lines from `/tmp/gh-aw/agent/lean_status.txt`). Use one of these templates:
 
 ```
 > ⚠️ Lean toolchain not available: elan installation failed (network/firewall — see run logs).
@@ -698,7 +700,7 @@ formal-verification/
    - Include `#check` and `example` expressions to confirm the spec is at least well-typed
 3. Focus on the most valuable properties: correctness of key operations, representation invariants, round-trip properties, monotonicity, idempotence — whatever is most likely to catch bugs or build confidence.
 4. **MANDATORY**: Run `lake build` (or `lean --stdin`) to verify the file is syntactically correct even with `sorry`. Fix ALL Lean 4 syntax and type errors before proceeding. Do not create a PR if `lake build` fails due to errors in your new file.
-5. Create a PR. The PR MUST include the verification status block from `/tmp/lean_status.txt`.
+5. Create a PR. The PR MUST include the verification status block from `/tmp/gh-aw/agent/lean_status.txt`.
 6. Update memory: advance target to phase 3, note the Lean file path, list the stated propositions.
 
 ---
@@ -716,7 +718,7 @@ formal-verification/
    - Use `sorry` only for genuinely hard sub-problems — minimise it
 3. Update the proposition statements to reference the Lean implementation (replace abstract stubs with the actual Lean function names).
 4. **MANDATORY**: Run `lake build` to verify the file is correct. Fix ALL errors — do not create a PR while `lake build` fails. If you cannot fix the errors, leave the file in its last passing state and document the remaining issues in the PR description.
-5. Create a PR. The PR MUST include the verification status block from `/tmp/lean_status.txt`.
+5. Create a PR. The PR MUST include the verification status block from `/tmp/gh-aw/agent/lean_status.txt`.
 6. Update memory: advance target to phase 4, describe the model and its abstractions.
 
 ---
@@ -846,38 +848,39 @@ if ! command -v opam &>/dev/null; then
 fi
 
 # --- Clone and build Charon ---
+mkdir -p /tmp/gh-aw/agent
 CHARON_PIN=$(cat aeneas/charon-pin 2>/dev/null || echo main)
-git clone https://github.com/AeneasVerif/charon /tmp/charon
-cd /tmp/charon && git checkout "$CHARON_PIN"
+git clone https://github.com/AeneasVerif/charon /tmp/gh-aw/agent/charon
+cd /tmp/gh-aw/agent/charon && git checkout "$CHARON_PIN"
 
 # Install charon-ml (OCaml library)
-opam install /tmp/charon -y
+opam install /tmp/gh-aw/agent/charon -y
 
 # Build the Charon Rust binary
-cd /tmp/charon/charon
+cd /tmp/gh-aw/agent/charon/charon
 cargo build --release
-mkdir -p /tmp/charon/bin
-cp target/release/charon /tmp/charon/bin/
-cp target/release/charon-driver /tmp/charon/bin/
+mkdir -p /tmp/gh-aw/agent/charon/bin
+cp target/release/charon /tmp/gh-aw/agent/charon/bin/
+cp target/release/charon-driver /tmp/gh-aw/agent/charon/bin/
 
 # --- Clone and build Aeneas ---
-git clone https://github.com/AeneasVerif/aeneas /tmp/aeneas
-ln -s /tmp/charon /tmp/aeneas/charon
+git clone https://github.com/AeneasVerif/aeneas /tmp/gh-aw/agent/aeneas
+ln -s /tmp/gh-aw/agent/charon /tmp/gh-aw/agent/aeneas/charon
 
 opam install -y \
   ppx_deriving visitors easy_logging zarith yojson core_unix \
   ocamlgraph menhir ocamlformat unionFind progress domainslib
 
-opam exec -- bash -c "cd /tmp/aeneas/src && dune build"
-mkdir -p /tmp/aeneas/bin
-cp /tmp/aeneas/src/_build/default/main.exe /tmp/aeneas/bin/aeneas
+opam exec -- bash -c "cd /tmp/gh-aw/agent/aeneas/src && dune build"
+mkdir -p /tmp/gh-aw/agent/aeneas/bin
+cp /tmp/gh-aw/agent/aeneas/src/_build/default/main.exe /tmp/gh-aw/agent/aeneas/bin/aeneas
 
 # --- Verify ---
-if [ -x /tmp/aeneas/bin/aeneas ] && [ -x /tmp/charon/bin/charon ]; then
-  echo "AENEAS_AVAILABLE=true" > /tmp/aeneas_status.txt
+if [ -x /tmp/gh-aw/agent/aeneas/bin/aeneas ] && [ -x /tmp/gh-aw/agent/charon/bin/charon ]; then
+  echo "AENEAS_AVAILABLE=true" > /tmp/gh-aw/agent/aeneas_status.txt
   echo "=== Lean Squad: Charon + Aeneas toolchain ready ==="
 else
-  echo "AENEAS_AVAILABLE=false" > /tmp/aeneas_status.txt
+  echo "AENEAS_AVAILABLE=false" > /tmp/gh-aw/agent/aeneas_status.txt
   echo "=== Lean Squad: Aeneas toolchain build FAILED ==="
 fi
 ```
@@ -894,10 +897,10 @@ Work on **one small target at a time** (a single module, file, or function). Do 
 
 ```bash
 # Determine the Charon-required Rust toolchain
-CHARON_TOOLCHAIN=$(grep 'channel' /tmp/charon/charon/rust-toolchain | cut -d '"' -f 2)
+CHARON_TOOLCHAIN=$(grep 'channel' /tmp/gh-aw/agent/charon/charon/rust-toolchain | cut -d '"' -f 2)
 
 # Run Charon — adjust cargo features as needed for the crate
-PATH="/tmp/charon/bin:$PATH" RUSTUP_TOOLCHAIN="$CHARON_TOOLCHAIN" \
+PATH="/tmp/gh-aw/agent/charon/bin:$PATH" RUSTUP_TOOLCHAIN="$CHARON_TOOLCHAIN" \
   charon cargo --preset=aeneas \
     -- --no-default-features --features <relevant-features>
 ```
@@ -905,7 +908,7 @@ PATH="/tmp/charon/bin:$PATH" RUSTUP_TOOLCHAIN="$CHARON_TOOLCHAIN" \
 1. Run Aeneas to generate Lean from the LLBC:
 
 ```bash
-/tmp/aeneas/bin/aeneas -backend lean -split-files <crate>.llbc \
+/tmp/gh-aw/agent/aeneas/bin/aeneas -backend lean -split-files <crate>.llbc \
   -dest formal-verification/lean/FVSquad/Aeneas/Generated
 ```
 
@@ -1047,10 +1050,11 @@ jobs:
 
       - name: Build and verify all proofs
         run: |
+          mkdir -p /tmp/gh-aw/agent
           echo "=== lake build starting ==="
-          lake build 2>&1 | tee /tmp/lake_build.log
+          lake build 2>&1 | tee /tmp/gh-aw/agent/lake_build.log
           BUILD_EXIT=${PIPESTATUS[0]}
-          SORRY_COUNT=$(grep -c 'sorry' /tmp/lake_build.log || true)
+          SORRY_COUNT=$(grep -c 'sorry' /tmp/gh-aw/agent/lake_build.log || true)
           echo ""
           echo "=== lake build exit code: $BUILD_EXIT ==="
           echo "=== 'sorry' occurrences in build output: $SORRY_COUNT ==="
@@ -1061,7 +1065,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lake-build-log
-          path: /tmp/lake_build.log
+          path: /tmp/gh-aw/agent/lake_build.log
 CIEOF
   echo "=== Lean Squad: created .github/workflows/lean-ci.yml ==="
 else
@@ -1339,10 +1343,12 @@ if ! command -v pdflatex &>/dev/null; then
 fi
 
 if command -v pdflatex &>/dev/null; then
-  echo "LATEX_AVAILABLE=true" > /tmp/latex_status.txt
-  pdflatex --version | head -1 >> /tmp/latex_status.txt
+  mkdir -p /tmp/gh-aw/agent
+  echo "LATEX_AVAILABLE=true" > /tmp/gh-aw/agent/latex_status.txt
+  pdflatex --version | head -1 >> /tmp/gh-aw/agent/latex_status.txt
 else
-  echo "LATEX_AVAILABLE=false" > /tmp/latex_status.txt
+  mkdir -p /tmp/gh-aw/agent
+  echo "LATEX_AVAILABLE=false" > /tmp/gh-aw/agent/latex_status.txt
   echo "=== Lean Squad: LaTeX not available — paper will not be compiled ==="
 fi
 ```
@@ -1530,13 +1536,13 @@ Theorem & File & Property & Status & Tactics \\
 cd formal-verification/paper
 if command -v latexmk &>/dev/null; then
   echo "=== Lean Squad: compiling paper ==="
-  if latexmk -pdf -interaction=nonstopmode paper.tex 2>&1 | tee /tmp/latex_build.log; then
+  if latexmk -pdf -interaction=nonstopmode paper.tex 2>&1 | tee /tmp/gh-aw/agent/latex_build.log; then
     echo "=== Lean Squad: paper compiled successfully ==="
-    echo "PAPER_BUILD=passed" >> /tmp/latex_status.txt
+    echo "PAPER_BUILD=passed" >> /tmp/gh-aw/agent/latex_status.txt
   else
     echo "=== Lean Squad: paper compilation FAILED ==="
-    echo "PAPER_BUILD=failed" >> /tmp/latex_status.txt
-    tail -40 /tmp/latex_build.log
+    echo "PAPER_BUILD=failed" >> /tmp/gh-aw/agent/latex_status.txt
+    tail -40 /tmp/gh-aw/agent/latex_build.log
   fi
 elif command -v pdflatex &>/dev/null; then
   echo "=== Lean Squad: compiling paper (pdflatex) ==="
@@ -1545,13 +1551,13 @@ elif command -v pdflatex &>/dev/null; then
     && pdflatex -interaction=nonstopmode paper.tex \
     && pdflatex -interaction=nonstopmode paper.tex
   if [ -f paper.pdf ]; then
-    echo "PAPER_BUILD=passed" >> /tmp/latex_status.txt
+    echo "PAPER_BUILD=passed" >> /tmp/gh-aw/agent/latex_status.txt
   else
-    echo "PAPER_BUILD=failed" >> /tmp/latex_status.txt
+    echo "PAPER_BUILD=failed" >> /tmp/gh-aw/agent/latex_status.txt
   fi
 else
   echo "=== Lean Squad: LaTeX not available — skipping compilation ==="
-  echo "PAPER_BUILD=skipped" >> /tmp/latex_status.txt
+  echo "PAPER_BUILD=skipped" >> /tmp/gh-aw/agent/latex_status.txt
 fi
 ```
 

@@ -119,10 +119,11 @@ If the build fails, create a GitHub issue titled "📱 Multi-Device Docs Test Fa
 Start the preview server in the background and wait for it to be ready:
 
 ```bash
+mkdir -p /tmp/gh-aw/agent
 cd ${{ github.workspace }}/DOCS_DIR
-SERVE_COMMAND > /tmp/docs-preview.log 2>&1 &
-echo $! > /tmp/docs-server.pid
-echo "Server started with PID: $(cat /tmp/docs-server.pid)"
+SERVE_COMMAND > /tmp/gh-aw/agent/docs-preview.log 2>&1 &
+echo $! > /tmp/gh-aw/agent/docs-server.pid
+echo "Server started with PID: $(cat /tmp/gh-aw/agent/docs-server.pid)"
 ```
 
 Wait for the server to be ready:
@@ -191,8 +192,8 @@ Categorize findings by severity:
 Always clean up when done:
 
 ```bash
-kill $(cat /tmp/docs-server.pid) 2>/dev/null || true
-rm -f /tmp/docs-server.pid /tmp/docs-preview.log
+kill $(cat /tmp/gh-aw/agent/docs-server.pid) 2>/dev/null || true
+rm -f /tmp/gh-aw/agent/docs-server.pid /tmp/gh-aw/agent/docs-preview.log
 echo "Server stopped"
 ```
 
