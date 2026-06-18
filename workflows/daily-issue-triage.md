@@ -27,7 +27,6 @@ safe-outputs:
     max: 100
   close-issue:
     target: "*"
-    state-reason: "not_planned"
     max: 50
 
 tools:

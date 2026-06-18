@@ -26,6 +26,10 @@ if: needs.pre_activation.outputs.check_result == 'success'
 
 timeout-minutes: 60
 
+checkout:
+  fetch: ["*"]     # fetch all remote branches to allow working on PR branches
+  fetch-depth: 0   # fetch full history
+
 permissions: read-all
 
 network:
@@ -49,7 +53,7 @@ safe-outputs:
     labels: [automation, efficiency, green-software]
   push-to-pull-request-branch:
     target: "*"
-    required-title-prefix: "[efficiency-improver] "
+    title-prefix: "[efficiency-improver] "
   create-issue:
     title-prefix: "[efficiency-improver] "
     labels: [automation, efficiency, green-software]

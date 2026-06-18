@@ -27,7 +27,6 @@ safe-outputs:
     max: 1
   close-issue:
     target: "triggering"
-    state-reason: "not_planned"
     max: 1
 
 tools:

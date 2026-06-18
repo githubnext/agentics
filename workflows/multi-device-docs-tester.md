@@ -50,7 +50,6 @@ network:
 
 tools:
   playwright:
-    mode: cli
   bash:
     - "npm install*"
     - "npm run build*"

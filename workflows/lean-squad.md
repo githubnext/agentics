@@ -70,7 +70,6 @@ safe-outputs:
     max: 4
   update-issue:
     target: "*"
-    required-title-prefix: "[lean-squad] "
     max: 1
   create-pull-request:
     title-prefix: "[lean-squad] "
@@ -80,7 +79,7 @@ safe-outputs:
     draft: false
   push-to-pull-request-branch:
     target: "*"
-    required-title-prefix: "[lean-squad] "
+    title-prefix: "[lean-squad] "
     protected-files: allowed
     max: 4
   add-comment:

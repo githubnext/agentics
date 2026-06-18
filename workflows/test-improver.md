@@ -31,6 +31,10 @@ if: needs.pre_activation.outputs.check_result == 'success'
 
 timeout-minutes: 30
 
+checkout:
+  fetch: ["*"]     # fetch all remote branches to allow working on PR branches
+  fetch-depth: 0   # fetch full history
+
 permissions: read-all
 
 network:
@@ -55,7 +59,7 @@ safe-outputs:
     protected-files: fallback-to-issue
   push-to-pull-request-branch:
     target: "*"
-    required-title-prefix: "[test-improver] "
+    title-prefix: "[test-improver] "
     max: 4
   create-issue:
     title-prefix: "[test-improver] "
@@ -63,7 +67,6 @@ safe-outputs:
     max: 4
   update-issue:
     target: "*"
-    required-title-prefix: "[test-improver] "
     max: 1
 
 tools:
