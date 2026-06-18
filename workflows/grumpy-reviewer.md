@@ -4,6 +4,7 @@ description: Performs critical code review with a focus on edge cases, potential
 on:
   slash_command:
     name: grumpy
+    strategy: centralized
     events: [pull_request_comment, pull_request_review_comment]
 
 permissions:

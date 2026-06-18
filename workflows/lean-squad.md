@@ -27,6 +27,7 @@ on:
   workflow_dispatch:
   slash_command:
     name: lean-squad
+    strategy: centralized
   reaction: "eyes"
 
 permissions: read-all

@@ -57,7 +57,7 @@ Use bash to download the `agent-artifacts` artifact from the triggering run:
 ```bash
 gh run download ${{ github.event.workflow_run.id }} \
   --name agent-artifacts \
-  --dir /tmp/agent-artifacts \
+  --dir /tmp/gh-aw/agent/agent-artifacts \
   --repo ${{ github.repository }} 2>&1
 echo "exit: $?"
 ```
@@ -71,7 +71,7 @@ creating any issue or comment. Do not report an error.
 Read the token usage file:
 
 ```bash
-cat /tmp/agent-artifacts/sandbox/firewall/logs/api-proxy-logs/token-usage.jsonl 2>/dev/null
+cat /tmp/gh-aw/agent/agent-artifacts/sandbox/firewall/logs/api-proxy-logs/token-usage.jsonl 2>/dev/null
 ```
 
 Each line is a JSON object. Example:

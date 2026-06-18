@@ -9,6 +9,7 @@ description: |
 on:
   slash_command:
     name: repo-ask
+    strategy: centralized
   reaction: "eyes"
 
 permissions: read-all

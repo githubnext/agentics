@@ -8,6 +8,7 @@ on:
   # Command trigger for /unbloat in PR comments
   slash_command:
     name: unbloat
+    strategy: centralized
     events: [pull_request_comment]
   
   # Manual trigger for testing

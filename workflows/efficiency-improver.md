@@ -37,6 +37,10 @@ network:
   - rust
   - java
 
+checkout:
+  fetch: ["*"]      # fetch all remote branches
+  fetch-depth: 0    # fetch full history
+
 safe-outputs:
   add-comment:
     max: 10

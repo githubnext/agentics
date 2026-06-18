@@ -7,6 +7,7 @@ description: |
 on:
   slash_command:
     name: q
+    strategy: centralized
   reaction: rocket
 
 permissions:

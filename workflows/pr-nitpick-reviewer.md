@@ -2,7 +2,9 @@
 description: Provides detailed nitpicky code review focusing on style, best practices, and minor improvements when invoked with the /nit command
 
 on:
-  slash_command: "nit"
+  slash_command:
+    name: nit
+    strategy: centralized
 
 permissions:
   contents: read

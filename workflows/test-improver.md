@@ -15,6 +15,7 @@ on:
   workflow_dispatch:
   slash_command:
     name: test-assist
+    strategy: centralized
   reaction: "eyes"
   permissions:
     pull-requests: read
@@ -41,6 +42,10 @@ network:
   - python
   - rust
   - java
+
+checkout:
+  fetch: ["*"]      # fetch all remote branches
+  fetch-depth: 0    # fetch full history
 
 safe-outputs:
   add-comment:

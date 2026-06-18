@@ -24,6 +24,7 @@ on:
         default: ""
   slash_command:
     name: repo-assist
+    strategy: centralized
   reaction: "eyes"
   permissions:
     pull-requests: read

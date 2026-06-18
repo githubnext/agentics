@@ -19,8 +19,13 @@ steps:
   - name: Check and test all documentation links
     id: link-check
     run: |
-      echo "# Link Check Results" > /tmp/link-check-results.md
-      echo "" >> /tmp/link-check-results.md
+      TMP_ROOT=/tmp/gh-aw/agent/link-checker
+      mkdir -p "$TMP_ROOT"
+      RESULTS_FILE="$TMP_ROOT/link-check-results.md"
+      ALL_LINKS_FILE="$TMP_ROOT/all-links.txt"
+      UNIQUE_LINKS_FILE="$TMP_ROOT/unique-links.txt"
+      echo "# Link Check Results" > "$RESULTS_FILE"
+      echo "" >> "$RESULTS_FILE"
       
       # Find all markdown files in docs directory and README
       echo "Finding all markdown files..."
@@ -33,34 +38,34 @@ steps:
       fi
       
       # Extract all links from markdown files
-      echo "## Links Found" >> /tmp/link-check-results.md
-      echo "" >> /tmp/link-check-results.md
+      echo "## Links Found" >> "$RESULTS_FILE"
+      echo "" >> "$RESULTS_FILE"
       
       # Use grep to find markdown links and HTTP(S) URLs
       for file in $MARKDOWN_FILES; do
         echo "Checking $file..."
         # Extract markdown links [text](url)
-        grep -oP '\[([^\]]+)\]\(([^\)]+)\)' "$file" | grep -oP '\(([^\)]+)\)' | tr -d '()' >> /tmp/all-links.txt 2>/dev/null || true
+        grep -oP '\[([^\]]+)\]\(([^\)]+)\)' "$file" | grep -oP '\(([^\)]+)\)' | tr -d '()' >> "$ALL_LINKS_FILE" 2>/dev/null || true
         # Extract plain HTTP(S) URLs
-        grep -oP 'https?://[^\s<>"]+' "$file" >> /tmp/all-links.txt 2>/dev/null || true
+        grep -oP 'https?://[^\s<>"]+' "$file" >> "$ALL_LINKS_FILE" 2>/dev/null || true
       done
       
       # Remove duplicates and sort
-      if [ -f /tmp/all-links.txt ]; then
-        sort -u /tmp/all-links.txt > /tmp/unique-links.txt
-        LINK_COUNT=$(wc -l < /tmp/unique-links.txt)
-        echo "Found $LINK_COUNT unique links" >> /tmp/link-check-results.md
-        echo "" >> /tmp/link-check-results.md
+      if [ -f "$ALL_LINKS_FILE" ]; then
+        sort -u "$ALL_LINKS_FILE" > "$UNIQUE_LINKS_FILE"
+        LINK_COUNT=$(wc -l < "$UNIQUE_LINKS_FILE")
+        echo "Found $LINK_COUNT unique links" >> "$RESULTS_FILE"
+        echo "" >> "$RESULTS_FILE"
       else
-        echo "No links found" >> /tmp/link-check-results.md
+        echo "No links found" >> "$RESULTS_FILE"
         echo "no_links=true" >> $GITHUB_OUTPUT
         exit 0
       fi
       
       # Test each link
-      echo "## Link Test Results" >> /tmp/link-check-results.md
-      echo "" >> /tmp/link-check-results.md
-      echo "Testing links..." >> /tmp/link-check-results.md
+      echo "## Link Test Results" >> "$RESULTS_FILE"
+      echo "" >> "$RESULTS_FILE"
+      echo "Testing links..." >> "$RESULTS_FILE"
       
       BROKEN_COUNT=0
       WORKING_COUNT=0
@@ -76,21 +81,21 @@ steps:
         
         if [[ "$HTTP_CODE" =~ ^2 ]] || [[ "$HTTP_CODE" =~ ^3 ]]; then
           WORKING_COUNT=$((WORKING_COUNT + 1))
-          echo "✅ $url (HTTP $HTTP_CODE)" >> /tmp/link-check-results.md
+          echo "✅ $url (HTTP $HTTP_CODE)" >> "$RESULTS_FILE"
         else
           BROKEN_COUNT=$((BROKEN_COUNT + 1))
-          echo "❌ $url (HTTP $HTTP_CODE)" >> /tmp/link-check-results.md
+          echo "❌ $url (HTTP $HTTP_CODE)" >> "$RESULTS_FILE"
         fi
-      done < /tmp/unique-links.txt
+      done < "$UNIQUE_LINKS_FILE"
       
-      echo "" >> /tmp/link-check-results.md
-      echo "**Summary:** $WORKING_COUNT working, $BROKEN_COUNT broken" >> /tmp/link-check-results.md
+      echo "" >> "$RESULTS_FILE"
+      echo "**Summary:** $WORKING_COUNT working, $BROKEN_COUNT broken" >> "$RESULTS_FILE"
       
       # Output results
       echo "broken_count=$BROKEN_COUNT" >> $GITHUB_OUTPUT
       echo "working_count=$WORKING_COUNT" >> $GITHUB_OUTPUT
       
-      cat /tmp/link-check-results.md
+      cat "$RESULTS_FILE"
     shell: bash
 
 tools:
@@ -118,14 +123,14 @@ Your workflow has already collected and tested all links in the previous step. U
 
 ## Step 1: Review Link Check Results
 
-The link check step has already run and created a report at `/tmp/link-check-results.md`. Read this file to see:
+The link check step has already run and created a report at `/tmp/gh-aw/agent/link-checker/link-check-results.md`. Read this file to see:
 - All links found in the documentation
 - Which links are working (✅) and which are broken (❌)
 - HTTP status codes for each link
 
 Use bash to read the file:
 ```bash
-cat /tmp/link-check-results.md
+cat /tmp/gh-aw/agent/link-checker/link-check-results.md
 ```
 
 ## Step 2: Load Cache Memory
@@ -228,4 +233,4 @@ Based on your work:
 
 - Repository: `${{ github.repository }}`
 - Run daily on weekdays to catch broken links early
-- Link test results are available at `/tmp/link-check-results.md`
+- Link test results are available at `/tmp/gh-aw/agent/link-checker/link-check-results.md`

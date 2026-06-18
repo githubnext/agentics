@@ -26,6 +26,10 @@ safe-outputs:
 
 tools:
   playwright:
+    mode: cli
+  bash:
+    - "mkdir*"
+    - "playwright-cli *"
   web-fetch:
   github:
     toolsets: [all]
@@ -70,8 +74,8 @@ still contains a placeholder, then:
    d. Also instruct them to remove this section from the markdown. 
    e. Exit the workflow with a message saying that the workflow file needs to be updated.
 
-1. Use the Playwright MCP tool to browse to `localhost:3000`. Review the website for accessibility problems by navigating around, clicking
-  links, pressing keys, taking snapshots and/or screenshots to review, etc. using the appropriate Playwright MCP commands.
+1. Use `playwright-cli` from the bash tool to browse to `http://localhost:3000`. Review the website for accessibility problems by navigating around, clicking
+  links, pressing keys, taking snapshots and/or screenshots to review, etc. Save any screenshots under `/tmp/gh-aw/agent/screenshots/`.
 
 2. Review the source code of the application to look for accessibility issues in the code.  Use the Grep, LS, Read, etc. tools.
 
