@@ -36,7 +36,7 @@ steps:
       echo "⬇ Downloading the last 100 open issues (excluding sub-issues)..."
 
       # Fetch the last 100 open issues that don't have a parent issue
-      gh issue list --repo ${{ github.repository }} \
+      gh issue list --repo "$GITHUB_REPOSITORY" \
         --search "-parent-issue:*" \
         --state open \
         --json number,title,author,createdAt,state,url,body,labels,updatedAt,closedAt,milestone,assignees \
