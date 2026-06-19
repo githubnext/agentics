@@ -1,0 +1,17 @@
+manifest-version: "1"
+name: optimization
+description: Agentic workflows for improving code performance, efficiency, quality, and maintainability.
+emoji: "⚡"
+includes:
+  - workflows/code-simplifier.md
+  - workflows/daily-efficiency-improver.md
+  - workflows/daily-perf-improver.md
+  - workflows/daily-test-improver.md
+  - workflows/duplicate-code-detector.md
+  - workflows/efficiency-improver.md
+  - workflows/large-file-simplifier.md
+  - workflows/lean-squad.md
+  - workflows/perf-improver.md
+  - workflows/q.md
+  - workflows/repository-quality-improver.md
+  - workflows/test-improver.md

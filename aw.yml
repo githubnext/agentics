@@ -1,0 +1,65 @@
+manifest-version: "1"
+name: agentics
+description: A sample family of reusable GitHub Agentic Workflows for maintainers, code quality, documentation, security, and more.
+emoji: "✨"
+includes:
+  - workflows/accessibility-review.md
+  - workflows/adhoc-qa.md
+  - workflows/agentic-wiki-coder.md
+  - workflows/agentic-wiki-writer.md
+  - workflows/ai-moderator.md
+  - workflows/archie.md
+  - workflows/ci-coach.md
+  - workflows/ci-doctor.md
+  - workflows/code-simplifier.md
+  - workflows/contribution-check.md
+  - workflows/contribution-guidelines-checker.md
+  - workflows/cost-tracker.md
+  - workflows/daily-accessibility-review.md
+  - workflows/daily-doc-updater.md
+  - workflows/daily-efficiency-improver.md
+  - workflows/daily-issue-triage.md
+  - workflows/daily-malicious-code-scan.md
+  - workflows/daily-multi-device-docs-tester.md
+  - workflows/daily-perf-improver.md
+  - workflows/daily-plan.md
+  - workflows/daily-qa.md
+  - workflows/daily-repo-chronicle.md
+  - workflows/daily-repo-status.md
+  - workflows/daily-team-status.md
+  - workflows/daily-test-improver.md
+  - workflows/dictation-prompt.md
+  - workflows/discussion-task-miner.md
+  - workflows/doc-updater.md
+  - workflows/duplicate-code-detector.md
+  - workflows/efficiency-improver.md
+  - workflows/glossary-maintainer.md
+  - workflows/grumpy-reviewer.md
+  - workflows/issue-arborist.md
+  - workflows/issue-triage.md
+  - workflows/large-file-simplifier.md
+  - workflows/lean-squad.md
+  - workflows/link-checker.md
+  - workflows/malicious-code-scan.md
+  - workflows/markdown-linter.md
+  - workflows/multi-device-docs-tester.md
+  - workflows/perf-improver.md
+  - workflows/plan.md
+  - workflows/pr-fix.md
+  - workflows/pr-nitpick-reviewer.md
+  - workflows/q.md
+  - workflows/repo-ask.md
+  - workflows/repo-assist.md
+  - workflows/repo-chronicle.md
+  - workflows/repo-status.md
+  - workflows/repository-quality-improver.md
+  - workflows/sub-issue-closer.md
+  - workflows/team-status.md
+  - workflows/tech-content-editorial-board.md
+  - workflows/test-improver.md
+  - workflows/unbloat-docs.md
+  - workflows/update-docs.md
+  - workflows/vex-generator.md
+  - workflows/weekly-issue-activity.md
+  - workflows/weekly-repo-map.md
+  - workflows/weekly-research.md
