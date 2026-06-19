@@ -42,11 +42,6 @@ Investigate faults proactively and improve CI.
 - [🗺️ Weekly Repository Map](docs/weekly-repo-map.md) - Visualize repository file structure and size distribution with a weekly ASCII tree map
 - [📰 Tech Content Editorial Board](docs/tech-content-editorial-board.md) - Daily tech content editorial-board review of technical rigor, wording, structure, and editorial quality
 
-### Dependency Management Workflows
-
-- [📦 Dependabot PR Bundler](docs/dependabot-pr-bundler.md) - Create pull requests to bundle together as many dependabot updates as possible
-- [📦 Dependabot Issue Bundler](docs/dependabot-issue-bundler.md) - Create issues that group together dependabot updates related to the same ecosystem
-
 ### Documentation Workflows
 
 - [📖 Documentation Update on Push to Main](docs/update-docs.md) - Update documentation automatically on every push to main
