@@ -1,15 +1,5 @@
 {
   "entries": {
-    "actions/checkout@v4": {
-      "repo": "actions/checkout",
-      "version": "v4",
-      "sha": "34e114876b0b11c390a56381ad16ebd13914f8d5"
-    },
-    "actions/checkout@v6.0.2": {
-      "repo": "actions/checkout",
-      "version": "v6.0.2",
-      "sha": "de0fac2e4500dabe0009e67214ff5f5447ce83dd"
-    },
     "actions/checkout@v7.0.0": {
       "repo": "actions/checkout",
       "version": "v7.0.0",
@@ -58,7 +48,8 @@
     "super-linter/super-linter@v8.7.0": {
       "repo": "super-linter/super-linter",
       "version": "v8.7.0",
-      "sha": "4ce20838b8ab83717e78138c5b3a1407148e0918"
+      "sha": "4ce20838b8ab83717e78138c5b3a1407148e0918",
+      "released_at": "2026-06-19T08:10:35Z"
     }
   },
   "containers": {
