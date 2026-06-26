@@ -98,6 +98,7 @@ You can use the "/plan" agent to turn the reports into actionable issues which c
 
 ### Issue Farming Workflows
 
+- [👾 Issue Monster](docs/issue-monster.md) - Automatically assign issues labeled `cookie` to the Copilot coding agent every 30 minutes
 - [🔒 Sub-Issue Closer](docs/sub-issue-closer.md) - Automatically close parent issues when all their sub-issues are complete
 - [🌳 Issue Arborist](docs/issue-arborist.md) - Automatically organize issues by linking related issues as parent-child sub-issues
 
