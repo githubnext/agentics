@@ -269,8 +269,6 @@ Please verify:
 - No unintended side effects
 
 ---
-
-*Automated by Code Simplifier Agent*
 ```
 
 ### 4.3 Use Safe Outputs
