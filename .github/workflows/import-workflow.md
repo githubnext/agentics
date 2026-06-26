@@ -41,6 +41,9 @@ tools:
   bash: true
   edit:
 
+engine:
+  model: small
+
 timeout-minutes: 20
 ---
 
