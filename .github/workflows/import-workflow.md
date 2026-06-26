@@ -112,6 +112,27 @@ The workflow from the source repository may contain project-specific references.
 
 Save the adapted workflow to `workflows/<workflow-name>.md`.
 
+### Required delegation pattern (inlined agents)
+
+To keep this import workflow reliable and efficient, delegate the analysis work to **inlined agents**:
+
+1. **Summarizer agent**  
+   Launch an inlined agent that reads the imported workflow source and returns a concise structured summary:
+   - workflow purpose
+   - trigger(s)
+   - required permissions
+   - key tools/safe outputs
+   - expected outputs/artifacts
+   - custom agent references
+
+2. **Processor agent(s)**  
+   Launch separate inlined agent call(s) to process the imported assets independently:
+   - one inlined agent call to adapt the workflow content for `workflows/<workflow-name>.md`
+   - if custom agent files were imported, process each custom agent file in its own inlined agent call
+
+3. **Orchestration rule**  
+   The main agent remains the orchestrator: collect the summaries and processed outputs from inlined agents, validate consistency, and only then write files.
+
 ## Step 5: Create the documentation page
 
 Create a new file at `docs/<workflow-name>.md` following the established documentation pattern used by other docs pages in this repository. The documentation page MUST include these sections:
