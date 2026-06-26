@@ -4,7 +4,11 @@ on:
   repository_dispatch:
     types: [maintainer]
 
-permissions: read-all
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  copilot-requests: write
 
 network: defaults
 

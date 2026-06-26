@@ -14,7 +14,14 @@ timeout-minutes: 30
 network: defaults
 
 
-permissions: read-all
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  actions: read
+  discussions: read
+  security-events: read
+  copilot-requests: write
 
 tools:
   github:

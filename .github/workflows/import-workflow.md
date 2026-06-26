@@ -18,7 +18,14 @@ on:
         type: string
         default: "github/gh-aw"
 
-permissions: read-all
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  actions: read
+  discussions: read
+  security-events: read
+  copilot-requests: write
 
 network: defaults
 
