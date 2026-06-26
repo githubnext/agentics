@@ -121,7 +121,8 @@ To keep this import workflow reliable and efficient, delegate the analysis work 
    - workflow purpose
    - trigger(s)
    - required permissions
-   - key tools/safe outputs
+   - key tools used
+   - safe outputs used
    - expected outputs/artifacts
    - custom agent references
 
@@ -131,7 +132,11 @@ To keep this import workflow reliable and efficient, delegate the analysis work 
    - if custom agent files were imported, process each custom agent file in its own inlined agent call
 
 3. **Orchestration rule**  
-   The main agent remains the orchestrator: collect the summaries and processed outputs from inlined agents, validate consistency, and only then write files.
+   The main agent remains the orchestrator: collect the summaries and processed outputs from inlined agents, validate consistency, and only then write files.  
+   Consistency checks must verify that:
+   - permissions and safe outputs in the adapted workflow do not exceed the imported source unless explicitly required
+   - custom agent references in `engine.agent`/`imports` match the imported files
+   - documented behavior (docs + README entry) matches the adapted workflow's actual trigger/output behavior
 
 ## Step 5: Create the documentation page
 
