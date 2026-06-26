@@ -3,7 +3,9 @@ on:
   schedule: daily on weekdays
   workflow_dispatch:
 
-permissions: read-all
+permissions:
+  all: read
+  copilot-requests: write
 
 timeout-minutes: 30
 

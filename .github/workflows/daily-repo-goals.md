@@ -14,7 +14,9 @@ timeout-minutes: 30
 network: defaults
 
 
-permissions: read-all
+permissions:
+  all: read
+  copilot-requests: write
 
 tools:
   github:

@@ -4,7 +4,9 @@ on:
   repository_dispatch:
     types: [maintainer]
 
-permissions: read-all
+permissions:
+  all: read
+  copilot-requests: write
 
 network: defaults
 
