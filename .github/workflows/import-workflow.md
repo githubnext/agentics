@@ -19,7 +19,12 @@ on:
         default: "github/gh-aw"
 
 permissions:
-  all: read
+  contents: read
+  issues: read
+  pull-requests: read
+  actions: read
+  discussions: read
+  security-events: read
   copilot-requests: write
 
 network: defaults

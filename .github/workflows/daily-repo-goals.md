@@ -15,7 +15,12 @@ network: defaults
 
 
 permissions:
-  all: read
+  contents: read
+  issues: read
+  pull-requests: read
+  actions: read
+  discussions: read
+  security-events: read
   copilot-requests: write
 
 tools:

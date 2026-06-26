@@ -3,7 +3,9 @@ description: Daily automated link checker that finds and fixes broken links in d
 on:
   schedule: daily on weekdays
 permissions:
-  all: read
+  contents: read
+  issues: read
+  pull-requests: read
   copilot-requests: write
 timeout-minutes: 60
 network:

@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  all: read
+  contents: read
+  issues: read
+  pull-requests: read
   copilot-requests: write
 
 timeout-minutes: 30

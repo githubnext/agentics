@@ -5,7 +5,9 @@ on:
     types: [maintainer]
 
 permissions:
-  all: read
+  contents: read
+  issues: read
+  pull-requests: read
   copilot-requests: write
 
 network: defaults
