@@ -15,6 +15,7 @@ on:
   workflow_dispatch:
   slash_command:
     name: perf-assist
+    strategy: centralized
   reaction: "eyes"
   permissions:
     pull-requests: read
