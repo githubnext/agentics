@@ -13,7 +13,7 @@ The [Daily Documentation Updater workflow](../workflows/doc-updater.md?plain=1) 
 gh extension install github/gh-aw
 
 # Add the workflow to your repository
-gh aw add-wizard githubnext/agentics/doc-updater
+gh aw add githubnext/agentics/doc-updater
 ```
 
 This walks you through adding the workflow to your repository.
