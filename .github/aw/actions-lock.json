@@ -1,19 +1,9 @@
 {
   "entries": {
-    "actions/checkout@v4": {
+    "actions/checkout@v7.0.1": {
       "repo": "actions/checkout",
-      "version": "v4",
-      "sha": "11d5960a326750d5838078e36cf38b85af677262"
-    },
-    "actions/checkout@v6.0.2": {
-      "repo": "actions/checkout",
-      "version": "v6.0.2",
-      "sha": "de0fac2e4500dabe0009e67214ff5f5447ce83dd"
-    },
-    "actions/checkout@v7.0.0": {
-      "repo": "actions/checkout",
-      "version": "v7.0.0",
-      "sha": "9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0"
+      "version": "v7.0.1",
+      "sha": "3d3c42e5aac5ba805825da76410c181273ba90b1"
     },
     "actions/download-artifact@v8.0.1": {
       "repo": "actions/download-artifact",
@@ -30,20 +20,20 @@
       "version": "v7.0.1",
       "sha": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
     },
-    "github/gh-aw-actions/setup-cli@v0.86.2": {
+    "github/gh-aw-actions/setup-cli@v0.88.3": {
       "repo": "github/gh-aw-actions/setup-cli",
-      "version": "v0.86.2",
-      "sha": "6aab9e5b5c91c615506061f09bedd81a23babe3c"
+      "version": "v0.88.3",
+      "sha": "49459c75b37a0b82b4ecb15e1079972cc3353bc9"
     },
-    "github/gh-aw-actions/setup@v0.86.2": {
+    "github/gh-aw-actions/setup@v0.88.3": {
       "repo": "github/gh-aw-actions/setup",
-      "version": "v0.86.2",
-      "sha": "6aab9e5b5c91c615506061f09bedd81a23babe3c"
+      "version": "v0.88.3",
+      "sha": "49459c75b37a0b82b4ecb15e1079972cc3353bc9"
     },
-    "super-linter/super-linter@v8.5.0": {
+    "super-linter/super-linter@v8.7.0": {
       "repo": "super-linter/super-linter",
-      "version": "v8.5.0",
-      "sha": "61abc07d755095a68f4987d1c2c3d1d64408f1f9"
+      "version": "v8.7.0",
+      "sha": "4ce20838b8ab83717e78138c5b3a1407148e0918"
     }
   },
   "containers": {
@@ -61,11 +51,6 @@
       "image": "ghcr.io/github/gh-aw-firewall/squid:0.25.55",
       "digest": "sha256:74084b704d8d3664a363655986664d70bd9cdb4830532d0b35cd784d867aabca",
       "pinned_image": "ghcr.io/github/gh-aw-firewall/squid:0.25.55@sha256:74084b704d8d3664a363655986664d70bd9cdb4830532d0b35cd784d867aabca"
-    },
-    "ghcr.io/github/gh-aw-mcpg:v0.3.19": {
-      "image": "ghcr.io/github/gh-aw-mcpg:v0.3.19",
-      "digest": "sha256:a6c890d7c24d7190c9ef97b9c954cc4cffaae6b01c371ced1f959f1370b1f68f",
-      "pinned_image": "ghcr.io/github/gh-aw-mcpg:v0.3.19@sha256:a6c890d7c24d7190c9ef97b9c954cc4cffaae6b01c371ced1f959f1370b1f68f"
     }
   }
 }
