@@ -164,7 +164,6 @@ safe-outputs:
       exclude:
       - CHANGELOG.md
       - README.md
-      - Directory.Packages.props
     max: 4
   push-to-pull-request-branch:
     target: "*"
@@ -175,7 +174,6 @@ safe-outputs:
       exclude:
       - CHANGELOG.md
       - README.md
-      - Directory.Packages.props
   create-issue:
     title-prefix: "[repo-assist] "
     labels: [automation, repo-assist]
