@@ -73,8 +73,12 @@ tools:
     validation:
       timeout-minutes: 1
       script: |
+        const fs = require("node:fs");
+        const path = require("node:path");
         const fail = message => { throw new Error(`notes.json: ${message}`); };
-        const data = JSON.parse(fs.readFileSync(path.join(memoryRoot, "notes.json"), "utf8"));
+        const notesPath = path.join(memoryRoot, "notes.json");
+        if (!fs.existsSync(notesPath)) fail("missing (create an initial notes.json that matches schema version 1)");
+        const data = JSON.parse(fs.readFileSync(notesPath, "utf8"));
         const isObject = value => value !== null && typeof value === "object" && !Array.isArray(value);
         const exactKeys = (value, keys) => isObject(value) && Object.keys(value).sort().join(",") === [...keys].sort().join(",");
         const validDate = value => typeof value === "string" && /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value);
