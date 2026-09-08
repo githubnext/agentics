@@ -16,9 +16,7 @@ network:
 
 tools:
   github:
-    lockdown: true
-    toolsets:
-      - issues
+    toolsets: [ issues ]
     min-integrity: none # This workflow is allowed to examine and comment on any issues
   bash:
     - "cat *"

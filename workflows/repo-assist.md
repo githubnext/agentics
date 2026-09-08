@@ -38,6 +38,9 @@ on:
         [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
       # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
 
+concurrency:
+  job-discriminator: ${{ github.event_name == 'schedule' && 'scheduled' || github.run_id }}
+
 if: needs.pre_activation.outputs.check_result == 'success'
 
 timeout-minutes: 60
@@ -162,8 +165,8 @@ safe-outputs:
     protected-files:
       policy: request_review
       exclude:
-      - CHANGELOG.md
-      - README.md
+        - CHANGELOG.md
+        - README.md
     max: 4
   push-to-pull-request-branch:
     target: "*"
@@ -172,8 +175,8 @@ safe-outputs:
     protected-files:
       policy: allowed
       exclude:
-      - CHANGELOG.md
-      - README.md
+        - CHANGELOG.md
+        - README.md
   create-issue:
     title-prefix: "[repo-assist] "
     labels: [automation, repo-assist]
@@ -355,7 +358,7 @@ The weighting scheme naturally adapts to repo state:
 
 **Progress Imperative**: Your primary purpose is to make forward progress on the repository. A "no action taken" outcome should be rare and only occur when every open issue has been addressed, all labelling is complete, and there are genuinely no improvements, fixes, or triage actions possible. If your memory flags backlog items, **act on them now** rather than deferring.
 
-Always do Task 11 (Update Monthly Activity Summary Issue) every run. In all comments and PR descriptions, identify yourself as "Repo Assist".
+Always do Task 11 (Update Monthly Activity Summary Issue) after performing work in non-command mode, including when manually dispatched without a command. Command-mode and no-op runs do not update the issue. In all comments and PR descriptions, identify yourself as "Repo Assist".
 
 ### Task 1: Issue Labelling
 

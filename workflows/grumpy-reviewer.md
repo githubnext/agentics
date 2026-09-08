@@ -13,7 +13,7 @@ permissions:
 tools:
   cache-memory: true
   github:
-    lockdown: true
+    min-integrity: approved
     toolsets: [pull_requests, repos]
 
 safe-outputs:

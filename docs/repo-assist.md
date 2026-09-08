@@ -24,7 +24,7 @@ graph LR
     W --> S[Select 3 tasks]
     S --> A[Read Memory]
     A --> T1[Task 1: Issue Labelling]
-    A --> T2[Task 2: Issue Investigation + Comment]
+    A --> T2[Task 2: Issue Investigation then Resolve, Fix, Seek Clarification or Comment]
     A --> T3[Task 3: Issue Investigation + Fix]
     A --> T4[Task 4: Engineering Investments]
     A --> T5[Task 5: Coding Improvements]
@@ -44,7 +44,7 @@ If a selected task is not applicable to the current repository state, Repo Assis
 | Selected task | Fallback |
 |---|---|
 | Task 1: Issue Labelling | Task 2 when all open issues are labelled |
-| Task 2: Issue Investigation | Task 1 when no issue needs substantive action |
+| Task 2: Issue Investigation then Resolve, Fix, Seek Clarification or Comment | Task 1 when no issue needs substantive action |
 | Task 3: Issue Investigation and Fix | Task 2 when no suitable issue is fixable |
 | Task 4: Engineering Investments | Task 5 when no actionable investment is identified |
 | Task 5: Coding Improvements | Task 9 when no clearly beneficial, low-risk improvement is identified |
@@ -116,7 +116,7 @@ Proactively moves the repository forward — considers the goals and aims of the
 
 ### Task 11: Monthly Activity Summary
 
-Every scheduled run that performs work, Repo Assist updates a rolling monthly activity issue that gives maintainers a single place to see all activity and suggested actions. The action list is rebuilt from current repository state and memory, completed or closed items are removed, and run history is kept in reverse chronological order.
+Every non-command-mode run that performs work, whether scheduled or manually dispatched, updates a rolling monthly activity issue that gives maintainers a single place to see all activity and suggested actions. Command-mode and no-op runs do not update the issue. The action list is rebuilt from current repository state and memory, completed or closed items are removed, and run history is kept in reverse chronological order.
 
 ### Persistent Memory
 
