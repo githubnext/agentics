@@ -45,6 +45,9 @@ on:
           - tolerable_risk
           - no_bandwidth
 
+concurrency:
+  job-discriminator: ${{ github.event_name == 'schedule' && 'scheduled' || github.run_id }}
+
 permissions:
   contents: read
   issues: read

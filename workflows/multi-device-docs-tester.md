@@ -28,6 +28,9 @@ on:
         required: false
         default: '4321'
 
+concurrency:
+  job-discriminator: ${{ github.event_name == 'schedule' && 'scheduled' || github.run_id }}
+
 permissions:
   contents: read
   issues: read

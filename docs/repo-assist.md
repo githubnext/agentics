@@ -1,6 +1,6 @@
 # 🌈 Repo Assist
  
-The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a [GitHub Agentic Workflow](https://github.blog/ai-and-ml/automate-repository-tasks-with-github-agentic-workflows/) for a friendly repository assistant that runs regularly to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. Each run it selects three tasks via a weighted random draw based - favouring issue labelling, investigation and fixing when the backlog is large, then shifting to engineering, testing, and forward progress as the backlog clears. It maintains a monthly activity summary for maintainer visibility.
+The [Repo Assist workflow](../workflows/repo-assist.md?plain=1) is a [GitHub Agentic Workflow](https://github.blog/ai-and-ml/automate-repository-tasks-with-github-agentic-workflows/) for a friendly repository assistant that runs regularly to support contributors and maintainers. It can also be triggered on-demand via `/repo-assist <instructions>` to perform specific tasks. Each run it selects three tasks via a weighted random draw based on repository state—favouring issue labelling, investigation, and fixing when the backlog is large, then shifting to engineering, testing, and forward progress as the backlog clears. If a selected task is not applicable, it runs a configured fallback task instead. It maintains a monthly activity summary for maintainer visibility.
 
 [Read more in this blog](https://dsyme.net/2026/02/25/repo-assist-a-repository-assistant/).
 
@@ -21,15 +21,15 @@ This walks you through adding the workflow to your repository.
 ````mermaid
 graph LR
     P[Fetch repo data] --> W[Compute task weights]
-    W --> S[Select 2 tasks]
+    W --> S[Select 3 tasks]
     S --> A[Read Memory]
     A --> T1[Task 1: Issue Labelling]
-    A --> T2[Task 2: Issue Investigation + Comment]
+    A --> T2[Task 2: Issue Investigation then Resolve, Fix, Seek Clarification or Comment]
     A --> T3[Task 3: Issue Investigation + Fix]
     A --> T4[Task 4: Engineering Investments]
     A --> T5[Task 5: Coding Improvements]
     A --> T6[Task 6: Maintain Repo Assist PRs]
-    A --> T7[Task 7: Stale PR Nudges]
+    A --> T7[Task 7: Documentation, QA, and Project Basics]
     A --> T8[Task 8: Performance Improvements]
     A --> T9[Task 9: Testing Improvements]
     A --> T10[Task 10: Take Repo Forward]
@@ -37,7 +37,22 @@ graph LR
     T11 --> M[Save Memory]
 ````
 
-Each run a deterministic pre-step fetches live repo data (open issues, unlabelled issues, open PRs) and computes a **weighted probability** for each task. Three tasks are selected and printed in the workflow logs, then communicated to the agent via prompting. The weights adapt naturally: when unlabelled issues are high, labelling dominates; when there are many open issues, commenting and fixing dominate; as the backlog clears, engineering and forward-progress tasks draw more evenly.
+Each run a deterministic pre-step fetches live repo data (open issues, unlabelled issues, and open Repo Assist PRs) and computes a **weighted probability** for each task. Three distinct tasks are selected using the workflow run ID as a reproducible random seed. The selection and weights are printed in the workflow logs and communicated to the agent via prompting. The weights adapt naturally: when unlabelled issues are high, labelling dominates; when there are many open issues, investigation and fixing dominate; as the backlog clears, engineering and forward-progress tasks draw more evenly.
+
+If a selected task is not applicable to the current repository state, Repo Assist substitutes its fallback rather than doing nothing:
+
+| Selected task | Fallback |
+|---|---|
+| Task 1: Issue Labelling | Task 2 when all open issues are labelled |
+| Task 2: Issue Investigation then Resolve, Fix, Seek Clarification or Comment | Task 1 when no issue needs substantive action |
+| Task 3: Issue Investigation and Fix | Task 2 when no suitable issue is fixable |
+| Task 4: Engineering Investments | Task 5 when no actionable investment is identified |
+| Task 5: Coding Improvements | Task 9 when no clearly beneficial, low-risk improvement is identified |
+| Task 6: Maintain Repo Assist PRs | Task 2 when no Repo Assist PR is open |
+| Task 7: Documentation, QA, and Project Basics | Task 5 when no useful improvement is identified |
+| Task 8: Performance Improvements | Task 9 when no measurable opportunity is identified |
+| Task 9: Testing Improvements | Task 5 when no worthwhile coverage or quality gap is identified |
+| Task 10: Take the Repository Forward | Task 2 when existing work is complete or blocked and no valuable next step is available |
 
 ### Task 1: Issue Labelling
 
@@ -45,11 +60,11 @@ Default weighting: dominates when the label backlog is large.
 
 Applies appropriate labels to unlabelled issues and PRs based on content analysis. Removes misapplied labels. Conservative and confident — only applies labels it is sure about.
 
-### Task 2: Issue Investigation and Comment
+### Task 2: Issue Investigation then Resolve, Fix, Seek Clarification or Comment
 
 Default weighting: scales with backlog size.
 
-Repo Assist reviews open issues and comments **only when it has something genuinely valuable to add**. It processes issues oldest-first using a memory-backed cursor, prioritising issues that have never received a Repo Assist comment. It also re-engages when new human comments appear.
+Repo Assist reviews open issues and acts **only when it can make substantive progress**. It processes issues oldest-first using a memory-backed cursor, prioritising issues that have never received substantive Repo Assist attention. After inspecting the issue, comments, relevant code, and tests, it either recommends a verified resolution, implements a tested fix, asks focused questions needed to unblock progress, or provides concrete analysis or guidance. It re-engages with previously addressed issues only when new human comments or repository changes warrant it.
 
 ### Task 3: Issue Investigation and Fix
 
@@ -75,11 +90,11 @@ Default weighting: only meaningful when open PRs exist.
 
 Keeps its own PRs healthy by fixing CI failures and resolving merge conflicts. Uses `push_to_pull_request_branch` to update PR branches directly.
 
-### Task 7: Stale PR Nudges
+### Task 7: Documentation Improvements, Ad Hoc QA, and Project Basics
 
-Default weighting: scales with non-Repo-Assist PR count.
+Default weighting: steady baseline with a small open-issue bias.
 
-Politely nudges PR authors when their PRs have been waiting 14+ days for a response. Maximum 3 nudges per run, never nags the same PR twice.
+Improves documentation, manually exercises important workflows, and addresses small repository-maintenance gaps. Good candidates include stale or inaccurate documentation, broken links and examples, mismatches between documented and actual behaviour, missing guidance for common workflows, focused ad hoc QA, and basic repository hygiene. Claims are verified against current code or observed behaviour, and worthwhile changes are submitted as small, tested draft PRs.
 
 ### Task 8: Performance Improvements
 
@@ -101,7 +116,11 @@ Proactively moves the repository forward — considers the goals and aims of the
 
 ### Task 11: Monthly Activity Summary
 
-Every run, Repo Assist updates a rolling monthly activity issue that gives maintainers a single place to see all activity and suggested actions.
+Every non-command-mode run that performs work, whether scheduled or manually dispatched, updates a rolling monthly activity issue that gives maintainers a single place to see all activity and suggested actions. Command-mode and no-op runs do not update the issue. The action list is rebuilt from current repository state and memory, completed or closed items are removed, and run history is kept in reverse chronological order.
+
+### Persistent Memory
+
+Repo Assist uses one schema-validated `notes.json` file to carry concise, actionable state across runs. It records backlog cursors, unresolved issue interactions, fix attempts, the latest engineering checks, maintainer-completed monthly actions, and a short priority queue. The workflow verifies remembered facts against current repository state before acting, replaces superseded entries, and removes stale records rather than accumulating a run-by-run activity log.
 
 ### Guidelines Repo Assist Follows
 
