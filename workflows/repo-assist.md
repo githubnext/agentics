@@ -52,7 +52,6 @@ permissions:
   code-quality: read
   contents: read
   deployments: read
-  id-token: write
   issues: read
   discussions: read
   packages: read
