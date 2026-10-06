@@ -85,7 +85,9 @@ tools:
   repo-memory:
     max-file-size: 65536
     max-patch-size: 65536
-    max-file-count: 1
+    # Allow one migration commit to delete up to five legacy entries while
+    # notes.json remains the only persisted file accepted by validation.
+    max-file-count: 6
     format-json: true
     allowed-extensions: [".json"]
     validation:
