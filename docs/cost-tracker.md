@@ -72,8 +72,8 @@ already there if you are running gh-aw with firewall enabled (the default).
 
 ## Learn More
 
-- [token-usage.jsonl reference](https://github.github.com/gh-aw/reference/token-usage/)
-- [gh-aw firewall documentation](https://github.github.com/gh-aw/reference/firewall/)
+- [token-usage.jsonl reference](https://github.github.com/gh-aw/reference/artifacts/#firewall-audit-logs)
+- [gh-aw firewall documentation](https://github.github.com/gh-aw/reference/network/)
 - [CI Doctor workflow](ci-doctor.md) — investigate CI failures automatically
 
 ## Going Further
