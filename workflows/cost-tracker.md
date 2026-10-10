@@ -145,7 +145,7 @@ Build a report using this template. Fill in `$TOTAL_COST` and the breakdown tabl
 
 </details>
 
-*Data from [token-usage.jsonl](https://github.github.io/gh-aw/reference/artifacts/#firewall-audit-logs) written by gh-aw's firewall.*
+*Data from [token-usage.jsonl](https://github.github.com/gh-aw/reference/artifacts/#firewall-audit-logs) written by gh-aw's firewall.*
 ```
 
 **If a PR number was found**: post this as a comment on that PR using the `add_comment`
