@@ -122,7 +122,7 @@ Every non-command-mode run that performs work, whether scheduled or manually dis
 
 Repo Assist uses one schema-validated `notes.json` file to carry concise, actionable state across runs. It records backlog cursors, unresolved issue interactions, fix attempts, the latest engineering checks, maintainer-completed monthly actions, and a short priority queue. The workflow verifies remembered facts against current repository state before acting, replaces superseded entries, and removes stale records rather than accumulating a run-by-run activity log.
 
-Repo Assist stores this file on the dedicated `memory/repo-assist-memory` branch. Repositories upgrading from an earlier Repo Assist version start with fresh memory on this branch; legacy memory branches are not migrated or modified.
+Repo Assist stores this file on the dedicated `memory/repo-assist-memory` branch. Repositories upgrading from an earlier Repo Assist version start with fresh memory on this branch; Repo Assist initializes a missing `notes.json`, while legacy memory branches are not migrated or modified.
 
 ### Guidelines Repo Assist Follows
 

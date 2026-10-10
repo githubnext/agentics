@@ -219,6 +219,27 @@ safe-outputs:
     target: "*" 
 
 steps:
+  - name: Initialize Repo Assist memory
+    env:
+      MEMORY_DIR: /tmp/gh-aw/repo-memory/default
+    run: |
+      if [[ ! -f "$MEMORY_DIR/notes.json" ]]; then
+        cat > "$MEMORY_DIR/notes.json" <<'EOF'
+      {
+        "version": 1,
+        "cursors": {
+          "labelling_after": null,
+          "investigation_after": null
+        },
+        "issues": [],
+        "fixes": [],
+        "checks": [],
+        "completed_actions": [],
+        "priorities": []
+      }
+      EOF
+      fi
+
   - name: Fetch repo data for task weighting
     env:
       GH_TOKEN: ${{ github.token }}
