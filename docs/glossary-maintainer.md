@@ -55,7 +55,7 @@ gh aw run glossary-maintainer
 
 ### Triggering CI on Pull Requests
 
-To automatically trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.com/gh-aw/reference/triggering-ci/) for setup instructions.
+To automatically trigger CI checks on PRs created by this workflow, configure an additional repository secret `GH_AW_CI_TRIGGER_TOKEN`. See the [triggering CI documentation](https://github.github.io/gh-aw/reference/triggering-ci/) for setup instructions.
 
 ## Learn More
 
