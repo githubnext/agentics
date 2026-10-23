@@ -26,7 +26,6 @@ permissions:
 tools:
   github:
     toolsets: [all]
-  web-fetch:
   cache-memory: true
   bash: true
 

@@ -19,7 +19,6 @@ safe-outputs:
   add-comment:
 
 tools:
-  web-fetch:
   bash: true
   github:
     toolsets: [default, discussions]

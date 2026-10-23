@@ -31,7 +31,6 @@ tools:
     # If in a private repo this has no particular effect.
     lockdown: false
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-  web-fetch:
 
 timeout-minutes: 15
 ---
@@ -59,5 +58,3 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 3. Create a new planning discussion with the project plan in its body. 
 
    3a. Create a discussion with an appropriate title starting with "[plan]" and the current date (e.g., "[plan] 2025-10-10"), using the project plan as the body.
-
-

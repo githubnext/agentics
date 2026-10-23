@@ -32,7 +32,6 @@ safe-outputs:
 
 tools:
   bash: ["cat", "ls", "find", "grep", "head", "tail", "wc"]
-  web-fetch:
   github:
     toolsets: [issues, labels]
     min-integrity: none

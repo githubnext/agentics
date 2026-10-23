@@ -50,7 +50,6 @@ checkout:
   fetch-depth: 0   # fetch full history
 
 tools:
-  web-fetch:
   github:
     toolsets: [default]
   bash: true
@@ -658,7 +657,7 @@ formal-verification/
    - **Proof tractability**: likely `decide` / routine `simp`+`omega`, or requires substantial proof engineering?
    - **Approximations needed**: what aspects of the original code can't be directly modelled in Lean (e.g., I/O, side effects, memory layout)? Document these clearly.
    - **Approach**: enumeration/`decide`, inductive invariant, equational proof, model checking via bounded `decide`?
-5. Search the web (`web-fetch`) for Lean 4 FV patterns relevant to the language/domain. Check Mathlib for relevant existing lemmas and automation.
+5. Research Lean 4 FV patterns relevant to the language/domain using HTTP requests through Bash. Check Mathlib for relevant existing lemmas and automation.
 6. Create or update `formal-verification/RESEARCH.md` and `formal-verification/TARGETS.md`. If updating, include a section noting how critique feedback was incorporated (e.g., re-prioritised targets, revised approaches, new targets added from gap analysis). Create a PR.
 7. Optionally, open an issue summarising the survey and inviting maintainer input on priorities.
 8. Update memory with identified targets, approach choices, rationale, and any critique-driven adjustments.

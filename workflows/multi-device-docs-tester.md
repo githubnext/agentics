@@ -40,7 +40,7 @@ tracker-id: multi-device-docs-tester
 
 engine:
   id: claude
-  max-turns: 30
+max-turns: 30
 
 
 timeout-minutes: 30
@@ -53,7 +53,6 @@ network:
 
 tools:
   playwright:
-    mode: cli
   bash:
     - "npm install*"
     - "npm run build*"

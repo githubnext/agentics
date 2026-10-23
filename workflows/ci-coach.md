@@ -36,7 +36,6 @@ tools:
   github:
     toolsets: [default]
   bash: true
-  web-fetch:
 
 safe-outputs:
   create-pull-request:

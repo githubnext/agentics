@@ -28,7 +28,6 @@ safe-outputs:
 tools:
   github:
     toolsets: [all]
-  web-fetch:
   # By default this workflow allows all bash commands within the confine of Github Actions VM 
   bash: true
 

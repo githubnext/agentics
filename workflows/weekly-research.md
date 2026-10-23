@@ -24,7 +24,6 @@ tools:
   github:
     toolsets: [all]
     min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
-  web-fetch:
 
 timeout-minutes: 15
 
@@ -55,5 +54,3 @@ At the end of the report list write a collapsed section with the following:
 - All search queries (web, issues, pulls, content) you used
 - All bash commands you executed
 - All MCP tools you used
-
-

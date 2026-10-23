@@ -26,7 +26,6 @@ safe-outputs:
 
 tools:
   playwright:
-  web-fetch:
   github:
     toolsets: [all]
 
@@ -54,7 +53,7 @@ with details.
 
 Our team uses the Web Content Accessibility Guidelines (WCAG) 2.2.  You may 
 refer to these as necessary by browsing to https://www.w3.org/TR/WCAG22/ using
-the WebFetch tool.  You may also search the internet using WebSearch if you need
+Playwright. You may also browse the internet using Playwright if you need
 additional information about WCAG 2.2.
 
 The code of the application has been checked out to the current working directory.

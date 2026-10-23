@@ -77,7 +77,6 @@ checkout:
   fetch-depth: 0   # fetch full history
 
 tools:
-  web-fetch:
   github:
     toolsets: [all]
     min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
