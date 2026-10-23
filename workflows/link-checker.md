@@ -95,6 +95,7 @@ steps:
     shell: bash
 
 tools:
+  bash: ["curl"]
   github:
     toolsets: [default]
   cache-memory: true

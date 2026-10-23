@@ -31,7 +31,7 @@ safe-outputs:
     max: 50
 
 tools:
-  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc"]
+  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc", "curl"]
   github:
     toolsets: [issues, labels]
     min-integrity: none

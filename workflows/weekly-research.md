@@ -20,7 +20,7 @@ safe-outputs:
     category: "ideas"
 
 tools:
-  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc"]
+  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc", "curl"]
   github:
     toolsets: [all]
     min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
@@ -36,7 +36,7 @@ timeout-minutes: 15
 Do a deep research investigation in ${{ github.repository }} repository, and the related industry in general.
 
 - Read selections of the latest code, issues and PRs for this repo.
-- Read latest trends and news from the software industry news source on the Web.
+- Use curl through Bash to read latest trends and news from software industry news sources on the Web.
 
 Create a new GitHub discussion with title starting with "[weekly-research]" containing a markdown report with
 

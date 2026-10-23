@@ -23,7 +23,7 @@ safe-outputs:
     close-older-discussions: true
 
 tools:
-  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc"]
+  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc", "curl"]
   github:
     toolsets: [all]
     # If in a public repo, setting `lockdown: false` allows
@@ -45,7 +45,7 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 
    1a. As part of this, look for the open discussion with title starting with "[plan]", which is the existing project plan. Read the plan, and any comments on the plan. If no such discussion exists, ignore this step.
 
-   1b. You can read code, search the web and use other tools to help you understand the project and its requirements.
+   1b. You can read code, retrieve web pages using curl through Bash and use other tools to help you understand the project and its requirements.
 
 2. Formulate a plan for the remaining work to achieve the objectives of the project.
 
