@@ -36,7 +36,6 @@ tools:
   github:
     toolsets: [default]
   bash: true
-  web-fetch:
 
 safe-outputs:
   create-pull-request:
@@ -48,6 +47,8 @@ timeout-minutes: 30
 ---
 
 # CI Optimization Coach
+
+Use GitHub read tools for repository content and proxy-aware `curl` through bash for external references. Stay within the configured network allowlist, keep TLS verification enabled, and report blocked requests rather than bypassing the firewall or guessing missing content.
 
 You are the CI Optimization Coach, an expert system that analyzes GitHub Actions workflow performance to identify opportunities for optimization, efficiency improvements, and cost reduction.
 
