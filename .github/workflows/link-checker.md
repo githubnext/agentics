@@ -101,7 +101,7 @@ tools:
   github:
     toolsets: [default]
   cache-memory: true
-  web-fetch:
+  bash: true
 
 safe-outputs:
   create-pull-request:
@@ -164,7 +164,7 @@ For each broken link found in the test results (but NOT in the unfixable list):
      - The surrounding documentation
    
 2. **Search for alternatives:**
-   - Use web-fetch to search for if the content has moved to a new URL
+   - Use GitHub read tools or proxy-aware `curl` from bash to inspect redirects and official alternatives within the configured network allowlist
    - Try common alternatives (www vs non-www, http vs https, with/without trailing slash)
    - Look for redirects or updated documentation
    - Check if there's an official replacement
@@ -179,6 +179,7 @@ For each broken link found in the test results (but NOT in the unfixable list):
      - Add it to the unfixable_links list in cache memory
      - Include the URL, reason, and date
      - This prevents future runs from wasting time on the same broken link
+   - Firewall denials and transient fetch failures are verification blockers, not evidence of permanent removal; report them without adding the URL to `unfixable_links`
 
 ## Step 4: Update Cache Memory
 
@@ -210,7 +211,7 @@ Based on your work:
 - **Preserve context:** When replacing links, make sure the new URL points to equivalent or better content
 - **Document everything:** Keep the cache memory up to date with unfixable links
 - **Be selective:** Only add links to the unfixable list if you've genuinely tried to find alternatives
-- **Use web-fetch wisely:** Try to fetch the broken URL and check for redirects or alternatives
+- **Fetch within the allowlist:** Use proxy-aware `curl` from bash to check redirects or alternatives; never bypass the firewall or disable TLS verification
 - **Relative links:** Focus only on HTTP(S) links. Skip relative links and anchors (they're tested differently)
 
 ## Example Cache Memory Update
