@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Test Repo Assist guards
+        run: python3 -m unittest discover -s tests -p 'test_repo_assist_*.py'
       - name: Install gh-aw
         run: gh extension install github/gh-aw
         env: 

@@ -138,7 +138,7 @@ Repo Assist stores this file on the dedicated `memory/repo-assist-memory` branch
 - **Release preparation**: Uses judgement each run to assess whether a release is warranted — no dedicated release task; proposes release PRs on its own initiative when appropriate
 - **Good contributor etiquette**: Warmly welcomes first-time contributors and points them to README and CONTRIBUTING as a normal part of good behaviour
 
-For scheduled runs, the workflow is skipped if there are already 8 or more open PRs with its title prefix, to avoid overwhelming maintainers.
+Scheduled runs with 8 or more open PRs with the `[repo-assist]` title prefix enter **maintenance-only mode** rather than skipping the workflow. They perform Tasks 6, 1, and 2: maintain existing PRs, label issues, and investigate without opening new PRs. Memory and monthly reporting still apply after substantive work. Below capacity, new PRs are limited to the available slots (and the usual per-run maximum of four). Before applying scheduled safe outputs, the workflow recounts live PRs and rejects a batch that would exceed eight; maintenance and triage outputs remain allowed above capacity. Manual dispatches and command-mode runs are exempt from this scheduled-run cap.
 
 ## Usage
 
