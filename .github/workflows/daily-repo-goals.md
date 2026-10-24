@@ -26,7 +26,6 @@ permissions:
 tools:
   github:
     toolsets: [all]
-  web-fetch:
   cache-memory: true
   bash: true
 
@@ -83,6 +82,8 @@ This tells you what has already been considered, proposed, or rejected. Do not r
 Clone the gh-aw repository (https://github.com/github/gh-aw) 
 
 Read the blog series that documents the workflows in gh-aw 'docs' directory, `blog/2026-01-12-welcome-to-pelis-agent-factory...`, paying particular attention to the merge rate statistics for each workflow. The merge rates give an indication of which workflows have been most successful and well-received by maintainers.
+
+Use the GitHub read tools or the existing bash tool with proxy-aware `curl` to retrieve source and documentation within the configured network allowlist. Report blocked requests rather than bypassing the firewall or treating them as evidence that content is missing.
 
 The workflow source files are in `.github/workflows/*.md` in the gh-aw repository. The blog series documents the workflows and includes merge rate statistics.
 
