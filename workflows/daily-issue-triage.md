@@ -31,8 +31,7 @@ safe-outputs:
     max: 50
 
 tools:
-  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc"]
-  web-fetch:
+  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc", "curl"]
   github:
     toolsets: [issues, labels]
     min-integrity: none
@@ -41,6 +40,8 @@ timeout-minutes: 60
 ---
 
 # Daily Issue Triage
+
+Use GitHub read tools for repository content and proxy-aware `curl` through bash for external references. Stay within the configured network allowlist, keep TLS verification enabled, and report blocked requests rather than bypassing the firewall or guessing missing content.
 
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
 

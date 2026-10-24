@@ -154,6 +154,16 @@ gh aw update   # Update added workflows
 
 This automatically updates agent files, applies codemods, updates actions versions, and recompiles all workflows.
 
+The Copilot CLI samples use GitHub read tools and proxy-aware `curl` for external references instead of the unsupported native `web-fetch` tool. The accessibility sample uses its existing Playwright browser. Fetches must respect the configured network allowlist and TLS verification; report blocked requests instead of bypassing these controls.
+
+To validate changes, run the same checks as CI, including both workflow directories:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_repo_assist_*.py'
+gh aw compile --verbose
+gh aw compile --workflows-dir workflows --verbose
+```
+
 📖 [Learn more about GitHub Agentic Workflows](https://github.github.io/gh-aw/)
 
 ## 💬 Share Feedback

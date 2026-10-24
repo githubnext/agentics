@@ -33,7 +33,7 @@ graph LR
     G --> J[Create PR]
 ```
 
-A bash script pre-processes links before the AI agent runs. The agent investigates broken links, tries common variations (www, http vs https), and uses web-fetch to find where content moved.
+A bash script pre-processes links before the AI agent runs. The agent investigates broken links, tries common variations (www, http vs https), and uses GitHub read tools or proxy-aware `curl` to find where content moved within the configured network allowlist. Firewall blocks and transient fetch failures are reported rather than cached as permanently unfixable links.
 
 ## Usage
 
