@@ -60,6 +60,8 @@ The three selected tasks are a starting allocation, not a restriction on which t
 
 Each assessment examines a concrete source/test/docs area or existing check; listing issues or test filenames alone is insufficient. The sweep stops at the first verified worthwhile work item and follows the normal validation, memory, and activity-reporting rules. Each task is assessed at most once, preventing fallback cycles. If the bounded sweep finds no suitable work, a justified noop remains valid and useful check results are kept in memory. Explicit command-mode instructions, maintainer holds, PR caps, and other output restrictions still take precedence.
 
+Explicit command mode and scheduled maintenance-only mode receive no generic fallback plan. At the scheduled PR cap, Repo Assist stays with Tasks 6, 1, and 2 and their investigation/triage-only fallbacks.
+
 ### Task 1: Issue Labelling
 
 Default weighting: dominates when the label backlog is large.
@@ -144,7 +146,7 @@ Repo Assist stores this file on the dedicated `memory/repo-assist-memory` branch
 - **Release preparation**: Uses judgement each run to assess whether a release is warranted — no dedicated release task; proposes release PRs on its own initiative when appropriate
 - **Good contributor etiquette**: Warmly welcomes first-time contributors and points them to README and CONTRIBUTING as a normal part of good behaviour
 
-For scheduled runs, the workflow is skipped if there are already 8 or more open PRs with its title prefix, to avoid overwhelming maintainers.
+Scheduled runs with 8 or more open PRs with the `[repo-assist]` title prefix enter **maintenance-only mode** rather than skipping the workflow. They perform Tasks 6, 1, and 2: maintain existing PRs, label issues, and investigate without opening new PRs. Memory and monthly reporting still apply after substantive work. Below capacity, new PRs are limited to the available slots (and the usual per-run maximum of four). Before applying scheduled safe outputs, the workflow recounts live PRs and rejects a batch that would exceed eight; maintenance and triage outputs remain allowed above capacity. Manual dispatches and command-mode runs are exempt from this scheduled-run cap.
 
 ## Usage
 

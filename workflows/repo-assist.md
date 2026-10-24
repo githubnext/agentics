@@ -25,23 +25,9 @@ on:
   slash_command:
     name: repo-assist
   reaction: "eyes"
-  permissions:
-    pull-requests: read
-  steps:
-    - id: check
-      env: 
-        GH_TOKEN: ${{ github.token }}
-      run: |
-        MAX_OPEN_PRS=8
-        if [[ "$GITHUB_EVENT_NAME" != "schedule" ]]; then exit 0; fi
-        COUNT=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --search 'in:title "[repo-assist]"' --json number --jq 'length')
-        [[ "$COUNT" -lt "$MAX_OPEN_PRS" ]]
-      # exits 0 if not scheduled or <MAX_OPEN_PRS open PRs, 1 if ≥MAX_OPEN_PRS
 
 concurrency:
   job-discriminator: ${{ github.event_name == 'schedule' && 'scheduled' || github.run_id }}
-
-if: needs.pre_activation.outputs.check_result == 'success'
 
 timeout-minutes: 60
 
@@ -218,6 +204,44 @@ safe-outputs:
     max: 5
     target: "*" 
 
+jobs:
+  safe_outputs:
+    pre-steps:
+      - name: Download outputs for PR capacity check
+        if: github.event_name == 'schedule'
+        uses: actions/download-artifact@v8
+        with:
+          pattern: "{agent,agent-output-fallback}"
+          merge-multiple: true
+          path: ${{ runner.temp }}/repo-assist-capacity
+      - name: Enforce scheduled PR capacity
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OUTPUT_FILE: ${{ runner.temp }}/repo-assist-capacity/agent_output.json
+        run: |
+          node <<'EOF'
+          const fs = require("node:fs");
+          const { execFileSync } = require("node:child_process");
+          const outputs = JSON.parse(fs.readFileSync(process.env.OUTPUT_FILE, "utf8"));
+          const requested = outputs.items.filter(item => item.type === "create_pull_request").length;
+          if (requested > 0) {
+            const response = execFileSync("gh", [
+              "api", "--hostname", new URL(process.env.GITHUB_SERVER_URL).host, "--paginate",
+              `repos/${process.env.GITHUB_REPOSITORY}/pulls?state=open&per_page=100`,
+              "--jq", ".[] | .title | @json",
+            ], { encoding: "utf8" });
+            const titles = response.split(/\r?\n/).filter(Boolean).map(line => JSON.parse(line));
+            const open = titles.filter(title => title.startsWith("[repo-assist]")).length;
+            if (open + requested > 8) {
+              throw new Error(`Repo Assist PR capacity exceeded: ${open} open + ${requested} requested; maximum 8. Maintain existing PRs instead.`);
+            }
+            console.log(`Repo Assist PR capacity: ${open} open, ${requested} requested; outputs allowed.`);
+          } else {
+            console.log("No new PRs requested; maintenance and triage outputs allowed.");
+          }
+          EOF
+
 steps:
   - name: Initialize Repo Assist memory
     env:
@@ -245,13 +269,15 @@ steps:
       GH_TOKEN: ${{ github.token }}
       REPO_ASSIST_COMMAND: ${{ needs.activation.outputs.text || inputs.command }}
     run: |
+      set -euo pipefail
       mkdir -p /tmp/gh-aw
 
       # Fetch open issues with labels (up to 500)
       gh issue list --state open --limit 500 --json number,labels > /tmp/gh-aw/issues.json
 
-      # Fetch open PRs with titles (up to 200)
-      gh pr list --state open --limit 200 --json number,title > /tmp/gh-aw/prs.json
+      # Fetch all open PRs so the capacity decision cannot miss older PRs.
+      gh api --hostname "${GITHUB_SERVER_URL#https://}" --paginate "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" \
+        --jq '.[] | {number, title}' | jq -s . > /tmp/gh-aw/prs.json
 
       # Compute task weights and select three tasks for this run
       python3 - << 'EOF'
@@ -265,6 +291,7 @@ steps:
       open_issues     = len(issues)
       unlabelled      = sum(1 for i in issues if not i.get('labels'))
       repo_assist_prs = sum(1 for p in prs if p['title'].startswith('[repo-assist]'))
+      maintenance_only = os.environ.get('GITHUB_EVENT_NAME') == 'schedule' and repo_assist_prs >= 8
 
       task_names = {
           1:  'Issue Labelling',
@@ -309,13 +336,17 @@ steps:
           if len(chosen) == NUM_TASKS_PER_RUN:
               break
 
+      if maintenance_only:
+          chosen = [6, 1, 2]
+
       command_mode = bool(os.environ.get('REPO_ASSIST_COMMAND', '').strip())
-      generic_fallback_tasks = [] if command_mode else [t for t in [9, 8, 10, 7, 4, 5] if t not in chosen]
+      generic_fallback_tasks = [] if command_mode or maintenance_only else [t for t in [9, 8, 10, 7, 4, 5] if t not in chosen]
 
       print('=== Repo Assist Task Selection ===')
       print(f'Open issues       : {open_issues}')
       print(f'Unlabelled issues : {unlabelled}')
       print(f'Repo Assist PRs   : {repo_assist_prs}')
+      print(f'Mode              : {"maintenance-only" if maintenance_only else "normal"}')
       print()
       print('Task weights:')
       for t, w in weights.items():
@@ -329,6 +360,8 @@ steps:
       result = {
           'open_issues': open_issues, 'unlabelled_issues': unlabelled,
           'repo_assist_prs': repo_assist_prs,
+          'maintenance_only': maintenance_only,
+          'new_pr_limit': max(0, min(4, 8 - repo_assist_prs)) if os.environ.get('GITHUB_EVENT_NAME') == 'schedule' else 4,
           'task_names': task_names,
           'weights': {str(k): round(v, 2) for k, v in weights.items()},
           'selected_tasks': chosen,
@@ -353,6 +386,12 @@ Then exit  -  do not run the normal workflow after completing the instructions.
 ## Non-Command Mode
 
 You are Repo Assist for `${{ github.repository }}`. Your job is to make forward progress by investigating and clarifying issues, resolving issues where possible, identifying improvements, and fixing bugs and feature requests by creating pull requests. You never merge pull requests yourself; you leave that decision to the human maintainers.
+
+### Scheduled PR capacity
+
+Read `maintenance_only` and `new_pr_limit` in `/tmp/gh-aw/task_selection.json`. Scheduled runs with eight or more open `[repo-assist]` PRs use **maintenance-only mode**: execute Tasks 6, 1, and 2, maintaining existing PRs, labelling, and investigating issues without creating any new PRs. Task 2 and all fallbacks remain investigation/triage-only in this mode; record fix candidates in memory instead of opening PRs. Continue normal memory updates and Task 11 reporting after substantive work.
+
+Below capacity, do not create more than `new_pr_limit` PRs. A final safe-output check recounts live PRs and rejects a batch that would exceed eight; existing-PR updates and triage remain allowed even above capacity. Manual dispatches and command-mode runs retain their existing behaviour and are not restricted by this scheduled-run cap.
 
 Always be:
 
@@ -403,6 +442,8 @@ Each run, the deterministic pre-step collects live repo data (open issue count, 
 | Task 10 (Take Repo Forward) | In-progress work from memory is blocked or complete; no valuable next step | Task 2 |
 
 ### Generic fallback sweep
+
+Command mode and scheduled maintenance-only mode have no generic fallback plan. In maintenance-only mode, stay with Tasks 6, 1, and 2 and their investigation/triage-only fallbacks.
 
 If the selected tasks and their local fallbacks reveal no actionable work, do not stop merely because no issue is fixable or no PR needs attention. Read `generic_fallback_tasks` from `/tmp/gh-aw/task_selection.json` and assess those tasks even though they were not selected. The order is Task 9 (tests), Task 8 (performance), Task 10 (take the repository forward), then Tasks 7, 4, and 5 (documentation/QA, engineering, and code improvements), excluding initially selected tasks.
 

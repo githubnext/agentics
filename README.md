@@ -11,6 +11,7 @@ Make software maintenance enjoyable! From basic issue triage to Repo Assist - a 
 - [🏷️ Issue Triage](docs/issue-triage.md) - Triage labelling of issues and pull requests and not much more
 - [🤖 Repo Assist](docs/repo-assist.md) - A regular, pervasive all-tools repository assistant that triages issues, investigates issues, replies with comments, fixes bugs, proposes engineering improvements, and maintains activity summaries
 - [🛡️ AI Moderator](docs/ai-moderator.md) - Automatically detect and moderate spam, link spam, and AI-generated content
+- [🐝 Hive Issue Triage](https://github.com/hivecommons/hive/blob/v5/src/deploy/gh-aw/hive.md) - Manually dispatched, report-only issue triage with deterministic admission and Hive classification before engine judgment _(community - maintained in [hivecommons/hive](https://github.com/hivecommons/hive/tree/v5/src/deploy/gh-aw); installation requires its companion admission script and classifier)_
 
 ### Fault Analysis Workflows
 

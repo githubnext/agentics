@@ -18,11 +18,15 @@ GENERIC_TASKS = [9, 8, 10, 7, 4, 5]
 
 
 class GenericFallbackTests(unittest.TestCase):
-    def select(self, selected=None, issues=None, command="", run_id="123"):
+    def select(self, selected=None, issues=None, command="", run_id="123",
+               repo_assist_prs=0, event="schedule"):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "issues.json").write_text(json.dumps(issues or []))
-            (root / "prs.json").write_text("[]")
+            (root / "prs.json").write_text(json.dumps([
+                {"title": f"[repo-assist] Fix {index}"}
+                for index in range(repo_assist_prs)
+            ]))
             original_open = open
 
             def local_open(path, *args, **kwargs):
@@ -33,7 +37,8 @@ class GenericFallbackTests(unittest.TestCase):
             with contextlib.ExitStack() as stack:
                 stack.enter_context(patch("builtins.open", local_open))
                 stack.enter_context(patch.dict(
-                    os.environ, GITHUB_RUN_ID=run_id, REPO_ASSIST_COMMAND=command
+                    os.environ, GITHUB_RUN_ID=run_id, REPO_ASSIST_COMMAND=command,
+                    GITHUB_EVENT_NAME=event
                 ))
                 stack.enter_context(contextlib.redirect_stdout(io.StringIO()))
                 if selected is not None:
@@ -87,6 +92,22 @@ class GenericFallbackTests(unittest.TestCase):
         self.assertEqual(
             self.select([1, 2, 3], command=" \n")["generic_fallback_tasks"], GENERIC_TASKS
         )
+
+    def test_maintenance_only_mode_has_no_generic_fallback_plan(self):
+        for count in [8, 20]:
+            with self.subTest(count=count):
+                result = self.select([9, 8, 10], repo_assist_prs=count)
+                self.assertTrue(result["maintenance_only"])
+                self.assertEqual(result["selected_tasks"], [6, 1, 2])
+                self.assertEqual(result["generic_fallback_tasks"], [])
+                self.assertEqual(result["new_pr_limit"], 0)
+
+    def test_below_capacity_and_manual_runs_still_offer_generic_work(self):
+        for count, event in [(7, "schedule"), (20, "workflow_dispatch")]:
+            with self.subTest(count=count, event=event):
+                result = self.select([1, 2, 3], repo_assist_prs=count, event=event)
+                self.assertFalse(result["maintenance_only"])
+                self.assertEqual(result["generic_fallback_tasks"], GENERIC_TASKS)
 
     def test_run_seed_is_still_reproducible(self):
         self.assertEqual(self.select(run_id="98765"), self.select(run_id="98765"))
