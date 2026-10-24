@@ -20,17 +20,18 @@ safe-outputs:
     category: "ideas"
 
 tools:
-  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc"]
+  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc", "curl"]
   github:
     toolsets: [all]
     min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
-  web-fetch:
 
 timeout-minutes: 15
 
 ---
 
 # Weekly Research
+
+Use GitHub read tools for repository content and proxy-aware `curl` through bash for external references. Stay within the configured network allowlist, keep TLS verification enabled, and report blocked requests rather than bypassing the firewall or guessing missing content.
 
 ## Job Description
 
@@ -55,5 +56,4 @@ At the end of the report list write a collapsed section with the following:
 - All search queries (web, issues, pulls, content) you used
 - All bash commands you executed
 - All MCP tools you used
-
 

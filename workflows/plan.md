@@ -23,7 +23,7 @@ safe-outputs:
     close-older-discussions: true
 
 tools:
-  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc"]
+  bash: ["cat", "ls", "find", "grep", "head", "tail", "wc", "curl"]
   github:
     toolsets: [all]
     # If in a public repo, setting `lockdown: false` allows
@@ -31,12 +31,13 @@ tools:
     # If in a private repo this has no particular effect.
     lockdown: false
     min-integrity: none # This workflow is allowed to examine and comment on any issues
-  web-fetch:
 
 timeout-minutes: 15
 ---
 
 # Agentic Planner
+
+Use GitHub read tools for repository content and proxy-aware `curl` through bash for external references. Stay within the configured network allowlist, keep TLS verification enabled, and report blocked requests rather than bypassing the firewall or guessing missing content.
 
 ## Job Description
 
@@ -59,5 +60,4 @@ Your job is to act as a planner for the GitHub repository ${{ github.repository 
 3. Create a new planning discussion with the project plan in its body. 
 
    3a. Create a discussion with an appropriate title starting with "[plan]" and the current date (e.g., "[plan] 2025-10-10"), using the project plan as the body.
-
 

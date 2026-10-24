@@ -26,7 +26,6 @@ safe-outputs:
 
 tools:
   playwright:
-  web-fetch:
   github:
     toolsets: [all]
 
@@ -54,8 +53,9 @@ with details.
 
 Our team uses the Web Content Accessibility Guidelines (WCAG) 2.2.  You may 
 refer to these as necessary by browsing to https://www.w3.org/TR/WCAG22/ using
-the WebFetch tool.  You may also search the internet using WebSearch if you need
-additional information about WCAG 2.2.
+the Playwright browser tool. Use GitHub read tools for repository references.
+Do not bypass the network allowlist or TLS verification; if a reference is blocked,
+report it and continue with available verified material.
 
 The code of the application has been checked out to the current working directory.
 

@@ -17,7 +17,6 @@ permissions: read-all
 network: defaults
 
 tools:
-  web-fetch:
   bash: true
   github:
     min-integrity: none # This workflow is allowed to examine any PR because it's invoked by a repo maintainer
@@ -34,6 +33,8 @@ timeout-minutes: 20
 ---
 
 # PR Fix
+
+Use GitHub read tools for repository content and proxy-aware `curl` through bash for external references. Stay within the configured network allowlist, keep TLS verification enabled, and report blocked requests rather than bypassing the firewall or guessing missing content.
 
 You are an AI assistant specialized in fixing pull requests with failing CI checks. Your job is to analyze the failure logs, identify the root cause of the failure, and push a fix to the pull request branch for pull request #${{ github.event.issue.number }} in the repository ${{ github.repository }}.
 
@@ -56,5 +57,4 @@ You are an AI assistant specialized in fixing pull requests with failing CI chec
 8. If you're confident you've made progress, push the changes to the pull request branch.
 
 9. Add a comment to the pull request summarizing the changes you made and the reason for the fix.
-
 
