@@ -77,7 +77,6 @@ checkout:
   fetch-depth: 0   # fetch full history
 
 tools:
-  web-fetch:
   github:
     toolsets: [all]
     min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
@@ -188,7 +187,7 @@ safe-outputs:
     title-prefix: "[repo-assist] "
     labels: [automation, repo-assist]
     protected-files:
-      policy: request_review
+      policy: request-review
       exclude:
         - CHANGELOG.md
         - README.md
@@ -218,6 +217,66 @@ safe-outputs:
     allowed: [bug, enhancement, "help wanted", "good first issue", "spam", "off topic", documentation, question, duplicate, wontfix, "needs triage", "needs investigation", "breaking change", performance, security, refactor]
     max: 5
     target: "*" 
+
+jobs:
+  safe_outputs:
+    pre-steps:
+      - name: Download outputs for consistency check
+        uses: actions/download-artifact@v8
+        with:
+          pattern: "{agent,agent-output-fallback}"
+          merge-multiple: true
+          path: ${{ runner.temp }}/repo-assist-consistency
+      - name: Enforce Repo Assist output consistency
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMAND_TEXT: ${{ needs.activation.outputs.text || inputs.command }}
+          OUTPUT_FILE: ${{ runner.temp }}/repo-assist-consistency/agent_output.json
+        run: |
+          node <<'EOF'
+          const fs = require("node:fs");
+          const { execFileSync } = require("node:child_process");
+          const outputs = JSON.parse(fs.readFileSync(process.env.OUTPUT_FILE, "utf8"));
+          const items = outputs.items;
+          const diagnostics = new Set(["noop", "report_incomplete", "missing_tool", "missing_data"]);
+          const mutations = items.filter(item => !diagnostics.has(item.type));
+          const noop = items.some(item => item.type === "noop");
+          const incomplete = items.some(item => item.type === "report_incomplete");
+          if (noop && (mutations.length > 0 || incomplete)) {
+            throw new Error("Repo Assist cannot emit noop alongside a mutation or report_incomplete. Report the actual work or failure instead.");
+          }
+
+          const commandMode = (process.env.COMMAND_TEXT || "").trim().length > 0;
+          if (!commandMode && mutations.length > 0 && !incomplete) {
+            const prefix = "[repo-assist] ";
+            const title = `${prefix}Monthly Activity ${new Date().toISOString().slice(0, 7)}`;
+            const response = execFileSync("gh", [
+              "api", "--hostname", new URL(process.env.GITHUB_SERVER_URL).host, "--paginate",
+              `repos/${process.env.GITHUB_REPOSITORY}/issues?state=open&labels=repo-assist&per_page=100`,
+              "--jq", ".[] | [.number, .title] | @json",
+            ], { encoding: "utf8" });
+            const titles = new Map(response.split(/\r?\n/).filter(Boolean)
+              .map(line => JSON.parse(line)).map(([number, title]) => [String(number), title]));
+            const runUrl = `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+            const hasReport = items.some(item => {
+              if (item.repo && item.repo.toLowerCase() !== process.env.GITHUB_REPOSITORY.toLowerCase()) return false;
+              let actualTitle;
+              if (item.type === "create_issue") {
+                actualTitle = item.title?.startsWith(prefix) ? item.title : prefix + item.title;
+              } else if (item.type === "update_issue" && item.status !== "closed") {
+                actualTitle = item.title || titles.get(String(item.issue_number));
+              }
+              if (actualTitle !== title || typeof item.body !== "string") return false;
+              const history = item.body.split(/^## Run History[ \t]*\r?$/m)[1];
+              return history?.split(/^## /m)[0].split(/\r?\n/)
+                .some(line => line.startsWith("### ") && line.includes(`[Run](${runUrl})`)) || false;
+            });
+            if (!hasReport) {
+              throw new Error("Substantive non-command Repo Assist outputs require a current-month activity issue create/update containing this run's history link. Finish Task 11, or report_incomplete if reporting is blocked.");
+            }
+          }
+          console.log(`Repo Assist outputs consistent: ${mutations.length} mutation(s), command=${commandMode}, incomplete=${incomplete}. Memory persistence is reported separately by the repo-memory job.`);
+          EOF
 
 steps:
   - name: Initialize Repo Assist memory
@@ -373,6 +432,8 @@ Keep notes terse and current. Replace superseded entries, remove resolved issue 
 
 After every change to `notes.json`, run `jq empty /tmp/gh-aw/repo-memory/default/notes.json`, then call `push_repo_memory`. A successful tool result is required before finishing the run. If either check reports an error, repair `notes.json` and retry both checks. Prefer `jq` with a temporary file and atomic rename over manual partial JSON edits.
 
+In the final response, distinguish unchanged memory from changed memory validated by `push_repo_memory` for downstream persistence. Do not claim that validation alone proves the later repo-memory job committed the changes. If memory validation cannot be repaired, use `report_incomplete` and describe the outstanding state; do not claim full completion or silently discard actionable records to obtain success.
+
 **Important**: Memory may not be 100% accurate. Issues may have been created, closed, or commented on; PRs may have been created, merged, commented on, or closed since the last run. Always verify memory against current repository state — reviewing recent activity since your last run is wise before acting on stale assumptions.
 
 **Memory backlog tracking**: Records in `issues`, `fixes`, and `priorities` are **action items for you**, not just informational notes. Each run, prioritise applicable work from those fields and remove or replace entries as their state changes.
@@ -407,6 +468,15 @@ The weighting scheme naturally adapts to repo state:
 **Progress Imperative**: Your primary purpose is to make forward progress on the repository. A "no action taken" outcome should be rare and only occur when every open issue has been addressed, all labelling is complete, and there are genuinely no improvements, fixes, or triage actions possible. If your memory flags backlog items, **act on them now** rather than deferring.
 
 Always do Task 11 (Update Monthly Activity Summary Issue) after performing work in non-command mode, including when manually dispatched without a command. Command-mode and no-op runs do not update the issue. In all comments and PR descriptions, identify yourself as "Repo Assist".
+
+### Output consistency (all modes)
+
+Before finishing, reconcile the safe outputs you requested with your final response and memory:
+
+- Use `noop` only when no GitHub mutation was requested. Labelling, comments, issue/PR creation or updates, and PR-branch pushes are substantive work even when no code changed; never follow them with `noop`.
+- After any substantive non-command work, request the Task 11 activity-issue create/update with this run's history link. Command-mode runs remain exempt. A genuine noop or memory-only check does not require an activity update.
+- If a required output, reporting step, or memory validation is blocked, use `report_incomplete` with the concrete failure and remaining obligations, not a success-shaped `noop`. This permits truthful partial work without claiming completion.
+- In the final response, distinguish requested safe outputs from confirmed downstream delivery, and list any incomplete obligations. The safe-output job rejects contradictory noop/mutation batches and successful non-command batches missing their monthly report.
 
 ### Task 1: Issue Labelling
 

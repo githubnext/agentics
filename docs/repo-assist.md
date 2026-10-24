@@ -118,6 +118,12 @@ Proactively moves the repository forward — considers the goals and aims of the
 
 Every non-command-mode run that performs work, whether scheduled or manually dispatched, updates a rolling monthly activity issue that gives maintainers a single place to see all activity and suggested actions. Command-mode and no-op runs do not update the issue. The action list is rebuilt from current repository state and memory, completed or closed items are removed, and run history is kept in reverse chronological order.
 
+### Output Consistency
+
+Labels, comments, issue/PR changes, and PR-branch pushes all count as substantive work, even when no code changes. Such runs must not emit `noop`. Before applying any safe outputs, a deterministic check rejects noop/mutation combinations and requires substantive non-command runs to create or update the current month's activity issue with the current run's history link. A genuine noop (including a memory-only check) and command-mode reporting exemptions remain unchanged.
+
+If a required action or report is blocked, Repo Assist uses `report_incomplete` and identifies the failure and remaining obligations instead of claiming success. Final responses distinguish requested safe outputs from downstream delivery and memory validation from the later repo-memory commit; validation alone is not proof of persistence.
+
 ### Persistent Memory
 
 Repo Assist uses one schema-validated `notes.json` file to carry concise, actionable state across runs. It records backlog cursors, unresolved issue interactions, fix attempts, the latest engineering checks, maintainer-completed monthly actions, and a short priority queue. The workflow verifies remembered facts against current repository state before acting, replaces superseded entries, and removes stale records rather than accumulating a run-by-run activity log.
