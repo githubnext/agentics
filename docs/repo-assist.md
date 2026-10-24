@@ -54,6 +54,14 @@ If a selected task is not applicable to the current repository state, Repo Assis
 | Task 9: Testing Improvements | Task 5 when no worthwhile coverage or quality gap is identified |
 | Task 10: Take the Repository Forward | Task 2 when existing work is complete or blocked and no valuable next step is available |
 
+### When the selected tasks find no work
+
+The three selected tasks are a starting allocation, not a restriction on which tasks Repo Assist may perform. If they and their local fallbacks find no actionable work, Repo Assist follows the `generic_fallback_tasks` plan: testing (9), performance (8), taking the repository forward (10), then documentation/QA (7), engineering (4), and code improvements (5). Initially selected tasks are excluded from the plan, and any task already assessed through a local fallback is skipped.
+
+Each assessment examines a concrete source/test/docs area or existing check; listing issues or test filenames alone is insufficient. The sweep stops at the first verified worthwhile work item and follows the normal validation, memory, and activity-reporting rules. Each task is assessed at most once, preventing fallback cycles. If the bounded sweep finds no suitable work, a justified noop remains valid and useful check results are kept in memory. Explicit command-mode instructions, maintainer holds, PR caps, and other output restrictions still take precedence.
+
+Explicit command mode and scheduled maintenance-only mode receive no generic fallback plan. At the scheduled PR cap, Repo Assist stays with Tasks 6, 1, and 2 and their investigation/triage-only fallbacks.
+
 ### Task 1: Issue Labelling
 
 Default weighting: dominates when the label backlog is large.
