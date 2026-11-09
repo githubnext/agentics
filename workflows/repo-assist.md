@@ -13,6 +13,8 @@ description: |
   - Maintains a persistent memory of work done and what remains
   Always polite, constructive, and mindful of the project's goals.
 
+intent: Reduce maintainer effort through verified repository improvements and useful triage without duplicate work or unsupported completion claims.
+
 on:
   schedule: every 12h
   workflow_dispatch:
@@ -64,7 +66,7 @@ checkout:
 
 tools:
   github:
-    toolsets: [all]
+    mode: gh-proxy
     min-integrity: none # This workflow is allowed to examine and comment on any issues or PRs
   bash: true
   repo-memory:
@@ -107,9 +109,9 @@ tools:
         const issueStates = new Set(["commented", "awaiting_clarification", "resolution_recommended", "deferred", "awaiting_approval"]);
         if (!Array.isArray(data.issues) || data.issues.length > 100) fail("issues must be an array of at most 100 entries");
         for (const [index, entry] of data.issues.entries()) {
-          if (!exactKeys(entry, ["number", "state", "updated_at", "note"])) fail(`invalid issues entry at index ${index}`);
+          if (!exactKeys(entry, ["number", "state", "updated_at", "note"])) fail(`issues[${index}] requires exactly number, state, updated_at, note`);
           if (!Number.isInteger(entry.number) || entry.number < 1) fail(`invalid issue number at index ${index}`);
-          if (!issueStates.has(entry.state)) fail(`invalid issue state at index ${index}`);
+          if (!issueStates.has(entry.state)) fail(`issues[${index}].state must be one of ${[...issueStates].join(", ")}`);
           if (!validDate(entry.updated_at)) fail(`invalid issue date at index ${index}`);
           if (!validText(entry.note, 300)) fail(`invalid issue note at index ${index}`);
         }
@@ -118,7 +120,7 @@ tools:
         const fixStates = new Set(["open", "merged", "closed", "blocked"]);
         if (!Array.isArray(data.fixes) || data.fixes.length > 50) fail("fixes must be an array of at most 50 entries");
         for (const [index, entry] of data.fixes.entries()) {
-          if (!exactKeys(entry, ["issue", "pr", "branch", "status", "updated_at", "note"])) fail(`invalid fixes entry at index ${index}`);
+          if (!exactKeys(entry, ["issue", "pr", "branch", "status", "updated_at", "note"])) fail(`fixes[${index}] requires exactly issue, pr, branch, status, updated_at, note`);
           if (!Number.isInteger(entry.issue) || entry.issue < 1) fail(`invalid fix issue at index ${index}`);
           if (entry.pr !== null && (!Number.isInteger(entry.pr) || entry.pr < 1)) fail(`invalid fix PR at index ${index}`);
           if (entry.branch !== null && !validText(entry.branch, 120)) fail(`invalid fix branch at index ${index}`);
@@ -132,7 +134,7 @@ tools:
         const checkAreas = new Set(["dependencies", "ci", "tooling", "build", "code", "docs", "qa", "hygiene", "performance", "tests", "release", "repo_assist_prs"]);
         if (!Array.isArray(data.checks) || data.checks.length > checkAreas.size) fail("checks must contain at most one entry per area");
         for (const [index, entry] of data.checks.entries()) {
-          if (!exactKeys(entry, ["area", "checked_at", "result", "follow_up"])) fail(`invalid checks entry at index ${index}`);
+          if (!exactKeys(entry, ["area", "checked_at", "result", "follow_up"])) fail(`checks[${index}] requires exactly area, checked_at, result, follow_up`);
           if (!checkAreas.has(entry.area)) fail(`invalid check area at index ${index}`);
           if (!validDate(entry.checked_at)) fail(`invalid check date at index ${index}`);
           if (!validText(entry.result, 300)) fail(`invalid check result at index ${index}`);
@@ -150,7 +152,7 @@ tools:
 
         if (!Array.isArray(data.priorities) || data.priorities.length > 20) fail("priorities must be an array of at most 20 entries");
         for (const [index, entry] of data.priorities.entries()) {
-          if (!exactKeys(entry, ["task", "item", "note"])) fail(`invalid priorities entry at index ${index}`);
+          if (!exactKeys(entry, ["task", "item", "note"])) fail(`priorities[${index}] requires exactly task, item, note`);
           if (!Number.isInteger(entry.task) || entry.task < 1 || entry.task > 10) fail(`invalid priority task at index ${index}`);
           if (!validText(entry.item, 100)) fail(`invalid priority item at index ${index}`);
           if (!validText(entry.note, 300)) fail(`invalid priority note at index ${index}`);
@@ -182,8 +184,9 @@ safe-outputs:
     target: "*"
     required-title-prefix: "[repo-assist] "
     max: 4
+    max-patch-size: 4096
     protected-files:
-      policy: allowed
+      policy: request-review
       exclude:
         - CHANGELOG.md
         - README.md
@@ -207,13 +210,104 @@ safe-outputs:
 jobs:
   safe_outputs:
     pre-steps:
-      - name: Download outputs for PR capacity check
-        if: github.event_name == 'schedule'
+      - name: Download outputs and assessment evidence
         uses: actions/download-artifact@v8
         with:
-          pattern: "{agent,agent-output-fallback}"
+          pattern: "{agent,agent-output-fallback,repo-assist-selection}"
           merge-multiple: true
           path: ${{ runner.temp }}/repo-assist-capacity
+      - name: Validate Repo Assist outcome
+        env:
+          OUTPUT_DIR: ${{ runner.temp }}/repo-assist-capacity
+          REPO_ASSIST_COMMAND: ${{ needs.activation.outputs.text || inputs.command }}
+        run: |
+          node <<'EOF'
+          const fs = require("node:fs");
+          const path = require("node:path");
+          const read = name => fs.readFileSync(path.join(process.env.OUTPUT_DIR, name), "utf8");
+          const fail = message => { throw new Error(`Repo Assist outcome: ${message}`); };
+          const { items } = JSON.parse(read("agent_output.json"));
+          if (!Array.isArray(items)) fail("missing safe-output items");
+          if ((process.env.REPO_ASSIST_COMMAND || "").trim()) {
+            console.log("Explicit command: normal-mode assessment and reporting rules do not apply.");
+            process.exit(0);
+          }
+          const diagnostics = new Set(["noop", "report_incomplete", "missing_tool", "missing_data", "report_missing_tool", "report_missing_data"]);
+          const mutations = items.filter(item => !diagnostics.has(item.type));
+          const noops = items.filter(item => item.type === "noop");
+          if (mutations.length) {
+            if (noops.length) fail("public changes, including labels, are substantive work; do not emit noop");
+            const month = new Date().toISOString().slice(0, 7);
+            const isReport = item =>
+              ["create_issue", "update_issue"].includes(item.type) &&
+              (item.type !== "create_issue" ||
+                (typeof item.title === "string" && item.title.replace(/^\[repo-assist\]\s*/, "") === `Monthly Activity ${month}`)) &&
+              typeof item.body === "string" &&
+              item.body.includes("## Suggested Actions for Maintainer") &&
+              item.body.includes("## Run History");
+            if (!items.some(isReport)) fail("substantive work requires a Monthly Activity update");
+            if (mutations.every(item => isReport(item) ||
+                (item.type === "update_issue" && item.status === "closed" && !item.body))) {
+              fail("Monthly Activity bookkeeping alone is not substantive work; assess tasks before noop");
+            }
+          } else if (items.some(item => item.type === "report_incomplete")) {
+            console.log("Incomplete work explicitly reported; not a justified noop.");
+          } else {
+            if (noops.length !== 1) fail("expected one evidence-backed noop or report_incomplete");
+            const selection = JSON.parse(read("task_selection.json"));
+            if (!Array.isArray(selection.selected_tasks) || selection.selected_tasks.length !== 3 ||
+                new Set(selection.selected_tasks).size !== 3 ||
+                selection.selected_tasks.some(task => !Number.isInteger(task) || task < 1 || task > 10) ||
+                typeof selection.maintenance_only !== "boolean") fail("invalid task selection");
+            const fallback = selection.maintenance_only ? [] :
+              [9, 8, 10, 7, 4, 5].filter(task => !selection.selected_tasks.includes(task));
+            if (JSON.stringify(selection.generic_fallback_tasks) !== JSON.stringify(fallback)) fail("invalid fallback plan");
+            const required = new Set([...selection.selected_tasks, ...selection.generic_fallback_tasks]);
+            const assessment = JSON.parse(noops[0].message);
+            if (assessment.outcome !== "justified_noop" || !Array.isArray(assessment.assessments)) {
+              fail("noop message must contain the structured justified_noop assessment");
+            }
+            const events = read("agent-session.jsonl").split(/\r?\n/).filter(Boolean).map(line => JSON.parse(line));
+            const requests = new Map(events.filter(event => event.type === "tool.execution_start")
+              .map(event => [event.data.toolCallId, event.data]));
+            const commands = new Set(events.filter(event => event.type === "tool.execution_complete")
+              .filter(event => {
+                const content = event.data.result?.content;
+                const completed = typeof content === "string" &&
+                  content.match(/(?:^|\n)<shellId: [^\r\n<>]* completed with exit code (\d+)>\s*$/);
+                return event.data.success === true && typeof content === "string" &&
+                  completed && completed[1] === "0";
+              })
+              .map(event => requests.get(event.data.toolCallId))
+              .filter(request => request?.toolName === "bash")
+              .map(request => request.arguments.command));
+            const seen = new Set();
+            for (const entry of assessment.assessments) {
+              if (!Number.isInteger(entry.task) || entry.task < 1 || entry.task > 10 || seen.has(entry.task)) {
+                fail("assessment task numbers must be unique integers from 1 to 10");
+              }
+              seen.add(entry.task);
+              if (typeof entry.result !== "string" || !entry.result.trim() ||
+                  !Array.isArray(entry.evidence) || entry.evidence.length === 0) fail(`Task ${entry.task} needs results and evidence`);
+              for (const evidence of entry.evidence) {
+                if (!commands.has(evidence.command)) fail(`Task ${entry.task} references an absent or failed command`);
+                if (!["source", "test", "docs", "check", "github"].includes(evidence.kind)) fail(`Task ${entry.task} has an invalid evidence kind`);
+                if (typeof evidence.path !== "string" || !evidence.path.trim() ||
+                    !evidence.command.includes(evidence.path)) fail(`Task ${entry.task} needs an inspected path or GitHub API endpoint`);
+              }
+              if (entry.task >= 4 && entry.task !== 6 && !entry.evidence.some(evidence =>
+                  !path.isAbsolute(evidence.path) && !evidence.path.split(/[\\/]/).includes("..") &&
+                  !/^(?:https?:|repos\/)/.test(evidence.path) &&
+                  /^(?:source|test|docs|check)$/.test(evidence.kind) &&
+                  /\b(?:cat|sed|head|tail|rg|grep|dotnet|npm|npx|python3?|node|make|cargo|go)\b/.test(evidence.command) &&
+                  !/\b(?:ls|find)\b|--files\b/.test(evidence.command))) {
+                fail(`Task ${entry.task} needs concrete source/test/docs/check evidence, not just issue metadata`);
+              }
+            }
+            for (const task of required) if (!seen.has(task)) fail(`Task ${task} was not assessed`);
+            console.log(`Justified noop: ${seen.size} tasks have recorded command evidence.`);
+          }
+          EOF
       - name: Enforce scheduled PR capacity
         if: github.event_name == 'schedule'
         env:
@@ -241,6 +335,15 @@ jobs:
             console.log("No new PRs requested; maintenance and triage outputs allowed.");
           }
           EOF
+
+post-steps:
+  - name: Upload Repo Assist task selection
+    uses: actions/upload-artifact@v7
+    with:
+      name: repo-assist-selection
+      path: /tmp/gh-aw/task_selection.json
+      if-no-files-found: error
+      retention-days: 7
 
 steps:
   - name: Initialize Repo Assist memory
@@ -273,7 +376,7 @@ steps:
       mkdir -p /tmp/gh-aw
 
       # Fetch open issues with labels (up to 500)
-      gh issue list --state open --limit 500 --json number,labels > /tmp/gh-aw/issues.json
+      gh issue list --state open --limit 500 --json number,title,labels > /tmp/gh-aw/issues.json
 
       # Fetch all open PRs so the capacity decision cannot miss older PRs.
       gh api --hostname "${GITHUB_SERVER_URL#https://}" --paginate "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" \
@@ -288,6 +391,7 @@ steps:
       with open('/tmp/gh-aw/prs.json') as f:
           prs = json.load(f)
 
+      issues = [i for i in issues if not i.get('title', '').startswith('[repo-assist] Monthly Activity ')]
       open_issues     = len(issues)
       unlabelled      = sum(1 for i in issues if not i.get('labels'))
       repo_assist_prs = sum(1 for p in prs if p['title'].startswith('[repo-assist]'))
@@ -381,7 +485,17 @@ Take heed of **instructions**: "${{ steps.sanitized.outputs.text || inputs.comma
 
 If these are non-empty (not ""), then you have been triggered via `/repo-assist <instructions>` (or by the user setting `inputs.command` in a manual `workflow_dispatch`). Follow the user's instructions instead of the normal scheduled workflow. Focus exclusively on those instructions. Apply all the same guidelines (read AGENTS.md, run formatters/linters/tests, be polite, use AI disclosure). Skip the weighted task selection and Task 11 reporting, and instead directly do what the user requested. If no specific instructions were provided (empty or blank), proceed with the normal scheduled workflow below.
 
+Distinguish a request for information, investigation, a report, or a proposed fix from permission to publish repository changes. For information-only requests, reply on the triggering issue/PR with `add_comment`; use the run summary for manual dispatches. A requested local report file is not, by itself, a request for a PR. Do not open a PR or issue unless the user asks for that publication. Honour explicit stop/no-action instructions with only `noop`, without public changes or memory edits.
+
 Then exit  -  do not run the normal workflow after completing the instructions.
+
+## Evidence and publication
+
+Use the pre-authenticated, read-only `gh` proxy for GitHub reads, always specifying this repository with `--repo` or a `repos/<owner>/<repo>/...` API endpoint. Do not export tokens, use unauthenticated `gh` as a fallback, or use `gh`/API writes; publish only through safe-output tools.
+
+An accepted safe-output call records a **queued request**, not a completed GitHub write. In final text and memory, say "queued" or "pending publication" until a later live query confirms the issue, comment, commit, or PR exists. At the start of the next applicable run, reconcile pending attempts with actual PR heads and safe-output failure reports before retrying or marking them complete. Do not repeat a rejected batch unchanged or claim a later human merge proves your earlier push succeeded.
+
+Only claim checks actually performed in this run. Listing filenames or counting API references is not test coverage; inspect assertions and relevant behavior. A type-check is not a full build, an attempted build is not a passing build, and a dependency query with `Current: MISSING` is not an installed/tested baseline. Record commands, their exit status, and concrete findings; stale memory alone cannot establish that source, dependencies, docs, or tests are unchanged.
 
 ## Non-Command Mode
 
@@ -414,13 +528,30 @@ The schema stores only:
 - `completed_actions`: Monthly Activity actions checked off by a maintainer, so they are not proposed again
 - `priorities`: a short queue of concrete follow-up work
 
+### Exact memory contract
+
+The root has exactly `version`, `cursors`, `issues`, `fixes`, `checks`, `completed_actions`, and `priorities`; `version` is `1`. `cursors` has exactly `labelling_after` and `investigation_after`, each a positive issue number or `null`. The other five fields are **arrays, never objects/maps**. Each entry has exactly these keys:
+
+| Array (maximum entries) | Entry |
+|---|---|
+| `issues` (100) | `{"number":130,"state":"deferred","updated_at":"2026-11-09","note":"Needs an interactive reproduction"}` |
+| `fixes` (50) | `{"issue":130,"pr":null,"branch":null,"status":"blocked","updated_at":"2026-11-09","note":"Pending publication; verify the next run"}` |
+| `checks` (12) | `{"area":"tests","checked_at":"2026-11-09","result":"Inspected cancellation assertions in tests/Tests.fs","follow_up":null}` |
+| `completed_actions` (100) | `{"key":"review-pr-372","completed_at":"2026-11-09"}` |
+| `priorities` (20) | `{"task":9,"item":"Cancellation coverage","note":"Check disposal after cancellation"}` |
+
+Use the actual current date in `YYYY-MM-DD` form. Issue/fix numbers are positive integers; `pr` may be `null`; `branch` may be `null` or a nonempty string of at most 120 characters. Issue states are exactly `commented`, `awaiting_clarification`, `resolution_recommended`, `deferred`, `awaiting_approval`. Fix statuses are exactly `open`, `merged`, `closed`, `blocked`; use `blocked` with a pending-publication note for unconfirmed attempts. Check areas are exactly `dependencies`, `ci`, `tooling`, `build`, `code`, `docs`, `qa`, `hygiene`, `performance`, `tests`, `release`, `repo_assist_prs`. All notes, check results, and non-null follow-ups are nonempty strings of at most 300 characters; action keys and priority items at most 100. Priority task numbers are integers 1-10. Issue numbers, fix issue numbers, non-null fix PRs, check areas, action keys, and priority task/item pairs are unique within their arrays.
+
 Keep notes terse and current. Replace superseded entries, remove resolved issue records and closed fix records once they are no longer needed for duplicate prevention, and never store run-by-run narration, exhaustive label histories, stale PR inventories, copied GitHub content, or facts that can be cheaply queried again. Stay within the schema's array and text limits; do not create another memory file.
 
-After every change to `notes.json`, run `jq empty /tmp/gh-aw/repo-memory/default/notes.json`, then call `push_repo_memory`. A successful tool result is required before finishing the run. If either check reports an error, repair `notes.json` and retry both checks. Prefer `jq` with a temporary file and atomic rename over manual partial JSON edits.
+Before editing, save a backup **outside** the memory directory, for example `/tmp/gh-aw/notes.before.json`. Write a candidate outside that directory, check the shell exit code and `jq empty`, and only then atomically replace `notes.json`. Preserve unrelated entries. For example, upsert an array entry using `.checks |= (map(select(.area != $entry.area)) + [$entry])` with `--argjson entry`, not `.checks.tests = ...`.
+
+**Sequentially**, after the successful edit completes, call `push_repo_memory`; never run it in parallel with the edit. If validation fails, restore the backup, repair the specific entry, and retry the edit, parse, and push. Never empty arrays, reset cursors, or discard blockers merely to pass validation. A zero-byte patch does not prove an intended edit succeeded: verify the changed fields. If the intended state cannot be saved, use `report_incomplete`, not a successful noop. A failed shell command is a failure even if its tool envelope says success.
 
 **Important**: Memory may not be 100% accurate. Issues may have been created, closed, or commented on; PRs may have been created, merged, commented on, or closed since the last run. Always verify memory against current repository state — reviewing recent activity since your last run is wise before acting on stale assumptions.
 
 **Memory backlog tracking**: Records in `issues`, `fixes`, and `priorities` are **action items for you**, not just informational notes. Each run, prioritise applicable work from those fields and remove or replace entries as their state changes.
+For clarification/deferred records, include the last reviewed human comment ID in `note` and compare it with live comments before reusing a blocker. A day-only `updated_at` value is not proof that no new reply arrived.
 
 ## Workflow
 
@@ -453,6 +584,20 @@ If the selected tasks and their local fallbacks reveal no actionable work, do no
 - Keep this bounded to the six generic categories, each assessed at most once, within the existing run timeout. If all are exhausted or genuinely blocked, use an honest `noop` with the concrete checks and deferrals, and retain concise latest results in memory's `checks`.
 - Command mode remains exclusive: do not start this sweep after completing explicit instructions. Honour all output limits, maintainer holds and any maintenance-only/new-PR restrictions; the sweep is not permission to bypass a PR cap or other safety boundary.
 
+### Completion contract
+
+Labels, label removals, comments, issues, and PR changes are all substantive work. After any such work, do Task 11 and do **not** emit `noop`, even if no code changed. The safe-output gate rejects public changes without a Monthly Activity update and rejects mutation-plus-noop batches.
+
+If work is genuinely exhausted, the **message string** passed to `noop` must be a JSON object with `outcome: "justified_noop"` and an `assessments` array. Include one entry for every selected task and every generic fallback task; local fallback tasks may also appear, once each. Each entry has `task`, a concise `result`, and a nonempty `evidence` array. Each evidence object has `command` (the exact successful bash command from this session), `path` (the inspected repository-relative path or GitHub API endpoint appearing in that command), and `kind` (`source`, `test`, `docs`, `check`, or `github`). Example of **one entry**, not a complete assessment:
+
+```json
+{"task":9,"result":"Cancellation tests already assert disposal after early termination","evidence":[{"command":"sed -n '1,160p' tests/Tests.fs","path":"tests/Tests.fs","kind":"test"}]}
+```
+
+The gate compares the assessment with the uploaded task selection and actual completed tool calls. Tasks 4, 5, 7, 8, 9, and 10 require concrete source/test/docs/check evidence, not just issue queries, task-selection files, `ls`, or API-reference counts. This checks recorded assessment coverage, not whether an improvement must exist. Do not manufacture work to satisfy it.
+
+Missing access, failed memory updates, insufficient time, or skipped required assessments mean **`report_incomplete`**, with the uncompleted tasks and blockers, not `noop` or invented evidence. Command-mode noops, including explicit stop requests, are exempt from the normal-mode assessment contract. Scheduled maintenance-only noops need only Tasks 6, 1, and 2, respecting their restrictions.
+
 The weighting scheme naturally adapts to repo state:
 
 - When unlabelled issues pile up, Task 1 (labelling) dominates.
@@ -470,6 +615,7 @@ Always do Task 11 (Update Monthly Activity Summary Issue) after performing work 
 Process as many unlabelled issues and PRs as possible each run. Resume from memory's backlog cursor.
 
 For each item, apply the best-fitting labels from: `bug`, `enhancement`, `help wanted`, `good first issue`, `documentation`, `question`, `duplicate`, `wontfix`, `spam`, `off topic`, `needs triage`, `needs investigation`, `breaking change`, `performance`, `security`, `refactor`. Remove misapplied labels. Apply multiple where appropriate; skip any you're not confident about. After labelling, post a brief comment if you have something genuinely useful to add.
+Read the item's body before choosing labels, and relevant human comments when the classification is ambiguous. Titles alone are not sufficient evidence for a confident label.
 
 Update memory with labels applied and cursor position.
 
@@ -477,6 +623,7 @@ Update memory with labels applied and cursor position.
 
 1. List open issues sorted by creation date ascending (oldest first). Resume from your memory's backlog cursor; reset when you reach the end.
 2. **Prioritise issues that have never received substantive Repo Assist action.** Read the issue and its comments, inspect the relevant code and tests, and check memory's `issues` and `fixes` records. Expect to act substantively on 1–3 issues per run; you may scan many more to find good candidates. Only re-engage on an already-addressed issue if new human comments or repository changes warrant further action.
+   Read the latest human reply before declaring an issue blocked or awaiting clarification. A reply choosing one of your proposed options is a specification decision, not a missing answer. Check linked reproductions and regression tests before asking for them again. If a fix still needs design work, record the remaining precise decision and assess another candidate; do not generalize one blocker to the whole backlog.
 3. After investigation, choose the outcome that makes the most forward progress:
   a. **Resolve**: if the issue is already fixed, answered, a duplicate, unsupported, or no longer applicable, provide the evidence and recommend or apply the appropriate resolution and labels.
   b. **Fix**: for a fixable bug or feature request, implement it and create a tested draft PR. Follow Task 3's requirements for duplicate checks, branching, focused changes, tests, AI disclosure, issue linking, and memory updates.
@@ -523,7 +670,9 @@ Check memory for already-submitted ideas; do not re-propose them. Create a fresh
 ### Task 6: Maintain Repo Assist PRs
 
 1. List all open PRs with the `[repo-assist]` title prefix.
-2. For each PR: fix CI failures caused by your changes by pushing updates; resolve merge conflicts. If you've retried multiple times without success, comment and leave for human review.
+2. For each PR: query its current **head repository, head ref, and head SHA**, and fetch that exact head before editing. Fix CI failures caused by your changes and resolve merge conflicts. Before queueing an update, inspect the **entire transported delta against that PR head**, not just the file you intended to fix: `git diff --stat <original-head> HEAD` and `git diff --name-only <original-head> HEAD`. If a merge brings unrelated base history, start again from the current PR head and keep the correction focused.
+   Preflight a bundle of the actual range with `git bundle create /tmp/gh-aw/pr-update.bundle <original-head>..HEAD` and `wc -c /tmp/gh-aw/pr-update.bundle`; updates must fit the configured 4096 KiB limit. Do not queue an oversized bundle or a workflow-file change that the configured credential cannot publish. Do not increase limits, grant workflow scope, silently strip intended changes, or bypass protected-file review. Record the precise blocker or queue a concise maintainer comment instead. A successful safe-output call means the update is queued, not pushed.
+   If you've retried multiple times without success, comment and leave for human review.
 3. Do not push updates for infrastructure-only failures — comment instead.
 4. Update memory.
 

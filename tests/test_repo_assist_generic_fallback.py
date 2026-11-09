@@ -81,6 +81,16 @@ class GenericFallbackTests(unittest.TestCase):
         result = self.select([1, 2, 3], issues=[{"number": 1, "labels": []}])
         self.assertEqual(result["generic_fallback_tasks"], GENERIC_TASKS)
 
+    def test_activity_trackers_do_not_bias_issue_weights(self):
+        issues = [
+            {"number": 1, "title": "[repo-assist] Monthly Activity 2026-11", "labels": []},
+            {"number": 2, "title": "Reproducible bug", "labels": [{"name": "bug"}]},
+        ]
+        result = self.select([1, 2, 3], issues=issues)
+        self.assertEqual(result["open_issues"], 1)
+        self.assertEqual(result["unlabelled_issues"], 0)
+        self.assertEqual(result["weights"]["2"], 4)
+
     def test_explicit_commands_have_no_generic_fallback_plan(self):
         for command in ["Investigate this issue", "Run Task 9", "\nFix the regression\n"]:
             with self.subTest(command=command):
