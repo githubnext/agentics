@@ -62,6 +62,24 @@ Each assessment examines a concrete source/test/docs area or existing check; lis
 
 Explicit command mode and scheduled maintenance-only mode receive no generic fallback plan. At the scheduled PR cap, Repo Assist stays with Tasks 6, 1, and 2 and their investigation/triage-only fallbacks.
 
+### Verified outcomes, not just green runs
+
+Before publishing normal-mode outputs, Repo Assist checks the actual output batch and recorded agent tool calls:
+
+- A justified `noop` must contain a structured assessment of every selected and generic fallback task. Each entry links a concrete finding to an exact successful command and inspected path/API endpoint. Proactive tasks require source, test, documentation, or check evidence; issue lists and filename listings alone do not qualify.
+- Missing tools/access, failed memory updates, insufficient time, and skipped required checks use `report_incomplete`, not a successful noop. Explicit command-mode stop requests are exempt; maintenance-only noops need only the restricted task plan.
+- Labels and label removals are substantive work too: normal-mode public changes require the Monthly Activity update and cannot be accompanied by `noop`.
+
+The gate verifies recorded assessment coverage, not the semantic quality of every conclusion or a requirement to create changes. It fails explicitly if required artifacts or evidence are missing. Regression tests exercise the actual gate with complete, skipped, fabricated, failed-command, maintenance-only, stop-command, and label-only scenarios.
+
+GitHub reads use the pre-authenticated, read-only `gh` proxy rather than a broad GitHub MCP tool inventory. This avoids unauthenticated CLI fallbacks and MCP PR-enrichment lookups against contributor forks. Writes still go exclusively through safe outputs; no additional write permissions are granted.
+
+### Reliable memory and publication
+
+The agent prompt includes the exact memory entry keys, enums, examples, limits, and uniqueness rules enforced by the validator. All collection fields, including `checks`, are arrays. Updates preserve unrelated records, keep backups outside the memory directory, and sequence edit, parse, validation, and push. Failed validation is repaired, not bypassed by clearing blockers or resetting cursors; a zero-byte patch is not proof of an intended edit.
+
+Safe-output calls queue requests; they do not prove GitHub publication. Final responses and memory distinguish pending publication from live-confirmed results, and subsequent runs reconcile pending attempts before retrying. PR maintenance inspects the full delta against the current PR head and preflights the bundle against the 4096 KiB limit. Oversized updates and workflow-file changes unsupported by the configured credential are reported as blockers, not retried unchanged or hidden by relaxed protections. Protected-file updates request review.
+
 ### Task 1: Issue Labelling
 
 Default weighting: dominates when the label backlog is large.
@@ -191,6 +209,8 @@ When triggered this way, Repo Assist starts a new coding agent session immediate
 - `/repo-assist investigate this bug and suggest a fix`
 - `/repo-assist add documentation for the new API endpoints`
 - `/repo-assist review this PR and suggest improvements`
+
+Information-only requests receive a reply on the triggering issue/PR, or a run summary for manual dispatches. A requested local report file does not implicitly authorize a pull request; publication must be requested. Explicit stop instructions produce no public changes or memory edits.
 
 All the same guidelines apply (AI disclosure, running formatters/linters/tests, being polite and constructive).
 

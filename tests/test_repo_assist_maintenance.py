@@ -18,7 +18,10 @@ def script_after(marker, indent):
 
 
 SELECTION = script_after("      python3 - << 'EOF'\n", 6)
-CAPACITY = script_after("          node <<'EOF'\n", 10)
+CAPACITY = textwrap.dedent(
+    WORKFLOW.split("      - name: Enforce scheduled PR capacity\n", 1)[1]
+    .split("          node <<'EOF'\n", 1)[1].split("\n          EOF", 1)[0]
+)
 
 
 class MaintenanceModeTests(unittest.TestCase):
@@ -71,7 +74,7 @@ class MaintenanceModeTests(unittest.TestCase):
 
     def test_cap_no_longer_gates_activation(self):
         self.assertNotIn("needs.pre_activation.outputs.check_result", WORKFLOW)
-        self.assertEqual(WORKFLOW.count("if: github.event_name == 'schedule'"), 2)
+        self.assertEqual(WORKFLOW.count("if: github.event_name == 'schedule'"), 1)
         self.assertIn('--paginate "repos/$GITHUB_REPOSITORY/pulls', WORKFLOW)
 
     def check_capacity(self, count, requests, other_prs=0, api_failure=False):
