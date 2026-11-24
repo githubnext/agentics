@@ -79,6 +79,8 @@ safe-outputs:
     run-success: "🗜️ Docs on a diet! [{workflow_name}]({run_url}) has removed the bloat. Lean and mean! 💪"
     run-failure: "📦 Unbloating paused! [{workflow_name}]({run_url}) {status}. The docs remain... fluffy."
 
+max-turns: 80
+
 # Timeout
 timeout-minutes: 30
 ---
